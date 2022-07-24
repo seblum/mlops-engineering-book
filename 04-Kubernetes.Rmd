@@ -1,0 +1,1045 @@
+# Kubernetes
+
+
+## Pods
+
+In K8s, a pod is the smallest deployable unit (and not containers | In contrast to K8s, the smallest deployable unit for docker are containers.). Within a pod there is always one *main container* representing the application (in whatever language written, e.g. JS, Python, Go). Further within a pod, there may or may not be *init containers*, and/or *side containers*. Init containers are containers that are executed before the main container. Side containers are containers that support the main containers, e.g. a container that acts as a proxy to your main container. Also within pods there may also be volumes, which enables containers to share data between them. 
+
+<!--- TODO: insert image --->
+![Pod](kubernetes_pod.png) 
+
+Containers communicate with each other within a pod using localhost and whatever port they expose. The port itself has a unique ip adress. This enables communication between pods via the unique adress.
+
++ group of one or more Container
++ represents a running process
++ shares Network and Volumes
++ Never Create Pods on its own. Use Controllers instead, e.g. Deployments
++ Ephemeral (not a long lifetime) and disposable
+
+
+#### Imperative & Declarative Management
+
+The imperative approach is good for learning, troubleshooting, and experimenting on the cluster. While the declarative approach is reproducible, which means the same configuration can be applied in different environments (prod/dev). This is best practice to use when building a cluster. This differentiation does not only hold for pods, but for all ressources within a cluster.
+
+##### Imperative Management
+
+```bash
+kubectl run <pod-name> --image="image-name" --port=80
+
+# run following to test your pods
+# in your browser, go to localhost:8080
+kubectl port-forward pod/<pod-name> 8080:80
+
+```
+
+##### Declarative Management / Configuration
+
+Declarative configuration is done using a *yaml*. This works basically on key-value pairs.
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-world
+  labels:
+	name: hello-world
+spec:
+  # remember: a pod is a selection of one or more containers, 
+  # we can also set more
+  containers:
+ 	- name: hello
+	image: "image-name"
+	# This pod can access only a the amount of ressources specified under limits
+	ressources:
+ 	  limits:
+		memory: "128Mi"
+		cpu: "500m"
+	ports:
+  	  ContainerPorts: 80
+```
+
+Appyl this declarative configuration using the following kubectl command.
+
+```bash
+kubectl apply -f "file-name.yaml"
+
+# run following to test your pods
+# in your browser, go to localhost:8080
+kubectl port-forward pod/<pod-name> 8080:80
+
+```
+
+
+## Kubectl
+
+```bash
+# run following to test your pods
+# in your browser, go to localhost:8080
+kubectl port-forward pod/<pod-name> 8080:80
+
+# show all pods currently running in the cluster
+kubectl get pods
+
+# delete a pod
+kubectl delete pods <pod-name>
+```
+
+
+
+
+
+## Labels, Selectors and Annotations - TBF
+
+We have seen labels in the yamls under metadata beforehand. What are they actually doing? Labels are a key-value pair that can be attached to objects such as Pods, Deployments, Replicaset, Services, etc. They are used to organize and select objects. 
+
+Selectors are used to filter K8s objects based on a set of labels. A selector basically simply uses a boolean language to select pods. The selector matches all or nothing. Everything specified in the selector must be fulfilled in the labels. However, this goes not the other way around. If we have multiple labels and the only one selector, which actually matches one of the labels, the selector will match the object This is seen in below example. 
+
+```bash
+# Show all pods including their labels
+kubectl get pods --show-labels
+
+# Show only pods that match the specified selector key-value pairs
+kubectl get pods --selector="key=value"
+kubectl get pods --selector="key=value,key2=value2"
+
+# in short you can also write
+kubectl get pods -l key=value
+# or also look for multiple
+kubectl get pods -l 'key in (value1, value2)'
+
+```
+
+Match a replicaset to a Pod. Any Pods has the label app:customer. The replicaset create replicas by selecting only labels matching to app: customer. We can also use multiple labels. 
+Service matches to both pods, blue and green. The Service labels-and-selectors-2 has no endpoints, as it is all or none, and no pod has the label environment=service.
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: blue
+  labels:
+    app: blue
+  annotations:
+	kubernetes.io/change-cause: "seblum/kubernetes:hello-world"
+spec:
+  containers:
+  - name: blue
+    image: "seblum/kubernetes:blue"
+	resources:
+  	  limits:
+  		memory: "128Mi"
+  		cpu: 	"500m"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: green
+  labels:
+    app: blue    
+spec:
+  containers:
+	- name: green
+  	  image: "seblum/kubernetes:green"
+	  resources:
+    	limits:
+	 	  memory: "128Mi"
+  		  cpu: 	"500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: labels-and-selectors
+spec:
+  type: NodePort
+  selector:
+	name: blue
+  ports:
+	- port: 80
+  	  targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: labels-and-selectors-2
+spec:
+  type: NodePort
+  selector:
+	name: blue
+	environment: service
+  ports:
+	- port: 80
+	  targetPort: 8081
+```
+
+Test it using:
+
+```bash
+# Show all pods including their labels
+kubectl describe svc labels-and-selectors
+
+# Show only pods that match the specified selector key-value pairs
+kubectl get pods --selector="key=value"
+```
+
+Annotations is an unstructures key value map stored with a resource that may be set by external tools to store and retrieve any metadata. They are not used for queriying purposes. They are used to assist tools and libraries to work with the Kubernetes object. For e.g. to pass configuration around between systems. Send some value that external tools know more perform informed decisions based on the annotiations provided.
+
+
+
+## Service Discovery
+
+Service Discovery is a mechanism for applications and microservices to locate each other on a network. Actually, we have used Service Discovery already in the previous sections, we just haven't mentioned it yet. As the name says, Service Discovery happens through services.
+
+If a client wants to communicate with the application, we should not use the individual pod ip, because pods are ephemeral. Instead, we should rely on services, because they have a stable IP address. Also, it has a DNS. 
+
+DNS (Domain Name System) translates domain names to IP addresses so browsers can load internet resources.
+
+
+<!--- TODO: insert image --->
+![Service Discovery](kubernetes_service-discovery.png) 
+
+How does service registration work? 
+When a service is created, it is registered in the service registry with the service name and the service IP. Most clusters use CoreDNS as a service registry. Looking it the cluster, one will see that der is a core-dns service running. If you have a closer look using describe, this service has only one endpoint. Now you know what it is good for.
+
+If you want to have an even closer look, you can look on the pods themselves and check the file /etc/resolv.conf. There you find a nameserver <IP> where the IP is the one of the core-dns
+```bash
+kubectl get pods -n kube-system
+
+kubectl get service -n kube-system
+
+# command for queriying the dns  
+nslookup <podname>
+```
+
+Accessing services from different namespaces. Querying services depends on the namespace you are in.
+
+With a service, one gets an associated endpoint with it. The endpoint contains a list of ip adresses to pods which have matched a particular selector, and also which are healthy. If a pod is not healthy, there is no point of a service to loadbalance traffic between those pods.
+```bash
+kubectl get endpoints
+```
+
+#### kube-proxy
+
+Each node has three components: Kubelet, Container Runtime, Kube Proxy.
+
+Kubeproxy is a networkd proxy that runs on each node. Implementing part of the K8s service. It maintains networks rules to allow communication to pods from inside and outside the cluster. Kubeproxy also implements a controller that watches the API server for new services and endpoints. When there is a new service or endpoint, the kubeproxy creates a local IPVS rule that tells the node to intercept traffic destined to the service clusterIP. IPVS (IP virtual server) is built on top of the net filter and implements a transport layer load balancing as part of the linux kernel. It gives the ability to load balance to real service. 
+Kubepory also redirects traffic to pods that match service label selectors.
+
+Kubeproy is intercepting all the requests and makes sure that when a request to the cluster ip is sent. using endpoints. Request is sent to the healthy pods behind the endpoints. 
+
+
+## Volume & Storage
+
+Since Pods are ephemeral, any data associated is deleted when a pod or container restarts. However, there are times when data wants to be kept, share data between Pods, or persist data to the host file system (disk). The majority of the times, applications are run stateless, meaning we dont want to keep data on the node and store data in a DB. Yet, there are times we want to have access to the file system.
+When we look at the previous section of the pods. A pod can contain volumes. They are used to store and access data which can be sure or long lived on K8s.
+
+Different types of volumes
++ EmptyDir
++ HostPath Volume
+
+Volume: EmptyDir
+The volume is initially empty (as the name suggests), and the volume is a temporary directory that shares the pods lifetime. If the pod dies, the contents of the emptyDir are lost. It is also used to share data between containers inside a Pod.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emptydir-volume
+spec:
+  selector:
+    matchLabels:
+      app: emptydir-volume
+  template:
+    metadata:
+      labels:
+        app: emptydir-volume
+    spec:
+      volumes:
+        # mimic a caching memory type
+        # we can also add a second volume
+        - name: cache
+          # now that we have this temp directory, we can use it in the containers
+          emptyDir: {}    
+      containers:
+      - name: container-one
+        image: busybox 
+        # image used for testing purposes
+        # since the testing image immediately dies, we want to
+        # execute our own sh command to interact with the volume
+        volumeMounts:
+        	# The name must match the name of the volume
+          - name: cache
+          	# interal reference of the pod 
+            mountPath: /foo
+        command: 
+          - "/bin/sh"
+        args:
+          - "-c"
+          - "touch /foo/bar.txt && sleep 3600"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+      - name: container-two
+        image: busybox
+        volumeMounts:
+          - name: cache
+            mountPath: /footwo
+        command:
+          - "sleep"
+          - "3600"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+```
+
+if we would create it without the shell commands, the pod will be in a crashloopbackoff. So it is caught in the sleep command. We can check whether the foo/bar.txt is actually created.
+```bash
+# get in container
+kubectl exec -it <emptydir-volume-name> -c container-one -- sh
+# check whether bar.txt is present
+ls
+
+# going in the second container, there is also a file foo/bar.txt
+# remember, both containers share the same volume
+kubectl exec -it <emptydir-volume-name> -c container-two -- sh
+ls
+```
+
+
+Volume: HostPath Volume type is used when an application need to access the underlying host file system, so the node file system. This can be quite dangerous. If you have the right access, the application can mess up the host. Thus, it is recommended to have it read only. HostPath represents a pre-existing file or directory on the host machine.
+
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostpath-volume
+spec:
+  selector:
+    matchLabels:
+      app: hostpath-volume
+  template:
+    metadata:
+      labels:
+        app: hostpath-volume
+    spec:
+      volumes:
+        - name: var-log
+          HostPath: {}
+          	path: /var/log
+      containers:
+      - name: container-one
+        image: busybox 
+        volumeMounts:
+	      - name: var-log
+	         mountPath: /var/log
+        command: 
+          - "/bin/sh"
+        args:
+          - "-c"
+          - "touch /foo/bar.txt && sleep 3600"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+```
+If you ssh into the node, you see the file /foo/bar.txt
+
+Other volume types
++ awsElasticBlockStore: EBS volumes are persisted and originally unmounted. Read Write one only
++ Full list can be found here: https://kubernetes.io/docs/concepts/storage/volumes/#volume-types
+
+
+#### Persistent Volumes
+
+Persistent Volumes allow us to store data beyond Pod lifecycle. If a Pod fails, dies or moves to a different node, it does not matter. The data is still intact and will be shared between pods. Persistent Volume types are implemented as plugins (a full list can be found online). Kubernetes supports different persistent volume types, such as:
++ NFS
++ Local
++ Cloud Network storage (AWS EBS, Azure File Storage, Google Persistent Disk)
+
+How it works:
+K8s is running on EKS. We have a AWS EBS. In K8s we have a Container storage interface (CSI). This CSI has to be implemented by the EBS. There is a aws-ebs-plugin, which is implemented by the provider. This gives us a persistent volume. Really, a Persistent Volume is the mapping between the storage provider (EBS) To the kubernetes cluster. If a pod wants to consume storage of a volume, We have to use a persistent volume claim (PVC)
+
+<!--- TODO: insert image --->
+![Persistent Volume Subsystem](kubernetes_Persistent-Volume-Subsystem.png) 
+
+All of this is part of a Persistent Volume Subsystem. A Persistent Volume Subsystem provides an API for users and administrators that abstracts details of how storage is provided from how it is consumed. This is done using Persistent Volume and PVC.
+
+From a PV, we can configure the storage class. Do we want a fast, slow, or both storage. What are the paramters to configure our storage? 
+PVC is how an enduser (pods) gets access to the persistent volume.
+
+Persistent Volume: is a storage resource provisioned by an administrator
+PVC: is a user's request for and claim to a persistent volume.
+Storage Class: describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned.
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mypv
+spec:
+  capacity:
+    storage: "100Mi"
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: manual
+  hostPath:
+  	# this path on node
+    path: "/mnt/data"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mypvc
+spec:
+  resources:
+    requests:
+      storage: "100Mi"
+  volumeMode: Filesystem
+  storageClassName: "manual"
+  accessModes:
+    - ReadWriteOnce
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pv-pvc-deployment
+spec:
+  selector:
+    matchLabels:
+      app: pv-pvc
+  template:
+    metadata:
+      labels:
+        app: pv-pvc
+    spec:
+      volumes:
+        - name: data
+          # here we define that we want to use the PVC by the name
+          persistentVolumeClaim:
+            claimName: mypvc
+      containers:
+      - name: pv-pvc
+      	# default image
+        image: nginx
+        volumeMounts:
+        	# now that we have the claim, we have to mount inside the container
+        	# is this on pod
+          - mountPath: "/usr/share/nginx/html"
+          	# name is equal to the pvc name specified
+            name: data
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: pv-pvc
+spec:
+  type: LoadBalancer
+  selector:
+    app: pv-pvc
+  ports:
+  - port: 80
+    targetPort: 80
+
+```
+
+
+## ConfigMaps
+
+Container Images shoud be reusable. So when you build software, the same Image should be used for Dev, Test, Staging, and Production. What only changes in your application is the configuration. 
+
+ConfigMaps should only be used to store configuration files, not sensitive data. 
+
+This allows for reusable application images. It is much simpler to test, and further configuration changes are disruptive, meaning the application can still run while the configuration changes without affecting the application. 
+
+ConfigMaps allow to store this configruation. Basically, they are really just a map of key value pair.
+
+Most of the time, the configuration within a config map is injected using environment variables and volumes.  
+
+One drawback wiht configmaps and environment variables ist, that the changes made to a ConfigMap will not be reflected on the container. 
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-properties
+data:
+  app-name: order
+  app-version: 1.0.0
+  team: engineering
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+data:
+	# configuration in .conf
+  nginx.conf: |
+    server {
+        listen       80;
+        server_name  localhost;
+
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+
+        location /health {
+            access_log off;
+            return 200 "healthy\n";
+        }
+    }
+
+```
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-map
+spec:
+  selector:
+    matchLabels:
+      app: config-map
+  template:
+    metadata:
+      labels:
+        app: config-map
+    spec:
+      volumes:
+      	# this is for volumes
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
+        - name: app-properties
+          configMap:
+            name: app-properties
+          # if both configmaps shall be mounted under one direc,
+          # we need to use projected
+        - name: config
+          projected:
+            sources:
+              - configMap:
+                  name: nginx-conf
+              - configMap:
+                  name: app-properties
+      containers:
+      - name: config-map-volume
+        volumeMounts:
+          - mountPath: /etc/order/ngnix
+          # is defined here in the nginx-volume to mount
+            name: nginx-conf
+            # everything from that configMap in mounted as a file
+        	# the file content is the value themselves
+          - mountPath: /etc/order/properties
+            name: app-properties
+            # both configmaps under one
+          - mountPath: etc/order/config
+          	name: config
+        image: busybox
+        command:
+          - "/bin/sh"
+          - "-c"
+        args:
+          - "sleep 3600"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+      - name: config-map-env
+        image: busybox
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        # as previous, keep the busybox container alive
+        command:
+          - "/bin/sh"
+          - "-c"
+        args:
+          - "env && sleep 3600"
+        env:
+          # environment variables to read in from config map
+          # for every data key-value pair in config Map, and own
+          # environment variable is created, which get the value from the corresponding key
+          - name: APP_VERSION
+            valueFrom:
+              configMapKeyRef:
+                name: app-properties
+                key: app-version
+          - name: APP_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: app-properties
+                key: app-name
+          - name: TEAM
+            valueFrom:
+              configMapKeyRef:
+                name: app-properties
+                key: team
+          # reads from second config map
+          - name: NGINX_CONF
+            valueFrom:
+              configMapKeyRef:
+                name: nginx-conf
+                key: nginx.conf  
+```
+
+config map env
+
+config maps and volumes. One pod is a selection of one or more containers, as well as one or more volumes. The volume is mounted inside the container. Whereever a volume is mounted, we get a file structure like this:
+
+/etc/name
+	/app.version
+	/server.name
+
+the contents of that file is the values for each key inside of that data.
+
+
+## Secrets
+
+Secrets, as the name suggests, store and manage sensitive information. ConfigMaps should only be used to store configuration files, not sensitive data. 
+
+create a generic secrets using the imperative approach
+```bash
+kubectl create secret generic mysecret --from-literal=db-password=123 -from-literal=api-token=token
+
+# output the new secret as yaml.
+kubectl get secret mysecret -o yaml
+
+# create a secret from file
+kubectl create secret generic mysecret-from-file --from-file=secret
+```
+
+
+similar to the configmaps, we can get the secrets from a environment variable or a volume
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secrets
+spec:
+  selector:
+    matchLabels:
+      app: secrets
+  template:
+    metadata:
+      labels:
+        app: secrets
+    spec:
+      volumes:
+      	# get the secret from a volume
+        - name: secret-vol
+          secret:
+          	# this is the name of the scret we created earlier
+            secretName: mysecret
+      containers:
+      - name: secrets
+        image: busybox
+        volumeMounts:
+          - mountPath: /etc/secrets
+            name: secret-vol
+        env:
+          # nane of the secret
+          - name: CUSTOM_SECRET
+    	  # get the secret from an environment variable
+            valueFrom:
+              secretKeyRef:
+              	# name and key of the secret we created earlier
+                name: mysecret-from-file
+                key: secret
+        command:
+          - "sleep"
+          - "3600"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+```
+
+Secrets are actually not secrets in Kubernetes, but what does that mean? They can actually quite easily decoded. If you kubectl describe on a secret and decode it using
+```base
+echo <password> | base64 -d
+```
+We should never store sensitive information, like database passwords, in secrets. For such, we should use a vault.
+
+**exemplary use case of secrets**
+
+If we want to pull from a private repository, how do we configure this?
+Assume we pull from this private docker hub. We can apply this deployment, yet it will throw an error. This is because we did not configure a secret for docker registry.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secret-app
+spec:
+  selector:
+    matchLabels:
+      app: secret-app
+  template:
+    metadata:
+      labels:
+        app: secret-app
+    spec:
+      imagePullSecrets:
+        - name: docker-hub-private
+      containers:
+      - name: secret-app
+        image: seblum/private
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+```
+
+lets create the secret.
+```bash
+kubectl create secret docker-registry docker-hub-private \
+--docker-username=YOUR_USERNAME \
+--docker-password=YOUR_PASSWORD \
+--docker-email=YOUR_EMAIL
+```
+
+
+## Namespaces
+
+Namespaces allows us to organize objects in the cluster. Maybe we want to organize by team, department, environment, etc. By default, kubectl interacts with the defaul namespace.
+
++ default The default namespace for objects with no other namespace
++ kube-system The namespace for objects created by the Kubernetes system
++ kube-public This namespace is created automatically and is readable by all users (including those not authenticated). This namespace is mostly reserved for cluster usage, in case that some resources should be visible and readable publicly throughout the whole cluster. The public aspect of this namespace is only a convention, not a requirement.
++ kube-node-lease This namespace for the lease objects associated with each node which improves the performance of the node heartbeats as the cluster scales.
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prod
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: logging
+---
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: monitoring-deployment
+  namespace: monitoring
+spec:
+  containers:
+  - name: 
+    image: "grafana"
+	resources:
+  	  limits:
+  		memory: "128Mi"
+  		cpu: 	"500m"
+```
+
+Cross communication and network policies between namespaces 
+develoment namespace and customer svc
+demo namespace and customer svc
+calling from demo to dev, we call customer.dev
+However, we do not usually want them to talk to each other. https://kubernetes.io/docs/concepts/services-networking/network-policies/
+
+#### kubectx & kubens
+
+Used for switching between namespaces. https://github.com/ahmetb/kubectx
+```bash
+# switch namespace
+kubens <namespace>
+```
+
+
+## Health Checks
+
+When building applications, we need to make sure that they are healthy at all times and that they are ready to receive traffic. Kubernetes uses a process health check to check if application is alive and if it is not it restart the process. Yes, checking in the process on its own is not sufficient. What if we want to connect an app to a database and it cannot? To solve such issues, we use *liveness probe* and *readiness probe*. If not specified any of these, kubernetes will use the default, which might not be sufficient.
+
+**Liveness Probe**
+The kubelet uses liveness probes to know when to restart a container. For example, liveness probes could catch a deadlock, db connection failure, etc. In order to dothat, we can specify an endpoint for a liveness probe.
+The kubelet will use the liveness probe to check whether the application runs fine and whether it can receive traffic. The benefit is, that it is simple to define want it means for the application to be healthy, just by the url defined.
+
+**Readiness Probe**
+Similar to the liveness Probe, the readniness probe is used by the kubelet to check when the container is ready to start accepting traffic.
+
+Regarding the path to specify: A lot of frameworks, like springboot, give you a path to use.
+
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer
+  namespace: engineering
+spec:
+  replicas: 20
+  selector:
+    matchLabels:
+      app: customer
+  template:
+    metadata:
+      labels:
+        app: customer
+        environment: test
+        tier: backend
+        department: engineering
+    spec:
+      containers:
+        - name: customer
+          image: "amigoscode/kubernetes:customer-v1"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+    	  # the liveness probe for us
+          livenessProbe:
+            httpGet:
+        	  # path of the url
+              path: /health
+              port: 8080
+            # time the liveness probe start after pod is started
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            failureThreshold: 3
+            # period on when the checks should be performed
+            periodSeconds: 5
+          # readiness probe
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3
+            periodSeconds: 5
+          env:
+          	# variable for the container to be killed after 30 seconds
+          	# needs to be implemented within the container though
+          	- name: "KILL_IN_SECODS"
+          	  value: "30"
+            - name: ORDER_SERVICE
+              value: "order"
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-node
+  namespace: engineering
+spec:
+  type: NodePort
+  selector:
+    app: customer
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 30000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer
+  namespace: engineering
+spec:
+  type: ClusterIP
+  selector:
+    app: customer
+  ports:
+    - port: 80
+      targetPort: 8080
+```
+
+
+## Ressource Management
+
+Sometimes, an app uses a lot of resources, e.g. memory & CPU. This might be dangerous, as one app might use a lot of ressources, leaving nothing left for other applications and starving them. In K8s, we can define the minimum amount of resources a container needs (request) as well as the maximum amount of resources a contaienr can have (limit).
+
+Configuring limits for a container can be within the spec for a Pod or deployment. We have been using the actually previously.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: customer
+  template:
+    metadata:
+      labels:
+        app: customer
+    spec:
+      containers:
+        - name: customer
+          image: "amigoscode/kubernetes:customer-v1"
+          resources:
+          	# Requests
+          	requests:
+          	  memory: "512Mi"
+          	  cpu: "1000m"
+          	# Limits
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
+```
+
+
+## Jobs & Cron Jobs
+
+When looking at the busybox image deployment. Kubernets does not know that the image is only short lived and will run in a CrashLoopBackOff-Error. This is why we have to execute jobs on it such as done with the shell commands previously.
+Kubernetes will try and restart the container itself though until it BackOffs completley. However, what if we have a task that only should run like every 5 minutes, or every single day? This is when CronJobs are good to used.
+Jobs execute only once. CronJobs execute depending on the specified expression.
+
+lets create a job that, e.g. simulates a database backup. This job will only run 30 seconds. 20 for the command to complete, 10 waiting to shut down.
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-backup-job
+spec:
+  # time it takes to terminate the job for one completion
+  ttlSecondsAfterFinished: 10
+  template:
+    spec:
+      containers:
+      - name: backup
+        image: busybox
+        command: ["/bin/sh", "-c"]
+        args:
+          - "echo 'performing db backup...' && sleep 20"
+      restartPolicy: Never
+```
+
+If we want to run this job every minute, we use a cronjob. The cronjob expression defines as follows: 
+( * * * * * * ) - ( Minutes Hours Day-of-month Month Day-of-week Year) 
+```yaml
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: db-backup-cron-job
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup
+            image: busybox
+            command: ["/bin/sh", "-c"]
+            args:
+              - "echo 'performing db backup...' && sleep 20"
+          restartPolicy: Never
+```
+
+
+## Deamon Sets
+
+It is up to Kubernetes, on what node a pod is scheduled. However, there are times where we want to have a copy of a pod across the cluster. A DeamonSet ensures a copy of a Pod is running across the cluster. They are used to deploy system daemons such as log collectors and monitoring agents. They run on every single node unless we tell which node to run on.
+
+DeamonSets are automatically deployed on a node, so they also do not need a specification on how many nodes. They will automatically be spawned on each node. If the cluster is scaled, the DaemonSet will automatically scale as well and schedule a copy of the pod on the new Node as well.
+
+In the given example we want to cover logging and daemon sets. K8s FluentD.
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: logging
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentd-elasticsearch
+  namespace: logging
+  labels:
+    k8s-app: fluentd-logging
+spec:
+  selector:
+    matchLabels:
+      name: fluentd-elasticsearch
+  template:
+    metadata:
+      labels:
+        name: fluentd-elasticsearch
+    spec:
+      tolerations:
+      # this toleration is to have the daemonset runnable on master nodes
+      # remove it if your masters can't run pods
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+      containers:
+      - name: fluentd-elasticsearch
+        # allows to collect logs from nodes
+        image: quay.io/fluentd_elasticsearch/fluentd:v2.5.2
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log
+      - name: varlibdockercontainers
+        hostPath:
+          path: /var/lib/docker/containers
+```
+
+
+## StatefulSets
+
+StatefulSets are used to deploy and manage stateful applications. Stateful applications are applications which are long lived, such as Databases. Most Applications of K8s are stateless as they only run for a specific task. However, the Database is the state of truth and should be present at all time.
+
+Lets assume we have a StatefulSet with 3 replicas. Each Pod has a PV attached.
