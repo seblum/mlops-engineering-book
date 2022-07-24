@@ -822,7 +822,7 @@ spec:
     spec:
       containers:
         - name: customer
-          image: "amigoscode/kubernetes:customer-v1"
+          image: "seblum/k8straining:flask-latest"
           resources:
             limits:
               memory: "128Mi"
@@ -912,7 +912,7 @@ spec:
     spec:
       containers:
         - name: customer
-          image: "amigoscode/kubernetes:customer-v1"
+          image: "seblum/k8straining:flask-latest"
           resources:
           	# Requests
           	requests:
