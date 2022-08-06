@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>MLOps Architecture from scratch</title>
+  <title>Chapter 2 Introduction | MLOps Architecture from scratch</title>
   <meta name="description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="MLOps Architecture from scratch" />
+  <meta property="og:title" content="Chapter 2 Introduction | MLOps Architecture from scratch" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
   <meta name="github-repo" content="seblum/kubernetes-training" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="MLOps Architecture from scratch" />
+  <meta name="twitter:title" content="Chapter 2 Introduction | MLOps Architecture from scratch" />
   
   <meta name="twitter:description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="introduction.html"/>
+<link rel="prev" href="index.html"/>
+<link rel="next" href="kubernetes.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -183,17 +183,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">MLOps Architecture from scratch</h1>
-<p class="author"><em>Sebastian Blum</em></p>
-<p class="date"><em>2022-07-24</em></p>
-</div>
-<div id="about" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">Chapter 1</span> About<a href="index.html#about" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>This document is written during my journey in the realm of MLOps. It is therefore in a state of continuous development.</p>
-<div id="topics" class="section level2 unnumbered hasAnchor">
-<h2>Topics<a href="index.html#topics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The overall aim is to build and create a MLOps architecture based on Airflow running on AWS EKS. Ideally, this architecture is create using terraform. Model tracking might be done using MLFlow, Data tracking using DVC. Further mentioned might be best practices in software development, CI/CD, Docker, and pipelines. I might also include a small Data Science use case utilizing the Airflow Cluster we built.</p>
+<div id="introduction" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Introduction<a href="introduction.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This project started out of an interest in multiple domains. At first, I was working on a Kubeflow platform at the time and haven’t had much experience in the realm of MLOps. I was starting with K8s and Terraform and was interested to dig deeper. I did so by teaching myself and I needed a project. What better also to do than to build “my own” MLOps plattform. I used Airflow since it is widely uses for workflow management and I also wanted to use it from the perspective of a data scientist, meaning to actually build some pipelines with it. This idea of extending the project to actually have a running use case expanded this work about including MLFlow for model tracking and DVC for data version control.</p>
+<div id="a-work-in-progress" class="section level3 unnumbered hasAnchor">
+<h3>A work in progress<a href="introduction.html#a-work-in-progress" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This project / book / tutorial / whatever this is or will be startet by explaining the concept of Kubernetes. The plan is to continuously update it by further sections. Since there is no deadline, there is no timeline, and I am also not sure whether there will exist something final to be honest.</p>
 
 </div>
 </div>
@@ -202,8 +197,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-
-<a href="introduction.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="kubernetes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -234,7 +229,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/index.Rmd",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/01-Introduction.Rmd",
 "text": "Edit"
 },
 "history": {

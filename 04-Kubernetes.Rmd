@@ -1,5 +1,76 @@
 # Kubernetes
 
+**What is Kubernetes?**
+
+Originated from google. K8s shares the same DNA of Borg and Omega and it is open source. K8s is written in Golang
+
+K8s is greek and means Pilot. This relates to function, as it pilots containers. K8s is an application orchestrator. Deploys and manages application containers. Scales up and down accorind demand. Zero downtime deployments. Rollbacks. And more. 
+
+Cluster is a set of nodes. Node is a VM or Physical machine (AWS; Azure, GCP)
+
+Difference between master node and worker node. Master node is the brain of the cluster, where it is organized. Worker node is where the heavy lifting is happening, such as running application. master and worker node communicate with each other via the kubelet. One cluster has usually multiple worker nodes.
+
+The smallets unit for K8s ist a Pod, for Docker it is a container.
+
+### Master & Control Plane
+
+Master node contains controll plane. It is made of several components. masters run all clusters control plane services. The brains where control and decisions are made.
+
++ Scheduler
++ Cluster Store
++ API Server
++ Controller Manager
++ Cloud Controller Manager
+
+Communication with outside using api server
+
+API Server:
+Frontend to Kubernetes Controll Plane. All Communications go through API server. External and Internal. Exposes Restful API on port 443. Authentication and authorisation checks are performed.
+
+using kubectl-apply-commads we communicate with the api server
+
+cluster store:
+Stores configuration and state of the entire cluster. Distributed Key-Value data store. Single Source of truth database. kubectl apply stores the file on the cluster store.
+
+Scheduler:
+watches for new workloads/pods and assigns them to a node based on several scheduling factors. Is it healthy? enough resources available and port available?
+Affinitiy and Anti-Affinity rules
+
+Controller manager:
+daemon that manages the control loop. Controller of controllers. Node controller. Whenever the currents state does not match the desired state, it administers the changes. 
+each controller watches the API server for changes. Goal: watch for any changes that does not match our desired state.
+cloud controller manager is responsible to interact with the underlying cloud infrastructure.
+
+Other controllers.
++ replicasets
+endpoints
+namespace
+service accounts
+
+
+### Worker Nodes
+
+This is where heavy lifting work happens. VM or physical machine often running linux. Provides running environment for your application.
+
+3 Main components:
+
++ kubelet
++ container runtime
++ kube proxy
+
+kubelet:
+main agent that runs on every single node. receives pod definitions from API server. Interacts with container runtime to run container associated with the pod. reports node and pod state to master.
+
+container runtime:
+responsible to pull images from container registries. ECR; dockerhub, etc. Pulling, starting, and stoping containers. Responsible for running containers and abstracts container management for K8s. within it it runs the Container runtime interface CRI, which is a interafce for 3d party container runtime. 
+
+kubeproxy:
+runs on every node through a daemondSet. responsible for 
++ local cluster networking. 
++ Each node gets own unique IP address. 
++ routing network traffic to load balanced service
+If two pods want to talk to each other, the kube-proxy does that.
+
 
 ## Pods
 
@@ -17,14 +88,14 @@ Containers communicate with each other within a pod using localhost and whatever
 + Ephemeral (not a long lifetime) and disposable
 
 
-#### Imperative & Declarative Management
+### Imperative & Declarative Management {-}
 
 The imperative approach is good for learning, troubleshooting, and experimenting on the cluster. While the declarative approach is reproducible, which means the same configuration can be applied in different environments (prod/dev). This is best practice to use when building a cluster. This differentiation does not only hold for pods, but for all ressources within a cluster.
 
-##### Imperative Management
+#### Imperative Management {-}
 
 ```bash
-kubectl run <pod-name> --image="image-name" --port=80
+kubectl run <pod-name> --image="<image-name>" --port=80
 
 # run following to test your pods
 # in your browser, go to localhost:8080
@@ -32,7 +103,7 @@ kubectl port-forward pod/<pod-name> 8080:80
 
 ```
 
-##### Declarative Management / Configuration
+#### Declarative Management / Configuration {-}
 
 Declarative configuration is done using a *yaml*. This works basically on key-value pairs.
 ```yaml
@@ -47,7 +118,7 @@ spec:
   # we can also set more
   containers:
  	- name: hello
-	image: "image-name"
+	image: "<image-name>"
 	# This pod can access only a the amount of ressources specified under limits
 	ressources:
  	  limits:
@@ -74,7 +145,7 @@ kubectl port-forward pod/<pod-name> 8080:80
 ```bash
 # run following to test your pods
 # in your browser, go to localhost:8080
-kubectl port-forward pod/<pod-name> 8080:80
+kubectl port-forward <ressource>/<pod-name> 8080:80
 
 # show all pods currently running in the cluster
 kubectl get pods
@@ -83,11 +154,274 @@ kubectl get pods
 kubectl delete pods <pod-name>
 ```
 
+## Deployments
+
+We should never deploy a pod using `kind:Pod`. Pods are ephemeral, so never treat them like pets. Pods down heal on their own. If we terminate a pod, it does not restart by themselves. This is dangerous, since we always want at least one replica if we have an application. We want to have a mechanism for the application to self heal. This is why we use deployments and replicasets, which solves this problem.
+
+We should manage Pods through deployments. Deploymentes manage releases of a new application. It provides zero downtime of the application and creates ReplicaSet behind the scenes.
+
+Deployment creates a replicaset. This makes sure that a desired number of pods is running. The purpose of an deployment is to facilitate software deployment. K8s will take care of the full deployment process if we want to change the version.
+
+If we look at the created pods of a deployment, they usually have a random string attached after the name. This is because a deployment can have multiple replicas and the random suffix ensures a different name after all.
+
+#### Replicasets {-}
+ReplicaSets are a ressource that ensure that a desired number of pods are always running. It does it by using control loops. Replicasets implement a background control loop that checks the desired number of pods are always present on the cluster.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world
+spec:
+  # specify number of replicas
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-world
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      containers:
+      - name: hello-world
+        image: seblum/k8s-training:flask-v1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+```
+
+#### Rolling updates
+
+A rolling update means that a new version of the application is rolled out. We want K8s to perfom a rolling update to update the app.
+When we have two replicasets running, one with version 1 and one with beta, k9s performs a rolling update that it scales alpha when beta is up and running. This also includes the management of deployments with zero downtime.
+
+A deployments strategy will delete every single pod before it creates a new version. This is very dangerous, because we have downtime. The preferred one is rolling update. It keeps traffic to the previous version until the new one is up and running. It alternates traffic until the new version is fully healthy.
+
+How can we configure our deployment for that?
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world
+spec:
+  replicas: 3
+  # a few new things have been added here
+  revisionHistory: 20
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      # only one pod at a time to become unavailable
+      maxUnavailable: 1
+      # never have more than one pod above the mentioned replicas.
+      # We will never have 5 pods running during a rollout
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: hello-world
+  template:
+    metadata:
+      labels:
+        app: hello-world
+      annotations:
+      	# just an annotation the get the version change
+      	kubernetes.io/change-cause: "seblum/k8s-training:flask-v2"
+    spec:
+      containers:
+      - name: hello-world
+      # only change the image name, k8s performs the update itself
+        image: seblum/k8s-training:flask--2
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+```
+
+K8s is not deleting the replicasets, they are still there. This is to perform **rollbacks**. Check it using `kubectl get rs`. 
+
+```bash
+kubectl rollout history deployment <name>
+
+kubectl rollout undo deployment <name>
+
+# goes back to a specific revision. There is a limit of history and k8s only keeps
+# 10 previous versions in history
+kubectl rollout undo deployment <name> --to-revision=
+
+kubectl rollout status deployments <name>
+
+# pause the rollout of the deployment.
+kubectl rollout pause
+```
+
+We could specify the revisions under ` spec: revisionHistory: 20 `. However, it doesn't really make sense to keep more. To not have discrepancies in your cluster, one should always update using the declarative approach.
+
+
+## Services
+
+How can we access an app?
+this should be only done for testing
+```
+port forward
+```
+
+How can we access the application without port-forward? Instead we should use services.
+
+each individual pod has its own IP address. How can a client access a pod? It needs to have a list of the ip adress. Since Pods are ephemeral, the client cannot rely on the ip address alone. If we scale up or down, we get a new address. This is why we use clients. We have a service that connects to the pods. the service has a stable ip, a stable dns name, and a stable port. this can be used so the client access via the services.
+
+There are different types of Services.
+
++ ClusterIP (Default)
++ NodePort
++ ExternalName
++ LoadBalancer
+
+#### ClusterIP 
+Default K8s Service. When you dont specify the type of a service, it will create a ClusterIP. It is only used for internal access. No external. If the customer pod wants to walk to the order service, it will use the ClusterIP. ClusterIp service will send traffic to any pod that is healthy. the client/Customer can then just send a request to the service.
+
+#### NodePort
+This service allows to open a port on all nodes. The range is between 30.000/32.767
+If a client wants to communicate with a node, it directly communicates with the node via the ip address. When the request reaches the port, the service handels the request and forwards to the specific pod. If e.g. a request is sent to a node without a pod, the NodePort service forwards the request to a node which has a healthy port running.
+
+Disadvantage is that we can only have one service per port. One ingress and multiple service is more desireable, as seen late. The point of running K8s in the cloud is to scale up and down. If NodeIP address change, then we have a problem.
+
+**Accessing API with NodePort Service**
+ssh into node `minikube ssh`. then `curl localhost:PORT/api/v1/customer`
+
+#### LoadBalancer
+Loadbalancers are a standard way of exposing applications to the internet. Basically create a loadbalancer per service. On AWS & GCP it create a Network Load Balancer (NLB). Automaticall distributed incoming traffic across multiple targets.
+In Minikube, it works via `minikube tunnel`. Run it to expose external IP so the cluster can be accesses via the browser 
+Cloud Controller Manager is resposible to talk to the underlying cloud provier. When running on AWS, it creat a NLB.
+
+#### default kubernetes service
+Kubernetes Service is automatically create to access K8s witha the K8s API. Check the endpoints of the service and the api-service pod within kube-system namespace
+
+
+### Full exercise. Customer - Order Microservice Example
+
+How does the customer microservice perform a REST-API Call to fetch data from the order microservice.
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: customer
+  template:
+    metadata:
+      labels:
+        app: customer
+    spec:
+      containers:
+      - name: customer
+        image: "seblum/kubernetes:customer-v1"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        # enviroment variable defined in the application and dockerfile
+        # value is ip adress of the order
+        env:
+          - name: ORDER_SERVICE
+            # using the ip adress would be a bad idea.
+            # use the service ip adress.
+            # value: "<order-service-ip-adress>:8081"
+            # how to do it should be this.
+            # we reference to the order service
+            value: order:8081
+            # we can actually use the actual ip of the service or
+            # use the dns, as done in the example above.
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: order
+  template:
+    metadata:
+      labels:
+        app: order
+    spec:
+      containers:
+      - name: order
+        image: "seblum/kubernetes:order-v1"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order
+spec:
+  # send traffic to any pod that matches the label
+  type: ClusterIP # does not need to be specified
+  selector:
+	name: order
+  ports:
+  	# port the service is associated with
+	- port: 8081
+	  # port to access targeted by the access
+	  # in our case has to be the same as in deployment.
+  	  targetPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order
+spec:
+  type: NodePort
+  selector:
+	name: order
+  ports:
+	- port: 8081
+  	  targetPort: 8081
+  	  # optional NodePort Service
+  	  # if we dont specify this, we get a randomly allocated port
+  	  nodePort: 30001 
+``` 
+
+# 
+```yaml
+# adding a frontend to the app with a loadbalancer
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer
+spec:
+  type: LoadBalancer
+  selector:
+    app: customer
+  ports:
+  - port: 80
+    targetPort: 80
+```
 
 
 
+When looking at the service with `kubectl describe service order` we see the ip of the service we have to call, as well as the listed endpoints. The endpoints are the list of the healthy pods behind the service.
 
-## Labels, Selectors and Annotations - TBF
+
+
+## Labels, Selectors and Annotations
 
 We have seen labels in the yamls under metadata beforehand. What are they actually doing? Labels are a key-value pair that can be attached to objects such as Pods, Deployments, Replicaset, Services, etc. They are used to organize and select objects. 
 
