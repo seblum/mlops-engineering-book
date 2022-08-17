@@ -23,7 +23,7 @@
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2022-07-24" />
+<meta name="date" content="2022-08-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -146,22 +146,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>3</b> Kubernetes</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="kubernetes.html"><a href="kubernetes.html#pods"><i class="fa fa-check"></i><b>3.1</b> Pods</a>
+<li class="chapter" data-level="3.1" data-path="kubernetes.html"><a href="kubernetes.html#prerequisites"><i class="fa fa-check"></i><b>3.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="3.2" data-path="kubernetes.html"><a href="kubernetes.html#nodes"><i class="fa fa-check"></i><b>3.2</b> Nodes</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="kubernetes.html"><a href="kubernetes.html#master-control-plane"><i class="fa fa-check"></i><b>3.2.1</b> Master &amp; Control Plane</a></li>
+<li class="chapter" data-level="3.2.2" data-path="kubernetes.html"><a href="kubernetes.html#worker-nodes"><i class="fa fa-check"></i><b>3.2.2</b> Worker Nodes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="kubernetes.html"><a href="kubernetes.html#pods"><i class="fa fa-check"></i><b>3.3</b> Pods</a>
 <ul>
 <li class="chapter" data-level="" data-path="kubernetes.html"><a href="kubernetes.html#imperative-declarative-management"><i class="fa fa-check"></i>Imperative &amp; Declarative Management</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="kubernetes.html"><a href="kubernetes.html#kubectl"><i class="fa fa-check"></i><b>3.2</b> Kubectl</a></li>
-<li class="chapter" data-level="3.3" data-path="kubernetes.html"><a href="kubernetes.html#labels-selectors-and-annotations---tbf"><i class="fa fa-check"></i><b>3.3</b> Labels, Selectors and Annotations - TBF</a></li>
-<li class="chapter" data-level="3.4" data-path="kubernetes.html"><a href="kubernetes.html#service-discovery"><i class="fa fa-check"></i><b>3.4</b> Service Discovery</a></li>
-<li class="chapter" data-level="3.5" data-path="kubernetes.html"><a href="kubernetes.html#volume-storage"><i class="fa fa-check"></i><b>3.5</b> Volume &amp; Storage</a></li>
-<li class="chapter" data-level="3.6" data-path="kubernetes.html"><a href="kubernetes.html#configmaps"><i class="fa fa-check"></i><b>3.6</b> ConfigMaps</a></li>
-<li class="chapter" data-level="3.7" data-path="kubernetes.html"><a href="kubernetes.html#secrets"><i class="fa fa-check"></i><b>3.7</b> Secrets</a></li>
-<li class="chapter" data-level="3.8" data-path="kubernetes.html"><a href="kubernetes.html#namespaces"><i class="fa fa-check"></i><b>3.8</b> Namespaces</a></li>
-<li class="chapter" data-level="3.9" data-path="kubernetes.html"><a href="kubernetes.html#health-checks"><i class="fa fa-check"></i><b>3.9</b> Health Checks</a></li>
-<li class="chapter" data-level="3.10" data-path="kubernetes.html"><a href="kubernetes.html#ressource-management"><i class="fa fa-check"></i><b>3.10</b> Ressource Management</a></li>
-<li class="chapter" data-level="3.11" data-path="kubernetes.html"><a href="kubernetes.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>3.11</b> Jobs &amp; Cron Jobs</a></li>
-<li class="chapter" data-level="3.12" data-path="kubernetes.html"><a href="kubernetes.html#deamon-sets"><i class="fa fa-check"></i><b>3.12</b> Deamon Sets</a></li>
-<li class="chapter" data-level="3.13" data-path="kubernetes.html"><a href="kubernetes.html#statefulsets"><i class="fa fa-check"></i><b>3.13</b> StatefulSets</a></li>
+<li class="chapter" data-level="3.4" data-path="kubernetes.html"><a href="kubernetes.html#deployments"><i class="fa fa-check"></i><b>3.4</b> Deployments</a></li>
+<li class="chapter" data-level="3.5" data-path="kubernetes.html"><a href="kubernetes.html#services"><i class="fa fa-check"></i><b>3.5</b> Services</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="kubernetes.html"><a href="kubernetes.html#exemplary-setup-of-database-and-frontend-microservices"><i class="fa fa-check"></i><b>3.5.1</b> Exemplary setup of database and frontend microservices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="kubernetes.html"><a href="kubernetes.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>3.6</b> Labels, Selectors and Annotations</a></li>
+<li class="chapter" data-level="3.7" data-path="kubernetes.html"><a href="kubernetes.html#namespaces"><i class="fa fa-check"></i><b>3.7</b> Namespaces</a></li>
+<li class="chapter" data-level="3.8" data-path="kubernetes.html"><a href="kubernetes.html#service-discovery"><i class="fa fa-check"></i><b>3.8</b> Service Discovery</a></li>
+<li class="chapter" data-level="3.9" data-path="kubernetes.html"><a href="kubernetes.html#volume-storage"><i class="fa fa-check"></i><b>3.9</b> Volume &amp; Storage</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="kubernetes.html"><a href="kubernetes.html#emptydir-volume"><i class="fa fa-check"></i><b>3.9.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="3.9.2" data-path="kubernetes.html"><a href="kubernetes.html#hostpath-volume"><i class="fa fa-check"></i><b>3.9.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="3.9.3" data-path="kubernetes.html"><a href="kubernetes.html#persistent-volumes"><i class="fa fa-check"></i><b>3.9.3</b> Persistent Volumes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="kubernetes.html"><a href="kubernetes.html#configmaps"><i class="fa fa-check"></i><b>3.10</b> ConfigMaps</a></li>
+<li class="chapter" data-level="3.11" data-path="kubernetes.html"><a href="kubernetes.html#secrets"><i class="fa fa-check"></i><b>3.11</b> Secrets</a>
+<ul>
+<li class="chapter" data-level="3.11.1" data-path="kubernetes.html"><a href="kubernetes.html#exemplary-use-case-of-secrets"><i class="fa fa-check"></i><b>3.11.1</b> Exemplary use case of secrets</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="kubernetes.html"><a href="kubernetes.html#health-checks"><i class="fa fa-check"></i><b>3.12</b> Health Checks</a>
+<ul>
+<li class="chapter" data-level="3.12.1" data-path="kubernetes.html"><a href="kubernetes.html#liveness-probe"><i class="fa fa-check"></i><b>3.12.1</b> Liveness Probe</a></li>
+<li class="chapter" data-level="3.12.2" data-path="kubernetes.html"><a href="kubernetes.html#readiness-probe"><i class="fa fa-check"></i><b>3.12.2</b> Readiness Probe</a></li>
+</ul></li>
+<li class="chapter" data-level="3.13" data-path="kubernetes.html"><a href="kubernetes.html#resource-management"><i class="fa fa-check"></i><b>3.13</b> Resource Management</a></li>
+<li class="chapter" data-level="3.14" data-path="kubernetes.html"><a href="kubernetes.html#deamon-sets"><i class="fa fa-check"></i><b>3.14</b> Deamon Sets</a></li>
+<li class="chapter" data-level="3.15" data-path="kubernetes.html"><a href="kubernetes.html#statefulsets"><i class="fa fa-check"></i><b>3.15</b> StatefulSets</a></li>
+<li class="chapter" data-level="3.16" data-path="kubernetes.html"><a href="kubernetes.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>3.16</b> Jobs &amp; Cron Jobs</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
