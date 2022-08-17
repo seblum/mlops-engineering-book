@@ -1,0 +1,40 @@
+# deployment_rolling-update.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world
+spec:
+  replicas: 3
+  # a few new things have been added here
+  revisionHistoryLimit: 20
+  # specify the deployments strategy
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      # only one pod at a time to become unavailable
+      # in our case scaling down of v1
+      maxUnavailable: 1
+      # never have more than one pod above the mentioned replicas
+      # with three replicas, there will never be 5 pods running during a rollout
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: hello-world
+  template:
+    metadata:
+      labels:
+        app: hello-world
+      annotations:
+        # just an annotation the get the version change
+        kubernetes.io/change-cause: "seblum/mlops-public:cat-v2"
+    spec:
+      containers:
+      - name: hello-world
+      # only change specification of the image to v2, k8s performs the update itself
+        image: seblum/mlops-public:cat-v2
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000

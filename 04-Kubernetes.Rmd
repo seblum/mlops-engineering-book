@@ -2,16 +2,17 @@
 
 **What is Kubernetes?**
 
-Kubernetes (short: K8s) is greek and means pilot. K8s is an applications orchestrator that originated from Google and is open source. Beeing an application orchestrator, K8s deploys and manages application containers. It scales up and down the respecive containers as needed and allows for zero downtime as well as the possibility of rollbacks. Thus, the meaning of *pilot* relates to its functionining in piloting containers.
+Kubernetes (short: K8s) is greek and means pilot. K8s is an applications orchestrator that originated from Google and is open source. Beeing an application orchestrator, K8s deploys and manages application containers. It scales up and down so called Pod (A Pod manages a container) as needed and allows for zero downtime as well as the possibility of rollbacks. Thus, the meaning of *pilot* relates to its functionining in piloting containers.
 
+## Prerequisites
 
-## Nodes 
+As a prerequisites to go through this tutorial and implement the scripts one has to have Docker installed, Kubectl to interact via the command line with K8s, as well as Minikube to run a K8s cluster on a local machine. Please refer to the corresponding sites.
 
-A K8s Cluster usually consistes of a set of nodes. A Node can hereby be a virtual machine (VM) in the cloud, e.g. AWS, Azure, or GCP, or a node can also be of course a physical on-premise instance. In managing containers, K8s distinguishes the nodes between a *master node* and *worker nodes*. The master node is basically the brain of the cluster. This is where everything is organized, handled, and managed. In comparison, a worker nodes is where the heavy lifting is happening, such as running application. Both, master and worker nodes communicate with each other via the so called kubelet. One cluster has only one master node and usually multiple worker nodes.
+## Nodes
 
-<!---
-The smallets unit for K8s ist a Pod, for Docker it is a container.
- --->
+A K8s Cluster usually consistes of a set of nodes. A Node can hereby be a virtual machine (VM) in the cloud, e.g. AWS, Azure, or GCP, or a node can also be of course a physical on-premise instance. K8s distinguishes the nodes between a *master node* and *worker nodes*. The master node is basically the brain of the cluster. This is where everything is organized, handled, and managed. In comparison, a worker nodes is where the heavy lifting is happening, such as running application. Both, master and worker nodes communicate with each other via the so called kubelet. One cluster has only one master node and usually multiple worker nodes.
+
+![K8s Cluster](images/04-Kubernetes/k8s-cluster.png) 
 
 ### Master & Control Plane
 
@@ -23,9 +24,7 @@ To be able to work as the brain of the cluster, the master node contains a contr
 + Controller Manager
 + Cloud Controller Manager
 
-<!---
-Communication with outside using api server
- --->
+![Master Node](images/04-Kubernetes/master-node.png) 
 
 ##### API Server
 The api servers serves as the connection between the frontend and the K8s controll plane. All communications, external and interal, go through it. Frontend to Kubernetes Controll Plane. It exposes a restful api on port 443 to allow communication, as well as performes authentication and authorization checks. Whenever we perform something on the K8s cluster, e.g. using a command like `kubectl apply -f <file.yaml>`, we communicate with the api server (what we do here is shown in the section about pods).
@@ -39,13 +38,12 @@ The scheduler of the control plane watches for new workloads/pods and assigns th
 ##### Controller manager
 The controller manager is a daemon that manages the control loop. This means, the controller manager is basically a controller of other controllers. Each controller watches the api server for changes to their state. Whenever a current state of a controller does not match the desired state, the control manager administers the changes. These controllers are for example replicasets, endpoints, namespace, or service accounts. There is also the cloud controller manager, which is responsible to interact with the underlying cloud infrastructure.
 
-<!---
-Node controller
- --->
 
 ### Worker Nodes
 
 There worker nodes are the part of the cluster where the heavy lifting happens. Their VMs (or physical machines) often run linux and thus provide a suitable and running environment for each application.
+
+![Worker Node](images/04-Kubernetes/worker-node.png) 
 
 A worker node consists of three main components.
 
@@ -67,8 +65,7 @@ The kube-proxy runs on every node via a DaemondSet. It is responsible for networ
 
 A pod is the smallest deployable unit in K8s (In contrast to K8s, the smallest deployable unit for docker are containers.). Therefore, a pod is a running process that runs on a clusters' node. Within a pod, there is always one *main container* representing the application (in whatever language written, e.g. JS, Python, Go). There also may or may not be *init containers*, and/or *side containers*. Init containers are containers that are executed before the main container. Side containers are containers that support the main containers, e.g. a container that acts as a proxy to your main container. There may be volumes specified within a pod, which enables containers to share and store data.
 
-<!--- TODO: insert image --->
-![Pod](kubernetes_pod.png) 
+![Pod](images/04-Kubernetes/pod.png) 
 
 The containers running within a pod communicate with each other using localhost and whatever port they expose. The port itself has a unique ip adress, which enables outward communication between pods.
 
@@ -95,6 +92,7 @@ kubectl port-forward pod/<pod-name> 8080:80
 Declarative configuration is done using a *yaml* format, which works on key-value pairs.
 
 ```yaml
+# pod.yaml
 apiVersion: v1
 # specify which kind of configuration this is
 # lets configure a simple pod
@@ -103,24 +101,24 @@ kind: Pod
 metadata:
   name: hello-world
   labels:
-	name: hello-world
+  name: hello-world
 spec:
   # remember: a pod is a selection of one or more containers
   # we could therefore specify multiple containers
   containers:
     # specify the container name
- 	- name: hello
+  - name: hello
   # specify which container image should be pulled
-	image: "<image-name>"
+  image: seblum/mlops-public:cat-v1
   # ressource configurations will be handled later as well
-	ressources:
- 	  limits:
-		memory: "128Mi"
-		cpu: "500m"
-	# specify the port on which the container should be exposed
+  ressources:
+    limits:
+    memory: "128Mi"
+    cpu: "500m"
+  # specify the port on which the container should be exposed
   # similar to the imperative approach
   ports:
-  	  ContainerPorts: 80
+      ContainerPorts: 80
 ```
 
 Appyl this declarative configuration using the following kubectl command via the CLI.
@@ -146,6 +144,9 @@ kubectl get pods
 # delete a specific pod
 kubectl delete pods <pod-name>
 
+# delete a previously applied configuration
+kubectl delete -f <file-name>
+
 # show all instances of a specific resource running on the cluster
 # (nodes, pods, deployments, statefulsets, etc) 
 kubectl get <resource>
@@ -165,6 +166,7 @@ In general, Pods should be managed through Deployments. The purpose of a Deploym
 A ReplicaSet makes sure that a desired number of pods is running. When looking at Pods' name of a Deployment, it usually has a random string attached. This is because a deployment can have multiple replicas and the random suffix ensures a different name after all. The way ReplicaSets work is that they implement a background control loop that checks the desired number of pods are always present on the cluster. We can specify the number of replicas by creating a yaml-file of a Deployment, similar to previous specifications done to a Pod. As a reminder, the Deployment can be applied using the `kubectl apply -f` as well.
 
 ```yaml
+# deployment.yaml
 apiVersion: apps/v1
 # specify that we want a deployment
 kind: Deployment
@@ -183,19 +185,20 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: seblum/k8s-training:flask-v1
+        image: seblum/mlops-public:cat-v1
         resources:
           limits:
             memory: "128Mi"
             cpu: "500m"
         ports:
-        - containerPort: 80
+        - containerPort: 5000
 ```
 
 #### Rolling updates
 A rolling update means that a new version of the application is rolled out. In general, a basic deployments strategy will delete every single pod before it creates a new version. This is very dangerous since there is downtime. The preferred strategy is to perform a rolling update. This ensures keeping traffic to the previous version until the new one is up and running and alternates traffic until the new version is fully healthy. K8s perfoms the update of an application while the application is up and running. For example, when there are two replicasets running, one with version v1 and one with v2, K8s performs the update such that it only scales v1 down when v2 is already up and running and the traffic has been redirected to v2 as well. How do the deployments need to be configured for that?
 
 ```yaml
+# deployment_rolling-update.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -203,7 +206,7 @@ metadata:
 spec:
   replicas: 3
   # a few new things have been added here
-  revisionHistory: 20
+  revisionHistoryLimit: 20
   # specify the deployments strategy
   strategy:
     type: RollingUpdate
@@ -222,19 +225,19 @@ spec:
       labels:
         app: hello-world
       annotations:
-      	# just an annotation the get the version change
-      	kubernetes.io/change-cause: "seblum/k8s-training:flask-v2"
+        # just an annotation the get the version change
+        kubernetes.io/change-cause: "seblum/mlops-public:cat-v2"
     spec:
       containers:
       - name: hello-world
       # only change specification of the image to v2, k8s performs the update itself
-        image: seblum/k8s-training:flask-v2
+        image: seblum/mlops-public:cat-v2
         resources:
           limits:
             memory: "128Mi"
             cpu: "500m"
         ports:
-        - containerPort: 80
+        - containerPort: 5000
 ```
 
 The changes can be applied as well using `kubectl apply -f "file-name.yaml"`. Good to know, K8s is not deleting the replicasets of previous versions. They are still stored on the Cluster Store. The `spec.revisionHistory: <?>` state in the yaml denoted this. The last ten previous versions are stored on default. However, it doesn't really make sense to keep more such for example in the previous yaml where there are the last 20 versions specified. This enables to perform **Rollbacks** to previous versions. To not have discrepancies in a cluster, one should always update using the declarative approach. Below stated are a number of commands that trigger and help with a rollback or with rollouts in general.
@@ -262,6 +265,8 @@ kubectl rollout undo deployment <name> --to-revision=
 
 To overall question when deploying an application is how we can access it. Each individual Pod has its own IP address. Thereby, the client can access this Pod via its IP address. Previously, we have made the app available via `kubectl port-forward` by forwarding the Pods' IP to localhost. However, should only be done for testing purposes and is not a reliable and stable way to enable access. Since Pods are ephemeral, the client cannot rely on the ip address alone. For example, if an application is scaled up or down, there will be new IPs associated with each new Pod.
 
+![Services](images/04-Kubernetes/services.png) 
+
 Instead, *Services* should be used. A service is an abstract way to expose an application as a network service. The service can connect access to a pod via an interal reference, so a change of the Pods IP will not interfere with its accessibility. The service itself has a stable IP adress, a stable DNS name, and a stable port. This allows for a reliable and stable connection from the client to the service, which can then direct the traffic to the pod. There are different types of Services.
 
 + ClusterIP (Default)
@@ -273,36 +278,31 @@ Instead, *Services* should be used. A service is an abstract way to expose an ap
 The ClusterIP is the default K8s service. This service type will be chosen if no specific type is selected. The ClusterIP is used for cluster internal access and does not allow for external communication. If one Pod wants to talk to another Pod inside the cluster, it will use ClusterIP to do so. The service will allow and send traffic to any pod that is healthy.
 
 #### NodePort
-The NodePort service allows to open a port simultaneously on all nodes. Its range lies between between 30.000/32.767. If a client wants to communicate with a node of the cluster, the client directly communicates with the node via its IP address. When the request reaches the port of the node, the NodePort service handles the request and forwards it to the specifically marked pod. 
+The NodePort service allows to open a static port simultaneously on all nodes. Its range lies between between 30.000/32.767. If a client wants to communicate with a node of the cluster, the client directly communicates with the node via its IP address. When the request reaches the port of the node, the NodePort service handles the request and forwards it to the specifically marked pod. This way, an application running on a pod can be exposed directly on a nodes' IP under a specific port. You'll be able to contact the NodePort Service from outside the cluster by requesting `<NodeIP>:<NodePort>`.
 
-Using a NodePort is beneficial for example of a request is sent to a node without a pod. The NodePort service will then forward the request to a node which has a healthy port running. However, only having one service specified per port is also a disadvantage. Having one ingress and multiple services is more desireable. The point of running K8s in the cloud is to scale up and down and if the NodeIP address changes, then we have a problem.
-<!---
-**Accessing API with NodePort Service**
-ssh into node `minikube ssh`. then `curl localhost:PORT/api/v1/customer`
-Check Nodeports in general
- --->
+Using a NodePort is beneficial for example when a request is sent to a node without a pod. The NodePort service will forward the request to a node which has a healthy associated pod running. However, only having one service specified per port is also a disadvantage. Having one ingress and multiple services is more desireable. The point of running K8s in the cloud is to scale up and down and if the NodeIP address changes, then we have a problem. So we should not aim to access a Node IP directly in the first place
+
+If applying below example using the frontend-deployment and the backend-deployment, we can access the frontend using the nodeport. Since using minikube, we can access the service by using `minikube service frontend-node --url`. Using the given IP adress it is possible to access the frontend using the NodePort service. We can also test the NodePort service when inside of a node. When accessing a node e.g. via `minikube ssh`, we can run `curl localhost:PORT/` inside the node to derive the to derive the website data from the frontend.
 
 #### LoadBalancer
 Loadbalancers are a standard way of exposing applications to the extern, for example the internet. Loadbalancers automatically distribute incoming traffic across multiple targets to balance the load in an equal level. If K8s is running on the cloud, e.g. AWS or GCP, a Network Load Balancer (NLB) is created. The Cloud Controller Manager (remember the Controller Manager of a Node) is resposible to talk to the underlying cloud provier. In Minikube, the external IP to access the application via the LoadBalancer can be exposed using the command `minikube tunnel`. 
 
-<!---
-#### default kubernetes service
-A K8s Service is automatically created to access K8s with the K8s API. Check the endpoints of the service and the api-service pod within kube-system namespace
- --->
+#### default kubernetes services
+There are also default K8s services created automatically to access K8s with the K8s API. Check the endpoints of the *kubernetes* service and the endpoints of the *api-service* pod within kube-system namespace. They should be the same.
 
-### Exemplary setup of database and frontend microservices
-
-The following example show the deployment and linking of two different deployments. A *frontend-deployment.yaml* that pulls a container running a [Streamlit App](https://streamlit.io/), and a *database-deployment.yaml* that runs a flask application exposing a dictionary as an exemplary and very basic database. The frontend accesses the flask database using a ClusterIP Service linked to the database-deployment. It also exposes an external IP via a Loadbalancer Service, so the streamlit app can be accesses via the browser and without the use of `kubectl port-forward`.
-
-It is possible to show all endpoints of the cluster using
+It is also possible to show all endpoints of the cluster using
 ```bash
 kubectl get endpoints
 ```
 
+### Exemplary setup of database and frontend microservices
+
+The following example show the deployment and linking of two different deployments. A *frontend-deployment.yaml* that pulls a container running a [Streamlit App](https://streamlit.io/), and a *database-deployment.yaml* that runs a flask application exposing a dictionary as an exemplary and very basic database. The frontend accesses the flask database using a ClusterIP Service linked to the database-deployment. It also exposes an external IP via a Loadbalancer Service, so the streamlit app can be accesses via the browser and without the use of `kubectl port-forward`. Since minikube is a closed network, use `minikube tunnel` to allow access to it using the LoadBalancer.
+
 When looking at the ClusterIP service with `kubectl describe service backendflask` the IP address of the service to exposes, as well as the listed endpoints that connect to the database-deployments are shown. One can compare them to the IPs of the actual deployments - they are the same.
 
 ```yaml
-# frontend-deployment.yaml
+# services_frontend-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -319,7 +319,8 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: seblum/mlops-public:frontend_streamlit
+        image: seblum/mlops-public:frontend-streamlit
+        imagePullPolicy: "Always"
         resources:
           limits:
             memory: "128Mi"
@@ -333,43 +334,40 @@ spec:
             # how to do it should be this.
             # we reference to the order service
           - name: DB_SERVICE
-            value: "backendflask"
-
-          - name: PORT
-            value: "5001"
+            value: "backendflask:5001"
         ports:
           # we can actually use the actual ip of the service or
           # use the dns, as done in the example above.
         - containerPort: 8501
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: frontend-node
-# spec:
-#   type: NodePort
-#   selector:
-#     app: frontend
-#   ports:
-#   - port: 80
-#     targetPort: 8080
-#     nodePort: 30000
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: frontend
-# spec:
-#   type: ClusterIP
-#   selector:
-#     app: frontend
-#   ports:
-#   - port: 5003
-#     targetPort: 8501
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: frontend
+  ports:
+  - port: 80
+    targetPort: 8501
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-node
+spec:
+  type: NodePort
+  selector:
+    app: frontend
+  ports:
+  - port: 80
+    targetPort: 8501
+    nodePort: 30000
 ```
 
 ```yaml
-# database-deployment.yaml
+# services_backend-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -386,7 +384,8 @@ spec:
     spec:
       containers:
       - name: backendflask
-        image: seblum/mlops-public:backend_flask
+        image: seblum/mlops-public:backend-flask
+        imagePullPolicy: "Always"
         resources:
           limits:
             memory: "128Mi"
@@ -407,36 +406,16 @@ spec:
     # port the service is associated with
   - port: 5001
     # port to access targeted by the access
-    # in our case has to be the same as in deployment.
+    # in our case has to be the same as in backendflask.
     targetPort: 5000
 ```
-
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: order
-spec:
-  type: NodePort
-  selector:
-	name: order
-  ports:
-	- port: 8081
-  	  targetPort: 8081
-  	  # optional NodePort Service
-  	  # if we dont specify this, we get a randomly allocated port
-  	  nodePort: 30001 
-``` 
 
 
 ## Labels, Selectors and Annotations
 
 In the previous sections we already made use of labels, selectors, and annotations, e.g. when matching the ClusterIP service to the back-deployments. Labels are a key-value pair that can be attached to objects such as Pods, Deployments, Replicaset, Services, etc. Overall, they are used to organize and select objects. 
 
-Annotations are an unstructured key-value mapping stored with a resource that may be set by external tools to store and retrieve any metadata. In contrast to labels and selectors, annotations are not used for querying purposes. They are used to assist tools and libraries to work with the K8s ressource, for example to pass configuration around between systems, or to send values so external tools can perform more informed decisions based on the annotations provided.
-<!---
-Check annotations
- --->
+Annotations are an unstructured key-value mapping stored with a resource that may be set by external tools to store and retrieve any metadata. In contrast to labels and selectors, annotations are not used for querying purposes but rather to attach arbitrary non-identifying metadata. These data are used to assist tools and libraries to work with the K8s ressource, for example to pass configuration around between systems, or to send values so external tools can perform more informed decisions based on the annotations provided.
 
 Selectors are used to filter K8s objects based on a set of labels. A selector basically simply uses a boolean language to select pods. The selector matches the labels under a an all or nothing principle, meaning everything specified in the selector must be fulfilled by the labels. However, this works not the other way around. If there are multiple labels specified and the selector matches only one of them, the selector will match the ressource itself. How a selector matches the labels can be tested using the `kubectl` commands as seen below.
 
@@ -455,41 +434,40 @@ kubectl get pods -l 'key in (value1, value2)'
 ```
 
 When using ReplicaSets in a Deployment, their selector matches the labels to a specific pod (check e.g. the section describing Deployments). Any Pods matching the label of the selector will be created according to the specified replicas. Of course, there can also be multiple labels specified.
-The same principle accounts when working with Services. Below example shows two different Pods and two NodePort services. Each service matches to a Pod based on their selector-label relationship. Have a look at their specific settings using `kubectl`. The Nodeport Service *labels-and-selectors-2* has no endpoints, as it is all or none and none of the created Pods matches the label `environment=service`. In contrast, even though the Pod *blue* has multiple labels specified, the NodePort Service is linked to it.
+The same principle accounts when working with Services. Below example shows two different Pods and two NodePort services. Each service matches to a Pod based on their selector-label relationship. Have a look at their specific settings using `kubectl`. The Nodeport Service *labels-and-selectors-2* has no endpoints, as it is a all-or-none-principle and none of the created Pods matches the label `environment=dev`. In contrast, even though the Pod *cat-v1* has multiple labels specified `app: cat-v1; version: one`, the NodePort Service *labels-and-selectors* is linked to it. It is also linked to the second Pod *cat-v2*.
 
 ```yaml
+# labels.yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: blue
+  name: cat-v1
   labels:
-    app: blue
-    version: two
-  annotations:
-	kubernetes.io/change-cause: "seblum/kubernetes:hello-world"
+    app: cat-v1  
+    version: one  
 spec:
   containers:
-  - name: blue
-    image: "seblum/kubernetes:blue"
-	resources:
-  	  limits:
-  		memory: "128Mi"
-  		cpu: 	"500m"
+  - name: cat-v1
+    image: "seblum/mlops-public:cat-v1"
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu:  "500m"
 ---
 apiVersion: v1
 kind: Pod
 metadata:
-  name: green
+  name: cat-v2
   labels:
-    app: blue    
+    app: cat-v1
 spec:
   containers:
-	- name: green
-  	  image: "seblum/kubernetes:green"
-	  resources:
-    	limits:
-	 	  memory: "128Mi"
-  		  cpu: 	"500m"
+  - name: cat-v2
+    image: "seblum/mlops-public:cat-v2"
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu:  "500m"
 ---
 apiVersion: v1
 kind: Service
@@ -498,10 +476,10 @@ metadata:
 spec:
   type: NodePort
   selector:
-	name: blue
+    app: cat-v1
   ports:
-	- port: 80
-  	  targetPort: 8080
+  - port: 80
+    targetPort: 5000
 ---
 apiVersion: v1
 kind: Service
@@ -510,11 +488,11 @@ metadata:
 spec:
   type: NodePort
   selector:
-	name: blue
-	environment: service
+    app: cat-v1
+    environment: dev
   ports:
-	- port: 80
-	  targetPort: 8081
+  - port: 80
+    targetPort: 5000
 ```
 
 
@@ -530,41 +508,46 @@ Namespaces allow to organize resources in the cluster, which makes it more overs
 Of course, there is also the possibility of creating ones own namespace and using it by attaching a e.g. Deployment to it, such as seen in the following example.
 
 ```yaml
+# namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
   name: monitoring
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: monitoring-deployment
   namespace: monitoring
 spec:
-  containers:
-  - name: 
-    image: "grafana"
-  resources:
-      limits:
-      memory: "128Mi"
-      cpu:  "500m"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: monitoring-deployment
+  template:
+    metadata:
+      labels:
+        app: monitoring-deployment
+    spec:
+      containers:
+      - name: monitoring-deployment
+        image: "grafana/grafana:latest"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
 ```
 
-<!---
-Cross communication and network policies between namespaces 
-develoment namespace and customer svc
-demo namespace and customer svc
-calling from demo to dev, we call customer.dev
-However, we do not usually want them to talk to each other. https://kubernetes.io/docs/concepts/services-networking/network-policies/
- --->
+When creating a Service, a corresponding DNS entry is created as well, such as seen in the Services section when calling `backendflask` directly. This entry is created according to the namespace which is denoted to the service. This can be useful when using the same configuration across multiple namespaces such as development, staging, and production. It is also possible to reach across namespaces. One needs to use the fully qualified domain name (FQDN) tough, such as `<service-name>.<namespace-name>.svc.cluster.local`.
 
 
 ## Service Discovery
 
 Service Discovery is a mechanism that lets applications and microservices locate each other on a network. In fact, we have aready used Service Discovery in the previous sections, they just haven't been mentioned yet. If a client wants to communicate with the application, it should not use the IP of an individual Pod should not use the individual pod ip. Instead, we should rely on services as they have a stable IP address. We have already seen this in the section about Services. Yet, each pod has also an individual DNS (Domain Name System). A DNS translates a domain names to an IP address, just one lookes up a number in a telephone book, so it's much easier to reference to a resource online. This is where service Discovery enters the game.
 
-<!--- TODO: insert image --->
-![Service Discovery](kubernetes_service-discovery.png) 
+![Service Discovery](images/04-Kubernetes/service-discovery.png) 
 
 Whenever a service is created, it is registered in the service registry with the service name and the service IP. Most clusters use CoreDNS as a service registry (this would be the telephone book itself). When having a look at the minikube cluster one should see are *core-dns* service running. Now you know what it is for. Having a closer look using `kubectl describe svc <name>`, the core-dns service has only one endpoint. If you want to have an even closer look, you can dive into a pod itself and check the file /etc/resolv.conf. There you find a nameserver <IP> where the IP is the one of the core-dns. 
 
@@ -585,8 +568,6 @@ It also implements a controller that watches the API server for new services and
 
 This means, kube-proxy is intercepting all the requests and makes sure that when a request to the ClusterIP service is sent using endpoints, the request is forwarded to the healthy pods behind the endpoint. 
 
-<!--- TODO: possibly insert a graph for this --->
-
 
 ## Volume & Storage
 
@@ -603,6 +584,7 @@ There are different types of volumes, e.g.:
 An EmptyDir Volume is initially empty (as the name suggests). The volume is a temporary directory that shares the pods lifetime. If the pod dies, the contents of the emptyDir are lost as well. The EmptyDir is also used to share data between containers inside a Pod during runtime.
 
 ```yaml
+# volume_empty-dir.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -630,9 +612,9 @@ spec:
         # since the testing image immediately dies, we want to
         # execute an own sh command to interact with the volume
         volumeMounts:
-        	# The name must match the name of the volume
+          # The name must match the name of the volume
           - name: cache
-          	# interal reference of the pod 
+            # interal reference of the pod 
             mountPath: /foo
         command: 
           - "/bin/sh"
@@ -658,7 +640,9 @@ spec:
             cpu: "500m"
 ```
 
-As stated in the yaml, the busybox image immediately dies. If the Containers where created without the shell commands, the pod would be in a crashloopbackoff-state. To prevent the Pod to do so it is caught with the `sleep`commands until it scales down. Accessing a container using `kubectl exec`, it can be checked whether the foo/bar.txt has been created in *container-one*. When checking the second container *container-two*, the same file should be visible as well. This is because both containers refer to the same volume. Keep in mind though that the mountPath of the *container-two* is different.
+As stated in the yaml, the busybox image immediately dies. If the Containers where created without the shell commands, the pod would be in a crashloopbackoff-state. To prevent the Pod to do so it is caught with the `sleep`commands until it scales down. Accessing a container using `kubectl exec`, it can be checked whether the foo/bar.txt has been created in *container-one*.
+
+When checking the second container *container-two*, the same file should be visible as well. This is because both containers refer to the same volume. Keep in mind though that the mountPath of the *container-two* is different.
 
 ```bash
 # get in container
@@ -676,6 +660,7 @@ ls
 THe HostPath Volume type is used when an application needs to access the underlying host file system, meaning the file system of the node. HostPath represents a pre-existing file or directory on the host machine. However, this can be quite dangerous and should be used with caution. If having the right access, the application can interfere and basically mess up the host. It is therefore recommended to set the rights to read only to prevent this from happening. 
 
 ```yaml
+# volume_hostpath.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -692,26 +677,35 @@ spec:
       volumes:
         - name: var-log
           # specify the HostPath volume type
-          HostPath: {}
-          	path: /var/log
+          hostPath:
+            path: /var/log
       containers:
       - name: container-one
         image: busybox 
         volumeMounts:
-	      - name: var-log
-	         mountPath: /var/log
+          - mountPath: /var/log
+            name: var-log
+            readOnly: true
         command: 
-          - "/bin/sh"
-        args:
-          # similar to the previous example 
-          # create a file and make it sleep
-          - "-c"
-          - "touch /foo/bar.txt && sleep 3600"
+          - "sleep"
+          - "3600"
         resources:
           limits:
             memory: "128Mi"
             cpu: "500m"
 ```
+
+Similar to the EmptyDir Volume example, you can check the implementation of the HostPath Volume by accessing the volume. When comparing the file structures of the *hostpath-volume* deployment and the directory `path: /var/log` on the node the deployment is running, they should be the same. All the changes made to either on of them will make the changes available on the other. By making changes via the pod we can directly influence the Node. Again, this is why it is important to keep it read-only.
+
+```bash
+# access the 
+kubectl exec -it <hostpath-volume-name> -- sh
+
+# ssh into node
+minikube ssh <node>
+
+```
+
 
 #### Persistent Volumes
 
@@ -728,8 +722,7 @@ If a Pods or Deployments want to consume storage of the PV, they need to get acc
 
 All of this is part of a Persistent Volume Subsystem. The Persistent Volume Subsystem provides an API for users and administrators. The API abstracts details of how storage is provided from how it is consumed. Again, the provisioning of storage is done via a PV and the consumption via a PCV.
 
-<!--- TODO: insert image --->
-![Persistent Volume Subsystem](kubernetes_Persistent-Volume-Subsystem.png) 
+![Persistent Volume Subsystem](images/04-Kubernetes/persistent-volume-subsystem.png) 
 
 Listed below are again the three main components when dealing with Persistent Volumes in K8s
 
@@ -737,15 +730,31 @@ Listed below are again the three main components when dealing with Persistent Vo
 + **PVC**: is a user's request for and claim to a persistent volume.
 + **Storage Class**: describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned.
 
-So how are Persistent Volumes specified in our deployments yamls? As there are `kind:Pod` ressources, there can similarly `kind:PersistentVolume` and `kind:PersistentVolumeClaim` be specified. At first, a PV is created. Second, a PVC is created requesting a certaing amount of storage. This PVC is then linked in the specifications of a Deployment to allow its containers to utilized the storage. The yaml code below shows this process.
+So how are Persistent Volumes specified in our deployments yamls? As there are `kind:Pod` ressources, there can similarly `kind:PersistentVolume` and `kind:PersistentVolumeClaim` be specified. At first, a PV is created. As we run on minikube and not on the cloud, a local storage in the node is allocated. Second, a PVC is created requesting a certain amount of that storage. This PVC is then linked in the specifications of a Deployment to allow its containers to utilized the storage.
+
+Before applying the yaml-files we need to allocate the local storage by claiming storage on the node and set the paths specified in the yamls. To do this, we ssh into the node using `minikube ssh`. We can then create a specific path on the node such as `/mnt/data/`. We might also create a file in it to test accessing it when creating a PVC to a Pod. Since we do not know yet on what node the Pod is scheduled, we should create the directory on both nodes. Below are all steps listed again.
+
+```bash
+# ssh into node
+minikube ssh
+# create path
+sudo mkdir /mnt/data
+# create a file with text
+sudo sh -c "echo 'this is a pvc test' > /mnt/data/index.html"
+# do this on both nodes as pod can land on either one of them
+
+```
+
+Afterward we can apply the yaml files and create a PV, PVC, and the corresponding Deployment utilizing the PVC. The yaml code below shows this process.
 
 ```yaml
+# volume_persistent-volume.yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: mypv
 spec:
-  # specifiy the capacity of the OV
+  # specifiy the capacity of the PersistentVolume
   capacity:
     storage: "100Mi"
   volumeMode: Filesystem
@@ -754,8 +763,9 @@ spec:
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: manual
   hostPath:
-  	# specify the hostPath on the node
     path: "/mnt/data"
+    # specify the hostPath on the node
+    # that's the path we specified on our node
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -764,6 +774,8 @@ metadata:
 spec:
   resources:
     requests:
+      # we request the same as the PV is specified
+      # so we basically request everything
       storage: "100Mi"
   volumeMode: Filesystem
   storageClassName: "manual"
@@ -785,25 +797,25 @@ spec:
     spec:
       volumes:
         - name: data
-          # efine the use of the PVC by specifying the name
+          # define the use of the PVC by specifying the name
+          # specify the pod/deployment can use the PVC
           persistentVolumeClaim:
             claimName: mypvc
       containers:
       - name: pv-pvc
-      	# default image
-        image: nginx
+        image: nginx:latest
         volumeMounts:
-        	# since the PVC is stated, the container needs to 
-          # mount inside it
           - mountPath: "/usr/share/nginx/html"
-          	# name is equal to the pvc name specified
+            # since the PVC is stated, the container needs to 
+            # mount inside it
+            # name is equal to the pvc name specified
             name: data
         resources:
           limits:
             memory: "128Mi"
             cpu: "500m"
         ports:
-        - containerPort: 80
+          - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -818,21 +830,24 @@ spec:
     targetPort: 80
 ```
 
+By accessing a pod using `kubectl exec -it <persistent-volume-name> -- sh` we can check whether the path is linked using the PVC. Now, the end result may seem the same as what we did with the HostPath Volume. But it actually is not, it just looks like it since both, the PersistentVolume and the HostPath connect to the Host. Yet, the locally mounted path would be somewhere else when running in the cloud. The PV configuration would point to another storage source instead of a local file system, for example an attached EBS of EFS storage. Since we also created a LoadBalancer service, we can run `minikube tunnel` to expose the application deplyment under localhost:80. It should show the input of the index.html file we created on the storage.
+
 
 ## ConfigMaps
 
 When building software, the same container image should be used for development, testing, staging, and production stage. Thus, container images should be reusable. What usually changes are only the configuration settings of the application. *ConfigMaps* allow to store such configurations as a simple mapping of key-value pairs. Most of the time, the configuration within a config map is injected using environment variables and volumes. However, ConfigMaps should only be used to store configuration files, not sensitive data, as they do not secure them.
-Besides allow for an easy change of variables, another benefit of using ConfigMaps is that changes in the configuration are not disruptive, meaning the application can still run while the configuration changes without affecting the application. However, one needs to keep in mind that change made to ConfigMaps and environment variables will not be reflected on already and currently running containers. <!--- TODO: check this --->
+Besides allow for an easy change of variables, another benefit of using ConfigMaps is that changes in the configuration are not disruptive, meaning the application can still run while the configuration changes without affecting the application. However, one needs to keep in mind that change made to ConfigMaps and environment variables will not be reflected on already and currently running containers.
 
 The following example creates two different ConfigMaps. The first one includes three environment variables as data. The second one include a more complex configuration of an nginx server.
 
 ```yaml
+# configmaps.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-properties
 data:
-  app-name: order
+  app-name: kitty
   app-version: 1.0.0
   team: engineering
 ---
@@ -841,7 +856,7 @@ kind: ConfigMap
 metadata:
   name: nginx-conf
 data:
-	# configuration in .conf
+  # configuration in .conf
   nginx.conf: |
     server {
         listen       80;
@@ -864,12 +879,12 @@ data:
             return 200 "healthy\n";
         }
     }
-
 ```
 
-A Deployment is created additionally which uses both ConfigMaps. A ConfigMap is declared under `spec.volumes` as well. It is also possible to state a reference to both ConfigMaps simultaneously. The Deployment creates two containers. The first container mounts each ConfigMap as a Volume. Container two uses environment variables to access and configure the key-value pairs of the ConfigMaps and store them on the container.
+Additionally, a Deployment is created which uses both ConfigMaps. A ConfigMap is declared under `spec.volumes` as well. It is also possible to state a reference to both ConfigMaps simultaneously. The Deployment creates two containers. The first container mounts each ConfigMap as a Volume. Container two uses environment variables to access and configure the key-value pairs of the ConfigMaps and store them on the container.
 
 ```yaml
+# configmaps_deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -884,7 +899,7 @@ spec:
         app: config-map
     spec:
       volumes:
-      	# specify ConfigMap nginx-conf
+        # specify ConfigMap nginx-conf
         - name: nginx-conf
           configMap:
             name: nginx-conf
@@ -905,14 +920,14 @@ spec:
       - name: config-map-volume
         image: busybox
         volumeMounts:
-          - mountPath: /etc/order/ngnix
+          - mountPath: /etc/cfmp/ngnix
           # is defined here in the nginx-volume to mount
             name: nginx-conf
           # everything from that configMap is mounted as a file
           # the file content is the value themselves
-          - mountPath: /etc/order/properties
+          - mountPath: /etc/cfmp/properties
             name: app-properties
-          - mountPath: etc/order/config
+          - mountPath: etc/cfmp/config
             name: config
         command:
           - "/bin/sh"
@@ -963,46 +978,43 @@ spec:
                 key: nginx.conf  
 ```
 
-<!---
-config map env
+We can check for the attached configs by accessing the containers via the shell, similar to what we did in the section about Volumes. In the container *config-map-volume*, the configs are saved under the respective `mountPath` of the volume. In the *config-map-env*, the configs are stored as environment variables. 
 
-config maps and volumes. One pod is a selection of one or more containers, as well as one or more volumes. The volume is mounted inside the container. Whereever a volume is mounted, we get a file structure like this:
+```bash
+# get in container -volume or -env
+kubectl exec -it <config-map-name> -c >container-name< -- sh
+# check subdirectories
+ls
 
-/etc/name
-	/app.version
-	/server.name
+# print environment variables
+printenv
+```
 
-the contents of that file is the values for each key inside of that data.
---->
 
 ## Secrets
 
-Secrets, as the name suggests, store and manage sensitive information. However, secrets are actually not secrets in K8s. They can quite easily decoded using `kubectl describe` on a secret and decode it using the shell command `echo <password> | base64 -d`. Thus, sensitive information like database password should never be stored in secrets. There are much better ressources to store such data, for example a Vault on the cloud provider itself.
-
-<!---
-Why are we using them in the first place then?
---->
+Secrets, as the name suggests, store and manage sensitive information. However, secrets are actually not secrets in K8s. They can quite easily decoded using `kubectl describe` on a secret and decode it using the shell command `echo <password> | base64 -d`. Thus, sensitive information like database password should never be stored in secrets. There are much better ressources to store such data, for example a Vault on the cloud provider itself. However, secret can be used so that you don't need to include confidential data in your application code. Since they are stored and created independently of the Pods that use them, there is less risk of being exposed during the workflow of creating, viewing, and editing Pods. 
 
 It is possible to create secrets using imperative approach as shown below.
 
 ```bash
 # create the two secrets db-password and api-token
-kubectl create secret generic mysecret --from-literal=db-password=123 -from-literal=api-token=token
+kubectl create secret generic mysecret-from-cli --from-literal=db-password=123 --from-literal=api-token=token
 
 # output the new secret as yaml
 kubectl get secret mysecret -o yaml
+
+# create a file called secret with a file-password in it
+echo "super-save-password" > secret 
 
 # create a secret from file
 kubectl create secret generic mysecret-from-file --from-file=secret
 ```
 
-<!---
-how does the file look?
---->
-
 Similar to ConfigMaps, secrets are accessed via an environment variable or a volume. 
 
 ```yaml
+# secrets.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -1017,11 +1029,11 @@ spec:
         app: secrets
     spec:
       volumes:
-      	# get the secret from a volume
+        # get the secret from a volume
         - name: secret-vol
           secret:
-          	# the name of the secret we created earlier
-            secretName: mysecret
+            # the name of the secret we created earlier
+            secretName: mysecret-from-cli
       containers:
       - name: secrets
         image: busybox
@@ -1031,10 +1043,10 @@ spec:
         env:
           # nane of the secret in the container
           - name: CUSTOM_SECRET
-    	      # get the secret from an environment variable
+            # get the secret from an environment variable
             valueFrom:
               secretKeyRef:
-              	# name and key of the secret we created earlier
+                # name and key of the secret we created earlier
                 name: mysecret-from-file
                 key: secret
         command:
@@ -1060,6 +1072,7 @@ kubectl create secret docker-registry docker-hub-private \
 Finally, the secret is specified in the deployment configuration where it can be accessed during application.
 
 ```yaml
+# secret_dockerhub.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -1078,7 +1091,9 @@ spec:
         - name: docker-hub-private
       containers:
       - name: secret-app
-        image: seblum/private
+        # of course you need an own private repository
+        # to pull and change the name accordingly
+        image: seblum/private:cat-v1
         resources:
           limits:
             memory: "128Mi"
@@ -1092,87 +1107,83 @@ spec:
 Applications running in service need to be healthy at all times so they are ready to receive traffic. K8s uses a process called health checks to test whether an application is alive. If there are any issues and the application is unhealthy, K8s will restart the process. Yet, checking only whether a process is up and running might be not sufficient. What if, e.g., a client wants to connect to a database and the connection cannot be established, even though the app is up and running? To solve more specific issues like this, health checks like a *liveness probe* or *readiness probe* can be used. If there have not been specified, K8s will use the default checks to test whether a process is running.
 
 #### Liveness Probe
-The Kubelet of a node uses *Liveness Probes* to check whether an application runs fine and whether it can receive traffic. For example, they could catch a deadlock, a database connection failure, etc. Otherwise it will restart a container. To use a Liveness Probe, an endpoint needs to be specified. The benefit of this is, that it is simple to define what it means for an application to be healthy just by defining a path. 
-<!---
-check again on K8s online
---->
+The Kubelet of a node uses *Liveness Probes* to check whether an application runs fine or whether it is unable to make progress and its stuck on a broken state. For example, it could catch a deadlock, a database connection failure, etc. The Liveness Probe can restart a container accordingly. To use a Liveness Probe, an endpoint needs to be specified. The benefit of this is, that it is simple to define what it means for an application to be healthy just by defining a path. 
 
 #### Readiness Probe
-Similar to a Liveness Probe, the *Readniness Probe* is used by the kubelet to check when the container is ready to start accepting traffic. Its configuration is also done by specifying a path to what it means the application is healthy. A lot of frameworks, like e.g. springboot, actually provide a path to use.
-<!---
-check again on K8s online
---->
+Similar to a Liveness Probe, the *Readniness Probe* is used by the kubelet to check when the container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready. Its configuration is also done by specifying a path to what it means the application is healthy. A lot of frameworks, like e.g. springboot, actually provide a path to use.
 
-Belows configuration shows a Deployment which includes a Liveness and a Readiness Probe. The image of the deployment is set up so its process is killed after a given number of seconds. This has been passed using environment variables such as seen in the script.
+Belows configuration shows a Deployment which includes a Liveness and a Readiness Probe. The image of the deployment is set up so its process is killed after a given number of seconds. This has been passed using environment variables such as seen in the script. Both, the Liveness and the Readiness Probe have the same parameters in the given example.
+
++ initialDelaySeconds: The probe will not be called until x seconds after all the containers in the Pod are created.
++ timeoutSeconds: The probe must respond within a x-second timeout and the HTTP status code must be equal to or greater than 200 and less than 400. 
++ periodSeconds: The probe is called every x seconds by K8s
++ failureThreshold: The container will fail and restart if more than x consecutive probes fail
 
 ```yaml
+# healthchecks.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: customer
-  namespace: engineering
+  name: backendflask-healthcheck
 spec:
-  replicas: 20
+  replicas: 1
   selector:
     matchLabels:
-      app: customer
+      app: backendflask-healthcheck
   template:
     metadata:
       labels:
-        app: customer
+        app: backendflask-healthcheck
         environment: test
         tier: backend
         department: engineering
     spec:
       containers:
-        - name: customer
-          image: "amigoscode/kubernetes:customer-v1"
-          # check whether I have to change the streamlit app to do this.
-          image: "seblum/mlops-public:healthchecks-v1"
+        - name: backendflask-healthcheck
+          # check whether I have to change the backend app to do this.
+          image: "seblum/mlops-public:backend-flask"
+          imagePullPolicy: "Always"
           resources:
             limits:
               memory: "128Mi"
               cpu: "500m"
-    	    # Specification of the the Liveness Probe
+          # Specification of the the Liveness Probe
           livenessProbe:
             httpGet:
-        	    # path of the url
-              path: /health
-              port: 8080
+              # path of the url
+              path: /liveness
+              port: 5000
             # time the liveness probe starts after pod is started
             initialDelaySeconds: 5
             timeoutSeconds: 1
             failureThreshold: 3
-            # period if time when the checks should be performed
+            # period of time when the checks should be performed
             periodSeconds: 5
           # Specification of the Readiness Probe
           readinessProbe:
             httpGet:
-              path: /health
-              port: 8080
+              path: /readiness
+              port: 5000
             initialDelaySeconds: 10
-            timeoutSeconds: 1
-            failureThreshold: 3
+            # change to 1 seconds and see the pod not going to go ready
+            timeoutSeconds: 3
+            failureThreshold: 1
             periodSeconds: 5
           env:
-          	# variable for the container to be killed after 30 seconds
-          	# needs to be implemented within the container though
-          	- name: "KILL_IN_SECODS"
-          	  value: "30"
-            - name: ORDER_SERVICE
-              value: "order"
+            # variable for the container to be killed after 60 seconds
+            - name: "KILL_IN_SECONDS"
+              value: "60"
           ports:
-            - containerPort: 8080
+            - containerPort: 5000
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: customer-node
-  namespace: engineering
+  name: backendflask-healthcheck
 spec:
   type: NodePort
   selector:
-    app: customer
+    app: backendflask-healthcheck
   ports:
     - port: 80
       targetPort: 8080
@@ -1181,52 +1192,51 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: customer
-  namespace: engineering
+  name: backendflask-healthcheck
 spec:
   type: ClusterIP
   selector:
-    app: customer
+    app: backendflask-healthcheck
   ports:
     - port: 80
       targetPort: 8080
 ```
 
 
-## Ressource Management
+## Resource Management
 
 Besides the importance of a healthy application itself, there should be also enough resources allocated so the application can perform well, e.g. memory & CPU. Yet, it should also only consume the resources needed and not block unneeded ones. It might be dangerous, as one application using a lot of ressources, leaving nothing left for other applications and eventually starving them. To prevent this from happening in K8s. there can be a minimum amount of resources defined a container needs (request) as well as the maximum amount of resources a container can have (limit). Configuring limits and requests for a container can be done within the spec for a Pod or Deployment. Actually, we have been using them all the time previously.
 
 ```yaml
+# resource-management.yaml
 apiVersion: apps/v1
+# specify that we want a deployment
 kind: Deployment
 metadata:
-  name: customer
+  name: rm-deployment
 spec:
-  replicas: 2
+  # specify number of replicas
+  replicas: 3
   selector:
     matchLabels:
-      app: customer
+      app: rm-deployment
   template:
     metadata:
       labels:
-        app: customer
+        app: rm-deployment
     spec:
       containers:
-        - name: customer
-          image: "amigoscode/kubernetes:customer-v1"
-          # allocate the resources needed
-          resources:
-          	# Requests
-          	requests:
-          	  memory: "512Mi"
-          	  cpu: "1000m"
-          	# Limits
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
-          ports:
-            - containerPort: 8080
+      - name: rm-deployment
+        image: seblum/mlops-public:cat-v1
+        requests:
+          memory: "512Mi"
+          cpu: "1000m"
+        # Limits
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+        ports:
+        - containerPort: 5000
 ```
 
 
@@ -1234,11 +1244,9 @@ spec:
 The master node of K8s decides on what worker nodes a pod is scheduled or not. However, there are times where we want to have a copy of a pod across the cluster. A *DeamonSet* ensures a copy of the specified Pod is exactly doing this. This can be useful for example to deploy system daemons such as log collectors and monitoring agents. DeamonSets are automatically deployed on every single node, unless specified on which node to run. They therefore do not need a specification of nodes and can scale up and down with the cluster as needed. They will automatically scheduled a pod on each new node.
 
 The given example deploys a DaemonSet to cover logging using K8s FluendID.
-<!---
-why is the voluem attached?
---->
 
 ```yaml
+# daemonsets.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -1309,6 +1317,7 @@ Using the *busybox* image in the section about volumes we experienced that the i
 
 The following job simulates a backup to a database that runs 30 seconds in total. The part in the `args` specifies that the container will sleep for 20 seconds (the hypothetical backup). Afterward, the container will wait 10 seconds to shut down, as specified in `ttlSecondsAfterFinished`.
 ```yaml
+# job.yaml
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -1329,7 +1338,8 @@ spec:
 
 The CronJob below runs run every minute. Given the structure of ( * * * * * * ) - ( Minutes Hours Day-of-month Month Day-of-week Year), the cronjob expression defines as follows:
 ```yaml
-apiVersion: batch/v1beta1
+# cronjob.yaml
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: db-backup-cron-job

@@ -1,0 +1,92 @@
+# configmaps_deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-map
+spec:
+  selector:
+    matchLabels:
+      app: config-map
+  template:
+    metadata:
+      labels:
+        app: config-map
+    spec:
+      volumes:
+        # specify ConfigMap nginx-conf
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
+        # specify ConfigMap app-properties
+        - name: app-properties
+          configMap:
+            name: app-properties
+        # if both configmaps shall be mounted under one directory,
+        # we need to use projected
+        - name: config
+          projected:
+            sources:
+              - configMap:
+                  name: nginx-conf
+              - configMap:
+                  name: app-properties
+      containers:
+      - name: config-map-volume
+        image: busybox
+        volumeMounts:
+          - mountPath: /etc/cfmp/ngnix
+          # is defined here in the nginx-volume to mount
+            name: nginx-conf
+          # everything from that configMap is mounted as a file
+          # the file content is the value themselves
+          - mountPath: /etc/cfmp/properties
+            name: app-properties
+          - mountPath: etc/cfmp/config
+            name: config
+        command:
+          - "/bin/sh"
+          - "-c"
+        args:
+          - "sleep 3600"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+      - name: config-map-env
+        image: busybox
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        # as previously, keep the busybox container alive
+        command:
+          - "/bin/sh"
+          - "-c"
+        args:
+          - "env && sleep 3600"
+        env:
+          # environment variables to read in from config map
+          # for every data key-value pair in config Map, an own
+          # environment variable is created, which gets 
+          # the value from the corresponding key
+          - name: APP_VERSION
+            valueFrom:
+              configMapKeyRef:
+                name: app-properties
+                key: app-version
+          - name: APP_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: app-properties
+                key: app-name
+          - name: TEAM
+            valueFrom:
+              configMapKeyRef:
+                name: app-properties
+                key: team
+          # reads from second config map
+          - name: NGINX_CONF
+            valueFrom:
+              configMapKeyRef:
+                name: nginx-conf
+                key: nginx.conf  
