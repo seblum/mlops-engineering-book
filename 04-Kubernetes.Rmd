@@ -580,7 +580,7 @@ There are different types of volumes, e.g.:
 + awsElasticBlockStore: AWS EBS volumes are persistent and originally unmounted. They are read-write-once-only tough.
 + There are multiple other types of volumes, a full list can be found here: https://kubernetes.io/docs/concepts/storage/volumes/#volume-types
 
-#### EmptyDir Volume
+### EmptyDir Volume
 An EmptyDir Volume is initially empty (as the name suggests). The volume is a temporary directory that shares the pods lifetime. If the pod dies, the contents of the emptyDir are lost as well. The EmptyDir is also used to share data between containers inside a Pod during runtime.
 
 ```yaml
@@ -656,7 +656,7 @@ kubectl exec -it <emptydir-volume-name> -c container-two -- sh
 ls
 ```
 
-#### HostPath Volume 
+### HostPath Volume 
 THe HostPath Volume type is used when an application needs to access the underlying host file system, meaning the file system of the node. HostPath represents a pre-existing file or directory on the host machine. However, this can be quite dangerous and should be used with caution. If having the right access, the application can interfere and basically mess up the host. It is therefore recommended to set the rights to read only to prevent this from happening. 
 
 ```yaml
@@ -707,7 +707,7 @@ minikube ssh <node>
 ```
 
 
-#### Persistent Volumes
+### Persistent Volumes
 
 Persistent Volumes allow to store data beyond a Pods lifecycle. If a Pod fails, dies or moves to a different node, the data is still intact and can be shared between pods. Persistent Volume types are implemented as plugins that K8s can support(a full list can be found online). Different types of Persistent Volumes are:
 
@@ -1058,7 +1058,7 @@ spec:
             cpu: "500m"
 ```
 
-#### Exemplary use case of secrets
+### Exemplary use case of secrets
 
 When pulling from a private dockerhub repository, applying the deployment will throw an error since there are no username and password specified. As they should not be coded into the deployment yaml itself, they can be accessed via a secret. In fact, a specific secret can be specified for docker registry. The secret can be specified using the imperative approach.
 
@@ -1106,10 +1106,10 @@ spec:
 ## Health Checks
 Applications running in service need to be healthy at all times so they are ready to receive traffic. K8s uses a process called health checks to test whether an application is alive. If there are any issues and the application is unhealthy, K8s will restart the process. Yet, checking only whether a process is up and running might be not sufficient. What if, e.g., a client wants to connect to a database and the connection cannot be established, even though the app is up and running? To solve more specific issues like this, health checks like a *liveness probe* or *readiness probe* can be used. If there have not been specified, K8s will use the default checks to test whether a process is running.
 
-#### Liveness Probe
+### Liveness Probe
 The Kubelet of a node uses *Liveness Probes* to check whether an application runs fine or whether it is unable to make progress and its stuck on a broken state. For example, it could catch a deadlock, a database connection failure, etc. The Liveness Probe can restart a container accordingly. To use a Liveness Probe, an endpoint needs to be specified. The benefit of this is, that it is simple to define what it means for an application to be healthy just by defining a path. 
 
-#### Readiness Probe
+### Readiness Probe
 Similar to a Liveness Probe, the *Readniness Probe* is used by the kubelet to check when the container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready. Its configuration is also done by specifying a path to what it means the application is healthy. A lot of frameworks, like e.g. springboot, actually provide a path to use.
 
 Belows configuration shows a Deployment which includes a Liveness and a Readiness Probe. The image of the deployment is set up so its process is killed after a given number of seconds. This has been passed using environment variables such as seen in the script. Both, the Liveness and the Readiness Probe have the same parameters in the given example.
