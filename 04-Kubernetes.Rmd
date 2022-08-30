@@ -1240,8 +1240,8 @@ spec:
 ```
 
 
-## Deamon Sets
-The master node of K8s decides on what worker nodes a pod is scheduled or not. However, there are times where we want to have a copy of a pod across the cluster. A *DeamonSet* ensures a copy of the specified Pod is exactly doing this. This can be useful for example to deploy system daemons such as log collectors and monitoring agents. DeamonSets are automatically deployed on every single node, unless specified on which node to run. They therefore do not need a specification of nodes and can scale up and down with the cluster as needed. They will automatically scheduled a pod on each new node.
+## Daemon Sets
+The master node of K8s decides on what worker nodes a pod is scheduled or not. However, there are times where we want to have a copy of a pod across the cluster. A *DaemonSet* ensures a copy of the specified Pod is exactly doing this. This can be useful for example to deploy system daemons such as log collectors and monitoring agents. DaemonSets are automatically deployed on every single node, unless specified on which node to run. They therefore do not need a specification of nodes and can scale up and down with the cluster as needed. They will automatically scheduled a pod on each new node.
 
 The given example deploys a DaemonSet to cover logging using K8s FluendID.
 
