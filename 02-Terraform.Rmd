@@ -1,0 +1,179 @@
+# Terraform
+
+Terraform is an infrastructure as code (IaC) tool that allows you to build, change, and version infrastructure safely and efficiently. This includes both low-level components like compute instances, storage, and networking, as well as high-level components like DNS entries and SaaS features. [@hashicorpwebsite] (https://www.terraform.io/docs) 
+
+IaC means using machine-readable definition files to manage and provision an entire IT infrastructure. This can automate the whole IT infrastructure and allows faster execution when configuring infrastructure, as well as allows a full traceability of the changes. Of the several IaC tools in the market right today, Terraform is a well known and established IaC tool.
+
+Terraform is developed by HashiCorp, open-source, and allows to create both on-prem and cloud resources. There are several differend hundred providers that can be used with Terraform, such as Amazon Web Services (AWS), Azure, Google Cloud Platform (GCP), Kubernetes, Helm, GitHub, Splunk, DataDog, etc.
+
+We want to use Terraform to create our ressource needed for Airflow in an automated way. 
+
+
+## Prerequisites
+
+To be able to follow through this tutorial, one needs to have the AWS CLI installed as well as the AWS credentials set up. Further, Terraform itself needs to be installed. Please refer to the corresponding sites. One can check its installation via `terraform version`.
+
+
+## Basic usage
+
+A Terraform project is basically just a set of files in a directory containing resource definitions of the cloud ressources to be created. Those Terraform files, denoted by the ending *.tf*, use Terraform's configuration language to define the specified resources. In the following example there are two definitions made: a *provider* and a *resource*. Later in this chapter we will dive deeper in the structure of the language. For now we only need to know this script is creating a file *hello.txt* which includes the text "Hello, Teraform". It's our Terraform version of Hello World!
+
+```bash
+provider "local" {
+  version = "~> 1.4"
+}
+resource "local_file" "hello" {
+  content = "Hello, Terraform"
+  filename = "hello.txt"
+}
+```
+
+### terraform init
+
+When a project is run for the first time the terraform project needs to be initialized. This is done via the `terraform init` command. Terraform scans the project files in this step and downloads any required providers needed (more to providers in the following). In the given example this is the local procider.
+
+```bash
+terraform init — Initializes the working directory which consists of all the configuration files
+```
+
+### terraform validate
+
+The `terraform validate` command checks the code for syntax errors. This is optional
+
+```bash
+terraform validate — Validates the configuration files in a directory
+```
+
+### terraform plan
+
+The `terraform plan` command verifies what action Terraform will perform and what resources will be created. This step is basically a *dry run* of the code to be executed. It also returns the provided values and some permission attributes which have been set.
+
+```bash
+terraform plan — Creates an execution plan to reach a desired state of the infrastructure
+```
+
+### terraform apply
+
+The command `Terraform apply` creates the resource specified in the .tf files. Initially the same output as in the `terraform plan` step is shown (hence its *dry run*). The output further states which resources are added, which will be changed, and which resources will be destroyed. After confirming the actions the resource creation will be executed.
+
+If there have been made changes in the terraform ressources and those changes should be applied, `terraform apply` can be performed again as it is shown that resources will be changed.
+
+```bash
+terraform apply — Makes the changes in the infrastructure as defined in the plan
+```
+
+### terraform destroy
+
+Finally, to destoy all created ressouces and to delete everything we did before, there is the `terraform destroy` command.
+
+```bash
+terraform destroy — Deletes all the old infrastructure resources
+```
+
+
+## Core Concepts
+
+The following section will explain the core concepts and building blocks of Terraform.
+
+### Providers
+
+Terraform relies on plugins called providers to interact with cloud providers, SaaS providers, and other APIs. Each provider adds a set of resource types and/or data sources that Terraform can manage. For example the *aws* provider shown below allows to specify resources related to the aws cloud, such as S3 Buckets or EC3 instances.
+
+Depending on the provider it is necessary to supply it with specific parameters. The aws provier e.g. needs the region as well as username and password. If nothing specified it will automatically pull these information from the *.aws/config* provided by the aws cli.
+It is also a best practice to specify the version of the provider specified, as the providers are usually maintained and updated on a regular basis.
+
+```bash
+provider "aws" {
+  region = "us-east-1"
+}
+```
+
+### Resources
+
+A Terraform resource is the core building block when working with IaC. It documents the syntax for declaring resources. This can be a *"local_file"* such as shown in the example above, or a cloud resource such as an *"ec2_instance"* on aws. The resource type is followed by the Terraform-name of the resource. Each specific customization and setting to the ressource is done within the resource specification. The style convention when writing Terraform code states that the resource name is named in lowercase as well as it should not repeat the resource type.
+
+```bash
+resource "aws_instance" "my-instance" {
+  ami           = "ami-0ddbdea833a8d2f0d"
+  instance_type = "t2.micro"
+  
+  tags = {
+    Name = "my-instance"
+    ManagedBy = "Terraform"
+  }
+}
+```
+
+### Data Sources
+
+Data sources are “read-only” resources, meaning that it is possible to get information about existing data sources but it is not to create or change them. They are usually used to fetch parameters needed to create resources or generally for use elsewhere in Terraform configuration.
+
+A typical example is shown below, the _aws_ami_ data source available in the AWS provider, which is used to recover attributes from an existing AMI. A data source called *"ubuntu”* is created that queries the AMI registry and returns several attributes related to the located image.
+
+```bash
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["099720109477"] # Canonical
+}
+```
+
+Data sources and their attributes can be used in other resource definitions by prepending the _data_ prefix to the attribute name. The following example used the *"aws_ami"* data source within an *"aws_instace"* resource.
+
+```bash
+resource "aws_instance" "web" {
+  ami = data.aws_ami.ubuntu.id 
+  instance_type = "t2.micro"
+}
+```
+
+
+## Modules
+
+Modules act as a container for multiple resources that are used together. It is a way to package and reuse resource configurations.
+
+
+### Input Variables
+
+Input Variables serve as parameters for a Terraform module, so users can customize behavior without editing the source.
+
+### Output Variables
+
+Output values are return values for a Terraform module
+
+### Local Variables
+
+Local values are basically just a convenience feature to assign a shorter name to an expression
+
+
+
+
+
+## Additionals
+
+### count and for_each Meta Arguments
+
+### workspaces
+
+### State
+
+
+## File structure
+
+
+## Full example - building ec2 and s3
+https://www.baeldung.com/ops/terraform-intro
+
+![K8s Cluster](images/04-Kubernetes/k8s-cluster.png) 
+
+## TODO
+
+- [ ] when is the statefile created?
+- [ ] 

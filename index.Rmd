@@ -10,7 +10,7 @@ bibliography: [book.bib, packages.bib]
 description: |
   This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC.
 link-citations: yes
-github-repo: seblum/kubernetes-training
+github-repo: seblum/mlops-practice
 ---
 
 # About

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | MLOps Architecture from scratch</title>
+  <title>Chapter 3 Terraform | MLOps Architecture from scratch</title>
   <meta name="description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | MLOps Architecture from scratch" />
+  <meta property="og:title" content="Chapter 3 Terraform | MLOps Architecture from scratch" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
   <meta name="github-repo" content="seblum/mlops-practice" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | MLOps Architecture from scratch" />
+  <meta name="twitter:title" content="Chapter 3 Terraform | MLOps Architecture from scratch" />
   
   <meta name="twitter:description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="introduction.html"/>
+<link rel="next" href="architecture.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -253,19 +253,130 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="terraform" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Terraform<a href="terraform.html#terraform" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Terraform is an infrastructure as code (IaC) tool that allows you to build, change, and version infrastructure safely and efficiently. This includes both low-level components like compute instances, storage, and networking, as well as high-level components like DNS entries and SaaS features. <span class="citation">(<a href="#ref-hashicorpwebsite" role="doc-biblioref"><strong>hashicorpwebsite?</strong></a>)</span> (<a href="https://www.terraform.io/docs" class="uri">https://www.terraform.io/docs</a>)</p>
+<p>IaC means using machine-readable definition files to manage and provision an entire IT infrastructure. This can automate the whole IT infrastructure and allows faster execution when configuring infrastructure, as well as allows a full traceability of the changes. Of the several IaC tools in the market right today, Terraform is a well known and established IaC tool.</p>
+<p>Terraform is developed by HashiCorp, open-source, and allows to create both on-prem and cloud resources. There are several differend hundred providers that can be used with Terraform, such as Amazon Web Services (AWS), Azure, Google Cloud Platform (GCP), Kubernetes, Helm, GitHub, Splunk, DataDog, etc.</p>
+<p>We want to use Terraform to create our ressource needed for Airflow in an automated way.</p>
+<div id="prerequisites" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Prerequisites<a href="terraform.html#prerequisites" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To be able to follow through this tutorial, one needs to have the AWS CLI installed as well as the AWS credentials set up. Further, Terraform itself needs to be installed. One can check its installation via <code>terraform version</code>.</p>
+</div>
+<div id="basic-usage-commands" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Basic usage &amp; commands<a href="terraform.html#basic-usage-commands" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A Terraform project is basically just a set of files in a directory containing resource definitions of the cloud ressources to be created. Those Terraform files, denoted by the ending <em>.tf</em>, use Terraform’s configuration language to define the specified resources. In the following example there are two definitions made: a <em>provider</em> and a <em>resource</em>. Later in this chapter we will dive deeper in the structure of the language. For now we only need to know this script is creating a file <em>hello.txt</em> which includes the text “Hello, Teraform”. It’s our Terraform version of Hello World!</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="terraform.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">provider</span> <span class="st">&quot;local&quot;</span> {</span>
+<span id="cb1-2"><a href="terraform.html#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">version</span> = <span class="st">&quot;~&gt; 1.4&quot;</span></span>
+<span id="cb1-3"><a href="terraform.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb1-4"><a href="terraform.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;local_file&quot;</span> <span class="st">&quot;hello&quot;</span> {</span>
+<span id="cb1-5"><a href="terraform.html#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">content</span> = <span class="st">&quot;Hello, Terraform&quot;</span></span>
+<span id="cb1-6"><a href="terraform.html#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">filename</span> = <span class="st">&quot;hello.txt&quot;</span></span>
+<span id="cb1-7"><a href="terraform.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<div id="terraform-init" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> terraform init<a href="terraform.html#terraform-init" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When a project is run for the first time the terraform project needs to be initialized. This is done via the <code>terraform init</code> command. Terraform scans the project files in this step and downloads any required providers needed (more to providers in the following). In the given example this is the local procider.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="terraform.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">terraform</span> init — Initializes the working directory which consists of all the configuration files</span></code></pre></div>
+</div>
+<div id="terraform-validate" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> terraform validate<a href="terraform.html#terraform-validate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>terraform validate</code> command checks the code for syntax errors. This is optional</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="terraform.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">terraform</span> validate — Validates the configuration files in a directory</span></code></pre></div>
+</div>
+<div id="terraform-plan" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> terraform plan<a href="terraform.html#terraform-plan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>terraform plan</code> command verifies what action Terraform will perform and what resources will be created. This step is basically a <em>dry run</em> of the code to be executed. It also returns the provided values and some permission attributes which have been set.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="terraform.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">terraform</span> plan — Creates an execution plan to reach a desired state of the infrastructure</span></code></pre></div>
+</div>
+<div id="terraform-apply" class="section level3 hasAnchor" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> terraform apply<a href="terraform.html#terraform-apply" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The command <code>Terraform apply</code> creates the resource specified in the .tf files. Initially the same output as in the <code>terraform plan</code> step is shown (hence its <em>dry run</em>). The output further states which resources are added, which will be changed, and which resources will be destroyed. After confirming the actions the resource creation will be executed.</p>
+<p>If there have been made changes in the terraform ressources and those changes should be applied, <code>terraform apply</code> can be performed again as it is shown that resources will be changed.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="terraform.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">terraform</span> apply — Makes the changes in the infrastructure as defined in the plan</span></code></pre></div>
+</div>
+<div id="terraform-destroy" class="section level3 hasAnchor" number="3.2.5">
+<h3><span class="header-section-number">3.2.5</span> terraform destroy<a href="terraform.html#terraform-destroy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Finally, to destoy all created ressouces and to delete everything we did before, there is the <code>terraform destroy</code> command.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="terraform.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">terraform</span> destroy — Deletes all the old infrastructure resources</span></code></pre></div>
+</div>
+</div>
+<div id="core-concepts" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Core Concepts<a href="terraform.html#core-concepts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="state" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> State<a href="terraform.html#state" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="providers" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> providers<a href="terraform.html#providers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Terraform relies on plugins called providers to interact with cloud providers, SaaS providers, and other APIs.</p>
+<p>Each provider adds a set of resource types and/or data sources that Terraform can manage.</p>
+<p>provider. chose cloud</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="terraform.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">provider</span> <span class="st">&quot;aws&quot;</span> {</span>
+<span id="cb7-2"><a href="terraform.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">region</span> = <span class="st">&quot;us-east-1&quot;</span></span>
+<span id="cb7-3"><a href="terraform.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+</div>
+<div id="resources" class="section level3 hasAnchor" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Resources<a href="terraform.html#resources" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="terraform.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_instance&quot;</span> <span class="st">&quot;my-instance&quot;</span> {</span>
+<span id="cb8-2"><a href="terraform.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">ami</span>           = <span class="st">&quot;ami-0ddbdea833a8d2f0d&quot;</span></span>
+<span id="cb8-3"><a href="terraform.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">instance_type</span> = <span class="st">&quot;t2.micro&quot;</span></span>
+<span id="cb8-4"><a href="terraform.html#cb8-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-5"><a href="terraform.html#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">tags</span> = {</span>
+<span id="cb8-6"><a href="terraform.html#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Name</span> = <span class="st">&quot;my-instance&quot;</span></span>
+<span id="cb8-7"><a href="terraform.html#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">ManagedBy</span> = <span class="st">&quot;Terraform&quot;</span></span>
+<span id="cb8-8"><a href="terraform.html#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="er">}</span></span>
+<span id="cb8-9"><a href="terraform.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+</div>
+<div id="data-sources" class="section level3 hasAnchor" number="3.3.4">
+<h3><span class="header-section-number">3.3.4</span> Data Sources<a href="terraform.html#data-sources" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="input-variables" class="section level3 hasAnchor" number="3.3.5">
+<h3><span class="header-section-number">3.3.5</span> Input Variables<a href="terraform.html#input-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="output-variables" class="section level3 hasAnchor" number="3.3.6">
+<h3><span class="header-section-number">3.3.6</span> Output Variables<a href="terraform.html#output-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="local-variables" class="section level3 hasAnchor" number="3.3.7">
+<h3><span class="header-section-number">3.3.7</span> Local Variables<a href="terraform.html#local-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="modules" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Modules<a href="terraform.html#modules" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="language" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Language<a href="terraform.html#language" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Input Variables — Serve as parameters for a Terraform module, so users can customize behavior without editing the source
+Modules — Acts as a container for multiple resources that are used together. It is a way to package and reuse resource configurations.
+Resources — Documents the syntax for declaring resources
+Data sources — Allow data to be fetched or computed for use elsewhere in Terraform configuration
+Output values — Return values for a Terraform module
+Local values — A convenience feature for assigning a short name to an expression</p>
+</div>
+<div id="additionals" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> additionals<a href="terraform.html#additionals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="count-and-for_each-meta-arguments" class="section level3 hasAnchor" number="3.6.1">
+<h3><span class="header-section-number">3.6.1</span> count and for_each Meta Arguments<a href="terraform.html#count-and-for_each-meta-arguments" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="workspaces" class="section level3 hasAnchor" number="3.6.2">
+<h3><span class="header-section-number">3.6.2</span> workspaces<a href="terraform.html#workspaces" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="full-example---building-ec2-and-s3" class="section level2 hasAnchor" number="3.7">
+<h2><span class="header-section-number">3.7</span> Full example - building ec2 and s3<a href="terraform.html#full-example---building-ec2-and-s3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><a href="https://www.baeldung.com/ops/terraform-intro" class="uri">https://www.baeldung.com/ops/terraform-intro</a></p>
+<div class="figure">
+<img src="images/04-Kubernetes/k8s-cluster.png" alt="" />
+<p class="caption">K8s Cluster</p>
+</div>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="architecture.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -296,7 +407,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/%s",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/02-Terraform.Rmd",
 "text": "Edit"
 },
 "history": {

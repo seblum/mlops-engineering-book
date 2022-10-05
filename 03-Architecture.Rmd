@@ -1,0 +1,26 @@
+# Architecture
+
+
+## Airflow
+
+### RDS
+### Github Sync
+
+## MLFlow
+
+### Airflow integration
+
+## EKS Cluster
+
+### User Management
+
+### Monitoring
+
+## Deployment
+
+Deployment using terraform and helm
+
+CICD using github actions possible
+
+
+![K8s Cluster](images/04-Kubernetes/k8s-cluster.png) 
