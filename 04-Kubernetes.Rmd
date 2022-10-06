@@ -1308,6 +1308,7 @@ spec:
 Lets assume we have a StatefulSet with 3 replicas. Each Pod has a PV attached.
 
 ```yaml
+
 ```
 
 
