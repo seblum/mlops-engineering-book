@@ -35,6 +35,8 @@ When a project is run for the first time the terraform project needs to be initi
 ```bash
 terraform init — Initializes the working directory which consists of all the configuration files
 ```
+![Terraform init](images/02-Terraform/terraform-init.png) 
+
 
 ### terraform validate
 
@@ -43,6 +45,7 @@ The `terraform validate` command checks the code for syntax errors. This is opti
 ```bash
 terraform validate — Validates the configuration files in a directory
 ```
+![Terraform validate](images/02-Terraform/terraform-validate.png) 
 
 ### terraform plan
 
@@ -51,6 +54,9 @@ The `terraform plan` command verifies what action Terraform will perform and wha
 ```bash
 terraform plan — Creates an execution plan to reach a desired state of the infrastructure
 ```
+
+![Terraform plan](images/02-Terraform/terraform-plan.png) 
+
 
 ### terraform apply
 
@@ -62,6 +68,9 @@ If there have been made changes in the terraform ressources and those changes sh
 terraform apply — Makes the changes in the infrastructure as defined in the plan
 ```
 
+![Terraform apply](images/02-Terraform/terraform-apply.png) 
+
+
 ### terraform destroy
 
 Finally, to destoy all created ressouces and to delete everything we did before, there is the `terraform destroy` command.
@@ -69,6 +78,8 @@ Finally, to destoy all created ressouces and to delete everything we did before,
 ```bash
 terraform destroy — Deletes all the old infrastructure resources
 ```
+
+![Terraform destroy](images/02-Terraform/terraform-destroy.png) 
 
 
 ## Core Concepts
@@ -134,46 +145,159 @@ resource "aws_instance" "web" {
 }
 ```
 
+## State
 
+A terraform state is file that stores all details about the resources and data created within a given context. Whenever we create a resource such as the *aws_instace*, terrafrom stores its identifier in the statefile. 
+
+Providing information about already existing resources is the primary purpose of the statefile. When we apply the terraform script or whenever we modify our resource definitions, terraform knows what to create, change, or delete on the basis of the existing entries within the statefile. Keep in mind that everything we specifiy within terraform will be stored in the statefile so beware of sensitive information such as initial passwords.
+
+Terraform uses the concept of a backend to store and retrieve it state files. The default backend is the local backend, which means to store the terraform state in a file in the project's root folder. However, we can also configure an alternative (remote) backend to store them elsewhere. The backend can be declared within a *terraform* block in the project files. The given example stores the statefile in an s3 bucket on aws. Keep in mind this needs access to an AWS account and also needs the aws provider to use with terraform.
+
+```yaml
+terraform {
+  backend "s3" {
+    bucket = "some-bucket"
+    key = "some-storage-key"
+    region = "us-east-1"
+  }
+}
+```
+    
 ## Modules
 
-Modules act as a container for multiple resources that are used together. It is a way to package and reuse resource configurations.
+Terraform modules allow to reuse resources in multiple places throughout your project. They act as a container to package and reuse resource configurations. Much like in standard programming languages we can we organize our code across multiple files and packages instead of having one single file containing all the code. Wrapping one code into a module also allows to reuse it in different environments, for example when deploy a *dev* and a *prod* infrastructure. Both environments can reuse the code from the same module, just with different setting.
+
+A module is a directory containing one or more resource definition files. Basically, when putting all our code in a single directory we have a module - yet only one. However,  terraform does not include subdirectories on its own as part of a module. Subdirectories must be called explicitly using a terraform *module*. In the example below we are referencing a module located in a *./network* subdirectory and passing a two parameters to it.
+
+```yaml
+module "network" {
+  source = "./networking"
+  create_public_ip = true
+  environment = "prod"
+}
+```
+
+Hence a module consists of a similar file structure as our root directory. We have a *main.tf* where all resources are specified as well as files for different data sources such as *variables.tf* and *outputs.tf*. Though, providers should be configured only in the root module and not in reusable modules.
+
+```
+root
+│   main.tf
+│   variables.tf
+│   outputs.tf
+│
+└── networking
+    │   main.tf
+    │   variables.tf
+    │   outputs.tf
+```
 
 
 ### Input Variables
 
-Input Variables serve as parameters for a Terraform module, so users can customize behavior without editing the source.
+Each module can have multiple input variables. Input Variables serve as parameters for a Terraform module, so users can customize behavior without editing the source. In the previous networking example there are two input variables *create_public_ip* and *environment*. Input variables are specified in the *variables.tf* file.
+
+```yaml
+variable "instance_name" {
+  type = string
+  default = "awesome-instance"
+  description = "Name of the aws instance to be created"
+}
+```
+Each variable has a type (e.g. _string_, _map_, _set_, _boolen_) and may have a default value and description. Any variable that has no default value must be supplied using the arguments when calling a *module* reference. This means that variables defined at the root module need actual values assigned to so terraform will not fail. Terraform can do this by differenz resources.
+
+* _-var_ command-line option
+* _.tfvar_ files, using command-line options or scanning for well-known files/locations
+* Environment variables starting with _TF\_VAR\__
+* The variable's _default_ value, if present
+
+Variables can be used in expressions using the *var.*-prefix such as shown in below example. We use the resource configuration of our previous example to create an aws instance, but this time we reference its name from a variable.
+
+```yaml
+resource "aws_instance" "awesome-instance" {
+  ami           = "ami-0ddbdea833a8d2f0d"
+  instance_type = "t2.micro"
+  
+  tags = {
+    Name = var.instance_name
+  }
+}
+```
+
 
 ### Output Variables
 
-Output values are return values for a Terraform module
+Similar to Input variables, a terraform module has output variables. As their name state, Output values return values of a Terraform module and are denoted in the *outputs.tf* file as expected. A module's consumer has no access to any resources or data created within the module itself. However, sometimes a modules attrivutes are needed for another module or resource. Output variables address this issue by exposing a defined subset of the created resources.
+
+The example below defines an output value *instance_address* containing the IP address of an EC2 instance the we create with a module. Any module that reference this module can use the *instance_address* value by referencing it via *module.module_name.instance_address*
+
+```yaml
+output "instance_address" {
+      value = aws_instance.awesome-instance.private_ip
+      description = "Web server's private IP address"
+    }
+```
 
 ### Local Variables
 
-Local values are basically just a convenience feature to assign a shorter name to an expression
+Additionally to Input variables and output variables a module provides the use of local variables.
+Local values are basically just a convenience feature to assign a shorter name to an expression and work like standard variables. This means theor scope is also limited to the module they are declared in. Using local variables reduces code repetitions which can be especially valuable when dealing with output variables from a module. 
 
+```yaml
+locals {
+  vpc_id = module.network.vpc_id
+}
+module "network" {
+  source = "./network"
+}
+module "service1" {
+  source = "./service1"
+  vpc_id = local.vpc_id
+}
+module "service2" {
+  source = "./service2"
+  vpc_id = local.vpc_id
+}
+```
 
+## Additional tips & tricks
 
-
-
-## Additionals
-
-### count and for_each Meta Arguments
-
-### workspaces
-
-### State
-
-
-## File structure
-
-
-## Full example - building ec2 and s3
+https://blog.gruntwork.io/terraform-tips-tricks-loops-if-statements-and-gotchas-f739bbae55f9
 https://www.baeldung.com/ops/terraform-intro
 
-![K8s Cluster](images/04-Kubernetes/k8s-cluster.png) 
 
-## TODO
+### Loops
 
+The _count_ and _for_each_ meta arguments allow us to create multiple instances of any resource. 
+
+**for_each**
+
+_for_each _accepts a list or map of values.
+
+**counter**
+
+The main difference between them is that _count_ expects a non-negative number
+
+### Conditionals
+
+if-statements
+
+### Workspaces
+
+Terraform workspaces allow us to keep multiple state files for the same project. When we run Terraform for the first time in a project, the generated state file will go into the _default_ workspace. Later, we can create a new workspace with the _terraform workspace new_ command, optionally supplying an existing state file as a parameter.
+
+
+
+## Putting an example together
+
+**Building a VPC with EC2 & S3**
+
+
+
+
+
+# TODO
 - [ ] when is the statefile created?
-- [ ] 
+- [ ] make image for usage steps
+- [ ] what is terraform {}
+- [ ] disclaimer for aws cloud schreiben dass das wissen vorher benötigt wird
+- [ ] disclaimer of cloud und netwerke schreiben
