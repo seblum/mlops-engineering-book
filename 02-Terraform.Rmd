@@ -267,6 +267,83 @@ https://www.baeldung.com/ops/terraform-intro
 
 ### Loops
 
+because declarative languages typically don’t have for-loops, how do you repeat a piece of logic—such as creating multiple similar resources—without copy and paste?
+
+Terraform comes with several different looping constructs, each used slightly different.
+
++ count - to loop over resources and modules
+
+Terraform does not have for-loops or other traditional procedural logic built into the language, so this syntax will not work. However, every Terraform resource has a meta-parameter you can use called count. count is Terraform’s oldest, simplest, and most limited iteration construct: all it does is define how many copies of the resource to create. 
+
+One problem is that all three IAM users would have the same name, which would cause an error, since usernames must be unique. If you had access to a standard for-loop, you might use the index in the for-loop, i, to give each user a unique name:
+
+
+```yaml
+resource "aws_iam_user" "example" {
+  count = 3
+  name  = "neo.${count.index}"
+}
+
+variable "user_names" {
+  description = "Create IAM users with these names"
+  type        = list(string)
+  default     = ["neo", "trinity", "morpheus"]
+}
+
+resource "aws_iam_user" "example" {
+  count = length(var.user_names) # returns the number of items in the given array
+  name  = var.user_names[count.index]
+}
+```
+Note that after you’ve used count on a resource, it becomes an array of resources rather than just one resource.
+the count parameter can also be used on modules. Just as adding count to a resource turns it into an array of resources, adding count to a module turns it into an array of modules. 
+
++ for_each - to loop over resources, inline blocks within a resource, and modules
+
+The for_each expression allows you to loop over lists, sets, and maps to create (a) multiple copies of an entire resource, (b) multiple copies of an inline block within a resource, or (c) multiple copies of a module.
+
+for_each supports sets and maps only when used on a resource.
+
+```yaml
+resource "aws_iam_user" "example" {
+  for_each = toset(var.user_names)
+  name     = each.value
+}
+```
+The fact that you now have a map of resources with for_each rather than an array of resources as with count is a big deal, because it allows you to remove items from the middle of a collection safely. 
+
+another advantage of for_each: its ability to create multiple inline blocks within a resource.
+
+can be more complex with tagging. does not work for count, but for for each. not mentioned as general intro not focus on.
+
++ for - to loop over lists and maps
+
+Terraform offers similar functionality as python list comprehension in the form of a for expression (not to be confused with the for_each expression you saw in the previous section). The basic syntax of a for expression is as follows:
+here is the Terraform code to convert the list of names in var.names to uppercase:
+
+```yaml
+variable "names" {
+  description = "A list of names"
+  type        = list(string)
+  default     = ["neo", "trinity", "morpheus"]
+}
+
+output "upper_names" {
+  value = [for name in var.names : upper(name)]
+}
+
+output "short_upper_names" {
+  value = [for name in var.names : upper(name) if length(name) < 5]
+}
+```
+
+
+
+
++ for string directive - to loop over lists and maps within a string
+
+
+
 The _count_ and _for_each_ meta arguments allow us to create multiple instances of any resource. 
 
 **for_each**
