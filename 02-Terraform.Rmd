@@ -6,19 +6,21 @@ IaC means using machine-readable definition files to manage and provision an ent
 
 Terraform is developed by HashiCorp, open-source, and allows to create both on-prem and cloud resources. There are several differend hundred providers that can be used with Terraform, such as Amazon Web Services (AWS), Azure, Google Cloud Platform (GCP), Kubernetes, Helm, GitHub, Splunk, DataDog, etc.
 
+Terraform is a declarative language. This allows to provide a more accurate view of what has been deployed than for example a procedural language. This makes it easier to reason about and to keep the codebase small. 
+
 We want to use Terraform to create our ressource needed for Airflow in an automated way. 
 
 
 ## Prerequisites
 
-To be able to follow through this tutorial, one needs to have the AWS CLI installed as well as the AWS credentials set up. Further, Terraform itself needs to be installed. Please refer to the corresponding sites. One can check its installation via `terraform version`.
+To be able to follow this tutorial, one needs to have the AWS CLI installed as well as the AWS credentials set up. It is also recommended to have basic knowledge of the AWS Cloud as this tutorials used the AWS infrastructure to provision cloud resources. Further, Terraform itself needs to be installed. Please refer to the corresponding sites. The scripts are run under Terraform version v1.0.3 (check). Later releases might have breaking changes. One can check its installation via `terraform version`.
 
 
 ## Basic usage
 
 A Terraform project is basically just a set of files in a directory containing resource definitions of the cloud ressources to be created. Those Terraform files, denoted by the ending *.tf*, use Terraform's configuration language to define the specified resources. In the following example there are two definitions made: a *provider* and a *resource*. Later in this chapter we will dive deeper in the structure of the language. For now we only need to know this script is creating a file *hello.txt* which includes the text "Hello, Teraform". It's our Terraform version of Hello World!
 
-```bash
+```yaml
 provider "local" {
   version = "~> 1.4"
 }
@@ -103,7 +105,7 @@ provider "aws" {
 
 A Terraform resource is the core building block when working with IaC. It documents the syntax for declaring resources. This can be a *"local_file"* such as shown in the example above, or a cloud resource such as an *"ec2_instance"* on aws. The resource type is followed by the Terraform-name of the resource. Each specific customization and setting to the ressource is done within the resource specification. The style convention when writing Terraform code states that the resource name is named in lowercase as well as it should not repeat the resource type.
 
-```bash
+```yaml
 resource "aws_instance" "my-instance" {
   ami           = "ami-0ddbdea833a8d2f0d"
   instance_type = "t2.micro"
@@ -170,6 +172,7 @@ Terraform modules allow to reuse resources in multiple places throughout your pr
 A module is a directory containing one or more resource definition files. Basically, when putting all our code in a single directory we have a module - yet only one. However,  terraform does not include subdirectories on its own as part of a module. Subdirectories must be called explicitly using a terraform *module*. In the example below we are referencing a module located in a *./network* subdirectory and passing a two parameters to it.
 
 ```yaml
+# main.tf
 module "network" {
   source = "./networking"
   create_public_ip = true
@@ -197,6 +200,7 @@ root
 Each module can have multiple input variables. Input Variables serve as parameters for a Terraform module, so users can customize behavior without editing the source. In the previous networking example there are two input variables *create_public_ip* and *environment*. Input variables are specified in the *variables.tf* file.
 
 ```yaml
+# variables.tf
 variable "instance_name" {
   type = string
   default = "awesome-instance"
@@ -213,6 +217,7 @@ Each variable has a type (e.g. _string_, _map_, _set_, _boolen_) and may have a 
 Variables can be used in expressions using the *var.*-prefix such as shown in below example. We use the resource configuration of our previous example to create an aws instance, but this time we reference its name from a variable.
 
 ```yaml
+# main.tf
 resource "aws_instance" "awesome-instance" {
   ami           = "ami-0ddbdea833a8d2f0d"
   instance_type = "t2.micro"
@@ -231,6 +236,7 @@ Similar to Input variables, a terraform module has output variables. As their na
 The example below defines an output value *instance_address* containing the IP address of an EC2 instance the we create with a module. Any module that reference this module can use the *instance_address* value by referencing it via *module.module_name.instance_address*
 
 ```yaml
+# outputs.tf
 output "instance_address" {
       value = aws_instance.awesome-instance.private_ip
       description = "Web server's private IP address"
@@ -239,10 +245,10 @@ output "instance_address" {
 
 ### Local Variables
 
-Additionally to Input variables and output variables a module provides the use of local variables.
-Local values are basically just a convenience feature to assign a shorter name to an expression and work like standard variables. This means theor scope is also limited to the module they are declared in. Using local variables reduces code repetitions which can be especially valuable when dealing with output variables from a module. 
+Additionally to Input variables and output variables a module provides the use of local variables. Local values are basically just a convenience feature to assign a shorter name to an expression and work like standard variables. This means theor scope is also limited to the module they are declared in. Using local variables reduces code repetitions which can be especially valuable when dealing with output variables from a module. 
 
 ```yaml
+# main.tf
 locals {
   vpc_id = module.network.vpc_id
 }
@@ -261,22 +267,13 @@ module "service2" {
 
 ## Additional tips & tricks
 
-https://blog.gruntwork.io/terraform-tips-tricks-loops-if-statements-and-gotchas-f739bbae55f9
-https://www.baeldung.com/ops/terraform-intro
+Of course there is much more to Terraform than these small examples can provide. Yet there are also some contrains when working with Terraform or declarative languages in general. Typically they do not have  for-loops or other traditional procedural logic built into the language to repeat a piece of logic or conditional if-statements to configure reasources on demand. However, there are ways there are some ways to deal with this issue and to create multiple respurces without copy and paste.
 
+Terraform comes with different looping constructs, each used slightly different. The *count* and *for_each* meta arguments enable us to create multiple instances of a resource. 
 
-### Loops
+### Count
 
-because declarative languages typically don’t have for-loops, how do you repeat a piece of logic—such as creating multiple similar resources—without copy and paste?
-
-Terraform comes with several different looping constructs, each used slightly different.
-
-+ count - to loop over resources and modules
-
-Terraform does not have for-loops or other traditional procedural logic built into the language, so this syntax will not work. However, every Terraform resource has a meta-parameter you can use called count. count is Terraform’s oldest, simplest, and most limited iteration construct: all it does is define how many copies of the resource to create. 
-
-One problem is that all three IAM users would have the same name, which would cause an error, since usernames must be unique. If you had access to a standard for-loop, you might use the index in the for-loop, i, to give each user a unique name:
-
+Count can be used to loop over any resource and module. Every Terraform resource has a meta-parameter *count* one can use. Count is the simplest, and most limited iteration construct and all it does is to define how many copies to create of a resource. When creating multiple instance with one specification, the problem is that each instance must have a unique name, otherwise Terraform would cause an error. Therefore we need to index the meta-parameter just like doing it in a for-loop to give each resource a unique name. The example below shows how to do this on an AWS IAM user.
 
 ```yaml
 resource "aws_iam_user" "example" {
@@ -287,7 +284,7 @@ resource "aws_iam_user" "example" {
 variable "user_names" {
   description = "Create IAM users with these names"
   type        = list(string)
-  default     = ["neo", "trinity", "morpheus"]
+  default     = ["adam", "eve", "snake", "apple"]
 }
 
 resource "aws_iam_user" "example" {
@@ -295,39 +292,73 @@ resource "aws_iam_user" "example" {
   name  = var.user_names[count.index]
 }
 ```
-Note that after you’ve used count on a resource, it becomes an array of resources rather than just one resource.
-the count parameter can also be used on modules. Just as adding count to a resource turns it into an array of resources, adding count to a module turns it into an array of modules. 
 
-+ for_each - to loop over resources, inline blocks within a resource, and modules
+![count](images/02-Terraform/additionals_count.png) 
 
-The for_each expression allows you to loop over lists, sets, and maps to create (a) multiple copies of an entire resource, (b) multiple copies of an inline block within a resource, or (c) multiple copies of a module.
+After using count on a resource it becomes an array of resources rather than one single resource. The same hold when using count on modules. When adding count to a module it turns it into an array of modules.
 
-for_each supports sets and maps only when used on a resource.
+This can round into problems because the way Terraform identifies each resource within the array is by its index. Now, when removing an item from the middle of the array, all items after it shift one index back. This will result in Terraform deleting every resource after that item and then re-creating these resources again from scratch
+
+So after running `terraform plan` with just three names, Terraform’s internal representation will look like this:
+```yaml
+variable "user_names" {
+  description = "Create IAM users with these names"
+  type        = list(string)
+  default     = ["adam", "eve", "apple"]
+}
+
+resource "aws_iam_user" "example" {
+  count = length(var.user_names) # returns the number of items in the given array
+  name  = var.user_names[count.index]
+}
+```
+
+**Count as conditional**
+Count can also be used as a form of a conditional if statement. This is possible as Terraform  supports *conditional expressions*. If `count` is set to one 1, one copy of that resource is created; if set to 0, the resource is not created at all. Writing this as a conditional expression could look something like the follow, where var.enable_autoscaling is a boolean variable either set to `True` or `False`.
 
 ```yaml
+resource "example-1" "example" {
+  count = var.enable_autoscaling ? 1 : 0
+  name  = var.user_names[count.index]
+}
+```
+
+### for-each
+
+The *for_each* expression allows to loop over lists, sets, and maps to create multiple copies of a resource just like the *count* meta. The main difference between them is that *count* expects a non-negative number, whereas *for_each* only accepts a list or map of values. Using the same example as above it would look like this:
+
+```yaml
+variable "user_names" {
+  description = "Create IAM users with these names"
+  type        = list(string)
+  default     = ["adam", "eve", "snake", "apple"]
+}
+
 resource "aws_iam_user" "example" {
   for_each = toset(var.user_names)
   name     = each.value
 }
+
+output "all_users" {  
+  value = aws_iam_user.example  
+}
 ```
-The fact that you now have a map of resources with for_each rather than an array of resources as with count is a big deal, because it allows you to remove items from the middle of a collection safely. 
-
-another advantage of for_each: its ability to create multiple inline blocks within a resource.
-
-can be more complex with tagging. does not work for count, but for for each. not mentioned as general intro not focus on.
-
-+ for - to loop over lists and maps
-
-Terraform offers similar functionality as python list comprehension in the form of a for expression (not to be confused with the for_each expression you saw in the previous section). The basic syntax of a for expression is as follows:
-here is the Terraform code to convert the list of names in var.names to uppercase:
+Using a map of resource with the *for_each* meta rather than an array of resources as with *count* has the benefit to remove items from the middle of the collection safely and without re-creating the resources following the deleted item. Of course, the same can also be done for modules.
 
 ```yaml
-variable "names" {
-  description = "A list of names"
-  type        = list(string)
-  default     = ["neo", "trinity", "morpheus"]
+module "users" {  
+  source = "./iam-user"  
+  
+  for_each  = toset(var.user_names)  
+  user_name = each.value  
 }
+```
 
+### for
+
+Terraform also offers a similar functionality as python list comprehension in the form of a for expression. This should not be confused with the *for-each* expression seen above. The basic syntax is shown below to convert the list of names of previous examples in var.names to uppercase:
+
+```yaml
 output "upper_names" {
   value = [for name in var.names : upper(name)]
 }
@@ -337,44 +368,85 @@ output "short_upper_names" {
 }
 ```
 
+![for on list](images/02-Terraform/additionals_for_on_list.png) 
 
+Using for to loop over lists and maps within a string can be used similarly. This allows us to use control statements directly withing strings using a syntax similar to string interpolation.
 
+```yaml
+output "for_directive" {  
+  value = "%{ for name in var.names }${name}, %{ endfor }"  
+}
+```
 
-+ for string directive - to loop over lists and maps within a string
+![for on string](images/02-Terraform/additionals_for_on_string.png) 
 
-
-
-The _count_ and _for_each_ meta arguments allow us to create multiple instances of any resource. 
-
-**for_each**
-
-_for_each _accepts a list or map of values.
-
-**counter**
-
-The main difference between them is that _count_ expects a non-negative number
-
-### Conditionals
-
-if-statements
 
 ### Workspaces
 
-Terraform workspaces allow us to keep multiple state files for the same project. When we run Terraform for the first time in a project, the generated state file will go into the _default_ workspace. Later, we can create a new workspace with the _terraform workspace new_ command, optionally supplying an existing state file as a parameter.
+Terraform workspaces allow us to keep multiple state files for the same project. When we run Terraform for the first time in a project, the generated state file will go into the *default* workspace. Later, we can create a new workspace with the `terraform workspace new` command, optionally supplying an existing state file as a parameter.
+
+![workspaces](images/02-Terraform/additionals_workspaces.png)
 
 
-
-## Putting an example together
+## Putting it together
 
 **Building a VPC with EC2 & S3**
 
+Finally, we want to put everything together and provision our own cloud infrastructure using Terraform. We will create a AWS Virtual private Cloud with EC2 Instances running on it, and S3 Buckets attached to the them. We will use *for_each* and *count* to create multiple instaces. The Terraform infrastructure is separated into three modules *VPS*, *EC2*, and *S3*.
 
+```yaml
+root
+│   main.tf
+│   variables.tf
+│   outputs.tf
+│
+└── networking
+│   │   main.tf
+│   │   variables.tf
+│   │   outputs.tf
+│
+└── ec2
+│   │   main.tf
+│   │   variables.tf
+│   │   outputs.tf
+│
+└── s3
+    │   main.tf
+    │   variables.tf
+    │   outputs.tf
+```
 
+### Root
 
+#### main.tf
+#### variables.tf
+#### outputs.tf
+#### providers.tf
+
+### Networking
+
+#### main.tf
+#### variables.tf
+#### outputs.tf
+
+### EC2
+
+#### main.tf
+#### variables.tf
+#### outputs.tf
+
+### S3
+
+#### main.tf
+#### variables.tf
+#### outputs.tf
 
 # TODO
 - [ ] when is the statefile created?
-- [ ] make image for usage steps
+- [ ] make images for usage steps
+- [ ] make images for loops
 - [ ] what is terraform {}
-- [ ] disclaimer for aws cloud schreiben dass das wissen vorher benötigt wird
+- [x] disclaimer for aws cloud schreiben dass das wissen vorher benötigt wird
 - [ ] disclaimer of cloud und netwerke schreiben
+- [ ] check yamls
+- [ ] insert images
