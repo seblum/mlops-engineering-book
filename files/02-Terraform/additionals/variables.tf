@@ -7,6 +7,6 @@ variable "user_names" {
 
 variable "enable_private_users" {
   description = "Boolean to enable private users in conditional count"
-  type = bool 
-  default = true
+  type        = bool
+  default     = true
 }

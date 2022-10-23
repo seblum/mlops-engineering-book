@@ -1,6 +1,6 @@
 
 
-output "all_users" {  
+output "all_users" {
   value = aws_iam_user.count-example
 }
 
@@ -13,8 +13,8 @@ output "short_upper_names" {
 }
 
 # FOR
-output "for_directive" {  
-  value = "%{ for name in var.user_names }${name}, %{ endfor }"  
+output "for_directive" {
+  value = "%{for name in var.user_names}${name}, %{endfor}"
 }
 
 

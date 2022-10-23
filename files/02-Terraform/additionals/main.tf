@@ -7,7 +7,7 @@ resource "aws_iam_user" "count-example" {
 
 # COUNT INDEX
 resource "aws_iam_user" "count-index-example" {
-  count = length(var.user_names) 
+  count = length(var.user_names)
   name  = var.user_names[count.index]
 }
 
@@ -25,7 +25,7 @@ resource "aws_iam_user" "for-each-example" {
 
 # module "users" {  
 #   source = "./iam-user"  
-  
+
 #   for_each  = toset(var.user_names)  
 #   user_name = each.value  
 # }
@@ -37,8 +37,8 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket = "tutorial-terraform" 
-    key = "some-storage-key"
+    bucket = "tutorial-terraform"
+    key    = "some-storage-key"
     region = "eu-central-1"
   }
 }

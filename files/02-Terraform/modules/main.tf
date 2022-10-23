@@ -1,21 +1,14 @@
 locals {
-  vpc_id = module.network.vpc_id
+  vpc_id = module.networking.vpc_id
 }
-module "network" {
-  source = "./network"
+module "networking" {
+  source = "./networking"
 }
-module "service1" {
-  source = "./service1"
-  vpc_id = local.vpc_id
-}
-module "service2" {
-  source = "./service2"
-  vpc_id = local.vpc_id
-}
+
 
 
 resource "aws_instance" "awesome-instance" {
-  ami           = "ami-0ddbdea833a8d2f0d"
+  ami           = "ami-09042b2f6d07d164a"
   instance_type = "t2.micro"
 
   tags = {
@@ -24,8 +17,16 @@ resource "aws_instance" "awesome-instance" {
 }
 
 
-module "network" {
-  source           = "./networking"
-  create_public_ip = true
-  environment      = "prod"
+
+provider "aws" {
+  region = "eu-central-1"
+}
+
+terraform {
+  backend "s3" {
+    # The bucket needs to be created manually beforehand
+    bucket = "tutorial-terraform"
+    key    = "some-storage-key"
+    region = "eu-central-1"
+  }
 }
