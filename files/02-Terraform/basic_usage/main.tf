@@ -1,11 +1,10 @@
 provider "local" {
-  version = "~> 1.4"
 }
+
 resource "local_file" "hello" {
   content = "Hello, Terraform"
   filename = "hello.txt"
 }
-
 
 # terraform init — Initializes the working directory which consists of all the configuration files
 # terraform validate — Validates the configuration files in a directory

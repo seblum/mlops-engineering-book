@@ -3,10 +3,10 @@ providers {
 }
 
 terraform {
-  
+
 }
 
-locals{
+locals {
 
 }
 

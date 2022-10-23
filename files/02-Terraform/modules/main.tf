@@ -17,7 +17,7 @@ module "service2" {
 resource "aws_instance" "awesome-instance" {
   ami           = "ami-0ddbdea833a8d2f0d"
   instance_type = "t2.micro"
-  
+
   tags = {
     Name = var.instance_name
   }
@@ -25,7 +25,7 @@ resource "aws_instance" "awesome-instance" {
 
 
 module "network" {
-  source = "./networking"
+  source           = "./networking"
   create_public_ip = true
-  environment = "prod"
+  environment      = "prod"
 }
