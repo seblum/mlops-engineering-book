@@ -35,8 +35,10 @@ resource "local_file" "hello" {
 When a project is run for the first time the terraform project needs to be initialized. This is done via the `terraform init` command. Terraform scans the project files in this step and downloads any required providers needed (more to providers in the following). In the given example this is the local procider.
 
 ```bash
-terraform init — Initializes the working directory which consists of all the configuration files
+# Initializes the working directory which consists of all the configuration files
+terraform init
 ```
+
 ![Terraform init](images/02-Terraform/terraform-init.png) 
 
 
@@ -45,7 +47,8 @@ terraform init — Initializes the working directory which consists of all the c
 The `terraform validate` command checks the code for syntax errors. This is optional
 
 ```bash
-terraform validate — Validates the configuration files in a directory
+# Validates the configuration files in a directory
+terraform validate
 ```
 ![Terraform validate](images/02-Terraform/terraform-validate.png) 
 
@@ -54,7 +57,8 @@ terraform validate — Validates the configuration files in a directory
 The `terraform plan` command verifies what action Terraform will perform and what resources will be created. This step is basically a *dry run* of the code to be executed. It also returns the provided values and some permission attributes which have been set.
 
 ```bash
-terraform plan — Creates an execution plan to reach a desired state of the infrastructure
+# Creates an execution plan to reach a desired state of the infrastructure
+terraform plan
 ```
 
 ![Terraform plan](images/02-Terraform/terraform-plan.png) 
@@ -67,7 +71,8 @@ The command `Terraform apply` creates the resource specified in the .tf files. I
 If there have been made changes in the terraform ressources and those changes should be applied, `terraform apply` can be performed again as it is shown that resources will be changed.
 
 ```bash
-terraform apply — Makes the changes in the infrastructure as defined in the plan
+# Makes the changes in the infrastructure as defined in the plan
+terraform apply 
 ```
 
 ![Terraform apply](images/02-Terraform/terraform-apply.png) 
@@ -78,7 +83,8 @@ terraform apply — Makes the changes in the infrastructure as defined in the pl
 Finally, to destoy all created ressouces and to delete everything we did before, there is the `terraform destroy` command.
 
 ```bash
-terraform destroy — Deletes all the old infrastructure resources
+# Deletes all the old infrastructure resources
+terraform destroy
 ```
 
 ![Terraform destroy](images/02-Terraform/terraform-destroy.png) 
@@ -242,6 +248,8 @@ output "instance_address" {
       description = "Web server's private IP address"
     }
 ```
+
+![outputs](images/02-Terraform/outputs.png) 
 
 ### Local Variables
 
