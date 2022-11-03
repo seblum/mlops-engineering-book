@@ -2,9 +2,9 @@
 
 Terraform is an open-source, declarative programming language developed by HashiCorp and allows to create both on-prem and cloud resources in the form of writing code. This is also know as Infrastructure as Code (IAC). There are several IaC tools in the market today and Terraform is only one of them. Yet it is a well known and established tool and during the course of this project we only focus on this.
 
-Hashicorp describes that:
+[Hashicorp](https://www.terraform.io/docs)  describes that:
 <blockquote>
-Terraform is an infrastructure as code (IaC) tool that allows you to build, change, and version infrastructure safely and efficiently. This includes both low-level components like compute instances, storage, and networking, as well as high-level components like DNS entries and SaaS features. [@hashicorpwebsite] (https://www.terraform.io/docs) 
+Terraform is an infrastructure as code (IaC) tool that allows you to build, change, and version infrastructure safely and efficiently. This includes both low-level components like compute instances, storage, and networking, as well as high-level components like DNS entries and SaaS features. 
 </blockquote> 
 
 
@@ -469,7 +469,7 @@ root
 #### variables.tf
 #### outputs.tf
 
-# TODO
+## TODO
 - [ ] when is the statefile created?
 - [x] make images for usage steps
 - [x] make images for loops
