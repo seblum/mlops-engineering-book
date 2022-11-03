@@ -5,8 +5,8 @@ variable "user_names" {
   default     = ["adam", "eve", "snake", "apple"]
 }
 
-variable "enable_private_users" {
-  description = "Boolean to enable private users in conditional count"
-  type        = bool
-  default     = true
-}
+# variable "enable_private_users" {
+#   description = "Boolean to enable private users in conditional count"
+#   type        = bool
+#   default     = true
+# }
