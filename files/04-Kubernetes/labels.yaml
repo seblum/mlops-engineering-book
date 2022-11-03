@@ -1,0 +1,56 @@
+# labels.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cat-v2
+  labels:
+    app: cat-v1  
+    version: one  
+spec:
+  containers:
+  - name: cat-v2
+    image: "seblum/mlops-public:cat-v1"
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu:  "500m"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cat-v2
+  labels:
+    app: cat-v1
+spec:
+  containers:
+  - name: cat-v2
+    image: "seblum/mlops-public:cat-v2"
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu:  "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: labels-and-selectors
+spec:
+  type: NodePort
+  selector:
+    app: cat-v1
+  ports:
+  - port: 80
+    targetPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: labels-and-selectors-2
+spec:
+  type: NodePort
+  selector:
+    app: cat-v1
+    environment: dev
+  ports:
+  - port: 80
+    targetPort: 5000

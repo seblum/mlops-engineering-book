@@ -29,7 +29,7 @@ set in the _output.yml file.</p>" />
 <meta name="author" content="John Doe" />
 
 
-<meta name="date" content="2022-07-20" />
+<meta name="date" content="2022-07-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -191,14 +191,21 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="hello-bookdown-2.html"><a href="hello-bookdown-2.html#an-unnumbered-section-2"><i class="fa fa-check"></i>An unnumbered section</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="kubernetes-trainingtutorial.html"><a href="kubernetes-trainingtutorial.html"><i class="fa fa-check"></i><b>5</b> Kubernetes Training/Tutorial</a>
+<li class="chapter" data-level="5" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>5</b> Kubernetes</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="kubernetes-trainingtutorial.html"><a href="kubernetes-trainingtutorial.html#pods---tbf"><i class="fa fa-check"></i><b>5.1</b> Pods - TBF</a></li>
-<li class="chapter" data-level="5.2" data-path="kubernetes-trainingtutorial.html"><a href="kubernetes-trainingtutorial.html#kubectl"><i class="fa fa-check"></i><b>5.2</b> Kubectl</a></li>
-<li class="chapter" data-level="5.3" data-path="kubernetes-trainingtutorial.html"><a href="kubernetes-trainingtutorial.html#labels-selectors-and-annotations---tbf"><i class="fa fa-check"></i><b>5.3</b> Labels, Selectors and Annotations - TBF</a></li>
-<li class="chapter" data-level="5.4" data-path="kubernetes-trainingtutorial.html"><a href="kubernetes-trainingtutorial.html#service-discovery"><i class="fa fa-check"></i><b>5.4</b> Service Discovery</a></li>
-<li class="chapter" data-level="5.5" data-path="kubernetes-trainingtutorial.html"><a href="kubernetes-trainingtutorial.html#volume-storage"><i class="fa fa-check"></i><b>5.5</b> Volume &amp; Storage</a></li>
-<li class="chapter" data-level="5.6" data-path="kubernetes-trainingtutorial.html"><a href="kubernetes-trainingtutorial.html#namespaces"><i class="fa fa-check"></i><b>5.6</b> Namespaces</a></li>
+<li class="chapter" data-level="5.1" data-path="kubernetes.html"><a href="kubernetes.html#pods"><i class="fa fa-check"></i><b>5.1</b> Pods</a></li>
+<li class="chapter" data-level="5.2" data-path="kubernetes.html"><a href="kubernetes.html#kubectl"><i class="fa fa-check"></i><b>5.2</b> Kubectl</a></li>
+<li class="chapter" data-level="5.3" data-path="kubernetes.html"><a href="kubernetes.html#labels-selectors-and-annotations---tbf"><i class="fa fa-check"></i><b>5.3</b> Labels, Selectors and Annotations - TBF</a></li>
+<li class="chapter" data-level="5.4" data-path="kubernetes.html"><a href="kubernetes.html#service-discovery"><i class="fa fa-check"></i><b>5.4</b> Service Discovery</a></li>
+<li class="chapter" data-level="5.5" data-path="kubernetes.html"><a href="kubernetes.html#volume-storage"><i class="fa fa-check"></i><b>5.5</b> Volume &amp; Storage</a></li>
+<li class="chapter" data-level="5.6" data-path="kubernetes.html"><a href="kubernetes.html#configmaps"><i class="fa fa-check"></i><b>5.6</b> ConfigMaps</a></li>
+<li class="chapter" data-level="5.7" data-path="kubernetes.html"><a href="kubernetes.html#secrets"><i class="fa fa-check"></i><b>5.7</b> Secrets</a></li>
+<li class="chapter" data-level="5.8" data-path="kubernetes.html"><a href="kubernetes.html#namespaces"><i class="fa fa-check"></i><b>5.8</b> Namespaces</a></li>
+<li class="chapter" data-level="5.9" data-path="kubernetes.html"><a href="kubernetes.html#health-checks"><i class="fa fa-check"></i><b>5.9</b> Health Checks</a></li>
+<li class="chapter" data-level="5.10" data-path="kubernetes.html"><a href="kubernetes.html#ressource-management"><i class="fa fa-check"></i><b>5.10</b> Ressource Management</a></li>
+<li class="chapter" data-level="5.11" data-path="kubernetes.html"><a href="kubernetes.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>5.11</b> Jobs &amp; Cron Jobs</a></li>
+<li class="chapter" data-level="5.12" data-path="kubernetes.html"><a href="kubernetes.html#deamon-sets"><i class="fa fa-check"></i><b>5.12</b> Deamon Sets</a></li>
+<li class="chapter" data-level="5.13" data-path="kubernetes.html"><a href="kubernetes.html#statefulsets"><i class="fa fa-check"></i><b>5.13</b> StatefulSets</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="blocks.html"><a href="blocks.html"><i class="fa fa-check"></i><b>6</b> Blocks</a>
 <ul>
@@ -278,8 +285,8 @@ div.csl-indent {
 <h2><span class="header-section-number">8.2</span> Captioned figures and tables<a href="cross.html#captioned-figures-and-tables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Figures and tables <em>with captions</em> can also be cross-referenced from elsewhere in your book using <code>\@ref(fig:chunk-label)</code> and <code>\@ref(tab:chunk-label)</code>, respectively.</p>
 <p>See Figure <a href="cross.html#fig:nice-fig">8.1</a>.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="cross.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, .<span class="dv">1</span>, .<span class="dv">1</span>))</span>
-<span id="cb18-2"><a href="cross.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pressure, <span class="at">type =</span> <span class="st">&#39;b&#39;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="cross.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, .<span class="dv">1</span>, .<span class="dv">1</span>))</span>
+<span id="cb31-2"><a href="cross.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pressure, <span class="at">type =</span> <span class="st">&#39;b&#39;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:nice-fig"></span>
 <img src="_main_files/figure-html/nice-fig-1.png" alt="Plot with connected points showing that vapor pressure of mercury increases exponentially as temperature increases." width="80%" />
 <p class="caption">
@@ -287,10 +294,10 @@ Figure 8.1: Here is a nice figure!
 </p>
 </div>
 <p>Don’t miss Table <a href="cross.html#tab:nice-tab">8.1</a>.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="cross.html#cb19-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb19-2"><a href="cross.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(pressure, <span class="dv">10</span>), <span class="at">caption =</span> <span class="st">&#39;Here is a nice table!&#39;</span>,</span>
-<span id="cb19-3"><a href="cross.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span></span>
-<span id="cb19-4"><a href="cross.html#cb19-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="cross.html#cb32-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb32-2"><a href="cross.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(pressure, <span class="dv">10</span>), <span class="at">caption =</span> <span class="st">&#39;Here is a nice table!&#39;</span>,</span>
+<span id="cb32-3"><a href="cross.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">booktabs =</span> <span class="cn">TRUE</span></span>
+<span id="cb32-4"><a href="cross.html#cb32-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:nice-tab">Table 8.1: </span>Here is a nice table!</caption>
 <thead>
