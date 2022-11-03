@@ -8,3 +8,6 @@ _bookdown_files
 rsconnect
 
 Rmd_book_template
+
+
+.DS_Store
