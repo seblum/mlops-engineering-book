@@ -13,7 +13,7 @@ link-citations: yes
 github-repo: seblum/mlops-practice
 ---
 
-# About
+# Preamble {-}
 
 This document is written during my journey in the realm of MLOps. It is therefore in a state of continuous development. 
 
