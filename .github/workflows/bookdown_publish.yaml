@@ -45,8 +45,8 @@ jobs:
        env:
           EMAIL: ${{ SECRETS.EMAIL }}               # must be a verified email
           GH_TOKEN: ${{ SECRETS.GH_PAT }}           # https://github.com/settings/tokens
+       with:
           BUILD_DIR: docs/     
           INPUT_BUILD_DIR: docs/     
-          build_dir: docs/             # "_site/" by default
           branch: gh-pages
  
