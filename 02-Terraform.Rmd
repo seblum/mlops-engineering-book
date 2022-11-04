@@ -363,12 +363,7 @@ output "all_users" {
 }
 ```
 
-<<<<<<< HEAD
 ![for each on list](images/02-Terraform/additionals_for_each_on_list.png)
-=======
-![for each](images/02-Terraform/additionals_for_each.png)
-
->>>>>>> ab16f8b8832cb3f4c8851aa0fafa06fff554647a
 
 Using a map of resource with the *for_each* meta rather than an array of resources as with *count* has the benefit to remove items from the middle of the collection safely and without re-creating the resources following the deleted item. Of course, the same can also be done for modules.
 
@@ -443,39 +438,3 @@ root
     │   variables.tf
     │   outputs.tf
 ```
-
-### Root
-
-#### main.tf
-#### variables.tf
-#### outputs.tf
-#### providers.tf
-
-### Networking
-
-#### main.tf
-#### variables.tf
-#### outputs.tf
-
-### EC2
-
-#### main.tf
-#### variables.tf
-#### outputs.tf
-
-### S3
-
-#### main.tf
-#### variables.tf
-#### outputs.tf
-
-# TODO
-- [ ] when is the statefile created?
-- [x] make images for usage steps
-- [x] make images for loops
-- [ ] what is terraform {}
-- [x] disclaimer for aws cloud schreiben dass das wissen vorher benötigt wird
-- [ ] disclaimer of cloud und netwerke schreiben
-- [ ] check yamls
-- [ ] insert images for workspace
-- [ ] Korrektur lesen ab output variables.
