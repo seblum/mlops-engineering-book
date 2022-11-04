@@ -47,6 +47,5 @@ jobs:
           GH_TOKEN: ${{ SECRETS.GH_PAT }}           # https://github.com/settings/tokens
        with:
           BUILD_DIR: docs/     
-          INPUT_BUILD_DIR: docs/     
           branch: gh-pages
  
