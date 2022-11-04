@@ -43,8 +43,7 @@ jobs:
      - name: Deploy to GitHub Pages
        uses: Cecilapp/GitHub-Pages-deploy@v3
        env:
-          EMAIL: ${{ SECRETS.EMAIL }}               # must be a verified email
-          GH_TOKEN: ${{ SECRETS.GH_PAT }}           # https://github.com/settings/tokens
+          GH_TOKEN: ${{ SECRETS.GITHUB_TOKEN }}           # https://github.com/settings/tokens
        with:
           BUILD_DIR: docs/     
           branch: gh-pages
