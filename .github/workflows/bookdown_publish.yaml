@@ -45,6 +45,7 @@ jobs:
        env:
           GH_TOKEN: ${{ SECRETS.GITHUB_TOKEN }}           # https://github.com/settings/tokens
        with:
+          EMAIL: ${{ SECRETS.EMAIL }}               # must be a verified email
           BUILD_DIR: docs/     
           branch: gh-pages
  
