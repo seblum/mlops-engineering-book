@@ -41,10 +41,10 @@ jobs:
          # Destination path
          path: docs # optional
      - name: Deploy to GitHub Pages
-       uses: Cecilapp/GitHub-Pages-deploy@master
+       uses: Cecilapp/GitHub-Pages-deploy@master@v3
        env:
-          EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
-          GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
-          BUILD_DIR: "docs/"                     # "_site/" by default
-    
+          EMAIL: ${{ SECRETS.EMAIL }}               # must be a verified email
+          GH_TOKEN: ${{ SECRETS.GH_PAT }}           # https://github.com/settings/tokens
+          BUILD_DIR: docs/                       # "_site/" by default
+          branch: gh-pages
  
