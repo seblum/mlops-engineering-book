@@ -1139,15 +1139,10 @@ spec:
         department: engineering
     spec:
       containers:
-<<<<<<< HEAD
-        - name: customer
-          image: "seblum/k8straining:flask-latest"
-=======
         - name: backendflask-healthcheck
           # check whether I have to change the backend app to do this.
           image: "seblum/mlops-public:backend-flask"
           imagePullPolicy: "Always"
->>>>>>> chapter/kubernetes
           resources:
             limits:
               memory: "128Mi"
@@ -1231,70 +1226,6 @@ spec:
         app: rm-deployment
     spec:
       containers:
-<<<<<<< HEAD
-        - name: customer
-          image: "seblum/k8straining:flask-latest"
-          resources:
-          	# Requests
-          	requests:
-          	  memory: "512Mi"
-          	  cpu: "1000m"
-          	# Limits
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
-          ports:
-            - containerPort: 8080
-```
-
-
-## Jobs & Cron Jobs
-
-When looking at the busybox image deployment. Kubernets does not know that the image is only short lived and will run in a CrashLoopBackOff-Error. This is why we have to execute jobs on it such as done with the shell commands previously.
-Kubernetes will try and restart the container itself though until it BackOffs completley. However, what if we have a task that only should run like every 5 minutes, or every single day? This is when CronJobs are good to used.
-Jobs execute only once. CronJobs execute depending on the specified expression.
-
-lets create a job that, e.g. simulates a database backup. This job will only run 30 seconds. 20 for the command to complete, 10 waiting to shut down.
-```yaml
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: db-backup-job
-spec:
-  # time it takes to terminate the job for one completion
-  ttlSecondsAfterFinished: 10
-  template:
-    spec:
-      containers:
-      - name: backup
-        image: busybox
-        command: ["/bin/sh", "-c"]
-        args:
-          - "echo 'performing db backup...' && sleep 20"
-      restartPolicy: Never
-```
-
-If we want to run this job every minute, we use a cronjob. The cronjob expression defines as follows: 
-( * * * * * * ) - ( Minutes Hours Day-of-month Month Day-of-week Year) 
-```yaml
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: db-backup-cron-job
-spec:
-  schedule: "*/1 * * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-          - name: backup
-            image: busybox
-            command: ["/bin/sh", "-c"]
-            args:
-              - "echo 'performing db backup...' && sleep 20"
-          restartPolicy: Never
-=======
       - name: rm-deployment
         image: seblum/mlops-public:cat-v1
         requests:
@@ -1306,7 +1237,6 @@ spec:
           cpu: "500m"
         ports:
         - containerPort: 5000
->>>>>>> chapter/kubernetes
 ```
 
 
