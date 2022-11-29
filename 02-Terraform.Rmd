@@ -443,39 +443,3 @@ root
     │   variables.tf
     │   outputs.tf
 ```
-
-### Root
-
-#### main.tf
-#### variables.tf
-#### outputs.tf
-#### providers.tf
-
-### Networking
-
-#### main.tf
-#### variables.tf
-#### outputs.tf
-
-### EC2
-
-#### main.tf
-#### variables.tf
-#### outputs.tf
-
-### S3
-
-#### main.tf
-#### variables.tf
-#### outputs.tf
-
-# TODO
-- [ ] when is the statefile created?
-- [x] make images for usage steps
-- [x] make images for loops
-- [ ] what is terraform {}
-- [x] disclaimer for aws cloud schreiben dass das wissen vorher benötigt wird
-- [ ] disclaimer of cloud und netwerke schreiben
-- [ ] check yamls
-- [ ] insert images for workspace
-- [ ] Korrektur lesen ab output variables.
