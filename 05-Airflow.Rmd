@@ -23,24 +23,18 @@ Airflow can also be referred to as “Workflows as code”. It serves several pu
 + flexible
 + 
 
-Airflow can implement programs from any language, but workflows are defined in Python.
+Airflow can implement programs from any language, but workflows are written in Python.
 They can be assessed via code, command-line, or via web interface.
 
-Airflow’s user interface provides both in-depth views of pipelines and individual tasks, and an overview of pipelines over time. From the interface, you can inspect logs and manage tasks, for example retrying a task in case of failure.
+TODO: Inser image of web-ui
 
-The web interface aims to make managing workflows as easy as possible. However, the philosophy of Airflow is to define workflows as code so coding will always be required.
 
-![Airflow Web Interface](images/05-Airflow/web-interface-overview.png) 
 
-**Why Airflow?**
-Airflow serves as a batch workflow orchestration plattform. contains operators to connect with many technologies and is easily extensible to connect with new technologies.
+runnings tasks/DAGs
 
-If you prefer coding over clicking, Airflow is the tool for you. Workflows are defined as Python code which means:
+Web interface to track everything
 
-* Workflows can be stored in version control so that you can roll back to previous versions
-* Workflows can be developed by multiple people simultaneously 
-* Tests can be written to validate functionality
-* Components are extensible and you can build on a wide collection of existing components
+python language
 
 ## DAGs
 
