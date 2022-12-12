@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # MLflow
 
 MLflow is an open source platform to manage the machine learning lifecycle end-to-end. This includes experimentation, reproducibility, deployment, and registration of a ML model. MLflow provides four primary components to manage the ML lifecycle. They can be either used on their own or they also to work together.
@@ -444,22 +445,28 @@ The *Artifact Store* needs to be configured when running MLflow on a distributed
 + [x] Build example project as code
 =======
 # Airflow
+=======
+# MLFlow
+>>>>>>> 0db352b (initial notes)
 
-[Apache Airflow](https://github.com/apache/airflow) is an open-source platform for developing, scheduling, and monitoring batch-oriented workflows. Airflow comes with a web interface to help you manage the state of your workflows. 
+An open source platform for the machine learning lifecycle
 
-Airflow can be deployed deployable in many ways, starting from a single process on your own laptop to a distributed setup with multiple compute resources for the biggest workflows. The aim of this tutorial is to show you how to use Airflow from a developer / user perspective and is based on the local installation. Please refer to the prerequisits on what is needed to follow through.
-A detailed description of what an Airflow deployment involves is shown in the chapter [Airflow Infrastructure](https://github.com/apache/airflow).
 
 ## Prerequisites
 
-installation with pip?
+`pip install mlflow`
 
-## Introduction
+## MLFlow Infrastructure
 
-**What is Airflow?**
 
-Airflow is a platform to program workflows, including their creation, schedulung, and monitoring.
++ Create a docker image for the MLFlow tracking server.
++ Deploy Postgresql database on Kubernetes.
+    + Helm to deploy PostgreSQL
++ Create YAML configurations for deployment, service and configmap to deploy the tracking server to Kubernetes.
+    + The first thing we need to do is create the configmap and secrets for the tracking server.
+    + 
 
+<<<<<<< HEAD
 A workflow describes here a set of steps to accomplish a given data engineering tasks, e.g. downloading files, copying data, filtering information, writing to a database, etc.
 Workflows can be of varying levels of complexity and in general it is a term with various meaning depending on context.
 
@@ -654,3 +661,6 @@ Executors run tasks. Different executors handle running the tasks differently, e
 
 allow substituting DAG information
 >>>>>>> 5b60218 (initial commit)
+=======
+## MLFlow Usage
+>>>>>>> 0db352b (initial notes)
