@@ -467,6 +467,7 @@ An open source platform for the machine learning lifecycle
     + 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 A workflow describes here a set of steps to accomplish a given data engineering tasks, e.g. downloading files, copying data, filtering information, writing to a database, etc.
 Workflows can be of varying levels of complexity and in general it is a term with various meaning depending on context.
 
@@ -664,3 +665,18 @@ allow substituting DAG information
 =======
 ## MLFlow Usage
 >>>>>>> 0db352b (initial notes)
+=======
+## MLFlow Usage
+
+### Tracking
+
+### Model storage
+
+## MLFflow Architecture
+
+### MLFLow Server
+
+### MLFlow Database
+
+### Artifact Store
+>>>>>>> 230d939 (added initial structure)
