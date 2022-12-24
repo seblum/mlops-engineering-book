@@ -4,4 +4,4 @@ This project started out of an interest in multiple domains. At first, I was wor
 
 ### A work in progress {-}
 
-This project / book / tutorial / whatever this is or will be startet by explaining the concept of Kubernetes. The plan is to continuously update it by further sections. Since there is no deadline, there is no timeline, and I am also not sure whether there will exist something final to be honest.
+This project / blog / tutorial / whatever this is or will be startet by explaining the concept of Kubernetes. The plan is to continuously update it by further sections. Since there is no deadline, there is no timeline, and I am also not sure whether there will exist something final to be honest.
