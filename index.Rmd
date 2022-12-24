@@ -1,5 +1,5 @@
 --- 
-title: "MLOps Architecture from scratch"
+title: "MLOps Engineering"
 author: "Sebastian Blum"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -8,7 +8,7 @@ bibliography: [book.bib, packages.bib]
 # url: your book url like https://bookdown.org/yihui/bookdown
 # cover-image: path to the social sharing image like images/cover.jpg
 description: |
-  This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC.
+  Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions.
 link-citations: yes
 github-repo: seblum/mlops-practice
 ---

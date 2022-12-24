@@ -1,12 +1,13 @@
 bookdown::gitbook:
   css: style.css
   config:
+    toc_depth: 2
     toc:
       before: |
-        <li><a href="./">A Minimal Book Example</a></li>
-      after: |
-        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/seblum/kubernetes-training/edit/master/%s
+        <li><a href="./">MLOps Engineering</a></li>
+      #after: |
+      #  <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+    #edit: https://github.com/seblum/kubernetes-training/edit/master/%s
     download: ["pdf", "epub"]
 # bookdown::pdf_book:
 #   includes:
