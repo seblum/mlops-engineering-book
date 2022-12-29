@@ -449,16 +449,28 @@ The *Artifact Store* needs to be configured when running MLflow on a distributed
 # MLFlow
 >>>>>>> 0db352b (initial notes)
 
-An open source platform for the machine learning lifecycle
+MLflow is an open source platform for managing the end-to-end machine learning lifecycle. It tackles four primary functions:
 
+* Tracking experiments to record and compare parameters and results ([MLflow Tracking](https://mlflow.org/docs/latest/tracking.html#tracking)).
+    
+* Packaging ML code in a reusable, reproducible form in order to share with other data scientists or transfer to production ([MLflow Projects](https://mlflow.org/docs/latest/projects.html#projects)).
+    
+* Managing and deploying models from a variety of ML libraries to a variety of model serving and inference platforms ([MLflow Models](https://mlflow.org/docs/latest/models.html#models)).
+    
+* Providing a central model store to collaboratively manage the full lifecycle of an MLflow Model, including model versioning, stage transitions, and annotations ([MLflow Model Registry](https://mlflow.org/docs/latest/model-registry.html#registry)).
+    
+
+MLflow is library-agnostic. You can use it with any machine learning library, and in any programming language, since all functions are accessible through a [REST API](https://mlflow.org/docs/latest/rest-api.html#rest-api) and [CLI](https://mlflow.org/docs/latest/cli.html#cli). For convenience, the project also includes a [Python API](https://mlflow.org/docs/latest/python_api/index.html#python-api), [R API](https://mlflow.org/docs/latest/R-api.html#r-api), and [Java API](https://mlflow.org/docs/latest/java_api/index.html#java-api).
+
+can even define your own plugins
 
 ## Prerequisites
 
 `pip install mlflow`
 
-## MLFlow Infrastructure
 
 
+<<<<<<< HEAD
 + Create a docker image for the MLFlow tracking server.
 + Deploy Postgresql database on Kubernetes.
     + Helm to deploy PostgreSQL
@@ -666,11 +678,65 @@ allow substituting DAG information
 ## MLFlow Usage
 >>>>>>> 0db352b (initial notes)
 =======
+=======
+>>>>>>> b190388 (copy pasted from mlflow website)
 ## MLFlow Usage
 
 ### Tracking
 
+The [MLflow Tracking API](https://mlflow.org/docs/latest/tracking.html) lets you log metrics and artifacts (files) from your data science code and see a history of your runs. You can try it out by writing a simple Python script as follows (this example is also included in `quickstart/mlflow_tracking.py`):
+
+```python
+import os
+from random import random, randint
+from mlflow import log_metric, log_param, log_artifacts
+
+if \_\_name\_\_ == "\_\_main\_\_":
+    \# Log a parameter (key-value pair)
+    log_param("param1", randint(0, 100))
+
+    \# Log a metric; metrics can be updated throughout the run
+    log_metric("foo", random())
+    log_metric("foo", random() + 1)
+    log_metric("foo", random() + 2)
+
+    \# Log an artifact (output file)
+    if not os.path.exists("outputs"):
+        os.makedirs("outputs")
+    with open("outputs/test.txt", "w") as f:
+        f.write("hello world!")
+    log_artifacts("outputs")
+```
+
+By default, wherever you run your program, the tracking API writes data into files into a local `./mlruns` directory. You can then run MLflow’s Tracking UI:
+
+```bash
+mlflow ui
+```
+and view it at http://localhost:5000.
+
+
+Logging to a Remote Tracking Server
+
+In the examples above, MLflow logs data to the local filesystem of the machine it’s running on. To manage results centrally or share them across a team, you can configure MLflow to log to a remote tracking server. To get access to a remote tracking server:
+
+[Launch a tracking server](https://mlflow.org/docs/latest/tracking.html#tracking-server) on a remote machine.
+
+You can then [log to the remote tracking server](https://mlflow.org/docs/latest/tracking.html#logging-to-a-tracking-server) by setting the `MLFLOW_TRACKING_URI` environment variable to your server’s URI, or by adding the following to the start of your program:
+
+```python
+import mlflow
+mlflow.set\_tracking\_uri("http://YOUR-SERVER:4040")
+mlflow.set_experiment("my-experiment")
+```
+
+### MLFlow Projects
+
 ### Model storage
+
+### Saving and Serving Models
+
+
 
 ## MLFflow Architecture
 
@@ -679,4 +745,17 @@ allow substituting DAG information
 ### MLFlow Database
 
 ### Artifact Store
+<<<<<<< HEAD
 >>>>>>> 230d939 (added initial structure)
+=======
+
+### MLFlow Infrastructure
+
+
++ Create a docker image for the MLFlow tracking server.
++ Deploy Postgresql database on Kubernetes.
+    + Helm to deploy PostgreSQL
++ Create YAML configurations for deployment, service and configmap to deploy the tracking server to Kubernetes.
+    + The first thing we need to do is create the configmap and secrets for the tracking server.
+    + 
+>>>>>>> b190388 (copy pasted from mlflow website)
