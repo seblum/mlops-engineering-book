@@ -1,75 +1,38 @@
 # Airflow
 
-[Apache Airflow](https://github.com/apache/airflow) is an open-source platform for developing, scheduling, and monitoring batch-oriented workflows. Airflow comes with a web interface to help you manage the state of your workflows. 
-
-Airflow can be deployed deployable in many ways, starting from a single process on your own laptop to a distributed setup with multiple compute resources for the biggest workflows. The aim of this tutorial is to show you how to use Airflow from a developer / user perspective and is based on the local installation. Please refer to the prerequisits on what is needed to follow through.
-A detailed description of what an Airflow deployment involves is shown in the chapter [Airflow Infrastructure](https://github.com/apache/airflow).
-
-## Prerequisites
-
-installation with pip?
-
-## Introduction to usage
-
-**What is Airflow?**
-Airflow is a platform to program workflows, including their creation, schedulung, and monitoring.
-
-A workflow describes here a set of steps to accomplish a given data engineering tasks, e.g. downloading files, copying data, filtering information, writing to a database, etc.
-Workflows can be of varying levels of complexity and in general it is a term with various meaning depending on context.
-
-Airflow can also be referred to as “Workflows as code”. It serves several purposes:
-+ dynamic
-+ extensible
-+ flexible
-+ 
-
-Airflow can implement programs from any language, but workflows are defined in Python.
-They can be assessed via code, command-line, or via web interface.
-
-Airflow’s user interface provides both in-depth views of pipelines and individual tasks, and an overview of pipelines over time. From the interface, you can inspect logs and manage tasks, for example retrying a task in case of failure.
-
-The web interface aims to make managing workflows as easy as possible. However, the philosophy of Airflow is to define workflows as code so coding will always be required.
+[Apache Airflow](https://github.com/apache/airflow) is an open-source platform to develop, schedule and monitor workflows. Airflow comes with a web interface to interact with and manage the state of workflows. The web user interface aims to make managing workflows as easy as possible and provides a good overview of each workflow over time and the ability to inspect logs and manage tasks, for example retrying a task in case of failure.
 
 ![Airflow Web Interface](images/05-Airflow/web-interface-overview.png) 
 
-**Why Airflow?**
-Airflow serves as a batch workflow orchestration plattform. contains operators to connect with many technologies and is easily extensible to connect with new technologies.
+However, the philosophy of Airflow is to define workflows as code so coding will always be required. Thus, Airflow can also be referred to as a “Workflows as code”-tool that allows for a dynamic, extensible, and flexible management of its workflows.
 
-If you prefer coding over clicking, Airflow is the tool for you. Workflows are defined as Python code which means:
+The Airflow platform contains different operators to connect with many other technologies to easily extend and connect with new technologies. Being able to manage a workflow for all stages of the training of ML models, and the possibility to combine Airflow with other tools e.g. for the tracking of ML models (MLflow), make Apache Airflow a create tool to incorporate in a MLOps architecture.
 
-* Workflows can be stored in version control so that you can roll back to previous versions
-* Workflows can be developed by multiple people simultaneously 
-* Tests can be written to validate functionality
-* Components are extensible and you can build on a wide collection of existing components
+The aim of this chapter is to give a tutorial on how to use Airflow from a user perspective, as well as give a short overview on its deployment. Airflow can be deployed in multiple ways, starting from a single process on a local machine to a distributed setup with multiple compute resources for large workflows in a production setting. A detailed description of what an Airflow deployment involves is shown in the section Airflow Infrastructure (TODO: section link). This tutorial is based based on the local installation of Airflow. Please refer to the prerequisits on what is needed to follow through.
 
+## Prerequisites
 
-Apache Airflow can be used to schedule:
+TODO: local installation 
 
-* ETL pipelines that extract data from multiple sources and run Spark jobs or any other data transformations
-* Training machine learning models
-* Report generation
-* Backups and similar DevOps operations
+## Basic usage concepts
 
-And much more! You can even write a pipeline to brew coffee every few hours, it will need some custom integrations but that’s the biggest power of Airflow — it’s pure Python and everything can be programmed.
+Airflow serves as a batch-oriented workflow orchestration plattform. Workflows vary in their levels of complexity and in general it is a term with various meaning depending on context. When working with Airflow, a workflow usually describes a set of steps to accomplish a given data engineering tasks, e.g. downloading files, copying data, filtering information, writing to a database, etc.
+
+Exemplary workflows or use cases might be for example to set up a ETL pipeline that extracts data from multiple sources, the transformation of the data, as well as loading them into a machine learning model. Even the training itself of a ML model can triggered via Airflow. Another workflow step might involve the generation of a report or backups. 
+
+Even though Airflow can implement programs from any language, the workflows are written and defined as Python code. Airflow allows to access them via code, command-line, or via web interface. Writing workflows in code allows to store the in version control to ensure roll backs to previous versions as well as to develop a workflow with a team of developers simultaneously. It also allows to include further DevOps principles such as testing and validating the codes functionality.
 
 ### DAGs
 
-Workflows are implemented as DAGs: Directed Acyclic Graphs.
+A workflows in Airflow is implemented as a DAG, a *Directed Acyclic Graph*. A *graph* describes the actual set of components of a workflow. It is *directed* because it has an inherent flow representing dependencies between its components. It is *acyclic* as it does not loop or repeat.
 
-* It is Directed, because there is an inherent flow representing dependencies between components.
-* It is Acyclic, because it does not loop / cycle / repeat.
-* Graph describes the actual set of components.
-
-DAGs are also seen in Airflow, Apache Spark, Luigi
-
-An Airflow Python script is really just a confguration file specifying a DAG's structure as code. 
-
-We’ll need a DAG object to nest our tasks into. Here we pass a string that defines the `dag_id`, which serves as a unique identifier for your DAG. We also pass the default argument dictionary
+An Airflow workflow is just a Python script that defines an Airflow DAG object as code. The DAG object is needed to nest the separate tasks of a workflow into. A workflow specified in code, e.g. python, is often also referred to as a *pipeline*. This terminology can be used synonymosly when working with Airflow. The following code-snipped depicts how to define a DAG object in code. The `dag_id` string is a unique identifier to a DAG. The `default_args` dictionary consists of additional parameters to be specified. The snippet below only shows two of them, there are a lot more though, which can also be seen here (TODO insert link)
 
 ```python
 from airflow.models import DAG
 
-# of course there are many other arguments as well
+# Using extra arguments allows a lot of customization, e.g.
+# it makes the creation of a time zone aware DAG quite easy.
 default_args = {
     'start_data':'2023-01-01',
     'schedule_interval':'None'
@@ -80,12 +43,8 @@ example_dag = DAG(
     default_args=default_args
 )
 ```
-Creating a time zone aware DAG is quite simple.
-a workflow can be run via the cli using 
 
-```bash
-airflow run <dag_id> <task_id> <start_date>
-```
+A workflow can be run either via the web interface or via the command line interface. The following command shows who to list the active DAGs from the directory.
 
 ```bash
 # initialize the database tables
@@ -93,64 +52,48 @@ airflow db init
 
 # print the list of active DAGs
 airflow dags list
-
-# prints the list of tasks in the "tutorial" DAG
-airflow tasks list tutorial
-
-# prints the hierarchy of tasks in the "tutorial" DAG
-airflow tasks list tutorial --tree
 ```
 
-`airflow tasks test` runs task instances locally, outputs their log to stdout (on screen), does not bother with dependencies, and does not communicate state (running, success, failed, …) to the database. It simply allows testing a single task instance. Same goes with airflow dags test
-
-
-```bash
-# testing
-# testing print_date
-airflow tasks test tutorial print_date 2015-06-01
-
-# testing sleep
-airflow tasks test tutorial sleep 2015-06-01
-
-airflow dags test
-```
-
-
-People sometimes think of the DAG definition file as a place where they can do some actual data processing - that is not the case at all! The script’s purpose is to define a DAG object. It needs to evaluate quickly (seconds, not minutes) since the scheduler will execute it periodically to reflect the changes if any.
-
-An Airflow pipeline is just a Python script that happens to define an Airflow DAG object.
-
-### Workloads
-
-A DAG runs through a series of [Tasks](https://airflow.apache.org/docs/apache-airflow/stable/concepts/tasks.html), and there are three common types of task you will see:
-
-* [Operators](https://airflow.apache.org/docs/apache-airflow/stable/concepts/operators.html), predefined tasks that you can string together quickly to build most parts of your DAGs.
-    
-* [Sensors](https://airflow.apache.org/docs/apache-airflow/stable/concepts/sensors.html), a special subclass of Operators which are entirely about waiting for an external event to happen.
-    
-* A [TaskFlow](https://airflow.apache.org/docs/apache-airflow/stable/concepts/taskflow.html)-decorated `@task`, which is a custom Python function packaged up as a Task.
-    
-
-Internally, these are all actually subclasses of Airflow’s `BaseOperator`, and the concepts of Task and Operator are somewhat interchangeable, but it’s useful to think of them as separate concepts - essentially, Operators and Sensors are _templates_, and when you call one in a DAG file, you’re making a Task.
+People sometimes think of the DAG definition file as a place where they can do some actual data processing - that is not the case at all! The script’s purpose is to define a DAG object. It needs to evaluate quickly (seconds, not minutes) since the scheduler will execute it periodically to reflect the changes if any. (rephrase - cause its copied)
 
 ### Operators
 
-Operators represent a single task in a workflow / unit of work for Airflow to complete. They run independently (usually) and generally do not share any information. There are various operators to perform different tasks.
+Operators represent a single task in a workflow and are basically a unit of work for Airflow to complete. Operators usually run independently and generally do not share any information. There are different categories of operators to perform different tasks, for example *Action operators*, *Transfer operators*, or *Sensors*. 
+Action operators executes a basic task based on the operators specifications, for example the `BashOperator`, the `PythonOperator`, or `KubernetesPodOperator`. The operator names already suggest what kind of executions they provide. Transfer operators are designed to transfer data from one place to another, for example to copy data from one cloud bucket to another. Those operators are often stateful, which means the downloaded data is first stored locally and the uploaded to the destination storage. This different principle of execution defines them as an own category of operator. Finally, Sensors are a special subclass of operators that are triggered when an external event is happening. They are further outlined in the subsection (TODO reference to own section).
 
-Gotchas: They are not guaranteed to run in the same location/environment. May require extensive use of Environment variables. Can be difficult to run tasks with elevated privileges.
+#### BashOperator 
+expects a bash_command
+```python
+example_task = BashOperator(task_id='bash_example',
+                           bash_command='echo "Example!"',
+                           dag=example_dag)
+```
 
-Some of the most popular operators are the PythonOperator, the BashOperator, and the KubernetesPodOperator. Airflow completes work based on the arguments you pass to your operators.
+#### PythonOperator
+expects a python_callable
+```python
+from airflow.operators.python_operator import PythonOperator
 
+def sleep(length_of_time):
+    time.sleep(lenght_of_time)
+    
+sleep_task = PythonOperator(
+    task_id='sleep',
+    python_callable=sleep,
+    op_kwargs={'length_of_time':5},
+    dag=example_dag
+)
+```
 
-BashOperator - expects a bash_command
+#### BranchPython
+requires a python_callable and provide_context=True. The callable must accept `**kwargs`
+```python
 
-PythonOperator - expects a python_callable
+```
 
-BranchPython - requires a python_callable and provide_context=True. The callable must accept `**kwargs`
+#### EmailOperator
 
-EmailOperator
-
-The EmailOperator does require the Airflow system to be configured with email server details.
+The `EmailOperator` allow to send predefined emails from an Airflow DAG run. This could be use for example to notify if a workflow was successfull or not. The `EmailOperator` does require the Airflow system to be configured with email server details.
 ```python
 from airflow.operators.email_operator import EmailOperator
 
@@ -164,32 +107,9 @@ email_task = EmailOperator(
 )
 ```
 
-Using operators is the classic approach to defining work in Airflow. For some use cases, it’s better to use the TaskFlow API to define work in a Pythonic context as described in [Working with TaskFlow](https://airflow.apache.org/docs/apache-airflow/stable/tutorial/taskflow.html).
-
-
-
-
-Operators can be split into three categories:
-
-* Action operators — for example, BashOperator (executes any bash command), PythonOperator (executes a python function) or TriggerDagRunOperator (triggers another DAG).
-* Transfer operators — designed to transfer data from one place to another, for example GCSToGCSOperator which copies data from one Google Cloud Storage bucket to another one. Those operators are a separate group because they are often stateful (the data is first downloaded from source storage and stored locally on a machine running Airflow and then uploaded to destination storage).
-* Sensors — are operators classes inheriting from `BaseSensorOperator` and are designed to wait for an operation to complete. When implementing a sensor, users have to implement the `poke` method which is then invoked by a special `execute`method of `BaseSensorOperator`. The `poke` method should return True or False. The sensor will be executed by Airflow until it returns True.
-
-
-
-
 ###  Tasks
 
-To use an operator in a DAG, you have to instantiate it as a task. Tasks determine how to execute your operator’s work within the context of a DAG.
-
-Tasks are Instances of operators. They are usually assigned to a variable on Python.
-They are referred to by the task_id within the airflow tools.
-
-```python
-example_task = BashOperator(task_id='bash_example',
-                           bash_command='echo "Example!"',
-                           dag=example_dag)
-```
+To use an operator in a DAG it needs to be instantiated as a task. Tasks determine how to execute an operator’s work within the context of a DAG. The concepts of a *Task* and *Operator* are actually somewhat interchangeable as each task is actually a subclass of Airflow’s `BaseOperator`. However, it is useful to think of them as separate concepts. Tasks are Instances of operators and are usually assigned to a variable on Python. The following code instantiates the `BashOperator` to two different variables `t1` and `t2`.
 
 ```python
 t1 = BashOperator(
@@ -205,9 +125,16 @@ t2 = BashOperator(
 )
 ```
 
+Tasks can be referred to by their task_id either using the web interface or using the CLI within the airflow tools.
+
+```bash
+airflow run <dag_id> <task_id> <start_date>
+```
+
+
 #### Setting up Dependencies
 
-It is possible to define a give order of task completion, meaning task dependencies. They are either referred to as upstream or downstream tasks.
+It is possible to define a given order of task completion, meaning task dependencies. They are either referred to as upstream or downstream tasks.
 In Airflow 1.8 and later, they are defined using the bitshift operators:
 * >>, or the upstream operator (before)
 * <<, or the downstream operator (after)
@@ -246,6 +173,41 @@ sleep_task = PythonOperator(
 )
 
 ```
+
+Try to understand Operators and Sensors as templates that make up a task when they are called in a DAG file.
+
+
+### CLI commands
+
+```bash
+airflow run <dag_id> <task_id> <start_date>
+```
+
+
+```bash
+# prints the list of tasks in the "tutorial" DAG
+airflow tasks list tutorial
+
+# prints the hierarchy of tasks in the "tutorial" DAG
+airflow tasks list tutorial --tree
+```
+
+`airflow tasks test` runs task instances locally, outputs their log to stdout (on screen), does not bother with dependencies, and does not communicate state (running, success, failed, …) to the database. It simply allows testing a single task instance. Same goes with airflow dags test
+
+
+```bash
+# testing
+# testing print_date
+airflow tasks test tutorial print_date 2015-06-01
+
+# testing sleep
+airflow tasks test tutorial sleep 2015-06-01
+
+airflow dags test
+```
+
+
+
 ### Scheduling
 
 DAG Runs
@@ -382,5 +344,32 @@ The DAG directory can be of different nature either a local folder in case of a 
 The metadata database is used to store data of the scheduler, executor, and the webserver, such as scheduling- or runtime, and user settings. It is beneficial to run the metadata database as a separate component to keep all data safe and secure in case there are bugs in other parts of the infrastructure. Such thoughts also account for the deployment of the metadata database itself. It is possible to run Airflow on an instance within a Kubernetes cluster along all other components of a distributed Airflow installation. However, this is not necessarily recommended and it is also possible to use a clouds' distinguished database resources to store the metadata, for example the Relational Database Service (RDS) on the amazon cloud.
 
 
-####### LINKS
-https://towardsdatascience.com/a-complete-introduction-to-apache-airflow-b7e238a33df
+
+* [ ] Bilder einfügen
+* [ ] Code einfügen
+* [ ] Todos bearbeiten
+* [ ] prerequisites installation
+* [ ] https://towardsdatascience.com/a-complete-introduction-to-apache-airflow-b7e238a33df
+* [ ] Text einheitlich schreiben
+* [ ] Korrekturlesen
+* [ ] Taskflow?
+
+
+
+## SAVE
+
+**DAG workload**
+
+A DAG usually consists of multiple steps it runs through, also names as tasks. There are different types of tasks in Airflow,
+for example *Operators*, *Sensors*, *TaskFlow-decorated tasks*. All of them will be outlined in the following subsections.
+
+    
+    <> * *Operators*: are predefined tasks that can be stringed together to quickly build most parts of the DAG and basically the main pipeline steps.
+    <> * *Sensors:* are a special subclass of operators that are triggered when an external event is happening.
+    <> * *TaskFlow-decorated tasks:* are part of a custom python function where a task cann be packaged via the decorator `@task`.
+    
+    
+Using operators is the classic approach to defining work in Airflow. For some use cases, it’s better to use the TaskFlow API to define work in a Pythonic context as described in [Working with TaskFlow](https://airflow.apache.org/docs/apache-airflow/stable/tutorial/taskflow.html).
+
+
+Gotchas: They are not guaranteed to run in the same location/environment. May require extensive use of Environment variables. Can be difficult to run tasks with elevated privileges.
