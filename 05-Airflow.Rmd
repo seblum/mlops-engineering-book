@@ -8,11 +8,12 @@ However, the philosophy of Airflow is to define workflows as code so coding will
 
 The Airflow platform contains different operators to connect with many other technologies to easily extend and connect with new technologies. Being able to manage a workflow for all stages of the training of ML models, and the possibility to combine Airflow with other tools e.g. for the tracking of ML models (MLflow), make Apache Airflow a create tool to incorporate in a MLOps architecture.
 
-The aim of this chapter is to give a tutorial on how to use Airflow from a user perspective, as well as give a short overview on its deployment. Airflow can be deployed in multiple ways, starting from a single process on a local machine to a distributed setup with multiple compute resources for large workflows in a production setting. A detailed description of what an Airflow deployment involves is shown in the section Airflow Infrastructure (TODO: section link). This tutorial is based based on the local installation of Airflow. Please refer to the prerequisits on what is needed to follow through.
+The aim of this chapter is to give a tutorial on how to use Airflow from a user perspective, as well as give a short overview on its deployment. Airflow can be deployed in multiple ways, starting from a single process on a local machine to a distributed setup with multiple compute resources for large workflows in a production setting. A detailed description of what an Airflow deployment involves is shown in the section Airflow Infrastructure. This tutorial is based based on the local installation of Airflow. Please refer to the prerequisits on what is needed to follow through.
 
 ## Prerequisites
 
-TODO: local installation 
+The main prerequisites to follow this tutorial to have an Apache Airflow instance installed. The official documentation gives a good overview on [how to do](https://airflow.apache.org/docs/apache-airflow/stable/start.html) it. It is sufficient to run Airflow on a local deployment and there is no need to to set up a complex Airflow deployment on a cluster or else. Also needed is knowledge of the programming language Python and basic knowledge of bash.
+
 
 ## Fundamental concepts
 
@@ -22,11 +23,12 @@ Exemplary workflows or use cases might be for example to set up a ETL pipeline t
 
 Even though Airflow can implement programs from any language, the workflows are written and defined as Python code. Airflow allows to access them via code, command-line, or via web interface. Writing workflows in code allows to store the in version control to ensure roll backs to previous versions as well as to develop a workflow with a team of developers simultaneously. It also allows to include further DevOps principles such as testing and validating the codes functionality.
 
+
 ### DAGs
 
 A workflows in Airflow is implemented as a DAG, a *Directed Acyclic Graph*. A *graph* describes the actual set of components of a workflow. It is *directed* because it has an inherent flow representing dependencies between its components. It is *acyclic* as it does not loop or repeat.
 
-An Airflow workflow is just a Python script that defines an Airflow DAG object as code. The DAG object is needed to nest the separate tasks of a workflow into. A workflow specified in code, e.g. python, is often also referred to as a *pipeline*. This terminology can be used synonymosly when working with Airflow. The following code-snipped depicts how to define a DAG object in code. The `dag_id` string is a unique identifier to a DAG. The `default_args` dictionary consists of additional parameters to be specified. The snippet below only shows two of them, there are a lot more though, which can also be seen here (TODO insert link)
+An Airflow workflow is just a Python script that defines an Airflow DAG object as code. The DAG object is needed to nest the separate tasks of a workflow into. A workflow specified in code, e.g. python, is often also referred to as a *pipeline*. This terminology can be used synonymosly when working with Airflow. The following code-snipped depicts how to define a DAG object in code. The `dag_id` string is a unique identifier to a DAG. The `default_args` dictionary consists of additional parameters to be specified. The snippet below only shows two of them, there are a lot more though, which can also be seen in the [official documentation](https://airflow.apache.org/docs/apache-airflow/stable/_api/airflow/models/dag/index.html#airflow.models.dag.DAG).
 
 ```python
 from airflow.models import DAG
@@ -54,9 +56,8 @@ A workflow can be run either via the web interface or via the command line inter
 
 The following command shows who to list the active DAGs from the directory.
 
-TODO: check whether commands are necessary
 ```bash
-# Initialize the database tables
+# Create the database schema
 airflow db init
 
 # Print the list of active DAGs
@@ -70,10 +71,9 @@ A DAG usually consists of multiple steps it runs through, also names as tasks. T
 ### Operators
 
 An Operator represents a single predefined task in a workflow and are basically a unit of work for Airflow to complete. Operators usually run independently and generally do not share any information. There are different categories of operators to perform different tasks, for example *Action operators*, *Transfer operators*, or *Sensors*. 
-Action operators executes a basic task based on the operators specifications, for example the `BashOperator`, the `PythonOperator`, or `KubernetesPodOperator`. The operator names already suggest what kind of executions they provide. Transfer operators are designed to transfer data from one place to another, for example to copy data from one cloud bucket to another. Those operators are often stateful, which means the downloaded data is first stored locally and the uploaded to the destination storage. This different principle of execution defines them as an own category of operator. Finally, Sensors are a special subclass of operators that are triggered when an external event is happening. They are further outlined in the subsection (TODO reference to own section).
+Action operators executes a basic task based on the operators specifications, for example the `BashOperator`, the `PythonOperator`, or `KubernetesPodOperator`. The operator names already suggest what kind of executions they provide. Transfer operators are designed to transfer data from one place to another, for example to copy data from one cloud bucket to another. Those operators are often stateful, which means the downloaded data is first stored locally and the uploaded to the destination storage. This different principle of execution defines them as an own category of operator. Finally, Sensors are a special subclass of operators that are triggered when an external event is happening.
 
-The `PythonOperator` is actually a deprecated function and now uses the `@task`-decorator of *Taskflow* to define work in a more Pythonic context and turn a python function into an Airflow task. Yet, it still works in (TODO inser airflow version) Airflow v2 and is still a good example on how operators work.
-
+The `PythonOperator` is actually a deprecated function and now uses the `@task`-decorator of *Taskflow* to define work in a more Pythonic context and turn a python function into an Airflow task. Yet, it still works in Airflow 2.0 and is still a good example on how operators work.
 
 #### Action Operators
 
@@ -191,7 +191,6 @@ sync_azure_files_with_gcs = AzureFileShareToGCSOperator(
 )
 ```
 
-
 #### Sensors
 
 A *sensor* is a special subclass of an operator that is triggered when an external event is happening or a certain condition is be true. Such conditions are for example the creation of a file, an upload of a database record, or a certain response from a web request.
@@ -200,6 +199,7 @@ It is also possible to specify how often check the condition to be true, which i
 Simultaneously, the `poke_interval` defines how long a sensor has to wait between checks, and `timeout`defines how long to wait before letting a task fail. 
 
 Below example show a `FileSensor` that checks the creation of a file with a `poke_interval` defined. A workflow is defined with its dependencies as well to give an exemplary idea of how and when to use sensors.
+
 ```python
 from airflow.contrib.sensors.file_sensor import FileSensor
 
@@ -215,13 +215,12 @@ Other sensors are for example:
 * `HttpSensor` - Requests a web URL and checks for content
 * `SqlSensor` - Runs a SQL query to check for content
 
-TODO: check out https://medium.com/@komal1491/airflow-external-sensor-a7e999ecadfd
 
 ###  Tasks
 
-To use an operator in a DAG it needs to be instantiated as a task. Tasks determine how to execute an operator’s work within the context of a DAG. The concepts of a *Task* and *Operator* are actually somewhat interchangeable as each task is actually a subclass of Airflow’s `BaseOperator`. However, it is useful to think of them as separate concepts. Tasks are Instances of operators and are usually assigned to a variable on Python. The following code instantiates the `BashOperator` to two different variables `t1` and `t2`.
+To use an operator in a DAG it needs to be instantiated as a task. Tasks determine how to execute an operator’s work within the context of a DAG. The concepts of a *Task* and *Operator* are actually somewhat interchangeable as each task is actually a subclass of Airflow’s `BaseOperator`. However, it is useful to think of them as separate concepts. Tasks are Instances of operators and are usually assigned to a variable on Python. The following code instantiates the `BashOperator` to two different variables `task_1` and `task_2`. 
 
-TODO: what is `depends_on_past` for?
+The `depends_on_past` argument ensures that the previously scheduled task has succeeded before the current task is triggered.
 
 ```python
 task_1 = BashOperator(
@@ -240,7 +239,7 @@ task_2 = BashOperator(
 
 task_3 = BashOperator(
     task_id="print_success",
-    depends_on_past=False,
+    depends_on_past=True,
     bash_command='echo "Success!"',
     dag=task_fundamentals
 )
@@ -264,7 +263,6 @@ airflow tasks test task_fundamentals sleep 2015-06-01
 
 `airflow tasks test` runs task instances locally, outputs their log to stdout (on screen), does not bother with dependencies, and does not communicate state (running, success, failed, …) to the database. It simply allows testing a single task instance. Same goes with `airflow dags test`
 
-
 #### Task dependencies
 
 A machine learning or data workflow usually has a specific order in which its tasks need to run. It is possible to define a specific order of task completion within Airflow. The order is defined by using task dependencies that are either referred to as upstream or downstream tasks. In Airflow 1.8 and later, this can be defined using the bitshift operators within python:
@@ -280,7 +278,6 @@ task_1 >> task_2 >> task_3
 ```
 ![task-dependencies](./images/05-Airflow/task-dependencies.png "task-dependencies")
 
-
 ```python
 # Mixed dependencies
 task_1 >> task_3 << task_2
@@ -295,7 +292,6 @@ task_2 >> task_3
 ```
 ![task-dependencies_mixed](./images/05-Airflow/task-dependencies_mixed.png "task-dependencies_mixed")
 
-
 ```python
 # It is also possible to define dependencies with
 task_1.set_downstream(task_2)
@@ -303,14 +299,12 @@ task_3.set_upstream(task_1)
 ```
 ![task-dependencies_upstream](./images/05-Airflow/task-dependencies_upstream.png "task-dependencies_upstream")
 
-
 ```python
 # It is also possible to mix it completely wild
 task_1 >> task_3 << task_2
 task_1.set_downstream(task_2)
 ```
 ![task-dependencies_wild](./images/05-Airflow/task-dependencies_wild.png "task-dependencies_wild")
-
 
 It is possible to list all tasks within a DAG using the cli. Below commands show two approaches.
 
@@ -357,7 +351,7 @@ example_dag = DAG(
 
 XCom (short for “cross-communication”) is a mechanism that allows information passing between tasks in a DAG. This is beneficial as by default tasks are isolated within Airflow and ma run on entirely different machines.
 
-An XCom is identified by a key-value pair stored in the Airflow Metadata Database. This means everytime we interact with an XCom we interact with the Metadata Database. The `key` of an XCom is basically its name and consists of a tuple (`dag_id`, `task_id`, `execution_date`,`key`). *key* within the XComs name denoted the name of the stored data and is a configurable string (by default it’s `return_value`). The XComs `value` is a json serializable and is only designed for small amounts of data, depending on the attache metadata database (e.g. MySQL provides max 48Kb, PostgreSQL 1Gb - TODO: check data).
+An XCom is identified by a key-value pair stored in the Airflow Metadata Database. This means everytime we interact with an XCom we interact with the Metadata Database. The `key` of an XCom is basically its name and consists of a tuple (`dag_id`, `task_id`, `execution_date`,`key`). *key* within the XComs name denoted the name of the stored data and is a configurable string (by default it’s `return_value`). The XComs `value` is a json serializable and is only designed for small amounts of data, depending on the attache metadata database (e.g. 2GB for SQLite, or 1GB Postgres database).
 The goal is not to use XComs to pass large values like dataframes. This means that the XCom purpose is to store metadata and not the data itself. 
 If there is the need to pass a big data frame from *task_a* to *task_b*, the data is stored in a persistent storage solution (bucket, or database) between those two tasks. 
 XComs are explicitly pushed and pulled to/from their storage using the `xcom_push` and `xcom_pull` methods.
@@ -437,19 +431,6 @@ pull = PythonOperator(
 # push1, push2 are upstream to pull
 [push1, push2] >> pull
 ```
-
-
-### Executor
-
-How and where are the DAG workflows actually run? This is where executors come into play - they run tasks. An executor defines where and how the Airflow tasks should be executed. This crucial component of Airflow can be configured by the user and should be chosen to fit the users specific needs. There are several different executors, each handleing the run of a task a bit differently. This also relies on the underlying infrastructure Airflow is build on.
-
-+ The `LocalExecutor`executes each task in a separate processe on a single machine. It’s the only non-distributed executor which is production ready and works well in relatively small deployments. If you installed Airflow as show above in the prerequisites, you will use this executor. 
-+ In contrast, the `CeleryExecutor` uses under the hood the Celery queue system that allows users to deploy multiple workers that read tasks from the broker queue (Redis or RabbitMQ) where tasks are sent by scheduler. This enables Airflow to distribute tasks between many machines and allows users to specify what task should be executed where. This is for example useful for routing compute-heavy tasks to more resourceful workers and is the most popular production executor.
-+ The `KubernetesExecutor` is another widely used production-ready executor and works similarly to the `CeleryExecutor`. As the name allready suggests it requires an underlying Kubernetes cluster that enables Airflow to spawn a new pod to run each task. Even though this is a robust method to account for machine or pod failure, the additional overhead in creation can be problematic for short running tasks.
-+ The `CeleryKubernetsExecutor` uses both, the `CeleryExecutor` and `KubernetesExecutor` (as the name already says). It allows to distinguish whether a particular task should be executed on kubernetes or routed to the celery workers. This way users can take full advantage of horizontal auto scaling of worker pods and to delegate computational heavy tasks to kubernetes.
-+ An additional `DebugExecutor`works as a is a debug executor. Its main purpose is to debug DAGs locally. It’s the only executor that uses a single process to execute all tasks.
-
-TODO: add SequentialExecutor
 
 
 ### Taskflow
@@ -539,7 +520,7 @@ Before Data Scientists and Machine Learning Engineers can utilize the power of A
 
 ### Airflow as a distributed system
 
-Airflow consists of several separate parts. While this separation is somewhat simulated on a local deployment, each several part of Airflow can be deployed separately when deploying Airflow in a distributed manner. This comes with benefits of safety, security, and reliability (TODO check terms).
+Airflow consists of several separate parts. While this separation is somewhat simulated on a local deployment, each several part of Airflow can be deployed separately when deploying Airflow in a distributed manner. This comes with benefits of availability, security, reliability, and scalability.
 
 An Airflow deployment generally consists of five different compontens:
 
@@ -555,7 +536,7 @@ The following graphs shows how the components build up the Airflow architecture.
 
 ### Scheduler 
 
-The scheduler is basically the brain and heart of Airflow. It handles triggering and scheduling of workflows as well as submitting tasks to the executor to run. To be able to do this, the scheduler is responsible to parse the DAG files from the *DAG directory*, manage the database states in the *metadata database*, and to communicate with the executor to schedule tasks. Since the release of Airflow 2.0 it is possible to run multiple schedulers at a time to ensure a high availability and reliability (TODO check term) of this centerpiece of a distributed Airflow.
+The scheduler is basically the brain and heart of Airflow. It handles triggering and scheduling of workflows as well as submitting tasks to the executor to run. To be able to do this, the scheduler is responsible to parse the DAG files from the *DAG directory*, manage the database states in the *metadata database*, and to communicate with the executor to schedule tasks. Since the release of Airflow 2.0 it is possible to run multiple schedulers at a time to ensure a high availability and reliability of this centerpiece of a distributed Airflow.
 
 ### Webserver
 
@@ -563,15 +544,28 @@ The webserver runs the web interface of Airflow and thus the user interface ever
 
 ### Executor 
 
-The executor handles running the tasks themselves. In a local installation of Airflow, the tasks are run by the executor itself, whereas in a production ready deployment if Airflow the executor pushes the task execution to separate worker instances. The benefit of a distributed deployment is either reliability, but also the possibility to run tasks on different instances based on their needs, for example to run the training step of a machine learning model on a GPU node.
+How and where are the DAG workflows actually run? This is where executors come into play - they run tasks. An executor defines where and how the Airflow tasks should be executed. This crucial component of Airflow can be configured by the user and should be chosen to fit the users specific needs. There are several different executors, each handleing the run of a task a bit differently. This also relies on the underlying infrastructure Airflow is build on.  
 
-TODO
-a [Celery](https://docs.celeryproject.org/en/stable/getting-started/introduction.html) worker application which consumes and executes tasks scheduled by scheduler when using a Celery-like executor (more details in next section). It is possible to have many workers in different places (for example using separate VMs or multiple kubernetes pods).
+In a local installation of Airflow, the tasks are run by the executor itself, whereas in a production ready deployment if Airflow the executor pushes the task execution to separate worker instances. This allows for different setups such as a Celery-like executor or an executor based on Kubernetes. The benefit of a distributed deployment is reliability and availability, as it is possible to have many workers in different places (for example using separate VMs or multiple kubernetes pods). It is further possibility to run tasks on different instances based on their needs, for example to run the training step of a machine learning model on a GPU node.
+
++ The `SequentialExecutor` is the default executor in Airflow. This executor only runs one task instance at a time and should therefore not used in a production use case.
++ The `LocalExecutor`executes each task in a separate processe on a single machine. It’s the only non-distributed executor which is production ready and works well in relatively small deployments. If you installed Airflow as show above in the prerequisites, you will use this executor. 
++ In contrast, the `CeleryExecutor` uses under the hood the Celery queue system that allows users to deploy multiple workers that read tasks from the broker queue (Redis or RabbitMQ) where tasks are sent by scheduler. This enables Airflow to distribute tasks between many machines and allows users to specify what task should be executed where. This is for example useful for routing compute-heavy tasks to more resourceful workers and is the most popular production executor.
++ The `KubernetesExecutor` is another widely used production-ready executor and works similarly to the `CeleryExecutor`. As the name allready suggests it requires an underlying Kubernetes cluster that enables Airflow to spawn a new pod to run each task. Even though this is a robust method to account for machine or pod failure, the additional overhead in creation can be problematic for short running tasks.
++ The `CeleryKubernetsExecutor` uses both, the `CeleryExecutor` and `KubernetesExecutor` (as the name already says). It allows to distinguish whether a particular task should be executed on kubernetes or routed to the celery workers. This way users can take full advantage of horizontal auto scaling of worker pods and to delegate computational heavy tasks to kubernetes.
++ An additional `DebugExecutor`works as a is a debug executor. Its main purpose is to debug DAGs locally. It’s the only executor that uses a single process to execute all tasks.
+
+Checking which executor is currently set can be done by running the following command.
+
+```bash
+airflow config get-value core executor
+```
+
 
 ### DAG Directory
 
 The DAG directory contains the DAG files written in python. Each file is read by the the other Airflow components for a different purpose. The *web interface* lists all written DAGs from the directory as well as their content. The scheduler and executor run a DAG or a task based on the input read from the DAG directory.
-The DAG directory can be of different nature either a local folder in case of a local installation, or a separate (git) repository where the DAG files are stored. (TODO how does it handle subdirectories?)
+The DAG directory can be of different nature either a local folder in case of a local installation, or a separate (git) repository where the DAG files are stored. The scheduler will recurse through the DAG Directory so it is also possible to create subfolders for example based on different projects.
 
 ### Metadata Database
 
@@ -580,10 +574,10 @@ The metadata database is used to store data of the scheduler, executor, and the 
 
 ## TODO
 
-* [ ] Bilder einfügen
+* [x] Bilder einfügen
 * [x] Code einfügen
-* [ ] Todos bearbeiten
-* [ ] prerequisites installation
+* [x] Todos bearbeiten
+* [x] prerequisites installation
 * [ ] https://towardsdatascience.com/a-complete-introduction-to-apache-airflow-b7e238a33df
 * [ ] Text einheitlich schreiben
 * [ ] Korrekturlesen
@@ -593,7 +587,7 @@ The metadata database is used to store data of the scheduler, executor, and the 
 * [x] taskflow
 * [x] scheduling
 * [x] xcom
-* [ ] resolve todos
+* [x] resolve todos
 
 
 
