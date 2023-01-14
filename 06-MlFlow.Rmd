@@ -21,7 +21,7 @@ can even define your own plugins
 
 
 
-## MLFlow Usage
+## Fundamental usage
 
 ### Tracking
 
@@ -71,11 +71,21 @@ mlflow.set\_tracking\_uri("http://YOUR-SERVER:4040")
 mlflow.set_experiment("my-experiment")
 ```
 
-### MLFlow Projects
+#### log metric
 
-### Model storage
+#### log artifact
 
-### Saving and Serving Models
+#### start run
+
+### Models
+
+#### log model
+
+#### load model
+
+### Model Registry
+
+### Projects
 
 
 
