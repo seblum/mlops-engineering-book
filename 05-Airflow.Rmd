@@ -435,7 +435,7 @@ pull = PythonOperator(
 
 ### Taskflow
 
-Defining a DAG and using operators as shown in the previous sections is the classic approach to define a workflow in Airflow. However, the TaskFlow API was introduced as part of Airflow 2.0 which allows a to define work in a more pythonic way using decorators. Dags and Tasks are created using the `@dag`or `@task` decorators. The function name itself acts as the unique identifier for the DAG or task respectively.
+Defining a DAG and using operators as shown in the previous sections is the classic approach to define a workflow in Airflow. However, the TaskFlow API was introduced as part of *Airflow 2.0* which allows a to define work in a more pythonic way using decorators. Dags and Tasks are created using the `@dag`or `@task` decorators. The function name itself acts as the unique identifier for the DAG or task respectively.
 
 All of the processing in the new TaskFlow DAG is similar to the traditional paradigm of Airflow, but it is all abstracted from the developers and allows them to focus on the code. Task dependencies are automatically generated within TaskFlows based on the functional invocation of tasks.
 
@@ -501,7 +501,8 @@ def transform(**kwargs):
     ti.xcom_push("total_order_value", total_value_json_string)
 ```
 
-As one can see, using Taskflow is an easy approach to workflowing in Airflow. It takes away a lot of worries when it comes to building pipelines and allows for a flexible programing experience using decorators. It allows for several more functionalities , such as for example reusing decorated tasks in multiple DAGs and overriding the task parameters such as the `task_id`, etc. 
+As one can see, using Taskflow is an easy approach to workflowing in Airflow. It takes away a lot of worries when it comes to building pipelines and allows for a flexible programing experience using decorators. It allows for several more functionalities , such as for example reusing decorated tasks in multiple DAGs and overriding the task parameters such as the `task_id`, custom XCom Backends to automatically store data in e.g. AWS S3, and TaskGroups to group multiple tasks for a better overview in the Airflow Interface.
+
 However, even though Taskflow allows a smooth way of developing workflows, it is beneficial to learn the traditional Airflow API to understand the fundamental concepts of how to create a workflow. The following section will build up on that knowledge and depict a full machine learning workflow as an example.
 
 
@@ -514,7 +515,7 @@ Please refer to the previous section. This involves everything
 ```
 
 
-## Deploying Airflow
+## Airflow deployment
 
 Before Data Scientists and Machine Learning Engineers can utilize the power of Airflow Workflows, Airflow obviously needs to be set up and deployed. There are multiple ways an Airflow deployment can take place. It can be run either on a single machine or in a distributed setup on a cluster of machines. As stated in the prerequisites for this tutorial we set up Airflow locally on a single machine to introduce you on how to work with airflow. Although Airflow can be run on a single machine, it is beneficial to deploy it as a distributed system to utilize its full power.
 
@@ -578,8 +579,7 @@ The metadata database is used to store data of the scheduler, executor, and the 
 * [x] Code einfügen
 * [x] Todos bearbeiten
 * [x] prerequisites installation
-* [ ] https://towardsdatascience.com/a-complete-introduction-to-apache-airflow-b7e238a33df
-* [ ] Text einheitlich schreiben
+* [x] Text einheitlich schreiben
 * [ ] Korrekturlesen
 * [x] Taskflow?
 * [x] transfer operators
