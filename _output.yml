@@ -9,10 +9,14 @@ bookdown::gitbook:
       facebook: false
     toc:
 <<<<<<< HEAD
+<<<<<<< HEAD
       collapse: subsection 
 =======
       collapse: subsection
 >>>>>>> 2d0242b (added code and copied webpage)
+=======
+      collapse: subsection
+>>>>>>> 2519db1 (added code and copied webpage)
       before: |
         <li><a href="./">A Minimal Book Example</a></li>
       after: |

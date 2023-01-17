@@ -452,24 +452,47 @@ The *Artifact Store* needs to be configured when running MLflow on a distributed
 MLflow is an open source platform for managing the end-to-end machine learning lifecycle. It tackles four primary functions:
 
 * Tracking experiments to record and compare parameters and results ([MLflow Tracking](https://mlflow.org/docs/latest/tracking.html#tracking)).
-    
 * Packaging ML code in a reusable, reproducible form in order to share with other data scientists or transfer to production ([MLflow Projects](https://mlflow.org/docs/latest/projects.html#projects)).
-    
 * Managing and deploying models from a variety of ML libraries to a variety of model serving and inference platforms ([MLflow Models](https://mlflow.org/docs/latest/models.html#models)).
-    
 * Providing a central model store to collaboratively manage the full lifecycle of an MLflow Model, including model versioning, stage transitions, and annotations ([MLflow Model Registry](https://mlflow.org/docs/latest/model-registry.html#registry)).
     
 
 MLflow is library-agnostic. You can use it with any machine learning library, and in any programming language, since all functions are accessible through a [REST API](https://mlflow.org/docs/latest/rest-api.html#rest-api) and [CLI](https://mlflow.org/docs/latest/cli.html#cli). For convenience, the project also includes a [Python API](https://mlflow.org/docs/latest/python_api/index.html#python-api), [R API](https://mlflow.org/docs/latest/R-api.html#r-api), and [Java API](https://mlflow.org/docs/latest/java_api/index.html#java-api).
 
+MLFlow comes with a web interface to conveniently compare and check up on models and metrics.
+
+![Web Interface of MLFlow](images/mlflow_experiments-overview.png)
+
 can even define your own plugins
+
+
+
+MLflow is organized into four components: [Tracking](https://mlflow.org/docs/latest/tracking.html#tracking), [Projects](https://mlflow.org/docs/latest/projects.html#projects), [Models](https://mlflow.org/docs/latest/models.html#models), and [Model Registry](https://mlflow.org/docs/latest/model-registry.html#registry). You can use each of these components on their own—for example, maybe you want to export models in MLflow’s model format without using Tracking or Projects—but they are also designed to work well together.
+
+MLflow’s core philosophy is to put as few constraints as possible on your workflow: it is designed to work with any machine learning library, determine most things about your code by convention, and require minimal changes to integrate into an existing codebase. At the same time, MLflow aims to take any codebase written in its format and make it reproducible and reusable by multiple data scientists. On this page, we describe a typical ML workflow and where MLflow fits in.
+
+
+
+MLflow provides four components to help manage the ML workflow:
+
+**MLflow Tracking** is an API and UI for logging parameters, code versions, metrics, and artifacts when running your machine learning code and for later visualizing the results. You can use MLflow Tracking in any environment (for example, a standalone script or a notebook) to log results to local files or to a server, then compare multiple runs. Teams can also use it to compare results from different users.
+
+**MLflow Projects** are a standard format for packaging reusable data science code. Each project is simply a directory with code or a Git repository, and uses a descriptor file or simply convention to specify its dependencies and how to run the code. For example, projects can contain a `conda.yaml` file for specifying a Python [Conda](https://conda.io/docs/) environment. When you use the MLflow Tracking API in a Project, MLflow automatically remembers the project version (for example, Git commit) and any parameters. You can easily run existing MLflow Projects from GitHub or your own Git repository, and chain them into multi-step workflows.
+
+**MLflow Models** offer a convention for packaging machine learning models in multiple flavors, and a variety of tools to help you deploy them. Each Model is saved as a directory containing arbitrary files and a descriptor file that lists several “flavors” the model can be used in. For example, a TensorFlow model can be loaded as a TensorFlow DAG, or as a Python function to apply to input data. MLflow provides tools to deploy many common model types to diverse platforms: for example, any model supporting the “Python function” flavor can be deployed to a Docker-based REST server, to cloud platforms such as Azure ML and AWS SageMaker, and as a user-defined function in Apache Spark for batch and streaming inference. If you output MLflow Models using the Tracking API, MLflow also automatically remembers which Project and run they came from.
+
+**MLflow Registry** offers a centralized model store, set of APIs, and UI, to collaboratively manage the full lifecycle of an MLflow Model. It provides model lineage (which MLflow experiment and run produced the model), model versioning, stage transitions (for example from staging to production or archiving), and annotations.
+
 
 ## Prerequisites
 
-`pip install mlflow`
+To go through this chapter it is necessary to have python and mlflow installed. One can install locally via `pip install mlflow`. 
 
+## Functionality
 
+### MLFlow Tracking
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 + Create a docker image for the MLFlow tracking server.
@@ -685,32 +708,104 @@ allow substituting DAG information
 =======
 ## Fundamental usage
 >>>>>>> 79bcae0 (added subsections)
+=======
+MLFlow Tracking allows to save and compare experiment records and results. The following code snippet shows the basic concepts of it. 
+>>>>>>> 2519db1 (added code and copied webpage)
 
-### Tracking
+#### MLFlow run
 
-The [MLflow Tracking API](https://mlflow.org/docs/latest/tracking.html) lets you log metrics and artifacts (files) from your data science code and see a history of your runs. You can try it out by writing a simple Python script as follows (this example is also included in `quickstart/mlflow_tracking.py`):
+mlflow.start_run creates a new MLflow run to track the performance of this model. We pass a run name to it to identify it via the mlflow ui
 
 ```python
-import os
-from random import random, randint
-from mlflow import log_metric, log_param, log_artifacts
+import mlflow
 
-if \_\_name\_\_ == "\_\_main\_\_":
-    \# Log a parameter (key-value pair)
-    log_param("param1", randint(0, 100))
+run_name="example-run"
 
-    \# Log a metric; metrics can be updated throughout the run
-    log_metric("foo", random())
-    log_metric("foo", random() + 1)
-    log_metric("foo", random() + 2)
+mlflow.start_run()
+run = mlflow.active_run()
+print(f"Active run_id: {run.info.run_id}")
+mlflow.end_run()
 
-    \# Log an artifact (output file)
-    if not os.path.exists("outputs"):
-        os.makedirs("outputs")
-    with open("outputs/test.txt", "w") as f:
-        f.write("hello world!")
-    log_artifacts("outputs")
 ```
+
+It is also possible to use the context manager like this
+
+```python
+import mlflow
+
+with mlflow.start_run(run_name=run_name) as run:
+    print(f"Active run_id: {run.info.run_id}")
+```
+
+**Child runs**
+
+Based on the run ID it is possible to create child runs of the current run. This can be used to gain a better overview of multiple run for example. Belows code depicts and example on how to create a child run.
+
+```python
+# Create child runs based on the run ID
+with mlflow.start_run(run_id=run_id) as parent_run:
+    print("parent run_id: {}".format(parent_run.info.run_id))
+    with mlflow.start_run(nested=True, run_name="test_dataset_abc.csv") as child_run:
+        mlflow.log_metric("acc", 0.91)
+        print("child run_id : {}".format(child_run.info.run_id))
+
+with mlflow.start_run(run_id=run_id) as parent_run:
+    print("parent run_id: {}".format(parent_run.info.run_id))
+    with mlflow.start_run(nested=True, run_name="test_dataset_xyz.csv") as child_run:
+        mlflow.log_metric("acc", 0.90)
+        print("child run_id : {}".format(child_run.info.run_id))
+```
+
+#### Logging metrics & parameters
+
+During a run we can log and store metrics within MLFlow. Its easily done by calling the `log_param` fpr parameters used or `log_metric` to record metrics like F1 or accuracy. We can also use `set_tag` to specify a tag for our run to identify. See belows example
+
+```python
+with mlflow.start_run(run_name=run_name) as run:
+    
+    # Parameters
+    mlflow.log_param("learning_rate", 0.01)
+    mlflow.log_params({"epochs": 0.05, "final_activation": "sigmoid"})
+
+    # Tags
+    mlflow.set_tag("env", "dev")
+    mlflow.set_tags({"some_tag": False, "project": "xyz"})
+
+    # Metrics
+    mlflow.log_metric("loss", 0.001)
+    mlflow.log_metrics({"acc": 0.92, "auc": 0.90})
+
+    # It is possible to log a metrics series (for example a training history)
+    for val_loss in [0.1,0.01,0.001,0.00001]:
+        mlflow.log_metric("val_loss", val_loss)
+        
+    for val_acc in [0.6,0.6,0.8,0.9]:
+        mlflow.log_metric("val_acc", val_acc)
+    
+    run_id=run.info.run_id
+    experiment_id=run.info.experiment_id
+    print(f"run id: {run_id}")
+    print(f"experiment id: {experiment_id}")
+```
+
+It is also possible to add information after the experiment ran. It is possible to add notes afterwards by using an experiment or run ID.
+
+```python
+from mlflow.tracking import MlflowClient
+
+# add a note to the experiment
+MlflowClient().set_experiment_tag(experiment_id, "mlflow.note.content","my experiment note")
+# add a note to the run
+MlflowClient().set_tag(run_id, "mlflow.note.content","my run note")
+
+# Or we can even log further metrics by calling mlflow.start_run on a specific ID
+with mlflow.start_run(run_id=run_id):
+    run = mlflow.active_run()
+    mlflow.log_metric("f1", 0.9)
+    print(run.info.run_id)
+```
+
+#### Display & View metrics
 
 By default, wherever you run your program, the tracking API writes data into files into a local `./mlruns` directory. You can then run MLflow’s Tracking UI:
 
@@ -724,44 +819,227 @@ Logging to a Remote Tracking Server
 
 In the examples above, MLflow logs data to the local filesystem of the machine it’s running on. To manage results centrally or share them across a team, you can configure MLflow to log to a remote tracking server. To get access to a remote tracking server:
 
-[Launch a tracking server](https://mlflow.org/docs/latest/tracking.html#tracking-server) on a remote machine.
-
 You can then [log to the remote tracking server](https://mlflow.org/docs/latest/tracking.html#logging-to-a-tracking-server) by setting the `MLFLOW_TRACKING_URI` environment variable to your server’s URI, or by adding the following to the start of your program:
 
 ```python
 import mlflow
-mlflow.set\_tracking\_uri("http://YOUR-SERVER:4040")
+mlflow.set_tracking_uri("http://YOUR-SERVER:4040")
 mlflow.set_experiment("my-experiment")
 ```
 
-#### log metric
+We can display what we have done so far within a notebook by running the following code. Yet, viewing all the results in the web interface of MLFlow integrated in the Kubeflow Dashboard is even better.
 
-#### log artifact
+```python
+current_experiment=dict(mlflow.get_experiment_by_name(experiment_name))
+mlflow.search_runs([current_experiment['experiment_id']])
+```
 
-#### start run
+![Web Interface of MLFlow](images/mlflow_experiments-overview.png)
 
-### Models
+#### Logging artifacts
 
-#### log model
+It is possible to log local files or directory as an artifact as well and place it within the runs URI. Artifacts can be organized into directories, so it is possible to log an artifact similarly.
 
-#### load model
+```python
+import os
 
-### Model Registry
+# Create an example file output/test.txt
+file_path="outputs/test.txt"
+if not os.path.exists("outputs"):
+    os.makedirs("outputs")
+with open(file_path, "w") as f:
+    f.write("hello world!")
 
-### Projects
+# Start the run based on the run ID and log the artifact 
+# we just created    
+with mlflow.start_run(run_id=run_id):
+    mlflow.log_artifact(
+        local_path=file_path,
+        # store the artifact directly in run's root 
+        artifact_path=None   
+    ) 
+    mlflow.log_artifact(
+        local_path=file_path,
+        # store the artifact in a specific directory
+        artifact_path="data/subfolder"
+    )
+
+    # get and print the URI where the artifacts have been logged to
+    artifact_uri = mlflow.get_artifact_uri()
+    print("Artifact uri: {}".format(artifact_uri))
+```
+
+#### Autolog
+
+Autolog allows for automatic logging of log metrics, parameters, and models without the need for explicit log statements.
+
+```python
+import mlflow.sklearn
+import numpy as np
+from sklearn.ensemble import RandomForestRegressor
+
+params = {"n_estimators": 4, "random_state": 42}
+
+mlflow.sklearn.autolog()
+
+run_name = 'autologging model example'
+with mlflow.start_run(run_name=run_name) as run:
+   rfr = RandomForestRegressor(**params).fit(np.array([[0, 1, 0],[0, 1, 0],[0, 1, 0]]), [1,1,1])
+
+mlflow.sklearn.autolog(disable=True)
+```
 
 
+### MLFlow Models
+
+MLFlow Models manages and deploys models from several different ML libraries such as scikit-learn, TensorFlow, PyTorch, or Spark.. The following code snippet introduces how to use it based on skikit-learn. Please refer to the [official documentation](https://mlflow.org/docs/latest/models.html) further other examples. 
+MLFlow Model acts  as a standard format to package the ML models so they can be used in different downstreams.
+
+```python
+# Import the sklearn models from mlflow
+import mlflow.sklearn
+from sklearn.ensemble import RandomForestRegressor
+
+params = {"n_estimators": 4, "random_state": 42}
+
+# Start an MLFlow run, train the RandomForestRegressor example model, and 
+# log its parameeters. In the end the model itself is logged and stored in MLFlow
+run_name = 'logging model example'
+with mlflow.start_run() as run:
+   rfr = RandomForestRegressor(**params).fit([[0, 1, 0]], [1])
+   mlflow.log_params(params)
+   mlflow.sklearn.log_model(rfr, artifact_path="sklearn-model")
+
+model_uri = "runs:/{}/sklearn-model".format(run.info.run_id)
+model_name = f"{namespace}-RandomForestRegressionModel"
+print(model_uri)
+print(model_name)
+```
+
+Once a model is stored in the correct format it can be loaded and used for prediction.
+
+```python
+import mlflow.pyfunc
+
+# Load the model and use it for predictions
+model = mlflow.pyfunc.load_model(model_uri=model_uri)
+data = [[0, 1, 0]]
+model.predict(data)
+```
+
+MLflow includes a generic `MLmodel` format for saving _models_ from a variety of tools in diverse _flavors_. For example, many models can be served as Python functions, so an `MLmodel` file can declare how each model should be interpreted as a Python function in order to let various tools serve it. MLflow also includes tools for running such models locally and exporting them to Docker containers or commercial serving platforms.
+
+
+### MLFlow Model Registry
+
+MLFlow Model Registry provides a central model store to manage the lifecycle of an ML Model. The *RandomForestRegressor* from the previous section can also be registered to the Model Registry to allow for example versioning. In fact, we already did that by running `mlflow.sklearn.log_model`. Let's have a look at the code again.
+
+```python
+import mlflow.sklearn
+import mlflow.pyfunc
+from sklearn.ensemble import RandomForestRegressor
+
+params = {"n_estimators": 4, "random_state": 42}
+
+run_name = 'logging model example'
+with mlflow.start_run() as run:
+   rfr = RandomForestRegressor(**params).fit([[0, 1, 0]], [1])
+   mlflow.log_params(params)
+   # Log and store the model and the MLFlow Model Registry
+   mlflow.sklearn.log_model(rfr, artifact_path="sklearn-model")
+
+model_uri = "runs:/{}/sklearn-model".format(run.info.run_id)
+model_name = f"{namespace}-RandomForestRegressionModel"
+
+model = mlflow.pyfunc.load_model(model_uri=model_uri)
+data = [[0, 1, 0]]
+model.predict(data)
+```
+
+It is also possible to store model in the model registry by calling `mlflow.register_model` such as show in belows example.
+
+```python
+# The previously stated Model URI and name are needed to register a MLFlow Model
+# using the following
+mv = mlflow.register_model(model_uri, model_name)
+print("Name: {}".format(mv.name))
+print("Version: {}".format(mv.version))
+print("Stage: {}".format(mv.current_stage))
+```
+
+Once registered to the model registry the model is already versioned. This allows to load a model based on its specific version. A registered model can be also modified to transition to another version or stage. Both use cases are shown in the example below.
+
+```python
+import mlflow.pyfunc
+
+# Load model for prediction. Keep note that we now specified the model version.
+model = mlflow.pyfunc.load_model(
+   model_uri=f"models:/{model_name}/{mv.version}"
+)
+
+# Predict based on the loaded model
+data = [[0, 1, 0]]
+model.predict(data)
+```
+
+Let's stage a model to `'Staging'`. 
+```python
+# Transition the model to another stage
+client = MlflowClient()
+
+stage = 'Staging' # None, Production
+
+client.transition_model_version_stage(
+    name=model_name,
+    version=mv.version,
+    stage=stage
+)
+```
+
+### MLFlow Projects
+
+MLflow allows you to package code and its dependencies as a _project_ that can be run in a reproducible fashion on other data. Each project includes its code and a `MLproject` file that defines its dependencies (for example, Python environment) as well as what commands can be run into the project and what arguments they take.
+
+You can easily run existing projects with the `mlflow run` command, which runs a project from either a local directory or a GitHub URI:
+
+```python
+mlflow run sklearn_elasticnet_wine -P alpha=5.0
+
+mlflow run https://github.com/mlflow/mlflow-example.git -P alpha=5.0
+```
+
+There’s a sample project in `tutorial`, including a `MLproject` file that specifies its dependencies. if you haven’t configured a [tracking server](https://mlflow.org/docs/latest/tracking.html#tracking-server), projects log their Tracking API data in the local `mlruns` directory so you can see these runs using `mlflow ui`.
 
 ## MLFflow Architecture
 
+
+## Scalability and Big Data
+
+Data is the key to obtaining good results in machine learning, so MLflow is designed to scale to large data sets, large output files (for example, models), and large numbers of experiments. Specifically, MLflow supports scaling in four dimensions:
+
+* An individual MLflow run can execute on a distributed cluster, for example, using [Apache Spark](https://spark.apache.org/). You can launch runs on the distributed infrastructure of your choice and report results to a Tracking Server to compare them. MLflow includes a built-in API to launch runs on [Databricks](https://databricks.com/).
+    
+* MLflow supports launching multiple runs in parallel with different parameters, for example, for hyperparameter tuning. You can simply use the [Projects API](https://mlflow.org/docs/latest/projects.html#projects) to start multiple runs and the [Tracking API](https://mlflow.org/docs/latest/tracking.html#tracking) to track them.
+    
+* MLflow Projects can take input from, and write output to, distributed storage systems such as AWS S3 and [DBFS](https://docs.databricks.com/user-guide/dbfs-databricks-file-system.html). MLflow can automatically download such files locally for projects that can only run on local files, or give the project a distributed storage URI if it supports that. This means that you can write projects that build large datasets, such as featurizing a 100 TB file.
+    
+* MLflow Model Registry offers large organizations a central hub to collaboratively manage a complete model lifecycle. Many data science teams within an organization develop hundreds of models, each model with its experiments, runs, versions, artifacts, and stage transitions. A central registry facilitates model discovery and model’s purpose across multiple teams in a large organization.
+
+
 ### MLFLow Server
 
+runs web UI
+
 ### MLFlow Database
+
+MySQL, RDS, Whatever?
 
 ### Artifact Store
 <<<<<<< HEAD
 >>>>>>> 230d939 (added initial structure)
 =======
+
+storage system like S3?
 
 ### MLFlow Infrastructure
 
@@ -771,5 +1049,18 @@ mlflow.set_experiment("my-experiment")
     + Helm to deploy PostgreSQL
 + Create YAML configurations for deployment, service and configmap to deploy the tracking server to Kubernetes.
     + The first thing we need to do is create the configmap and secrets for the tracking server.
+<<<<<<< HEAD
     + 
 >>>>>>> b190388 (copy pasted from mlflow website)
+=======
+
+
+
+
+# TODO
++ set prerequisites
++ insert images
++ insert code
++ write architecture
++ https://mlflow.org/docs/latest/concepts.html#the-machine-learning-workflow workflow into mlops intro
+>>>>>>> 2519db1 (added code and copied webpage)
