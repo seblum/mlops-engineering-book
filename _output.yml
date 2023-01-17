@@ -8,7 +8,11 @@ bookdown::gitbook:
       linkedin: true
       facebook: false
     toc:
+<<<<<<< HEAD
       collapse: subsection 
+=======
+      collapse: subsection
+>>>>>>> 2d0242b (added code and copied webpage)
       before: |
         <li><a href="./">A Minimal Book Example</a></li>
       after: |
