@@ -1,8 +1,0 @@
-# Introduction
-
-This project started out of an interest in multiple domains. At first, I was working on a Kubeflow platform at the time and haven't had much experience in the realm of MLOps. I was starting with K8s and Terraform and was interested to dig deeper. I did so by teaching myself and I needed a project. What better also to do than to build "my own" MLOps plattform. I used Airflow since it is widely uses for workflow management and I also wanted to use it from the perspective of a data scientist, meaning to actually build some pipelines with it. This idea of extending the project to actually have a running use case expanded this work about including MLFlow for model tracking and DVC for data version control.
-
-### A work in progress {-}
-
-This project / book / tutorial / whatever this is or will be startet by explaining the concept of Kubernetes. The plan is to continuously update it by further sections. Since there is no deadline, there is no timeline, and I am also not sure whether there will exist something final to be honest.
-
