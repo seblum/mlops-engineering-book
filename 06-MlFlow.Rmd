@@ -318,6 +318,8 @@ mlflow run https://github.com/mlflow/mlflow-example.git -P alpha=5.0
 
 There’s a sample project in `tutorial`, including a `MLproject` file that specifies its dependencies. if you haven’t configured a [tracking server](https://mlflow.org/docs/latest/tracking.html#tracking-server), projects log their Tracking API data in the local `mlruns` directory so you can see these runs using `mlflow ui`.
 
+https://mlflow.org/docs/latest/projects.html
+
 
 ## MLFflow Architecture
 
@@ -333,18 +335,32 @@ Data is the key to obtaining good results in machine learning, so MLflow is desi
     
 * MLflow Model Registry offers large organizations a central hub to collaboratively manage a complete model lifecycle. Many data science teams within an organization develop hundreds of models, each model with its experiments, runs, versions, artifacts, and stage transitions. A central registry facilitates model discovery and model’s purpose across multiple teams in a large organization.
 
+An MLflow tracking server also has two components to store data: a backend store and an artifact store. \[3\]
+
+The **backend store** is where MLflow Tracking Server stores experiment and run metadata as well as params, metrics, and tags for runs. \[3\]
+
+I used the [Amazon RDS](https://aws.amazon.com/rds/mysql/) as our backend store
+
+The **artifact store** is a location suitable for large data and is where data scientists log their artifact output (for example, models). \[3\] Obviously, the default choice here is an S3 Bucket.
+
+Amazon S3 is an object storage service. It also has a free tier available for 12 months. \[5\]
 
 ### MLFLow Server
 
 runs web UI
+* MLFlow Tracking Server, which exposes API for logging parameters, metrics, experiments, metadata and UI for visualizing the results.
 
 ### MLFlow Database
 
 MySQL, RDS, Whatever?
+* Amazon Aurora Serverless used as the backend store where MLFlow stores metadata about experiments and runs i.e. metrics, tags and parameters.
 
 ### Artifact Store
 
 storage system like S3?
+* AWS S3 used as the artefact store where MLFlow stores artefacts, e.g. models, data files.
+
+
 
 ### MLFlow Infrastructure
 
