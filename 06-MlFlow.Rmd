@@ -17,7 +17,7 @@ MLFlow comes with a web interface to conveniently view and compare models and me
 
 ## Prerequisites
 
-To go through this chapter it is necessary to have python and mlflow installed. One can install MLFlow locally via `pip install mlflow`. 
+To go through this chapter it is necessary to have python and mlflow installed. One can install MLFlow locally via `pip install mlflow`. Further, the skikit-learn library is needed to run some parts of this tutorial `pip install scikit-learn`
 
 
 ## Functionality
@@ -28,6 +28,18 @@ In the following the four primary components of MLFlow are shown in more detail 
 ### MLFlow Tracking
 
 MLFlow Tracking allows to log and compare parameters, code versions, metrics, and artifacts. This can be easily done by minimal changes to your code using the MLFlow Tracking API. The following examples depict the basic concepts and show how to use it.
+
+#### MLFlow experiment
+
+```python
+import   mlflow
+
+experiment_name = "introduction-experiment"
+mlflow.set_experiment(experiment_name)
+```
+
+TODO set experiment, create experiment
+
 
 #### MLFlow run
 
@@ -202,6 +214,7 @@ mlflow.sklearn.autolog(disable=True)
 
 Even though this is a very convenient feature, it is a good practice to log metrics manually as this gives you more control over your ML run.
 
+TODO: Autologging stores already model
 
 ### MLFlow Models
 
