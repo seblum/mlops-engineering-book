@@ -50,8 +50,11 @@ This will start and end a MLFlow run. It is also possible to use the context man
 ```python
 import mlflow
 
+run_name="context-manager-run"
+
 with mlflow.start_run(run_name=run_name) as run:
-    print(f"Active run_id: {run.info.run_id}")
+    run_id = run.info.run_id
+    print(f"Active run_id: {run_id}")
 ```
 
 **Child runs**
@@ -320,56 +323,30 @@ There’s a sample project in `tutorial`, including a `MLproject` file that spec
 
 https://mlflow.org/docs/latest/projects.html
 
+* MLflow supports launching multiple runs in parallel with different parameters, for example, for hyperparameter tuning. You can simply use the [Projects API](https://mlflow.org/docs/latest/projects.html#projects) to start multiple runs and the [Tracking API](https://mlflow.org/docs/latest/tracking.html#tracking) to track them.
+
 
 ## MLFflow Architecture
 
- Scalability and Big Data
+While MLFlow can be run locally for your personal model implementation, it is usually deployed on a bigger network for large organizations or teams. MLFlow can be launched on a distributed infrastructure of your choice to scale its use The MLFlow backend consists of three different main components, all of which can be deployed in a cloud infrastructure.
 
-Data is the key to obtaining good results in machine learning, so MLflow is designed to scale to large data sets, large output files (for example, models), and large numbers of experiments. Specifically, MLflow supports scaling in four dimensions:
+### MLFLow Tracking Server
 
-* An individual MLflow run can execute on a distributed cluster, for example, using [Apache Spark](https://spark.apache.org/). You can launch runs on the distributed infrastructure of your choice and report results to a Tracking Server to compare them. MLflow includes a built-in API to launch runs on [Databricks](https://databricks.com/).
-    
-* MLflow supports launching multiple runs in parallel with different parameters, for example, for hyperparameter tuning. You can simply use the [Projects API](https://mlflow.org/docs/latest/projects.html#projects) to start multiple runs and the [Tracking API](https://mlflow.org/docs/latest/tracking.html#tracking) to track them.
-    
-* MLflow Projects can take input from, and write output to, distributed storage systems such as AWS S3 and [DBFS](https://docs.databricks.com/user-guide/dbfs-databricks-file-system.html). MLflow can automatically download such files locally for projects that can only run on local files, or give the project a distributed storage URI if it supports that. This means that you can write projects that build large datasets, such as featurizing a 100 TB file.
-    
-* MLflow Model Registry offers large organizations a central hub to collaboratively manage a complete model lifecycle. Many data science teams within an organization develop hundreds of models, each model with its experiments, runs, versions, artifacts, and stage transitions. A central registry facilitates model discovery and model’s purpose across multiple teams in a large organization.
+The MLFlow *Tracking Server* exposes the API to log parameters, metrics, experiments and metadata. It also runs the MLFlow Web Interface to visualize the results. The *Tracking Server* uses both, the backend store and the artifact store to store and read data from.
 
-An MLflow tracking server also has two components to store data: a backend store and an artifact store. \[3\]
+### MLFlow Backend Store
 
-The **backend store** is where MLflow Tracking Server stores experiment and run metadata as well as params, metrics, and tags for runs. \[3\]
+The MLFlow *Backend Store* is where MLflow stores experiment and run metadata like parameters, metrics, and experiments of the runs. 
 
-I used the [Amazon RDS](https://aws.amazon.com/rds/mysql/) as our backend store
+It is possible to use a variety of metadata stores to use as the *Backend Store*, for example MySQL, or AWS RDS
 
-The **artifact store** is a location suitable for large data and is where data scientists log their artifact output (for example, models). \[3\] Obviously, the default choice here is an S3 Bucket.
+### MLFlow Artifact Store
 
-Amazon S3 is an object storage service. It also has a free tier available for 12 months. \[5\]
+The MLFlow *Artifact Store* is a location to store large data if an ML run. This is where MLFlow users log their artifact output, e.g. models, or data files.
 
-### MLFLow Server
-
-runs web UI
-* MLFlow Tracking Server, which exposes API for logging parameters, metrics, experiments, metadata and UI for visualizing the results.
-
-### MLFlow Database
-
-MySQL, RDS, Whatever?
-* Amazon Aurora Serverless used as the backend store where MLFlow stores metadata about experiments and runs i.e. metrics, tags and parameters.
-
-### Artifact Store
-
-storage system like S3?
-* AWS S3 used as the artefact store where MLFlow stores artefacts, e.g. models, data files.
+MLFlow stores these data in the current (Todo: where does it store) when used locally. It is also possible to use cloud storage resources as an *Artifact Store*, such as AWS S3 Buckets.
 
 
-
-### MLFlow Infrastructure
-
-
-+ Create a docker image for the MLFlow tracking server.
-+ Deploy Postgresql database on Kubernetes.
-    + Helm to deploy PostgreSQL
-+ Create YAML configurations for deployment, service and configmap to deploy the tracking server to Kubernetes.
-    + The first thing we need to do is create the configmap and secrets for the tracking server.
 
 
 
