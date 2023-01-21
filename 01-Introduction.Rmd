@@ -1,12 +1,31 @@
 # Introduction
 
-## MLOps Engineering
+## Machine Learning Workflow
 
-Machine Learning Operations (MLOps) Engineering is the practice of applying software engineering principles and best practices to the deployment and management of machine learning models in a production environment. It is a discipline that combines the skills and expertise of data scientists, machine learning engineers, and DevOps engineers to ensure that machine learning models are deployed and managed efficiently and effectively.
 
-The goal of MLOps engineering is to automate and streamline the process of building, testing, and deploying machine learning models, while also ensuring that they are performing as expected in production. This is achieved through the use of tools and technologies such as version control, continuous integration and delivery, and monitoring and observability.
+Machine learning requires experimenting with a wide range of datasets, data preparation steps, and algorithms to build a model that maximizes some target metric. Once you have built a model, you also need to deploy it to a production system, monitor its performance, and continuously retrain it on new data and compare with alternative models.
 
-By applying software engineering principles and best practices to the deployment and management of machine learning models, MLOps engineers can help organizations move quickly and efficiently from prototyping to production, while also ensuring that models are accurate and reliable.
+Being productive with machine learning can therefore be challenging for several reasons:
+
+* **It’s difficult to keep track of experiments.** When you are just working with files on your laptop, or with an interactive notebook, how do you tell which data, code and parameters went into getting a particular result?
+    
+* **It’s difficult to reproduce code.** Even if you have meticulously tracked the code versions and parameters, you need to capture the whole environment (for example, library dependencies) to get the same result again. This is especially challenging if you want another data scientist to use your code, or if you want to run the same code at scale on another platform (for example, in the cloud).
+    
+* **There’s no standard way to package and deploy models.** Every data science team comes up with its own approach for each ML library that it uses, and the link between a model and the code and parameters that produced it is often lost.
+    
+* **There’s no central store to manage models (their versions and stage transitions).** A data science team creates many models. In absence of a central place to collaborate and manage model lifecycle, data science teams face challenges in how they manage models stages: from development to staging, and finally, to archiving or production, with respective versions, annotations, and history.
+    
+
+Moreover, although individual ML libraries provide solutions to some of these problems (for example, model serving), to get the best result you usually want to try _multiple ML libraries_. MLflow lets you train, reuse, and deploy models with any library and package them into reproducible steps that other data scientists can use as a “black box,” without even having to know which library you are using.
+
+### ML Tools & Principles
+
+#### Model Tracking
+
+#### Workflow Management & Pipelines
+
+#### Model Serving
+
 
 ## Machine Learning Operations
 
@@ -27,26 +46,25 @@ DevOps is a practice that emphasizes the collaboration and communication between
 DevOps focuses on the deployment and management of software in general, while MLOps focuses specifically on the deployment and management of machine learning models in a production environment. The goal is basically the same as in DevOps, yet deploying a machine learning model. While this is achieved by the same tools and best practices used in DevOps, deploying machine learning models (compared to software) adds a lot of complexity to the process.
 Machine learning models are not just lines of code, but also require large amounts of data, and specialized hardware, to function properly. Further, their complex algorithms might need to change when there is a shift in new data. This process of ensuring that machine learning models are accurate and reliable lead to further challenges. Another key difference is that MLOps places a greater emphasis on model governance, which needs to ensure that machine learning models are compliant with relevant regulations and standards.
 
-
-## Roles and Tasks in MLOps
+### Roles and Tasks in MLOps
 
 The MLOps lifecycle typically involves several key roles and responsibilities, each with their own specific tasks and objectives.
 
-##### Data Scientists
+#### Data Scientist
 Data Scientists are usually responsible for developing and testing machine learning models within the development stage. Their work typically involves investigating large amounts of data, the necessary preprocessing steps, and choosing a suitable machine learning model that solves the business need. They further develop a functioning ML model respective to the data 
     
-##### ML Engineers
+#### ML Engineer
 ML Engineers work closely with Data Scientists to develop and deploy machine learning models in a production environment. They are responsible for creating and maintaining the infrastructure and tools needed to run machine learning models at scale and in production. 
 
 They are also responsible for the day-to-day management and monitoring of machine learning models in a production environment. They use tools and technologies to track model performance and make sure that models are running smoothly and producing accurate results. This also includes to takes measures for data or model shifts (TODO: check data shift)
 
-##### MLOps Engineer
+#### MLOps Engineer
 The MLOps engineer is responsible for creating and maintaining the infrastructure and tools needed to run machine learning models at scale, and for ensuring that the models are integrated seamlessly into the overall software development and deployment process. This includes tasks such as setting up and configuring the necessary hardware and software environments, creating and maintaining documentation, and implementing automated testing and deployment processes. The MLOps engineer must be able to navigate this complexity and ensure that the models are deployed and managed in a way that is both efficient and effective. (TODO: check everything)
     
-##### DevOps Engineers
+#### DevOps Engineer
 DevOps Engineers are responsible for automating and streamlining the process of building, testing, and deploying software, or in this case machine learning models respectively. They use best practices from software development and operations, such as version control, continuous integration and delivery, and monitoring and observability, to ensure that models are performing as expected in production. 
     
-##### Additional roles & function
+#### Additional roles & function
 The previous roles only show a small portion of all contributors within data projects. Additional roles are further mentioned to give an overview of the complexity of such interdisciplinary teams. Of course, every team differs and a team is not limited to these roles.
 
 *Model Governance* is responsible for ensuring that machine learning models are accurate, reliable, and compliant with relevant regulations and standards. They typically work with data scientists, ML engineers, and other stakeholders to create and implement governance policies and procedures.
@@ -55,18 +73,33 @@ The previous roles only show a small portion of all contributors within data pro
 
 It's also worth noting that some of these roles may overlap and different organizations may have different ways of structuring their teams and responsibilities. The most important thing is to have clear communication and collaboration between all the different teams, roles and stakeholders involved in the MLOps lifecycle.
 
-## ML Tools & Principles
+## MLOps Engineering
 
-### Model Tracking
+Machine Learning Operations (MLOps) Engineering is the practice of applying software engineering principles and best practices to the deployment and management of machine learning models in a production environment. It is a discipline that combines the skills and expertise of data scientists, machine learning engineers, and DevOps engineers to ensure that machine learning models are deployed and managed efficiently and effectively.
+
+The goal of MLOps engineering is to automate and streamline the process of building, testing, and deploying machine learning models, while also ensuring that they are performing as expected in production. This is achieved through the use of tools and technologies such as version control, continuous integration and delivery, and monitoring and observability.
+
+By applying software engineering principles and best practices to the deployment and management of machine learning models, MLOps engineers can help organizations move quickly and efficiently from prototyping to production, while also ensuring that models are accurate and reliable.
 
 
 ## DevOps Tools & Principles
 
+might be an own chapters
 ### Version Control
 
 ### CI/CD
 
 
-## TODO:
+
+
+
+## The Architecture of this Setup
+
+
+TODO: insert image of architecture with mlflow and airflow on K8s, rollout with terraform
+
+
+
+# TODO:
 
 - [ ] resolve todos
