@@ -16,7 +16,7 @@ mlflow.set_experiment(experiment_name)
 print("> register model in registry 1.0")
 
 
-mlflow.set_tracking_uri("http://127.0.0.1:5004/")
+mlflow.set_tracking_uri("http://127.0.0.1:5000/")
 
 run_name = "registry-example-run"
 params = {"n_estimators": 4,
