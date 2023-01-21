@@ -12,7 +12,7 @@ MLflow is library-agnostic, which means one can use it with any ML library and  
 
 MLFlow comes with a web interface to conveniently view and compare models and metrics.
 
-![Web Interface of MLFlow](images/mlflow_experiments-overview.png)
+![Web Interface of MLFlow](images/06-MLFlow/mlflow_web_interface-overview.png)
 
 
 ## Prerequisites
@@ -149,7 +149,7 @@ mlflow.search_runs([current_experiment['experiment_id']])
 
 Yet, viewing all the results in the web interface of MLFlow gives a much better overview. By default, the tracking API writes the data to the local filesystem of the machine it’s running on under a `./mlruns` directory. We can acces the MLflow’s Tracking UI by running `mlflow ui` via our console, and view it in our browser under http://localhost:5000. The metrics dashboard of a run looks like to following
 
-![MLFlow experiments dashboard](images/mlflow_experiments-overview.png)
+![MLFlow Model Tracking Dashboard](images/06-MLFlow/mlflow_web_interface-tracking.png)
 
 It is also possible to configure MLflow to log to a remote tracking server, to manage results centrally or share them across a team. To get access to a remote tracking server it is needed to set a MLFlow tracking URI. This can be done either by setting an environment variable `MLFLOW_TRACKING_URI` to the servers URI, or by adding it to the start of our code.
 
@@ -253,6 +253,7 @@ data = [[0, 1, 0]]
 model.predict(data)
 ```
 
+![MLFlow Models](images/06-MLFlow/mlflow_web_interface-models.png)
 
 ### MLFlow Model Registry
 
@@ -365,12 +366,13 @@ MLFlow stores these data in the current (Todo: where does it store) when used lo
 
 
 # TODO
-+ set prerequisites
-+ insert images
-+ insert code
-+ run code
-+ write architecture
-+ https://mlflow.org/docs/latest/concepts.html#the-machine-learning-workflow workflow into mlops intro
-+ resolve todos
-+ check order of mlflow components
-+ add mlflow projects example
++ [ ] set prerequisites
++ [x] insert images
++ [ ] insert code
++ [x] run code
++ [ ] write architecture
++ [ ] https://mlflow.org/docs/latest/concepts.html#the-machine-learning-workflow workflow into mlops intro
++ [ ] resolve todos
++ [ ] check order of mlflow components
++ [ ] add mlflow projects example
++ [x] Check Tutorial
