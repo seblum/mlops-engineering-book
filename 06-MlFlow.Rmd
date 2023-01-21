@@ -2,10 +2,10 @@
 
 MLflow is an open source platform to manage the machine learning lifecycle end-to-end. This includes experimentation, reproducibility, deployment, and registration of a ML model. MLflow provides four primary components to manage the ML lifecycle. They can be either used on their own or they also to work together.
 
-* **MLflow Tracking** is used to log and compare parameters, code versions, metrics, and artifacts of an ML code. Results can be stored to local files or to remote servers and allow to compare multiple runs.
-* **MLflow Projects** packages data science code in a standard format for a reusable, and reproducible form to share your code with other data scientists or transfer it to production. Each project is basically a directory with code or a Git repository, and uses a descriptor file to specify its dependencies, for example a `conda.yaml`. This allows to run existing MLflow Projects from a Git repository, such as GitHub. It is also possible to chain Projects into multi-step workflows.
-* **MLflow Models** enables to manage and deploy machine learning models from multiple libraries. It allows to package your own ML model for later use in downstream tasks, e.g. real-time serving through a REST API. The package format defines a convention that saves the model in different *“flavors”* that can be interpreted by different downstream tools. This allows to load a TensorFlow model as a TensorFlow DAG for example, or to deploy a Python model to a Docker-based REST server, or to cloud platforms such as Azure ML and AWS SageMaker
+* **MLflow Tracking** is used to log and compare parameters, code versions, metrics, and artifacts of an ML code. Results can be stored to local files or to remote servers and allow to compare multiple runs. MLflow Tracking comes with an API and a web interface to easily observe the logged parameters and artifacts.
+* **MLflow Models** enables to manage and deploy machine learning models from multiple libraries. It allows to package your own ML model for later use in downstream tasks, e.g. real-time serving through a REST API. The package format defines a convention that saves the model in different *“flavors”* that can be interpreted by different downstream tools.
 * **MLflow Registry** provides a central model store to collaboratively manage the full lifecycle of an MLflow Model, including model versioning, stage transitions, and annotations. It comes with an API and UI for easy use of such funtionalities and each of those aspects can be checked in MLflows' web interface.
+* **MLflow Projects** packages data science code in a standard format for a reusable, and reproducible form to share your code with other data scientists or transfer it to production. Each project is basically a local directory or a Git repository, and uses a descriptor file to specify its dependencies and entrypoints. An existing MLflow Project can be run also either locally or from a Git repository.
 
 MLflow is library-agnostic, which means one can use it with any ML library and  programming language. All functions are accessible through a [REST API](https://MLflow.org/docs/latest/rest-api.html#rest-api) and [CLI](https://MLflow.org/docs/latest/cli.html#cli), and project comes with a Python API, R API, and Java API already included. It requires minimal changes to integrate MLflow into an existing codebase and aims to make it reproducible and reusable as easy as possible so other Data Scientists can reuse the code. It is even possible to define your own plugins (TODO: True? example)
 
@@ -16,7 +16,7 @@ MLflow comes with a web interface to conveniently view and compare models and me
 
 ## Prerequisites
 
-To go through this chapter it is necessary to have python and MLflow installed. One can install MLflow locally via `pip install MLflow`. The tutorial is based on MLflow version (TODO:Insert version).
+To go through this chapter it is necessary to have python and MLflow installed. One can install MLflow locally via `pip install MLflow`. The tutorial is based on MLflow version (TODO:Insert version). It is also recommended to have knowledge of VirtualEnv, Conda, or Docker when working with MLflow Projects.
 
 
 ## Functionality
@@ -227,6 +227,8 @@ TODO: Autologging stores already model
 MLflow Models manages and deploys models from various different ML libraries such as scikit-learn, TensorFlow, PyTorch, Spark, or [many more](https://MLflow.org/docs/latest/models.html). It includes a generic `MLmodel` format that acts as a standard format to package ML models so they can be used in different projects and environments. The stored model can then be served as a python functions in an easy and convenient way that are run either locally or or Docker containers or commercial serving platforms. The following example is based on the scikit-learn library.
 
 TODO: insert flavors
+This allows to load a TensorFlow model as a TensorFlow DAG for example, or to deploy a Python model to a Docker-based REST server, or to cloud platforms such as Azure ML and AWS SageMaker
+
 
 ```python
 # Import the sklearn models from MLflow
@@ -344,21 +346,37 @@ for rm in client.search_registered_models():
 
 ### MLflow Projects
 
-MLflow allows you to package code and its dependencies as a _project_ that can be run in a reproducible fashion on other data. Each project includes its code and a `MLproject` file that defines its dependencies (for example, Python environment) as well as what commands can be run into the project and what arguments they take.
+MLflow Projects allows to package code and its dependencies as a *project* that can be run reproducible on other data. Each project includes a *MLproject* file written in the *YAML* syntax that defines the projects dependencies and the commands and arguments it takes to run the project. It basically is a convention to organizes and describe your model code so other data scientists or automated tools can run it. MLflow currently supports the following environments to run your code: Virtualenv, conda, Docker Container, and system environment. A very basic `MLproject` file is shown below
 
-You can easily run existing projects with the `MLflow run` command, which runs a project from either a local directory or a GitHub URI:
+```yaml
+name: My_RandomForestRegressionModel
+
+# Use Virtualenv: alternatively conda_env, docker_env.image
+python_env: <MLFLOW_PROJECT_DIRECTORY>/python_env.yaml 
+
+entry_points: 
+   main: 
+   parameters: 
+   data_file: path 
+   regularization: {type: float, default: 0.1} 
+   command: "python train.py -r {regularization} {data_file}" 
+   validate: 
+   parameters: 
+   data_file: path 
+   command: "python validate.py {data_file}"
+```
+
+A project can be run using the  `MLflow run` command in the command line, which runs a project from either a local directory or a GitHub URI:
 
 ```python
-MLflow run sklearn_elasticnet_wine -P alpha=5.0
+# Run the MLflow project from a local directory
+MLflow run My_RandomForestRegressionModel -P alpha=5.0
 
+# Run the MLflow project from a Github URI
 MLflow run https://github.com/MLflow/MLflow-example.git -P alpha=5.0
 ```
 
-There’s a sample project in `tutorial`, including a `MLproject` file that specifies its dependencies. if you haven’t configured a [tracking server](https://MLflow.org/docs/latest/tracking.html#tracking-server), projects log their Tracking API data in the local `mlruns` directory so you can see these runs using `MLflow ui`.
-
-https://MLflow.org/docs/latest/projects.html
-
-* MLflow supports launching multiple runs in parallel with different parameters, for example, for hyperparameter tuning. You can simply use the [Projects API](https://MLflow.org/docs/latest/projects.html#projects) to start multiple runs and the [Tracking API](https://MLflow.org/docs/latest/tracking.html#tracking) to track them.
+The MLflow Projects API allows to chain projects together into workflows and also supports launching multiple runs in parallel. Combining this with for example the MLflow Tracking API enables an easy way of hyperparameter tuning to develop a model with a good fit.
 
 
 ## MLFflow Architecture
@@ -392,9 +410,11 @@ MLflow stores these data in the current (Todo: where does it store) when used lo
 + [x] insert code
 + [x] run code
 + [ ] write architecture
-+ [ ] https://MLflow.org/docs/latest/concepts.html#the-machine-learning-workflow workflow into mlops intro
++ [x] https://MLflow.org/docs/latest/concepts.html#the-machine-learning-workflow workflow into mlops intro
 + [ ] resolve todos
-+ [ ] check order of MLflow components
++ [x] check order of MLflow components
 + [ ] add MLflow projects example
 + [x] Check Tutorial
 + [ ] check that intro is shorter than
++ [ ] Test MLProjects yourself
++ [ ] Build example project as code
