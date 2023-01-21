@@ -16,10 +16,14 @@ print("> Build and save model")
 # Import the sklearn models from mlflow
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 mlflow.set_tracking_uri("http://127.0.0.1:5000/")
 =======
 mlflow.set_tracking_uri("http://127.0.0.1:5004/")
 >>>>>>> 2ca0f2d (code test und initial images)
+=======
+mlflow.set_tracking_uri("http://127.0.0.1:5000/")
+>>>>>>> cd2e73c (added final code)
 
 run_name = "models-example-run"
 params = {"n_estimators": 4, "random_state": 42}
