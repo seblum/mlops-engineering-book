@@ -1053,11 +1053,24 @@ A project can be run using the  `MLflow run` command in the command line, which 
 
 ```python
 # Run the MLflow project from a local directory
+# The parameters are optional in this case as the MLproject file has defaults
 MLflow run My_RandomForestRegressionModel -P alpha=5.0
 
+mlflow run .
+mlflow run . --experiment-name="models-experiment"
+MLFLOW_TRACKING_URI=http://localhost:5005 mlflow run . --experiment-name="models-experiment"
+mlflow run . --env-manager virtualenv
+
+
 # Run the MLflow project from a Github URI
-MLflow run https://github.com/MLflow/MLflow-example.git -P alpha=5.0
+MLflow run https://github.com/seblum/MLflow-example.git 
 ```
+
+TODO: When running a server you have to provide the URI to the server as environment variable to mflow run.
+
+TODO: by setting the MLFLOW\_TRACKING\_URI environment variable we specify an execution backend for the run
+
+TODO: * **experiment_id** – ID of experiment under which to launch the run.
 
 The MLflow Projects API allows to chain projects together into workflows and also supports launching multiple runs in parallel. Combining this with for example the MLflow Tracking API enables an easy way of hyperparameter tuning to develop a model with a good fit.
 
@@ -1089,12 +1102,15 @@ The MLflow *Backend Store* is where MLflow stores experiment and run metadata li
 
 It is possible to use a variety of metadata stores to use as the *Backend Store*, for example MySQL, or AWS RDS
 
+Although you are able to track your parameters without running a server the recommended approach is to create a MLflow tracking server. This server will give you access to a graphical interface where you are able to manage your runs and experiments. Some of the functionality available via the API is also available via the interface, an example is creating an experiment. When running a MLflow server you can specify a backend store, this store is any SQLAlchemy compatible database that will be responsible for logging anything that is not an artifact. Concretely this means that only the large files will be left out of the backend store, this also includes models. In the end we'll present a simple example of using MLflow where you'll be able to see how to configure your own backend store.
+
 ### MLflow Artifact Store
 
 The MLflow *Artifact Store* is a location to store large data if an ML run. This is where MLflow users log their artifact output, e.g. models, or data files.
 
 MLflow stores these data in the current (Todo: where does it store) when used locally. It is also possible to use cloud storage resources as an *Artifact Store*, such as AWS S3 Buckets.
 
+Just as the backend store, it's another storage place for the MLflow tracking server. You'll also need to configure it as in the example at the end. The goal of the artifact store is to hold large files that are not suitable for a relational database. In general you'll specify a cloud bucket. Some examples of artifacts are: your models, images (can be plots of metrics etc), binaries etc. Any file can be stored as an artifact.
 
 <<<<<<< HEAD
 + Create a docker image for the MLFlow tracking server.
@@ -1156,4 +1172,9 @@ MLflow stores these data in the current (Todo: where does it store) when used lo
 >>>>>>> 8b068a5 (minor changes on introduction)
 + [ ] Test MLProjects yourself
 + [ ] Build example project as code
+<<<<<<< HEAD
 >>>>>>> 1c78f53 (draft for mlprojects)
+=======
++ [ ] https://kili-technology.com/data-labeling/machine-learning/how-to-manage-your-machine-learning-pipeline-with-mlflow
++ [ ] 
+>>>>>>> 5546e57 (added mlflow projects example)
