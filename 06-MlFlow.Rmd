@@ -1066,6 +1066,8 @@ The MLflow Projects API allows to chain projects together into workflows and als
 
 While MLflow can be run locally for your personal model implementation, it is usually deployed on a bigger network for large organizations or teams. MLflow can be launched on a distributed infrastructure of your choice to scale its use The MLflow backend consists of three different main components, all of which can be deployed in a cloud infrastructure.
 
+![MLflow Architecture Diagram](images/06-MLflow/MLflow_architecture_diagram.png)
+
 ### MLflow Tracking Server
 
 The MLflow *Tracking Server* exposes the API to log parameters, metrics, experiments and metadata. It also runs the MLflow Web Interface to visualize the results. The *Tracking Server* uses both, the backend store and the artifact store to store and read data from.
@@ -1135,11 +1137,13 @@ MLflow stores these data in the current (Todo: where does it store) when used lo
 + [x] insert code
 + [x] run code
 + [ ] write architecture
++ [ ] proof read
 + [x] https://MLflow.org/docs/latest/concepts.html#the-machine-learning-workflow workflow into mlops intro
 + [ ] resolve todos
 + [x] check order of MLflow components
 + [ ] add MLflow projects example
 + [x] Check Tutorial
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 3670df9 (renamed images and put into code)
 =======
@@ -1147,6 +1151,9 @@ MLflow stores these data in the current (Todo: where does it store) when used lo
 <<<<<<< HEAD
 >>>>>>> cd2e73c (added final code)
 =======
+=======
++ [x] check that intro is shorter than
+>>>>>>> 8b068a5 (minor changes on introduction)
 + [ ] Test MLProjects yourself
 + [ ] Build example project as code
 >>>>>>> 1c78f53 (draft for mlprojects)
