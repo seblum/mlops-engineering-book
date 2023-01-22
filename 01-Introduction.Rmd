@@ -103,3 +103,5 @@ TODO: insert image of architecture with mlflow and airflow on K8s, rollout with 
 # TODO:
 
 - [ ] resolve todos
+- [ ]  https://kili-technology.com/data-labeling/machine-learning/how-to-manage-your-machine-learning-pipeline-with-mlflow
+- [ ]  https://pedro-munoz.tech/how-to-setup-mlflow-in-production/
