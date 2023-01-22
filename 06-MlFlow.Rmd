@@ -380,9 +380,16 @@ mlflow run . --env-manager virtualenv
 
 
 # Run the MLflow project from a Github URI
-MLflow run https://github.com/seblum/MLflow-example.git 
+MLflow run git@github.com/seblum/mlops-practice//files/06-MLFlow/mlprojects.git?ref=chapter/mlflow
+
+MLFLOW_TRACKING_URI=http://localhost:5000 MLflow run https://github.com/seblum/mlops-practice#files/06-MLFlow/mlprojects --version=chapter/mlflow
 ```
 
+```bash
+mlflow.exceptions.MlflowException: The configured tracking uri scheme: 'file'   is invalid for use with the proxy mlflow-artifact scheme. The allowed tracking schemes are: {'http', 'https'}
+``````
+
+files/06-MLFlow/mlprojects
 TODO: When running a server you have to provide the URI to the server as environment variable to mflow run.
 
 TODO: by setting the MLFLOW\_TRACKING\_URI environment variable we specify an execution backend for the run
@@ -438,4 +445,5 @@ Just as the backend store, it's another storage place for the MLflow tracking se
 + [ ] Test MLProjects yourself
 + [ ] Build example project as code
 + [ ] https://kili-technology.com/data-labeling/machine-learning/how-to-manage-your-machine-learning-pipeline-with-mlflow
++ [ ] https://pedro-munoz.tech/how-to-setup-mlflow-in-production/
 + [ ] 
