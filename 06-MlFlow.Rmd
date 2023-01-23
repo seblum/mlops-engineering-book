@@ -473,7 +473,7 @@ MLflow comes with a web interface to conveniently view and compare models and me
 
 ## Prerequisites
 
-To go through this chapter it is necessary to have python and MLflow installed. One can install MLflow locally via `pip install MLflow`. The tutorial is based on MLflow version (TODO:Insert version). It is also recommended to have knowledge of VirtualEnv, Conda, or Docker when working with MLflow Projects.
+To go through this chapter it is necessary to have python and MLflow installed. One can install MLflow locally via `pip install MLflow`. The tutorial is based on MLflow v2.1.1. It is also recommended to have knowledge of VirtualEnv, Conda, or Docker when working with MLflow Projects.
 
 
 ## Functionality
