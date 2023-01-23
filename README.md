@@ -11,3 +11,16 @@ Additional resources:
 The **bookdown** book: https://bookdown.org/yihui/bookdown/
 
 The **bookdown** package reference site: https://pkgs.rstudio.com/bookdown
+
+
+## Table of Contents:
+
+1. Introduction
+2. MLOps
+3. Airflow
+4. MLflow
+5. Terraform
+6. Kuberenetes
+7. Example
+    7. Infrastructure
+    8. Modeling
