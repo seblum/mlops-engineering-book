@@ -2,6 +2,25 @@
 
 ## Machine Learning Workflow
 
+A machine learning workflow typically involves several stages, including data preparation, where data is collected, cleaned and preprocessed, model building, where an algorithm is selected and trained, model evaluation, where the performance of the trained model is measured, model deployment, where the model is deployed in a production environment and can be used to make predictions on new data, and model monitoring and maintenance, where the performance of the deployed model is monitored and updated as needed. These stages are closely related and are often handled by the same tool or platform, and some stages may involve multiple iterations, and some tools may be used across different stages in the workflow.
+
+#### Technical
+
+A machine learning workflow typically involves several stages, including data preparation, model building, model evaluation, and model deployment.
+
+1.  Data Preparation: In this stage, data scientists collect, clean, and preprocess the data that will be used to train the machine learning model. This includes tasks such as removing missing or duplicate data, normalizing data, and splitting the data into training and testing sets.
+    
+2.  Model Building: In this stage, data scientists select and train a machine learning model using the prepared data. This includes tasks such as selecting an appropriate algorithm, training the model, and tuning the model's parameters to improve performance.
+    
+3.  Model Evaluation: In this stage, data scientists evaluate the performance of the trained model using the test data set. This includes tasks such as measuring the accuracy and other performance metrics, comparing the performance of different models, and identifying potential issues with the model.
+    
+4.  Model Deployment: In this stage, the selected and optimized model is deployed to a production environment where it can be used to make predictions on new data. This includes tasks such as scaling the model to handle large amounts of data, deploying the model to different environments, and monitoring the performance of the deployed model.
+    
+5.  Model Monitoring and Maintenance: Once the model is deployed, it's important to monitor its performance and update it as needed. This includes tasks such as collecting feedback, monitoring the model's performance metrics, and updating the model as necessary.
+    
+It is worth noting that not all ML workflows will have all the steps or that they might have some variations. Additionally, some stages may involve multiple iterations, and some tools may be used across different stages in the workflow.
+
+
 
 Machine learning requires experimenting with a wide range of datasets, data preparation steps, and algorithms to build a model that maximizes some target metric. Once you have built a model, you also need to deploy it to a production system, monitor its performance, and continuously retrain it on new data and compare with alternative models.
 
@@ -18,14 +37,48 @@ Being productive with machine learning can therefore be challenging for several 
 
 Moreover, although individual ML libraries provide solutions to some of these problems (for example, model serving), to get the best result you usually want to try _multiple ML libraries_. MLflow lets you train, reuse, and deploy models with any library and package them into reproducible steps that other data scientists can use as a “black box,” without even having to know which library you are using.
 
+##### At what stages of the machine learning workflow are model tracking, model serving, and workflow management tools used?
+
+1.  Model Tracking: Model tracking tools are often used at the development and testing stages of the machine learning workflow. During development, tracking allows data scientists to keep track of the different versions of a model and compare their performance, which helps them to select the best version to deploy. During testing, tracking allows to check the performance of the model and make sure it meets the requirements.
+    
+2.  Model Serving: Model serving tools are typically used at the deployment stage of the machine learning workflow. Once a model has been trained and tested, it needs to be deployed in a production environment so it can be used to make predictions on new data. Model serving tools handle the deployment of the model, scaling it to handle large amounts of data, and monitoring the performance of the deployed model.
+    
+3.  Workflow Management: Workflow management tools are used throughout the entire machine learning workflow. They are used to automate and streamline the steps involved in building, training, and deploying machine learning models. This includes tasks such as data preprocessing, model training, and model deployment, allowing for the coordination of all the necessary steps in the ML pipeline, and the tracking of the pipeline’s progress.
+    
+
+It is important to note that some tools may overlap and can be used for multiple tasks and stages, the above is a general guideline.
+
 ### ML Tools & Principles
+
+There are several machine learning workflow tools that can help streamline the process of building and deploying machine learning models. Some popular tools include:
+
+1.  TensorFlow: An open-source machine learning framework for building and deploying machine learning models. It includes tools for data preprocessing, model training, and model deployment.
+    
+2.  Apache Airflow: An open-source platform for defining, scheduling, and monitoring workflows. It can be used to automate the training and deployment of machine learning models.
+    
+3.  Kubeflow: An open-source platform for building and deploying machine learning models on Kubernetes. It includes tools for data preprocessing, model training, and model deployment.
+    
+4.  MLflow: An open-source platform for managing the machine learning lifecycle, including experiment tracking, reproducibility, and deployment.
+    
+5.  DataRobot: A platform that automates the process of building, deploying, and maintaining machine learning models. It includes tools for data preprocessing, model selection, and model deployment.
+    
+6.  DVC: DVC (Data Version Control) is an open-source tool for MLOps that helps to version control, manage, and track data and models.
+    
+7.  Algoly: Algoly is an AI workbench that allows data scientists to build, deploy and monitor machine learning models.
+
+All three of these processes are closely related and are often handled by the same tool or platform. For example, a machine learning workflow management tool may include features for model tracking and model serving, and a model serving platform may include features for workflow management.
 
 #### Model Tracking
 
+Model Tracking: Model tracking is the process of keeping track of the different versions of a machine learning model as it is developed, trained, and deployed. This includes tracking the performance of each version, the parameters used, and the data used to train it. It allows to compare, select and deploy the best version of the model.
+ 
 #### Workflow Management & Pipelines
+
+Workflow Management: Workflow management is the process of automating and streamlining the steps involved in building, training, and deploying machine learning models. This includes tasks such as data preprocessing, model training, and model deployment. It allows for the coordination of all the necessary steps in the ML pipeline and the tracking of the pipeline’s progress.
 
 #### Model Serving
 
+Model Serving: Model serving refers to the process of deploying a machine learning model in a production environment, so it can be used to make predictions on new data. This includes tasks such as scaling the model to handle large amounts of data, deploying the model to different environments, and monitoring the performance of the deployed model.
 
 ## Machine Learning Operations
 
@@ -61,6 +114,22 @@ They are also responsible for the day-to-day management and monitoring of machin
 #### MLOps Engineer
 The MLOps engineer is responsible for creating and maintaining the infrastructure and tools needed to run machine learning models at scale, and for ensuring that the models are integrated seamlessly into the overall software development and deployment process. This includes tasks such as setting up and configuring the necessary hardware and software environments, creating and maintaining documentation, and implementing automated testing and deployment processes. The MLOps engineer must be able to navigate this complexity and ensure that the models are deployed and managed in a way that is both efficient and effective. (TODO: check everything)
     
+#### MLOps Engineer vs ML Engineer
+An ML Engineer is responsible for building and deploying machine learning models. This includes tasks such as selecting appropriate algorithms, training and tuning models, and evaluating performance.
+
+An MLOps Engineer, on the other hand, focuses on the operational aspects of machine learning. This includes tasks such as building and maintaining the infrastructure and tooling needed to train and deploy models, monitoring the performance of deployed models, and implementing processes for collaboration and version control.
+
+In summary, an ML Engineer focuses on the development and implementation of ML models, whereas an MLOps Engineer focuses on the operational and infrastructure side of ML models.
+
+#### MLOps Engineer vs DevOps Engineer
+DevOps Engineer and MLOps Engineer are similar but with a different focus. Both roles involve the integration of development and operations teams in order to improve the software development process and release software faster.
+
+A DevOps Engineer is responsible for automating and streamlining the software development and deployment process. This includes tasks such as configuring and maintaining continuous integration and continuous delivery (CI/CD) pipelines, monitoring and troubleshooting production systems, and implementing best practices for security and scalability.
+
+An MLOps Engineer, on the other hand, applies similar principles and tools to the deployment and management of machine learning models. This includes tasks such as building and maintaining the infrastructure and tooling needed to train and deploy models, monitoring the performance of deployed models, and implementing processes for collaboration and version control.
+
+In summary, a DevOps Engineer focuses on the automation and streamlining of software development and deployment process, whereas an MLOps Engineer focuses on the automation and streamlining of ML models development, deployment and management.
+  
 #### DevOps Engineer
 DevOps Engineers are responsible for automating and streamlining the process of building, testing, and deploying software, or in this case machine learning models respectively. They use best practices from software development and operations, such as version control, continuous integration and delivery, and monitoring and observability, to ensure that models are performing as expected in production. 
     
@@ -85,12 +154,57 @@ By applying software engineering principles and best practices to the deployment
 ## DevOps Tools & Principles
 
 might be an own chapters
+
+DevOps is a set of practices and tools that aims to automate and streamline the software development and deployment process. The principles of DevOps include:
+
+1.  Collaboration: DevOps promotes collaboration between development and operations teams to improve communication, increase efficiency, and reduce delays.
+    
+2.  Automation: DevOps uses automation tools and scripts to automate repetitive tasks, such as building, testing, and deploying software.
+    
+3.  Continuous Integration and Continuous Delivery (CI/CD): DevOps uses CI/CD to automate the software development and deployment process. This includes automatically building, testing, and deploying code changes as soon as they are made.
+    
+4.  Monitoring and Logging: DevOps uses monitoring and logging tools to track the performance of deployed software and troubleshoot issues.
+    
+5.  Infrastructure as Code: DevOps uses tools to manage infrastructure as code, which allows for the automated provisioning, scaling, and management of infrastructure.
+    
+6.  Containers and Microservices: DevOps uses containers and microservices to package and deploy software, which allows for more flexibility and scalability.
+    
+7.  Test-Driven Development: DevOps uses Test-Driven Development (TDD) to ensure that the software is of high quality, it runs tests before and after any change to catch any errors early.
+
+
 ### Version Control
+
+Version control is a system that records changes to a file or set of files over time, so that you can recall specific versions later. It allows multiple developers to work on a project simultaneously, and it makes it easy to roll back changes if something goes wrong.
+
+There are two main types of version control systems: centralized and distributed.
+
+1.  Centralized Version Control Systems (CVCS) : In a centralized version control system, there is a single central repository that contains all the versions of the files, and developers must check out files from the repository in order to make changes. Examples of CVCS include Subversion and Perforce.
+    
+2.  Distributed Version Control Systems (DVCS) : In a distributed version control system, each developer has a local copy of the entire repository, including all the versions of the files. This allows developers to work offline, and it makes it easy to share changes with other developers. Examples of DVCS include Git, Mercurial and Bazaar
+
+Some of the key benefits of version control include:
+
+* Keeping track of changes: By keeping track of all changes made to files, version control makes it easy to go back to a previous version if something goes wrong.
+* Collaboration: Version control allows multiple developers to work on a project simultaneously, and it makes it easy to share changes with others.
+* Backup: Version control systems keep a history of all changes, so you can always go back to a previous version if something gets lost.
+* Auditing: Version control allows to track who made a specific change, when and why.
+* Branching and Merging: Version control systems make it easy to create branches of a project, which allows developers to work on different features simultaneously without affecting the main project.
+
+Overall, version control is an essential tool for any software development project as it allows multiple developers to work together, track changes, and easily rollback in case of errors.
 
 ### CI/CD
 
 
+Continuous Integration (CI) and Continuous Delivery (CD) are related software development practices that work together to automate and streamline the software development and deployment process.
 
+1.  Continuous Integration (CI): CI is a software development practice that involves frequently integrating code changes into a shared repository. The goal of CI is to catch and fix integration errors as soon as they are introduced, rather than waiting for them to accumulate over time. This is typically done by running automated tests and builds, to catch any errors that might have been introduced with new code changes.
+    
+2.  Continuous Delivery (CD): CD is a software development practice that involves automating the process of building, testing, and deploying software. The goal of CD is to ensure that code changes can be safely and quickly deployed to production. This is typically done by automating the deployment process and by testing the software in a staging environment before deploying it to production.
+    
+
+CI/CD pipeline is the process of automatically building, testing, and deploying code changes. It integrates the principles of continuous integration and continuous delivery in a seamless workflow, allowing teams to catch and fix issues early and quickly deliver new features to users. The pipeline is often triggered by a code commit, and it includes steps such as building, testing, packaging and deploying software.
+
+CI and CD practices help to increase the speed and quality of software development, by automating repetitive tasks and catching errors early, reducing the time and effort required to release new features, and increasing the stability of the deployed software.
 
 
 ## The Architecture of this Setup

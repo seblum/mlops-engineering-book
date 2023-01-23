@@ -6,3 +6,40 @@ This project started out of an interest in multiple domains. At first, I was wor
 
 This project / book / tutorial / whatever this is or will be startet by explaining the concept of Kubernetes. The plan is to continuously update it by further sections. Since there is no deadline, there is no timeline, and I am also not sure whether there will exist something final to be honest.
 
+
+
+### Preliminary Introduction
+
+```
+Introduction to a book about ML Engineering with airflow, and mlflow on an aws eks cluster deployed using terraform
+```
+
+
+"ML Engineering with Airflow and MLflow on AWS EKS: Building, Deploying, and Managing Machine Learning Workflows" is a comprehensive guide to building and deploying machine learning models using Airflow and MLflow on an AWS EKS cluster deployed using Terraform. The book is designed for data scientists and engineers who are looking to improve their machine learning workflows and automate the deployment of their models in a production environment.
+
+The book begins by introducing the concepts of machine learning engineering and the challenges associated with building, deploying, and managing machine learning models. It then covers the basics of Airflow, a powerful tool for building and managing machine learning workflows, and MLflow, a platform for managing the machine learning lifecycle.
+
+Next, the book covers the process of deploying an AWS EKS cluster using Terraform, a tool for provisioning and managing infrastructure as code. The book also covers the process of deploying Airflow and MLflow on the EKS cluster, as well as best practices for configuring and scaling the cluster.
+
+The book goes on to cover the process of building machine learning workflows using Airflow, including data preprocessing, model training, and model deployment. It also covers the use of MLflow for tracking experiments, reproducing results, and deploying models in production.
+
+Finally, the book covers advanced topics such as monitoring and troubleshooting machine learning workflows, and automating the management of machine learning models using Airflow and MLflow.
+
+Overall, "ML Engineering with Airflow and MLflow on AWS EKS" is a valuable resource for data scientists and engineers looking to improve their machine learning workflows and automate the deployment of their models in a production environment.
+
+
+```
+Introduction to a book about MLOps Engineering with airflow, and mlflow on an aws eks cluster deployed using terraform
+```
+
+"MLOps Engineering with Airflow and MLflow on AWS EKS: Building, Deploying, and Managing Machine Learning Workflows" is a comprehensive guide to implementing MLOps best practices using Airflow and MLflow on an AWS EKS cluster deployed using Terraform. The book is designed for data scientists, engineers and DevOps practitioners who are looking to improve their machine learning workflows and automate the deployment of their models in a production environment.
+
+The book begins by introducing the concepts of MLOps and the challenges associated with building, deploying, and managing machine learning models in a production environment. It then covers the basics of Airflow, a powerful tool for building and managing machine learning workflows, and MLflow, a platform for managing the machine learning lifecycle.
+
+Next, the book covers the process of deploying an AWS EKS cluster using Terraform, a tool for provisioning and managing infrastructure as code. The book also covers the process of deploying Airflow and MLflow on the EKS cluster, as well as best practices for configuring and scaling the cluster.
+
+The book goes on to cover the process of building machine learning workflows using Airflow, including data preprocessing, model training, and model deployment. It also covers the use of MLflow for tracking experiments, reproducing results, and deploying models in production, and how to monitor and troubleshoot deployed models.
+
+Finally, the book covers advanced topics such as implementing ML workflows in a CI/CD pipeline, and automating the management of machine learning models using Airflow and MLflow.
+
+Overall, "MLOps Engineering with Airflow and MLflow on AWS EKS" is a valuable resource for data scientists, engineers and DevOps practitioners looking to implement best practices and automate the deployment of machine learning models in a production environment using Airflow, MLflow and AWS EKS.
