@@ -1,84 +1,68 @@
 # Introduction
 
+*"MLOps Engineering with Airflow and MLflow on AWS EKS: Building, Deploying, and Managing Machine Learning Workflows"* is a comprehensive guide to building and deploying machine learning models using Airflow and MLflow on an AWS EKS cluster deployed using Terraform. The book is designed for data scientists, engineers and DevOps practitioners who are looking to dive into the realm of machine learning operations and automate the deployment of their models in a production environment.
+
+The book begins by introducing the concepts of MLOps and the challenges associated with building, deploying, and managing machine learning models in a production environment. It then covers the basics of *Airflow*, a powerful tool for building and managing machine learning workflows, and *MLflow*, a platform for managing the machine learning lifecycle.
+
+Next, the book covers the basics of *Terraform*, a tool for provisioning and managing infrastructure as code, and *Kubernetes*, an open-source system for automating the deployment, scaling, and management of containerized applications. 
+
+Finally, the book covers the process of deploying Airflow and MLflow onan AWS EKS cluster using Terraform and hencefore the implementation of the previously introduced tools. A machine learning workflow using Airflow is set up on the deployed infrastructure, including data preprocessing, model training, and model deployment, as well as tracking the experiment and deploying the model into production using MLFlow. 
+
+<!---
+Finally, the book covers advanced topics such as monitoring and troubleshooting machine learning workflows, and automating the management of machine learning models using Airflow and MLflow.
+
+Finally, the book covers advanced topics such as implementing ML workflows in a CI/CD pipeline, and automating the management of machine learning models using Airflow and MLflow.
+-->
+
 ## Machine Learning Workflow
 
-A machine learning workflow typically involves several stages, including data preparation, where data is collected, cleaned and preprocessed, model building, where an algorithm is selected and trained, model evaluation, where the performance of the trained model is measured, model deployment, where the model is deployed in a production environment and can be used to make predictions on new data, and model monitoring and maintenance, where the performance of the deployed model is monitored and updated as needed. These stages are closely related and are often handled by the same tool or platform, and some stages may involve multiple iterations, and some tools may be used across different stages in the workflow.
+A machine learning workflow typically involves several stages. These stages are closely related are sometimes overlap as some stages may involve multiple iterations. The stages are often handled by the same tool or platform a a clear differentiation across stages and tools is sometimes fairly difficult. Further, some machine learning workflows will not have all the steps or they might have some variations. In the following, the machine learning workflow is broken down to five different stages to make things easier and give an overview.
 
-#### Technical
+**1. Data Preparation**
+In the first stage, the data used to train a machine learning model is collected, cleaned, and preprocessed . This includes tasks to remove missing or duplicate data, normalize data, and split the data into training and testing sets.
+    
+**2. Model Building** 
+In the second stage, a machine learning model is selected and trained using the prepared data. This includes tasks such as selecting an appropriate algorithm, training the model, and tuning the model's parameters to improve its performance.
+    
+**3. Model Evaluation**
+Afterward, the performance of the trained model is evaluated using the test data set. This includes tasks such as measuring the accuracy and other performance metrics, comparing the performance of different models, and identifying potential issues with the model.
+    
+**4. Model Deployment** 
+Finally, the selected and optimized model is deployed to a production environment where it can be used to make predictions on new data. This stage includes tasks such as scaling the model to handle large amounts of data, and deploying the model to different environments to be used in different contexts
+    
+**5. Model Monitoring and Maintenance**
+Once the model is deployed, it is important to monitor the model performance and update it as needed. This includes tasks such as collecting feedback, monitoring the model's performance metrics, and updating the model as necessary.
 
-A machine learning workflow typically involves several stages, including data preparation, model building, model evaluation, and model deployment.
-
-1.  Data Preparation: In this stage, data scientists collect, clean, and preprocess the data that will be used to train the machine learning model. This includes tasks such as removing missing or duplicate data, normalizing data, and splitting the data into training and testing sets.
-    
-2.  Model Building: In this stage, data scientists select and train a machine learning model using the prepared data. This includes tasks such as selecting an appropriate algorithm, training the model, and tuning the model's parameters to improve performance.
-    
-3.  Model Evaluation: In this stage, data scientists evaluate the performance of the trained model using the test data set. This includes tasks such as measuring the accuracy and other performance metrics, comparing the performance of different models, and identifying potential issues with the model.
-    
-4.  Model Deployment: In this stage, the selected and optimized model is deployed to a production environment where it can be used to make predictions on new data. This includes tasks such as scaling the model to handle large amounts of data, deploying the model to different environments, and monitoring the performance of the deployed model.
-    
-5.  Model Monitoring and Maintenance: Once the model is deployed, it's important to monitor its performance and update it as needed. This includes tasks such as collecting feedback, monitoring the model's performance metrics, and updating the model as necessary.
-    
-It is worth noting that not all ML workflows will have all the steps or that they might have some variations. Additionally, some stages may involve multiple iterations, and some tools may be used across different stages in the workflow.
+A machine learning workflow is thereby not a walk in the park. Being productive with machine learning, monitoring its performance and continuously retraining it on new data with possible alternative models can be challenging and involves the right tools.
 
 
+### ML Worflow Tools
 
-Machine learning requires experimenting with a wide range of datasets, data preparation steps, and algorithms to build a model that maximizes some target metric. Once you have built a model, you also need to deploy it to a production system, monitor its performance, and continuously retrain it on new data and compare with alternative models.
+There are several machine learning workflow tools that can help streamline the process of building and deploying machine learning models. Integrating them into the machine learning workflow their functions can be distinguished into three processes. (1) *Workflow Management*, (2) *Model Tracking*, and (3) *Model Serving*. All three of these processes are closely related and are often handled by the same tool or platform.
 
-Being productive with machine learning can therefore be challenging for several reasons:
 
-* **It’s difficult to keep track of experiments.** When you are just working with files on your laptop, or with an interactive notebook, how do you tell which data, code and parameters went into getting a particular result?
-    
-* **It’s difficult to reproduce code.** Even if you have meticulously tracked the code versions and parameters, you need to capture the whole environment (for example, library dependencies) to get the same result again. This is especially challenging if you want another data scientist to use your code, or if you want to run the same code at scale on another platform (for example, in the cloud).
-    
-* **There’s no standard way to package and deploy models.** Every data science team comes up with its own approach for each ML library that it uses, and the link between a model and the code and parameters that produced it is often lost.
-    
-* **There’s no central store to manage models (their versions and stage transitions).** A data science team creates many models. In absence of a central place to collaborate and manage model lifecycle, data science teams face challenges in how they manage models stages: from development to staging, and finally, to archiving or production, with respective versions, annotations, and history.
-    
+#### Workflow Management
 
-Moreover, although individual ML libraries provide solutions to some of these problems (for example, model serving), to get the best result you usually want to try _multiple ML libraries_. MLflow lets you train, reuse, and deploy models with any library and package them into reproducible steps that other data scientists can use as a “black box,” without even having to know which library you are using.
+Workflow Management is the process of automating and streamlining the steps involved in building, training, and deploying machine learning models. This includes tasks such as data preprocessing, model training, and model deployment. Workflow management allows for the coordination of all the necessary steps in the ML pipeline, and the tracking of the pipeline’s progress. 
 
-##### At what stages of the machine learning workflow are model tracking, model serving, and workflow management tools used?
+Workflow management tools are used throughout the entire machine learning workflow. *Apache Airflow* is an open-source platform for workflow management and is widely used to automate the training and deployment of machine learning models.
 
-1.  Model Tracking: Model tracking tools are often used at the development and testing stages of the machine learning workflow. During development, tracking allows data scientists to keep track of the different versions of a model and compare their performance, which helps them to select the best version to deploy. During testing, tracking allows to check the performance of the model and make sure it meets the requirements.
-    
-2.  Model Serving: Model serving tools are typically used at the deployment stage of the machine learning workflow. Once a model has been trained and tested, it needs to be deployed in a production environment so it can be used to make predictions on new data. Model serving tools handle the deployment of the model, scaling it to handle large amounts of data, and monitoring the performance of the deployed model.
-    
-3.  Workflow Management: Workflow management tools are used throughout the entire machine learning workflow. They are used to automate and streamline the steps involved in building, training, and deploying machine learning models. This includes tasks such as data preprocessing, model training, and model deployment, allowing for the coordination of all the necessary steps in the ML pipeline, and the tracking of the pipeline’s progress.
-    
-
-It is important to note that some tools may overlap and can be used for multiple tasks and stages, the above is a general guideline.
-
-### ML Tools & Principles
-
-There are several machine learning workflow tools that can help streamline the process of building and deploying machine learning models. Some popular tools include:
-
-1.  TensorFlow: An open-source machine learning framework for building and deploying machine learning models. It includes tools for data preprocessing, model training, and model deployment.
-    
-2.  Apache Airflow: An open-source platform for defining, scheduling, and monitoring workflows. It can be used to automate the training and deployment of machine learning models.
-    
-3.  Kubeflow: An open-source platform for building and deploying machine learning models on Kubernetes. It includes tools for data preprocessing, model training, and model deployment.
-    
-4.  MLflow: An open-source platform for managing the machine learning lifecycle, including experiment tracking, reproducibility, and deployment.
-    
-5.  DataRobot: A platform that automates the process of building, deploying, and maintaining machine learning models. It includes tools for data preprocessing, model selection, and model deployment.
-    
-6.  DVC: DVC (Data Version Control) is an open-source tool for MLOps that helps to version control, manage, and track data and models.
-    
-7.  Algoly: Algoly is an AI workbench that allows data scientists to build, deploy and monitor machine learning models.
-
-All three of these processes are closely related and are often handled by the same tool or platform. For example, a machine learning workflow management tool may include features for model tracking and model serving, and a model serving platform may include features for workflow management.
 
 #### Model Tracking
 
-Model Tracking: Model tracking is the process of keeping track of the different versions of a machine learning model as it is developed, trained, and deployed. This includes tracking the performance of each version, the parameters used, and the data used to train it. It allows to compare, select and deploy the best version of the model.
- 
-#### Workflow Management & Pipelines
+Model Tracking is the process of keeping track of the different versions of a machine learning model including tracking the performance of each version, the parameters used, and the data used to train it
+Model Tracking tools are often used at the development and testing stages of the machine learning workflow. During development, tracking allows to keep track of the different versions of a model, compare their performance and learning parameters, and finally helps to select the best model version to deploy. Model tracking also allows to check the performance of a machine learning model during testing and assures it meets industry requirements.
 
-Workflow Management: Workflow management is the process of automating and streamlining the steps involved in building, training, and deploying machine learning models. This includes tasks such as data preprocessing, model training, and model deployment. It allows for the coordination of all the necessary steps in the ML pipeline and the tracking of the pipeline’s progress.
+*MLflow* is an open-source platform to manage the machine learning lifecycle, including experiment tracking, reproducibility, and deployment. Similarly, *DVC* (Data Version Control) is a tool that allows to version control, manage, and track not only models but also data.
+
 
 #### Model Serving
 
-Model Serving: Model serving refers to the process of deploying a machine learning model in a production environment, so it can be used to make predictions on new data. This includes tasks such as scaling the model to handle large amounts of data, deploying the model to different environments, and monitoring the performance of the deployed model.
+Model Serving refers to the process of deploying a machine learning model in a production environment, so it can be used to make predictions on new data. This includes tasks such as scaling the model to handle large amounts of data, deploying the model to different environments, and monitoring the performance of the deployed model.
+
+Model serving tools are specifically used at the deployment stage of the machine learning workflow. Model serving tools can handle the previous tasks such as deployment, scaling, and monitoring of a machine learning model.
+Multiple tools integrate the funtionality of serving models, each different in its specific use cases, for example *TensorFlow*, *Kubernetes*, *DataRobot*, or also the already mentioned tools *MLflow* and *Airflow*
+
 
 ## Machine Learning Operations
 
@@ -99,7 +83,7 @@ DevOps is a practice that emphasizes the collaboration and communication between
 DevOps focuses on the deployment and management of software in general, while MLOps focuses specifically on the deployment and management of machine learning models in a production environment. The goal is basically the same as in DevOps, yet deploying a machine learning model. While this is achieved by the same tools and best practices used in DevOps, deploying machine learning models (compared to software) adds a lot of complexity to the process.
 Machine learning models are not just lines of code, but also require large amounts of data, and specialized hardware, to function properly. Further, their complex algorithms might need to change when there is a shift in new data. This process of ensuring that machine learning models are accurate and reliable lead to further challenges. Another key difference is that MLOps places a greater emphasis on model governance, which needs to ensure that machine learning models are compliant with relevant regulations and standards.
 
-### Roles and Tasks in MLOps
+## Roles and Tasks in MLOps
 
 The MLOps lifecycle typically involves several key roles and responsibilities, each with their own specific tasks and objectives.
 
@@ -219,3 +203,23 @@ TODO: insert image of architecture with mlflow and airflow on K8s, rollout with 
 - [ ] resolve todos
 - [ ]  https://kili-technology.com/data-labeling/machine-learning/how-to-manage-your-machine-learning-pipeline-with-mlflow
 - [ ]  https://pedro-munoz.tech/how-to-setup-mlflow-in-production/
+
+
+
+
+
+
+# backup
+
+
+
+* **It’s difficult to keep track of experiments.** When you are just working with files on your laptop, or with an interactive notebook, how do you tell which data, code and parameters went into getting a particular result?
+    
+* **It’s difficult to reproduce code.** Even if you have meticulously tracked the code versions and parameters, you need to capture the whole environment (for example, library dependencies) to get the same result again. This is especially challenging if you want another data scientist to use your code, or if you want to run the same code at scale on another platform (for example, in the cloud).
+    
+* **There’s no standard way to package and deploy models.** Every data science team comes up with its own approach for each ML library that it uses, and the link between a model and the code and parameters that produced it is often lost.
+    
+* **There’s no central store to manage models (their versions and stage transitions).** A data science team creates many models. In absence of a central place to collaborate and manage model lifecycle, data science teams face challenges in how they manage models stages: from development to staging, and finally, to archiving or production, with respective versions, annotations, and history.
+    
+
+Moreover, although individual ML libraries provide solutions to some of these problems (for example, model serving), to get the best result you usually want to try _multiple ML libraries_. MLflow lets you train, reuse, and deploy models with any library and package them into reproducible steps that other data scientists can use as a “black box,” without even having to know which library you are using.
