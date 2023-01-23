@@ -120,6 +120,7 @@ print("> Logging artifacts")
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 mlflow.set_tracking_uri("http://127.0.0.1:5005/")
 =======
 mlflow.set_tracking_uri("http://127.0.0.1:5004/")
@@ -127,6 +128,9 @@ mlflow.set_tracking_uri("http://127.0.0.1:5004/")
 =======
 mlflow.set_tracking_uri("http://127.0.0.1:5000/")
 >>>>>>> cd2e73c (added final code)
+=======
+mlflow.set_tracking_uri("http://127.0.0.1:5005/")
+>>>>>>> f9dbc0f (added clipicture)
 
 # Create an example file output/test.txt
 file_path = "outputs/test.txt"
