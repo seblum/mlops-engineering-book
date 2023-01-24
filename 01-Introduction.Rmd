@@ -84,7 +84,7 @@ The goal of DevOps is to automate and streamline the process of building, testin
 2.  *Version Control*: Tools such as Git, SVN, and Mercurial are used to track and manage changes to code and configuration files, allowing teams to collaborate and roll back to previous versions if necessary.
 3.  *Continuous Integration and Continuous Deployment (CI/CD)*: Tools such as Jenkins, Travis CI, and Github Actions are used to automate the building, testing, and deployment of code changes.
 4.  *Monitoring and Logging*: Tools such as Prometheus, Grafana, and ELK are used to monitor the health and performance of applications and services, as well as to collect and analyze log data.
-5.  *Cloud Management Platforms*: AWS, Azure, and GCP are used to provision, manage, and scale infrastructure and services in the cloud.
+5.  *Cloud Management Platforms*: AWS, Azure, and GCP are used to provision, manage, and scale infrastructure and services in the cloud. Scaling and provisioning of infrastructure can be automated by using Infrastructure as Code (IaC) Tools like Terraform.
 
 DevOps focuses on the deployment and management of software in general, while MLOps focuses specifically on the deployment and management of machine learning models in a production environment. The goal is basically the same as in DevOps, yet deploying machine learning model. While this is achieved by the same tools and best practices used in DevOps, deploying machine learning models (compared to software) adds a lot of complexity to the process.
 
@@ -104,25 +104,26 @@ It's important to note that the specific tools used in MLOps and DevOps may vary
 MLOps Engineering is the discipline that applies the previously mentioned software engineering principles to create the needed development and production environment.
 It usually comines the skills and expertise of data scientists, machine learning engineers, and DevOps engineers to ensure that machine learning models are deployed and managed efficiently and effectively.
 
-<!--
-TODO: Infrastructure
-The MLOps engineer is responsible to create and maintain the infrastructure and tooling needed to train and deploy models, monitoring the performance of deployed models, and implementing processes for collaboration and version control. This includes tasks such as setting up and configuring the necessary hardware and software environments, creating and maintaining documentation, and implementing automated testing and deployment processes. The MLOps engineer must be able to navigate this complexity and ensure that the models are deployed and managed in a way that is both efficient and effective. (TODO: check everything)
--->
+One of the key aspects of MLOps Engineering is infrastructure management. The infrastructure refers to the hardware, software and networking resources that are needed to support the machine learning models in production. The infrastructure is crucial for the success of MLOps as it ensures that the models are running smoothly, are highly available and are able to handle the load of the incoming requests. It also helps to prevent downtime, ensure data security and guarantee the scalability of the models.
 
-It is important to note that one person can not exceed on all of the above mentioned positions. Developing machine learning models into production usually requires multiple people working with different and specialized skillsets and roles.
+MLOps Engineering is responsible for designing, building, maintaining and troubleshooting the infrastructure that supports machine learning models in production. This includes provisioning, configuring, and scaling the necessary resources like cloud infrastructure, Kubernetes clusters, machine learning platforms and model serving infrastructure. It is useful to use configuration management and automation tools like Terraform to manage the infrastructure in a consistent, repeatable and version controlled way. This allows to easily manage and scale the infrastructure as needed, and roll back to previous versions if necessary.
+
+It is important to note that one person can not exceed on all of the above mentioned tasks of designing, building, maintaining and troubleshooting. Developing the infrastructure for machine learning models in production usually requires multiple people working with different and specialized skillsets and roles.
 
 
 ## Roles and Tasks in MLOps
 
 The MLOps lifecycle typically involves several key roles and responsibilities, each with their own specific tasks and objectives.
 
+#### Data Engineer
+
+A data engineer designs, builds, maintains, and troubleshoots the infrastructure and systems that support the collection, storage, processing, and analysis of large and complex data sets. Task include designing and building data pipelines, managing data storage, optimizing data processing, ensuring data quality, and monitoring the necessary data pipelines and systems. They usually work closely with data scientists to understand their data needs and ensure the infrastructure supports their requirements.
+
 #### Data Scientist
 Data Scientists are usually responsible for developing and testing machine learning models within the development stage. Their work typically involves investigating large amounts of data, the necessary preprocessing steps, and choosing a suitable machine learning model that solves the business need. They further develop a functioning ML model respective to the data 
     
 #### ML Engineer
-ML Engineers work closely with Data Scientists to develop and deploy machine learning models in a production environment. They are responsible for creating and maintaining the infrastructure and tools needed to run machine learning models at scale and in production. 
-
-They are also responsible for the day-to-day management and monitoring of machine learning models in a production environment. They use tools and technologies to track model performance and make sure that models are running smoothly and producing accurate results. This also includes to takes measures for data or model shifts (TODO: check data shift)
+ML Engineers work closely with Data Scientists to develop and deploy machine learning models in a production environment. They are responsible for creating and maintaining the infrastructure and tools needed to run machine learning models at scale and in production. They are also responsible for the day-to-day management and monitoring of machine learning models in a production environment. They use tools and technologies to track model performance and make sure that models are running smoothly and producing accurate results. This also includes to takes measures for data or model shifts (TODO: check data shift)
 
 #### MLOps Engineer
 The MLOps engineer is responsible to create and maintain the infrastructure and tooling needed to train and deploy models, monitoring the performance of deployed models, and implementing processes for collaboration and version control. This includes tasks such as setting up and configuring the necessary hardware and software environments, creating and maintaining documentation, and implementing automated testing and deployment processes. The MLOps engineer must be able to navigate this complexity and ensure that the models are deployed and managed in a way that is both efficient and effective.
@@ -138,14 +139,30 @@ It's also worth noting that some of these roles may overlap and different organi
 
 ## MLOps Engineering with Airflow and MLflow on Kubernetes
 
+Deployment of Airflow and MLflow on an Kubernetes cluster using Terraform.
 
-TODO: insert image of architecture with mlflow and airflow on K8s, rollout with terraform
+Chose AWS, Airflow, MLFlow, and Terraform why? Kubernetes for scalability.
 
+Github Actions why?
 
+All open source.
+TODO
+and hencefore the implementation of the previously introduced tools. A machine learning workflow using Airflow is set up on the deployed infrastructure, including data preprocessing, model training, and model deployment, as well as tracking the experiment and deploying the model into production using MLFlow. 
 
-Auf rollen beziehen
+The structure on Git can be distinguished on two different repositories, one for infrastructure deployment, and the other for the used machine learning models. The project has the following architecture. 
 
-was decken wir ab
+![Architecture Overview](images/01-Introduction/architecture-overview.png)
+
+The necessary AWS infrastructure is set up using Terraform. This includes creating an AWS EKS cluster and the associated ressources like a virtual private cloud (VPC), subnets, security groups, IAM roles, as well as further AWS ressources needed to deploy Airflow and MLflow.
+Once the EKS cluster is set up, Kubernetes can be used to deploy and manage applications on the cluster. Helm, a package manager for Kubernetes, is used to manage the deployment of Airflow and MLflow. The EKS cluster allows for easy scalability and management of these platforms. Github Actions is used for automating the deployment of the infrastructure using CI/CD principles. 
+
+Once the infrastructure is set up, machine learning models can be deployed to the EKS cluster as Kubernetes pods, using Helm charts as well. This is can be done in an automated fashion using Airflow's ability to scan the second repository responsible for the machine learning models. Similarly, to building Airflow workflows, those algorithms would also include the use of the MLFlow API to enable model tracking and serving. Github Actions is used as a CI/CD pipeline to automatically build, test, and deploy machine learning models to this repository similarly as it is used in the repository for the infrastructure. 
+
+<!---
+Monitoring and logging would be achieved using CloudWatch to monitor the health and performance of the EKS cluster and its components, such as worker nodes, Kubernetes pods, etc and ELK stack or similar for logging of the system and applications. Networking would be handled by AWS Elastic Load Balancing service or Ingress controller to route traffic to the correct service/pod in the cluster.
+-->
+
+Whereas the deployment of the infrastructure would be taken care of by MLOps-, DevOps-, and Data Engineers, the development of the Airflow workflows including MLFlow would be taken care of by Data Scientist and ML Engineers.
 
 
 # TODO:
@@ -153,8 +170,5 @@ was decken wir ab
 - [ ] resolve todos
 - [ ]  https://kili-technology.com/data-labeling/machine-learning/how-to-manage-your-machine-learning-pipeline-with-mlflow
 - [ ]  https://pedro-munoz.tech/how-to-setup-mlflow-in-production/
-- [ ]  mention terraform
-- [ ]  
-
-
-
+- [x]  mention terraform, who uses it? when used?
+- [x]  mention data engineer
