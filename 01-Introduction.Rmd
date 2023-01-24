@@ -1,12 +1,12 @@
 # Introduction
 
-*"MLOps Engineering with Airflow and MLflow on AWS EKS: Building, Deploying, and Managing Machine Learning Workflows"* is a comprehensive guide to building and deploying machine learning models using Airflow and MLflow on an AWS EKS cluster deployed using Terraform. The book is designed for data scientists, engineers and DevOps practitioners who are looking to dive into the realm of machine learning operations and automate the deployment of their models in a production environment.
+*"MLOps Engineering with Airflow and MLflow on Kubernetes: Building, Deploying, and Managing Machine Learning Workflows"* is a comprehensive guide to building and deploying machine learning models using Airflow and MLflow on an Kubernetes cluster deployed using Terraform. The book is designed for data scientists, engineers and DevOps practitioners who are looking to dive into the realm of machine learning operations and automate the deployment of their models in a production environment.
 
 The book begins by introducing the concepts of MLOps and the challenges associated with building, deploying, and managing machine learning models in a production environment. It then covers the basics of *Airflow*, a powerful tool for building and managing machine learning workflows, and *MLflow*, a platform for managing the machine learning lifecycle.
 
 Next, the book covers the basics of *Terraform*, a tool for provisioning and managing infrastructure as code, and *Kubernetes*, an open-source system for automating the deployment, scaling, and management of containerized applications. 
 
-Finally, the book covers the process of deploying Airflow and MLflow onan AWS EKS cluster using Terraform and hencefore the implementation of the previously introduced tools. A machine learning workflow using Airflow is set up on the deployed infrastructure, including data preprocessing, model training, and model deployment, as well as tracking the experiment and deploying the model into production using MLFlow. 
+Finally, the book covers the process of deploying Airflow and MLflow on an Kubernetes cluster using Terraform and hencefore the implementation of the previously introduced tools. A machine learning workflow using Airflow is set up on the deployed infrastructure, including data preprocessing, model training, and model deployment, as well as tracking the experiment and deploying the model into production using MLFlow. 
 
 <!---
 Finally, the book covers advanced topics such as monitoring and troubleshooting machine learning workflows, and automating the management of machine learning models using Airflow and MLflow.
@@ -40,13 +40,11 @@ A machine learning workflow is thereby not a walk in the park. Being productive 
 
 There are several machine learning workflow tools that can help streamline the process of building and deploying machine learning models. Integrating them into the machine learning workflow their functions can be distinguished into three processes. (1) *Workflow Management*, (2) *Model Tracking*, and (3) *Model Serving*. All three of these processes are closely related and are often handled by the same tool or platform.
 
-
 #### Workflow Management
 
 Workflow Management is the process of automating and streamlining the steps involved in building, training, and deploying machine learning models. This includes tasks such as data preprocessing, model training, and model deployment. Workflow management allows for the coordination of all the necessary steps in the ML pipeline, and the tracking of the pipeline’s progress. 
 
 Workflow management tools are used throughout the entire machine learning workflow. *Apache Airflow* is an open-source platform for workflow management and is widely used to automate the training and deployment of machine learning models.
-
 
 #### Model Tracking
 
@@ -54,7 +52,6 @@ Model Tracking is the process of keeping track of the different versions of a ma
 Model Tracking tools are often used at the development and testing stages of the machine learning workflow. During development, tracking allows to keep track of the different versions of a model, compare their performance and learning parameters, and finally helps to select the best model version to deploy. Model tracking also allows to check the performance of a machine learning model during testing and assures it meets industry requirements.
 
 *MLflow* is an open-source platform to manage the machine learning lifecycle, including experiment tracking, reproducibility, and deployment. Similarly, *DVC* (Data Version Control) is a tool that allows to version control, manage, and track not only models but also data.
-
 
 #### Model Serving
 
@@ -76,15 +73,31 @@ building and maintaining the infrastructure and tooling needed to train and depl
 
 The key concepts and best practices of MLOps, and the use of tools and technologies to support the MLOps process are closely related to *regular* DevOps principles, widely known in the industry of computer science.
 
+
 ### ML + (Dev)-Ops
 
 Machine Learning Operations (MLOps) and Development Operations (DevOps) both aim to improve the efficiency and effectiveness of software development and deployment. Both practices share major similarities, but there are some key differences that set them apart.
 
-The goal of DevOps is to automate and streamline the process of building, testing, and deploying software to make the management of the software lifecycle as quick and efficient as possible. This can be achieved by using tools, such as *version control*, *continuous integration and delivery (CI/CD)*, and *monitoring and observability*, all of which are introduced in a later chapter (TODO: insert chapter).
+The goal of DevOps is to automate and streamline the process of building, testing, and deploying software to make the management of the software lifecycle as quick and efficient as possible. This can be achieved by using tools, such as:
+
+1.  *Containerization*: Tools such as Docker and Kubernetes are used to package and deploy applications and services in a consistent and reproducible manner.
+2.  *Version Control*: Tools such as Git, SVN, and Mercurial are used to track and manage changes to code and configuration files, allowing teams to collaborate and roll back to previous versions if necessary.
+3.  *Continuous Integration and Continuous Deployment (CI/CD)*: Tools such as Jenkins, Travis CI, and Github Actions are used to automate the building, testing, and deployment of code changes.
+4.  *Monitoring and Logging*: Tools such as Prometheus, Grafana, and ELK are used to monitor the health and performance of applications and services, as well as to collect and analyze log data.
+5.  *Cloud Management Platforms*: AWS, Azure, and GCP are used to provision, manage, and scale infrastructure and services in the cloud.
 
 DevOps focuses on the deployment and management of software in general, while MLOps focuses specifically on the deployment and management of machine learning models in a production environment. The goal is basically the same as in DevOps, yet deploying machine learning model. While this is achieved by the same tools and best practices used in DevOps, deploying machine learning models (compared to software) adds a lot of complexity to the process.
 
-Machine learning models are not just lines of code, but also require large amounts of data, and specialized hardware, to function properly. Further, their complex algorithms might need to change when there is a shift in new data. This process of ensuring that machine learning models are accurate and reliable lead to further challenges. Another key difference is that MLOps places a greater emphasis on model governance, which needs to ensure that machine learning models are compliant with relevant regulations and standards.
+Machine learning models are not just lines of code, but also require large amounts of data, and specialized hardware, to function properly. Further, their complex algorithms might need to change when there is a shift in new data. This process of ensuring that machine learning models are accurate and reliable lead to further challenges. Another key difference is that MLOps places a greater emphasis on model governance, which needs to ensure that machine learning models are compliant with relevant regulations and standards. The above list of tools within DevOps can be extended to the following for MLOps.
+
+1.  *Machine Learning Platforms*: These platforms such as TensorFlow, PyTorch, and scikit-learn are used to develop and train machine learning models.
+2.  *Experiment Management Tools*: Tools such as MLflow, Weights & Biases, and Airflow are used to track, version, and reproduce experiments, as well as to manage the model lifecycle.
+3.  *Model Deployment and Management Tools*: Tools such as TensorFlow Serving, Clipper, and Seldon Core are used to deploy and manage machine learning models in production.
+4.  *Data Versioning and Management Tools*: Tools such as DVC, Data Version Control, and Pachyderm are used to version and manage the data used for training and evaluating models.    
+5.  *Automated Model Evaluation and Deployment Tools*: Tools such as Kubeflow, AlgoTrader, and AlgoHub are used to automate the evaluation of machine learning models and deploy the best-performing models to production.
+
+It's important to note that the specific tools used in MLOps and DevOps may vary depending on the organization's needs and some of the tools are used both but applied differently in each, e.g. container orchestration tools like Kubernetes. The above lists do also not claim to be complete.
+
 
 ### MLOps Engineering
 
@@ -123,7 +136,7 @@ The previous roles only show a small portion of all contributors within data pro
 It's also worth noting that some of these roles may overlap and different organizations may have different ways of structuring their teams and responsibilities. The most important thing is to have clear communication and collaboration between all the different teams, roles and stakeholders involved in the MLOps lifecycle.
 
 
-## The Architecture of this Setup
+## MLOps Engineering with Airflow and MLflow on Kubernetes
 
 
 TODO: insert image of architecture with mlflow and airflow on K8s, rollout with terraform
@@ -140,24 +153,8 @@ was decken wir ab
 - [ ] resolve todos
 - [ ]  https://kili-technology.com/data-labeling/machine-learning/how-to-manage-your-machine-learning-pipeline-with-mlflow
 - [ ]  https://pedro-munoz.tech/how-to-setup-mlflow-in-production/
+- [ ]  mention terraform
+- [ ]  
 
 
-
-
-
-
-# backup
-
-
-
-* **It’s difficult to keep track of experiments.** When you are just working with files on your laptop, or with an interactive notebook, how do you tell which data, code and parameters went into getting a particular result?
-    
-* **It’s difficult to reproduce code.** Even if you have meticulously tracked the code versions and parameters, you need to capture the whole environment (for example, library dependencies) to get the same result again. This is especially challenging if you want another data scientist to use your code, or if you want to run the same code at scale on another platform (for example, in the cloud).
-    
-* **There’s no standard way to package and deploy models.** Every data science team comes up with its own approach for each ML library that it uses, and the link between a model and the code and parameters that produced it is often lost.
-    
-* **There’s no central store to manage models (their versions and stage transitions).** A data science team creates many models. In absence of a central place to collaborate and manage model lifecycle, data science teams face challenges in how they manage models stages: from development to staging, and finally, to archiving or production, with respective versions, annotations, and history.
-    
-
-Moreover, although individual ML libraries provide solutions to some of these problems (for example, model serving), to get the best result you usually want to try _multiple ML libraries_. MLflow lets you train, reuse, and deploy models with any library and package them into reproducible steps that other data scientists can use as a “black box,” without even having to know which library you are using.
 
