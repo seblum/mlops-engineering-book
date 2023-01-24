@@ -64,24 +64,40 @@ Model serving tools are specifically used at the deployment stage of the machine
 Multiple tools integrate the funtionality of serving models, each different in its specific use cases, for example *TensorFlow*, *Kubernetes*, *DataRobot*, or also the already mentioned tools *MLflow* and *Airflow*
 
 
-## Machine Learning Operations
+## Machine Learning Operations (MLOps)
 
-Machine Learning Operations (MLOps) is a practice that combines the collaboration and communication of data scientists and operations professionals to enable the efficient deployment and management of machine learning models in a production environment.
+Machine Learning Operations (MLOps) combines principles from machine learning development and operations to enable the efficient deployment and management of machine learning models in a production environment. The goal of MLOps is to automate and streamline the machine learning workflow as much as possible, while also ensuring that each machine learning model is performing as expected in production. 
+Using MLOps principles allows organizations to move quickly and efficiently from prototyping to production.
 
-The goal of MLOps is to automate and streamline the process of building, testing, and deploying machine learning models, while also ensuring that they are performing as expected in production. This is achieved through the use of tools and best practices from software development and operations, such as version control, continuous integration and delivery, and monitoring and observability.
+<!--
+TODO: InfrastructureTODO: This involves infrastructure...
+building and maintaining the infrastructure and tooling needed to train and deploy models, monitoring the performance of deployed models, and implementing processes for collaboration and version control.
+-->
 
-One of the key benefits of MLOps is that it allows organizations to move quickly and efficiently from prototyping to production, while also ensuring that models are accurate and reliable. This is especially important in industries such as finance, healthcare, and transportation, where the use of machine learning models can have a significant impact on business outcomes.
-
-In this chapter, we will explore the key concepts and best practices of MLOps, including the role of data scientists and operations professionals, the importance of model governance, and the use of tools and technologies to support the MLOps process.
+The key concepts and best practices of MLOps, and the use of tools and technologies to support the MLOps process are closely related to *regular* DevOps principles, widely known in the industry of computer science.
 
 ### ML + (Dev)-Ops
 
-Machine Learning Operations (MLOps) and Development Operations (DevOps) are both practices that aim to improve the efficiency and effectiveness of software development and deployment. While the two practices share some similarities, there are also some key differences that set them apart.
+Machine Learning Operations (MLOps) and Development Operations (DevOps) both aim to improve the efficiency and effectiveness of software development and deployment. Both practices share major similarities, but there are some key differences that set them apart.
 
-DevOps is a practice that emphasizes the collaboration and communication between development and operations teams in order to improve the speed and quality of software delivery. The goal of DevOps is to automate and streamline the process of building, testing, and deploying software, while also ensuring that it is performing as expected in production. This is achieved through the use of tools and best practices from software development and operations, such as version control, continuous integration and delivery, and monitoring and observability.
+The goal of DevOps is to automate and streamline the process of building, testing, and deploying software to make the management of the software lifecycle as quick and efficient as possible. This can be achieved by using tools, such as *version control*, *continuous integration and delivery (CI/CD)*, and *monitoring and observability*, all of which are introduced in a later chapter (TODO: insert chapter).
 
-DevOps focuses on the deployment and management of software in general, while MLOps focuses specifically on the deployment and management of machine learning models in a production environment. The goal is basically the same as in DevOps, yet deploying a machine learning model. While this is achieved by the same tools and best practices used in DevOps, deploying machine learning models (compared to software) adds a lot of complexity to the process.
+DevOps focuses on the deployment and management of software in general, while MLOps focuses specifically on the deployment and management of machine learning models in a production environment. The goal is basically the same as in DevOps, yet deploying machine learning model. While this is achieved by the same tools and best practices used in DevOps, deploying machine learning models (compared to software) adds a lot of complexity to the process.
+
 Machine learning models are not just lines of code, but also require large amounts of data, and specialized hardware, to function properly. Further, their complex algorithms might need to change when there is a shift in new data. This process of ensuring that machine learning models are accurate and reliable lead to further challenges. Another key difference is that MLOps places a greater emphasis on model governance, which needs to ensure that machine learning models are compliant with relevant regulations and standards.
+
+### MLOps Engineering
+
+MLOps Engineering is the discipline that applies the previously mentioned software engineering principles to create the needed development and production environment.
+It usually comines the skills and expertise of data scientists, machine learning engineers, and DevOps engineers to ensure that machine learning models are deployed and managed efficiently and effectively.
+
+<!--
+TODO: Infrastructure
+The MLOps engineer is responsible to create and maintain the infrastructure and tooling needed to train and deploy models, monitoring the performance of deployed models, and implementing processes for collaboration and version control. This includes tasks such as setting up and configuring the necessary hardware and software environments, creating and maintaining documentation, and implementing automated testing and deployment processes. The MLOps engineer must be able to navigate this complexity and ensure that the models are deployed and managed in a way that is both efficient and effective. (TODO: check everything)
+-->
+
+It is important to note that one person can not exceed on all of the above mentioned positions. Developing machine learning models into production usually requires multiple people working with different and specialized skillsets and roles.
+
 
 ## Roles and Tasks in MLOps
 
@@ -96,99 +112,15 @@ ML Engineers work closely with Data Scientists to develop and deploy machine lea
 They are also responsible for the day-to-day management and monitoring of machine learning models in a production environment. They use tools and technologies to track model performance and make sure that models are running smoothly and producing accurate results. This also includes to takes measures for data or model shifts (TODO: check data shift)
 
 #### MLOps Engineer
-The MLOps engineer is responsible for creating and maintaining the infrastructure and tools needed to run machine learning models at scale, and for ensuring that the models are integrated seamlessly into the overall software development and deployment process. This includes tasks such as setting up and configuring the necessary hardware and software environments, creating and maintaining documentation, and implementing automated testing and deployment processes. The MLOps engineer must be able to navigate this complexity and ensure that the models are deployed and managed in a way that is both efficient and effective. (TODO: check everything)
-    
-#### MLOps Engineer vs ML Engineer
-An ML Engineer is responsible for building and deploying machine learning models. This includes tasks such as selecting appropriate algorithms, training and tuning models, and evaluating performance.
-
-An MLOps Engineer, on the other hand, focuses on the operational aspects of machine learning. This includes tasks such as building and maintaining the infrastructure and tooling needed to train and deploy models, monitoring the performance of deployed models, and implementing processes for collaboration and version control.
-
-In summary, an ML Engineer focuses on the development and implementation of ML models, whereas an MLOps Engineer focuses on the operational and infrastructure side of ML models.
-
-#### MLOps Engineer vs DevOps Engineer
-DevOps Engineer and MLOps Engineer are similar but with a different focus. Both roles involve the integration of development and operations teams in order to improve the software development process and release software faster.
-
-A DevOps Engineer is responsible for automating and streamlining the software development and deployment process. This includes tasks such as configuring and maintaining continuous integration and continuous delivery (CI/CD) pipelines, monitoring and troubleshooting production systems, and implementing best practices for security and scalability.
-
-An MLOps Engineer, on the other hand, applies similar principles and tools to the deployment and management of machine learning models. This includes tasks such as building and maintaining the infrastructure and tooling needed to train and deploy models, monitoring the performance of deployed models, and implementing processes for collaboration and version control.
-
-In summary, a DevOps Engineer focuses on the automation and streamlining of software development and deployment process, whereas an MLOps Engineer focuses on the automation and streamlining of ML models development, deployment and management.
+The MLOps engineer is responsible to create and maintain the infrastructure and tooling needed to train and deploy models, monitoring the performance of deployed models, and implementing processes for collaboration and version control. This includes tasks such as setting up and configuring the necessary hardware and software environments, creating and maintaining documentation, and implementing automated testing and deployment processes. The MLOps engineer must be able to navigate this complexity and ensure that the models are deployed and managed in a way that is both efficient and effective.
   
 #### DevOps Engineer
-DevOps Engineers are responsible for automating and streamlining the process of building, testing, and deploying software, or in this case machine learning models respectively. They use best practices from software development and operations, such as version control, continuous integration and delivery, and monitoring and observability, to ensure that models are performing as expected in production. 
+DevOps Engineers are responsible for automating and streamlining the process of building, testing, and deploying software. They use best practices from software development and operations, such as version control, continuous integration and delivery, and monitoring and observability, to ensure that models are performing as expected in production. 
     
 #### Additional roles & function
-The previous roles only show a small portion of all contributors within data projects. Additional roles are further mentioned to give an overview of the complexity of such interdisciplinary teams. Of course, every team differs and a team is not limited to these roles.
-
-*Model Governance* is responsible for ensuring that machine learning models are accurate, reliable, and compliant with relevant regulations and standards. They typically work with data scientists, ML engineers, and other stakeholders to create and implement governance policies and procedures.
-
-*Business stakeholders* are the end-users of the machine learning models and they are responsible for providing feedback and requirements for the models in the business context. They are also responsible for making decisions based on the results produced by the models.
+The previous roles only show a small portion of all contributors within data projects. Additional roles within an industry context might also include *Model Governance*, which is responsible to ensure that models are accurate, reliable, and compliant with relevant regulations and standards, or *Business stakeholders*, that provide feedback and requirements for the models in a business context.
 
 It's also worth noting that some of these roles may overlap and different organizations may have different ways of structuring their teams and responsibilities. The most important thing is to have clear communication and collaboration between all the different teams, roles and stakeholders involved in the MLOps lifecycle.
-
-## MLOps Engineering
-
-Machine Learning Operations (MLOps) Engineering is the practice of applying software engineering principles and best practices to the deployment and management of machine learning models in a production environment. It is a discipline that combines the skills and expertise of data scientists, machine learning engineers, and DevOps engineers to ensure that machine learning models are deployed and managed efficiently and effectively.
-
-The goal of MLOps engineering is to automate and streamline the process of building, testing, and deploying machine learning models, while also ensuring that they are performing as expected in production. This is achieved through the use of tools and technologies such as version control, continuous integration and delivery, and monitoring and observability.
-
-By applying software engineering principles and best practices to the deployment and management of machine learning models, MLOps engineers can help organizations move quickly and efficiently from prototyping to production, while also ensuring that models are accurate and reliable.
-
-
-## DevOps Tools & Principles
-
-might be an own chapters
-
-DevOps is a set of practices and tools that aims to automate and streamline the software development and deployment process. The principles of DevOps include:
-
-1.  Collaboration: DevOps promotes collaboration between development and operations teams to improve communication, increase efficiency, and reduce delays.
-    
-2.  Automation: DevOps uses automation tools and scripts to automate repetitive tasks, such as building, testing, and deploying software.
-    
-3.  Continuous Integration and Continuous Delivery (CI/CD): DevOps uses CI/CD to automate the software development and deployment process. This includes automatically building, testing, and deploying code changes as soon as they are made.
-    
-4.  Monitoring and Logging: DevOps uses monitoring and logging tools to track the performance of deployed software and troubleshoot issues.
-    
-5.  Infrastructure as Code: DevOps uses tools to manage infrastructure as code, which allows for the automated provisioning, scaling, and management of infrastructure.
-    
-6.  Containers and Microservices: DevOps uses containers and microservices to package and deploy software, which allows for more flexibility and scalability.
-    
-7.  Test-Driven Development: DevOps uses Test-Driven Development (TDD) to ensure that the software is of high quality, it runs tests before and after any change to catch any errors early.
-
-
-### Version Control
-
-Version control is a system that records changes to a file or set of files over time, so that you can recall specific versions later. It allows multiple developers to work on a project simultaneously, and it makes it easy to roll back changes if something goes wrong.
-
-There are two main types of version control systems: centralized and distributed.
-
-1.  Centralized Version Control Systems (CVCS) : In a centralized version control system, there is a single central repository that contains all the versions of the files, and developers must check out files from the repository in order to make changes. Examples of CVCS include Subversion and Perforce.
-    
-2.  Distributed Version Control Systems (DVCS) : In a distributed version control system, each developer has a local copy of the entire repository, including all the versions of the files. This allows developers to work offline, and it makes it easy to share changes with other developers. Examples of DVCS include Git, Mercurial and Bazaar
-
-Some of the key benefits of version control include:
-
-* Keeping track of changes: By keeping track of all changes made to files, version control makes it easy to go back to a previous version if something goes wrong.
-* Collaboration: Version control allows multiple developers to work on a project simultaneously, and it makes it easy to share changes with others.
-* Backup: Version control systems keep a history of all changes, so you can always go back to a previous version if something gets lost.
-* Auditing: Version control allows to track who made a specific change, when and why.
-* Branching and Merging: Version control systems make it easy to create branches of a project, which allows developers to work on different features simultaneously without affecting the main project.
-
-Overall, version control is an essential tool for any software development project as it allows multiple developers to work together, track changes, and easily rollback in case of errors.
-
-### CI/CD
-
-
-Continuous Integration (CI) and Continuous Delivery (CD) are related software development practices that work together to automate and streamline the software development and deployment process.
-
-1.  Continuous Integration (CI): CI is a software development practice that involves frequently integrating code changes into a shared repository. The goal of CI is to catch and fix integration errors as soon as they are introduced, rather than waiting for them to accumulate over time. This is typically done by running automated tests and builds, to catch any errors that might have been introduced with new code changes.
-    
-2.  Continuous Delivery (CD): CD is a software development practice that involves automating the process of building, testing, and deploying software. The goal of CD is to ensure that code changes can be safely and quickly deployed to production. This is typically done by automating the deployment process and by testing the software in a staging environment before deploying it to production.
-    
-
-CI/CD pipeline is the process of automatically building, testing, and deploying code changes. It integrates the principles of continuous integration and continuous delivery in a seamless workflow, allowing teams to catch and fix issues early and quickly deliver new features to users. The pipeline is often triggered by a code commit, and it includes steps such as building, testing, packaging and deploying software.
-
-CI and CD practices help to increase the speed and quality of software development, by automating repetitive tasks and catching errors early, reducing the time and effort required to release new features, and increasing the stability of the deployed software.
 
 
 ## The Architecture of this Setup
@@ -196,6 +128,11 @@ CI and CD practices help to increase the speed and quality of software developme
 
 TODO: insert image of architecture with mlflow and airflow on K8s, rollout with terraform
 
+
+
+Auf rollen beziehen
+
+was decken wir ab
 
 
 # TODO:
@@ -223,3 +160,4 @@ TODO: insert image of architecture with mlflow and airflow on K8s, rollout with 
     
 
 Moreover, although individual ML libraries provide solutions to some of these problems (for example, model serving), to get the best result you usually want to try _multiple ML libraries_. MLflow lets you train, reuse, and deploy models with any library and package them into reproducible steps that other data scientists can use as a “black box,” without even having to know which library you are using.
+
