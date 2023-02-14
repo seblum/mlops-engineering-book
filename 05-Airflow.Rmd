@@ -573,21 +573,3 @@ The DAG directory can be of different nature either a local folder in case of a 
 The metadata database is used to store data of the scheduler, executor, and the webserver, such as scheduling- or runtime, and user settings. It is beneficial to run the metadata database as a separate component to keep all data safe and secure in case there are bugs in other parts of the infrastructure. Such thoughts also account for the deployment of the metadata database itself. It is possible to run Airflow on an instance within a Kubernetes cluster along all other components of a distributed Airflow installation. However, this is not necessarily recommended and it is also possible to use a clouds' distinguished database resources to store the metadata, for example the Relational Database Service (RDS) on the amazon cloud.
 
 
-## TODO
-
-* [x] Bilder einfügen
-* [x] Code einfügen
-* [x] Todos bearbeiten
-* [x] prerequisites installation
-* [x] Text einheitlich schreiben
-* [ ] Korrekturlesen
-* [x] Taskflow?
-* [x] transfer operators
-* [x] action operators
-* [x] taskflow
-* [x] scheduling
-* [x] xcom
-* [x] resolve todos
-
-
-
