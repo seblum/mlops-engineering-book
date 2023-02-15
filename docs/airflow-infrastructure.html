@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Kubernetes | MLOps Engineering</title>
+  <title>3.3 Airflow infrastructure | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Kubernetes | MLOps Engineering" />
+  <meta property="og:title" content="3.3 Airflow infrastructure | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Kubernetes | MLOps Engineering" />
+  <meta name="twitter:title" content="3.3 Airflow infrastructure | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="exemplary-deployment.html"/>
-<link rel="next" href="core-concepts-1.html"/>
+<link rel="prev" href="exemplary-ml-workflow.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -255,22 +255,68 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="kubernetes" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Kubernetes<a href="kubernetes.html#kubernetes" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Kubernetes (short: K8s) is greek and means pilot. K8s is an applications orchestrator that originated from Google and is open source. Beeing an application orchestrator, K8s deploys and manages application containers. It scales up and down so called Pod (A Pod manages a container) as needed and allows for zero downtime as well as the possibility of rollbacks. Thus, the meaning of <em>pilot</em> relates to its functionining in piloting containers.</p>
-<div id="prerequisites-1" class="section level3 unlisted unnumbered hasAnchor">
-<h3>Prerequisites<a href="kubernetes.html#prerequisites-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>As a prerequisites to go through this tutorial and implement the scripts one has to have Docker installed, Kubectl to interact via the command line with K8s, as well as Minikube to run a K8s cluster on a local machine. Please refer to the corresponding sites.</p>
+<div id="airflow-infrastructure" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Airflow infrastructure<a href="airflow-infrastructure.html#airflow-infrastructure" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Before Data Scientists and Machine Learning Engineers can utilize the power of Airflow Workflows, Airflow obviously needs to be set up and deployed. There are multiple ways an Airflow deployment can take place. It can be run either on a single machine or in a distributed setup on a cluster of machines. As stated in the prerequisites for this tutorial we set up Airflow locally on a single machine to introduce you on how to work with airflow. Although Airflow can be run on a single machine, it is beneficial to deploy it as a distributed system to utilize its full power.</p>
+<div id="airflow-as-a-distributed-system" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Airflow as a distributed system<a href="airflow-infrastructure.html#airflow-as-a-distributed-system" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Airflow consists of several separate parts. While this separation is somewhat simulated on a local deployment, each several part of Airflow can be deployed separately when deploying Airflow in a distributed manner. This comes with benefits of availability, security, reliability, and scalability.</p>
+<p>An Airflow deployment generally consists of five different compontens:</p>
+<ul>
+<li><strong>Scheduler:</strong> The schedules handles triggering scheduled workflows and submitting tasks to the executor to run.</li>
+<li><strong>Executor:</strong> The executor handles running the tasks themselves. In a local installation of Airflow, the tasks are run by the executor itself, whereas in a production ready deployment if Airflow the executor pushes the task execution to separate worker instances.</li>
+<li><strong>Webserver:</strong> The webserver provides the user interface of Airflow we have seen before that allows to inspect, trigger, and debug DAGs and tasks.</li>
+<li><strong>DAG Directory:</strong> The DAG directory is a directory that contains the DAG files which are read by the scheduler and executor.</li>
+<li><strong>Metadata Database:</strong> The metadata database is used to store data of the scheduler, executor, and the webserver, such as scheduling- or runtime, and user settings.</li>
+</ul>
+<p>The following graphs shows how the components build up the Airflow architecture.</p>
+<div class="figure">
+<img src="images/05-Airflow/airflow_architecture.png" alt="" />
+<p class="caption">airflow_architecture</p>
+</div>
+</div>
+<div id="scheduler-1" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Scheduler<a href="airflow-infrastructure.html#scheduler-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The scheduler is basically the brain and heart of Airflow. It handles triggering and scheduling of workflows as well as submitting tasks to the executor to run. To be able to do this, the scheduler is responsible to parse the DAG files from the <em>DAG directory</em>, manage the database states in the <em>metadata database</em>, and to communicate with the executor to schedule tasks. Since the release of Airflow 2.0 it is possible to run multiple schedulers at a time to ensure a high availability and reliability of this centerpiece of a distributed Airflow.</p>
+</div>
+<div id="webserver" class="section level3 hasAnchor" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Webserver<a href="airflow-infrastructure.html#webserver" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The webserver runs the web interface of Airflow and thus the user interface every Airflow user sees. This allows to inspect, trigger, and debug DAGs and tasks in Airflow (and much more!), such as seen in the previous chapters. Each user interaction and change is written to the <em>DAG directory</em> or the <em>metadata database</em>, from where the <em>scheduler</em> will read and act upon.</p>
+</div>
+<div id="executor" class="section level3 hasAnchor" number="3.3.4">
+<h3><span class="header-section-number">3.3.4</span> Executor<a href="airflow-infrastructure.html#executor" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>How and where are the DAG workflows actually run? This is where executors come into play - they run tasks. An executor defines where and how the Airflow tasks should be executed. This crucial component of Airflow can be configured by the user and should be chosen to fit the users specific needs. There are several different executors, each handleing the run of a task a bit differently. This also relies on the underlying infrastructure Airflow is build on.</p>
+<p>In a local installation of Airflow, the tasks are run by the executor itself, whereas in a production ready deployment if Airflow the executor pushes the task execution to separate worker instances. This allows for different setups such as a Celery-like executor or an executor based on Kubernetes. The benefit of a distributed deployment is reliability and availability, as it is possible to have many workers in different places (for example using separate VMs or multiple kubernetes pods). It is further possibility to run tasks on different instances based on their needs, for example to run the training step of a machine learning model on a GPU node.</p>
+<ul>
+<li>The <code>SequentialExecutor</code> is the default executor in Airflow. This executor only runs one task instance at a time and should therefore not used in a production use case.</li>
+<li>The <code>LocalExecutor</code>executes each task in a separate processe on a single machine. It’s the only non-distributed executor which is production ready and works well in relatively small deployments. If you installed Airflow as show above in the prerequisites, you will use this executor.</li>
+<li>In contrast, the <code>CeleryExecutor</code> uses under the hood the Celery queue system that allows users to deploy multiple workers that read tasks from the broker queue (Redis or RabbitMQ) where tasks are sent by scheduler. This enables Airflow to distribute tasks between many machines and allows users to specify what task should be executed where. This is for example useful for routing compute-heavy tasks to more resourceful workers and is the most popular production executor.</li>
+<li>The <code>KubernetesExecutor</code> is another widely used production-ready executor and works similarly to the <code>CeleryExecutor</code>. As the name allready suggests it requires an underlying Kubernetes cluster that enables Airflow to spawn a new pod to run each task. Even though this is a robust method to account for machine or pod failure, the additional overhead in creation can be problematic for short running tasks.</li>
+<li>The <code>CeleryKubernetsExecutor</code> uses both, the <code>CeleryExecutor</code> and <code>KubernetesExecutor</code> (as the name already says). It allows to distinguish whether a particular task should be executed on kubernetes or routed to the celery workers. This way users can take full advantage of horizontal auto scaling of worker pods and to delegate computational heavy tasks to kubernetes.</li>
+<li>An additional <code>DebugExecutor</code>works as a is a debug executor. Its main purpose is to debug DAGs locally. It’s the only executor that uses a single process to execute all tasks.</li>
+</ul>
+<p>Checking which executor is currently set can be done by running the following command.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb81-1"><a href="airflow-infrastructure.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="ex">airflow</span> config get-value core executor</span></code></pre></div>
+</div>
+<div id="dag-directory" class="section level3 hasAnchor" number="3.3.5">
+<h3><span class="header-section-number">3.3.5</span> DAG Directory<a href="airflow-infrastructure.html#dag-directory" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The DAG directory contains the DAG files written in python. Each file is read by the the other Airflow components for a different purpose. The <em>web interface</em> lists all written DAGs from the directory as well as their content. The scheduler and executor run a DAG or a task based on the input read from the DAG directory.
+The DAG directory can be of different nature either a local folder in case of a local installation, or a separate (git) repository where the DAG files are stored. The scheduler will recurse through the DAG Directory so it is also possible to create subfolders for example based on different projects.</p>
+</div>
+<div id="metadata-database" class="section level3 hasAnchor" number="3.3.6">
+<h3><span class="header-section-number">3.3.6</span> Metadata Database<a href="airflow-infrastructure.html#metadata-database" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The metadata database is used to store data of the scheduler, executor, and the webserver, such as scheduling- or runtime, and user settings. It is beneficial to run the metadata database as a separate component to keep all data safe and secure in case there are bugs in other parts of the infrastructure. Such thoughts also account for the deployment of the metadata database itself. It is possible to run Airflow on an instance within a Kubernetes cluster along all other components of a distributed Airflow installation. However, this is not necessarily recommended and it is also possible to use a clouds’ distinguished database resources to store the metadata, for example the Relational Database Service (RDS) on the amazon cloud.</p>
 
 </div>
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="exemplary-deployment.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="core-concepts-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="exemplary-ml-workflow.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -301,7 +347,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/04-Kubernetes.Rmd",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/05.3-Airflow-infrastructure.Rmd",
 "text": "Edit"
 },
 "history": {

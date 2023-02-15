@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Kubernetes | MLOps Engineering</title>
+  <title>1.5 Exemplary Deployment | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Kubernetes | MLOps Engineering" />
+  <meta property="og:title" content="1.5 Exemplary Deployment | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Kubernetes | MLOps Engineering" />
+  <meta name="twitter:title" content="1.5 Exemplary Deployment | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="exemplary-deployment.html"/>
-<link rel="next" href="core-concepts-1.html"/>
+<link rel="prev" href="additional-tips-tricks.html"/>
+<link rel="next" href="kubernetes.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -255,22 +255,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="kubernetes" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Kubernetes<a href="kubernetes.html#kubernetes" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Kubernetes (short: K8s) is greek and means pilot. K8s is an applications orchestrator that originated from Google and is open source. Beeing an application orchestrator, K8s deploys and manages application containers. It scales up and down so called Pod (A Pod manages a container) as needed and allows for zero downtime as well as the possibility of rollbacks. Thus, the meaning of <em>pilot</em> relates to its functionining in piloting containers.</p>
-<div id="prerequisites-1" class="section level3 unlisted unnumbered hasAnchor">
-<h3>Prerequisites<a href="kubernetes.html#prerequisites-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>As a prerequisites to go through this tutorial and implement the scripts one has to have Docker installed, Kubectl to interact via the command line with K8s, as well as Minikube to run a K8s cluster on a local machine. Please refer to the corresponding sites.</p>
+<div id="exemplary-deployment" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Exemplary Deployment<a href="exemplary-deployment.html#exemplary-deployment" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Building a VPC with EC2 &amp; S3</strong></p>
+<p>Finally, we want to put everything together and provision our own cloud infrastructure using Terraform. We will create a AWS Virtual private Cloud with EC2 Instances running on it, and S3 Buckets attached to the them. We will use <em>for_each</em> and <em>count</em> to create multiple instaces. The Terraform infrastructure is separated into three modules <em>VPS</em>, <em>EC2</em>, and <em>S3</em>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="exemplary-deployment.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">root</span></span>
+<span id="cb26-2"><a href="exemplary-deployment.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   main.tf</span>
+<span id="cb26-3"><a href="exemplary-deployment.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   variables.tf</span>
+<span id="cb26-4"><a href="exemplary-deployment.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   outputs.tf</span>
+<span id="cb26-5"><a href="exemplary-deployment.html#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb26-6"><a href="exemplary-deployment.html#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> networking</span>
+<span id="cb26-7"><a href="exemplary-deployment.html#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   main.tf</span>
+<span id="cb26-8"><a href="exemplary-deployment.html#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   variables.tf</span>
+<span id="cb26-9"><a href="exemplary-deployment.html#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   outputs.tf</span>
+<span id="cb26-10"><a href="exemplary-deployment.html#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb26-11"><a href="exemplary-deployment.html#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> ec2</span>
+<span id="cb26-12"><a href="exemplary-deployment.html#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   main.tf</span>
+<span id="cb26-13"><a href="exemplary-deployment.html#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   variables.tf</span>
+<span id="cb26-14"><a href="exemplary-deployment.html#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   outputs.tf</span>
+<span id="cb26-15"><a href="exemplary-deployment.html#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb26-16"><a href="exemplary-deployment.html#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> s3</span>
+<span id="cb26-17"><a href="exemplary-deployment.html#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│</span>   main.tf</span>
+<span id="cb26-18"><a href="exemplary-deployment.html#cb26-18" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│</span>   variables.tf</span>
+<span id="cb26-19"><a href="exemplary-deployment.html#cb26-19" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│</span>   outputs.tf</span></code></pre></div>
 
 </div>
-</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="exemplary-deployment.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="core-concepts-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="additional-tips-tricks.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="kubernetes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -301,7 +318,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/04-Kubernetes.Rmd",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/02.5-Terraform-Exemplary_deployment.Rmd",
 "text": "Edit"
 },
 "history": {
