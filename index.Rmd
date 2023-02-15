@@ -13,11 +13,11 @@ link-citations: yes
 github-repo: seblum/mlops-engineering-book
 ---
 
-# Preamble {-}
+# Preamble {.unnumbered}
 
 This document is written during my journey in the realm of MLOps. It is therefore in a state of continuous development. 
 
-## Topics {-}
+### Topics {.unlisted .unnumbered}
 
 The overall aim is to build and create a MLOps architecture based on Airflow running on AWS EKS. Ideally, this architecture is create using terraform. Model tracking might be done using MLFlow, Data tracking using DVC. Further mentioned might be best practices in software development, CI/CD, Docker, and pipelines. I might also include a small Data Science use case utilizing the Airflow Cluster we built.
 
