@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | MLOps Engineering</title>
+  <title>1.1 Basic usage | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | MLOps Engineering" />
+  <meta property="og:title" content="1.1 Basic usage | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | MLOps Engineering" />
+  <meta name="twitter:title" content="1.1 Basic usage | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="terraform.html"/>
+<link rel="next" href="core-concepts.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -243,19 +243,76 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="basic-usage" class="section level2 hasAnchor">
+<h2><span class="header-section-number">1.1</span> Basic usage<a href="basic-usage.html#basic-usage" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A Terraform project is basically just a set of files in a directory containing resource definitions of cloud ressources to be created. Those Terraform files, denoted by the ending <code>.tf</code>, use Terraform’s configuration language to define the specified resources. In the following example there are two definitions made: a <code>provider</code> and a <code>resource</code>. Later in this chapter we will dive deeper in the structure of the language. For now, we only need to know this script is creating a file called <code>hello.txt</code> that includes the text <code>"Hello, Terraform"</code>. It’s our Terraform version of Hello World!</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="basic-usage.html#cb1-1"></a><span class="ex">provider</span> <span class="st">&quot;local&quot;</span> {</span>
+<span id="cb1-2"><a href="basic-usage.html#cb1-2"></a>  <span class="ex">version</span> = <span class="st">&quot;~&gt; 1.4&quot;</span></span>
+<span id="cb1-3"><a href="basic-usage.html#cb1-3"></a>}</span>
+<span id="cb1-4"><a href="basic-usage.html#cb1-4"></a><span class="ex">resource</span> <span class="st">&quot;local_file&quot;</span> <span class="st">&quot;hello&quot;</span> {</span>
+<span id="cb1-5"><a href="basic-usage.html#cb1-5"></a>  <span class="ex">content</span> = <span class="st">&quot;Hello, Terraform&quot;</span></span>
+<span id="cb1-6"><a href="basic-usage.html#cb1-6"></a>  <span class="ex">filename</span> = <span class="st">&quot;hello.txt&quot;</span></span>
+<span id="cb1-7"><a href="basic-usage.html#cb1-7"></a>}</span></code></pre></div>
+<div id="terraform-init" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.1.1</span> terraform init<a href="basic-usage.html#terraform-init" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When a project is run for the first time the terraform project needs to be initialized. This is done via the <code>terraform init</code> command. Terraform scans the project files in this step and downloads any required providers needed (more details to providers in a following section). In the given example this is the local procider.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="basic-usage.html#cb2-1"></a><span class="co"># Initializes the working directory which consists of all the configuration files</span></span>
+<span id="cb2-2"><a href="basic-usage.html#cb2-2"></a><span class="ex">terraform</span> init</span></code></pre></div>
+<div class="figure">
+<img src="images/02-Terraform/terraform-init.png" alt="" />
+<p class="caption">Terraform init</p>
+</div>
+</div>
+<div id="terraform-validate" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.1.2</span> terraform validate<a href="basic-usage.html#terraform-validate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>terraform validate</code> command checks the code for syntax errors. This is optional yet a way to handle initial errors or minor careless mistakes</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="basic-usage.html#cb3-1"></a><span class="co"># Validates the configuration files in a directory</span></span>
+<span id="cb3-2"><a href="basic-usage.html#cb3-2"></a><span class="ex">terraform</span> validate</span></code></pre></div>
+<div class="figure">
+<img src="images/02-Terraform/terraform-validate.png" alt="" />
+<p class="caption">Terraform validate</p>
+</div>
+</div>
+<div id="terraform-plan" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.1.3</span> terraform plan<a href="basic-usage.html#terraform-plan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>terraform plan</code> command verifies what action Terraform will perform and what resources will be created. This step is basically a <em>dry run</em> of the code to be executed. It also returns the provided values and some permission attributes which have been set.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="basic-usage.html#cb4-1"></a><span class="co"># Creates an execution plan to reach a desired state of the infrastructure</span></span>
+<span id="cb4-2"><a href="basic-usage.html#cb4-2"></a><span class="ex">terraform</span> plan</span></code></pre></div>
+<div class="figure">
+<img src="images/02-Terraform/terraform-plan.png" alt="" />
+<p class="caption">Terraform plan</p>
+</div>
+</div>
+<div id="terraform-apply" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.1.4</span> terraform apply<a href="basic-usage.html#terraform-apply" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The command <code>Terraform apply</code> creates the resource specified in the <code>.tf</code> files. Initially, the same output as in the <code>terraform plan</code> step is shown (hence its <em>dry run</em>). The output further states which resources are added, which will be changed, and which resources will be destroyed. After confirming the actions the resource creation will be executed.</p>
+<p>Modifications to previously deployed ressources can be implemented by using <code>terraform apply</code> again. The output will denote that there are resources to change.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="basic-usage.html#cb5-1"></a><span class="co"># Provision the changes in the infrastructure as defined in the plan</span></span>
+<span id="cb5-2"><a href="basic-usage.html#cb5-2"></a><span class="ex">terraform</span> apply </span></code></pre></div>
+<div class="figure">
+<img src="images/02-Terraform/terraform-apply.png" alt="" />
+<p class="caption">Terraform apply</p>
+</div>
+</div>
+<div id="terraform-destroy" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.1.5</span> terraform destroy<a href="basic-usage.html#terraform-destroy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To destoy all created ressouces and to delete everything we did before, there is a <code>terraform destroy</code> command.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="basic-usage.html#cb6-1"></a><span class="co"># Deletes all the old infrastructure resources</span></span>
+<span id="cb6-2"><a href="basic-usage.html#cb6-2"></a><span class="ex">terraform</span> destroy</span></code></pre></div>
+<div class="figure">
+<img src="images/02-Terraform/terraform-destroy.png" alt="" />
+<p class="caption">Terraform destroy</p>
+</div>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="terraform.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="core-concepts.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -286,7 +343,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/%s",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/02.1-Terraform-Basic_Usage.Rmd",
 "text": "Edit"
 },
 "history": {

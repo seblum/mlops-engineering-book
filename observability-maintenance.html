@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | MLOps Engineering</title>
+  <title>2.6 Observability &amp; Maintenance | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | MLOps Engineering" />
+  <meta property="og:title" content="2.6 Observability &amp; Maintenance | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | MLOps Engineering" />
+  <meta name="twitter:title" content="2.6 Observability &amp; Maintenance | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="environment-configuration-security.html"/>
+<link rel="next" href="helm.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -243,19 +243,119 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="observability-maintenance" class="section level2 hasAnchor">
+<h2><span class="header-section-number">2.6</span> Observability &amp; Maintenance<a href="observability-maintenance.html#observability-maintenance" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="health-checks" class="section level3 hasAnchor">
+<h3><span class="header-section-number">2.6.1</span> Health Checks<a href="observability-maintenance.html#health-checks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Applications running in service need to be healthy at all times so they are ready to receive traffic. K8s uses a process called health checks to test whether an application is alive. If there are any issues and the application is unhealthy, K8s will restart the process. Yet, checking only whether a process is up and running might be not sufficient. What if, e.g., a client wants to connect to a database and the connection cannot be established, even though the app is up and running? To solve more specific issues like this, health checks like a <em>liveness probe</em> or <em>readiness probe</em> can be used. If there have not been specified, K8s will use the default checks to test whether a process is running.</p>
+<div id="liveness-probe" class="section level4 hasAnchor">
+<h4><span class="header-section-number">2.6.1.1</span> Liveness Probe<a href="observability-maintenance.html#liveness-probe" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The Kubelet of a node uses <em>Liveness Probes</em> to check whether an application runs fine or whether it is unable to make progress and its stuck on a broken state. For example, it could catch a deadlock, a database connection failure, etc. The Liveness Probe can restart a container accordingly. To use a Liveness Probe, an endpoint needs to be specified. The benefit of this is, that it is simple to define what it means for an application to be healthy just by defining a path.</p>
+</div>
+<div id="readiness-probe" class="section level4 hasAnchor">
+<h4><span class="header-section-number">2.6.1.2</span> Readiness Probe<a href="observability-maintenance.html#readiness-probe" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Similar to a Liveness Probe, the <em>Readniness Probe</em> is used by the kubelet to check when the container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready. Its configuration is also done by specifying a path to what it means the application is healthy. A lot of frameworks, like e.g. springboot, actually provide a path to use.</p>
+<p>Belows configuration shows a Deployment which includes a Liveness and a Readiness Probe. The image of the deployment is set up so its process is killed after a given number of seconds. This has been passed using environment variables such as seen in the script. Both, the Liveness and the Readiness Probe have the same parameters in the given example.</p>
+<ul>
+<li>initialDelaySeconds: The probe will not be called until x seconds after all the containers in the Pod are created.</li>
+<li>timeoutSeconds: The probe must respond within a x-second timeout and the HTTP status code must be equal to or greater than 200 and less than 400.</li>
+<li>periodSeconds: The probe is called every x seconds by K8s</li>
+<li>failureThreshold: The container will fail and restart if more than x consecutive probes fail</li>
+</ul>
+<div class="sourceCode" id="cb59"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb59-1"><a href="observability-maintenance.html#cb59-1"></a><span class="co"># healthchecks.yaml</span></span>
+<span id="cb59-2"><a href="observability-maintenance.html#cb59-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb59-3"><a href="observability-maintenance.html#cb59-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb59-4"><a href="observability-maintenance.html#cb59-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb59-5"><a href="observability-maintenance.html#cb59-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb59-6"><a href="observability-maintenance.html#cb59-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb59-7"><a href="observability-maintenance.html#cb59-7"></a><span class="at">  </span><span class="fu">replicas</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb59-8"><a href="observability-maintenance.html#cb59-8"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb59-9"><a href="observability-maintenance.html#cb59-9"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb59-10"><a href="observability-maintenance.html#cb59-10"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb59-11"><a href="observability-maintenance.html#cb59-11"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb59-12"><a href="observability-maintenance.html#cb59-12"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb59-13"><a href="observability-maintenance.html#cb59-13"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb59-14"><a href="observability-maintenance.html#cb59-14"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb59-15"><a href="observability-maintenance.html#cb59-15"></a><span class="at">        </span><span class="fu">environment</span><span class="kw">:</span><span class="at"> test</span></span>
+<span id="cb59-16"><a href="observability-maintenance.html#cb59-16"></a><span class="at">        </span><span class="fu">tier</span><span class="kw">:</span><span class="at"> backend</span></span>
+<span id="cb59-17"><a href="observability-maintenance.html#cb59-17"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> engineering</span></span>
+<span id="cb59-18"><a href="observability-maintenance.html#cb59-18"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb59-19"><a href="observability-maintenance.html#cb59-19"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb59-20"><a href="observability-maintenance.html#cb59-20"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb59-21"><a href="observability-maintenance.html#cb59-21"></a><span class="co">          # check whether I have to change the backend app to do this.</span></span>
+<span id="cb59-22"><a href="observability-maintenance.html#cb59-22"></a><span class="at">          </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;seblum/mlops-public:backend-flask&quot;</span></span>
+<span id="cb59-23"><a href="observability-maintenance.html#cb59-23"></a><span class="at">          </span><span class="fu">imagePullPolicy</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Always&quot;</span></span>
+<span id="cb59-24"><a href="observability-maintenance.html#cb59-24"></a><span class="at">          </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb59-25"><a href="observability-maintenance.html#cb59-25"></a><span class="at">            </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb59-26"><a href="observability-maintenance.html#cb59-26"></a><span class="at">              </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb59-27"><a href="observability-maintenance.html#cb59-27"></a><span class="at">              </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb59-28"><a href="observability-maintenance.html#cb59-28"></a><span class="co">          # Specification of the the Liveness Probe</span></span>
+<span id="cb59-29"><a href="observability-maintenance.html#cb59-29"></a><span class="at">          </span><span class="fu">livenessProbe</span><span class="kw">:</span></span>
+<span id="cb59-30"><a href="observability-maintenance.html#cb59-30"></a><span class="at">            </span><span class="fu">httpGet</span><span class="kw">:</span></span>
+<span id="cb59-31"><a href="observability-maintenance.html#cb59-31"></a><span class="co">              # path of the url</span></span>
+<span id="cb59-32"><a href="observability-maintenance.html#cb59-32"></a><span class="at">              </span><span class="fu">path</span><span class="kw">:</span><span class="at"> /liveness</span></span>
+<span id="cb59-33"><a href="observability-maintenance.html#cb59-33"></a><span class="at">              </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
+<span id="cb59-34"><a href="observability-maintenance.html#cb59-34"></a><span class="co">            # time the liveness probe starts after pod is started</span></span>
+<span id="cb59-35"><a href="observability-maintenance.html#cb59-35"></a><span class="at">            </span><span class="fu">initialDelaySeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb59-36"><a href="observability-maintenance.html#cb59-36"></a><span class="at">            </span><span class="fu">timeoutSeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb59-37"><a href="observability-maintenance.html#cb59-37"></a><span class="at">            </span><span class="fu">failureThreshold</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
+<span id="cb59-38"><a href="observability-maintenance.html#cb59-38"></a><span class="co">            # period of time when the checks should be performed</span></span>
+<span id="cb59-39"><a href="observability-maintenance.html#cb59-39"></a><span class="at">            </span><span class="fu">periodSeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb59-40"><a href="observability-maintenance.html#cb59-40"></a><span class="co">          # Specification of the Readiness Probe</span></span>
+<span id="cb59-41"><a href="observability-maintenance.html#cb59-41"></a><span class="at">          </span><span class="fu">readinessProbe</span><span class="kw">:</span></span>
+<span id="cb59-42"><a href="observability-maintenance.html#cb59-42"></a><span class="at">            </span><span class="fu">httpGet</span><span class="kw">:</span></span>
+<span id="cb59-43"><a href="observability-maintenance.html#cb59-43"></a><span class="at">              </span><span class="fu">path</span><span class="kw">:</span><span class="at"> /readiness</span></span>
+<span id="cb59-44"><a href="observability-maintenance.html#cb59-44"></a><span class="at">              </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
+<span id="cb59-45"><a href="observability-maintenance.html#cb59-45"></a><span class="at">            </span><span class="fu">initialDelaySeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span>
+<span id="cb59-46"><a href="observability-maintenance.html#cb59-46"></a><span class="co">            # change to 1 seconds and see the pod not going to go ready</span></span>
+<span id="cb59-47"><a href="observability-maintenance.html#cb59-47"></a><span class="at">            </span><span class="fu">timeoutSeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
+<span id="cb59-48"><a href="observability-maintenance.html#cb59-48"></a><span class="at">            </span><span class="fu">failureThreshold</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb59-49"><a href="observability-maintenance.html#cb59-49"></a><span class="at">            </span><span class="fu">periodSeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb59-50"><a href="observability-maintenance.html#cb59-50"></a><span class="at">          </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb59-51"><a href="observability-maintenance.html#cb59-51"></a><span class="co">            # variable for the container to be killed after 60 seconds</span></span>
+<span id="cb59-52"><a href="observability-maintenance.html#cb59-52"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;KILL_IN_SECONDS&quot;</span></span>
+<span id="cb59-53"><a href="observability-maintenance.html#cb59-53"></a><span class="at">              </span><span class="fu">value</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;60&quot;</span></span>
+<span id="cb59-54"><a href="observability-maintenance.html#cb59-54"></a><span class="at">          </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb59-55"><a href="observability-maintenance.html#cb59-55"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
+<span id="cb59-56"><a href="observability-maintenance.html#cb59-56"></a><span class="pp">---</span></span>
+<span id="cb59-57"><a href="observability-maintenance.html#cb59-57"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb59-58"><a href="observability-maintenance.html#cb59-58"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb59-59"><a href="observability-maintenance.html#cb59-59"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb59-60"><a href="observability-maintenance.html#cb59-60"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb59-61"><a href="observability-maintenance.html#cb59-61"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb59-62"><a href="observability-maintenance.html#cb59-62"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> NodePort</span></span>
+<span id="cb59-63"><a href="observability-maintenance.html#cb59-63"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb59-64"><a href="observability-maintenance.html#cb59-64"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb59-65"><a href="observability-maintenance.html#cb59-65"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb59-66"><a href="observability-maintenance.html#cb59-66"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb59-67"><a href="observability-maintenance.html#cb59-67"></a><span class="at">      </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">8080</span></span>
+<span id="cb59-68"><a href="observability-maintenance.html#cb59-68"></a><span class="at">      </span><span class="fu">nodePort</span><span class="kw">:</span><span class="at"> </span><span class="dv">30000</span></span>
+<span id="cb59-69"><a href="observability-maintenance.html#cb59-69"></a><span class="pp">---</span></span>
+<span id="cb59-70"><a href="observability-maintenance.html#cb59-70"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb59-71"><a href="observability-maintenance.html#cb59-71"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb59-72"><a href="observability-maintenance.html#cb59-72"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb59-73"><a href="observability-maintenance.html#cb59-73"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb59-74"><a href="observability-maintenance.html#cb59-74"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb59-75"><a href="observability-maintenance.html#cb59-75"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> ClusterIP</span></span>
+<span id="cb59-76"><a href="observability-maintenance.html#cb59-76"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb59-77"><a href="observability-maintenance.html#cb59-77"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb59-78"><a href="observability-maintenance.html#cb59-78"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb59-79"><a href="observability-maintenance.html#cb59-79"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb59-80"><a href="observability-maintenance.html#cb59-80"></a><span class="at">      </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">8080</span></span></code></pre></div>
+</div>
+</div>
+<div id="debugging" class="section level3 hasAnchor">
+<h3><span class="header-section-number">2.6.2</span> Debugging<a href="observability-maintenance.html#debugging" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="environment-configuration-security.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="helm.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -286,7 +386,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/%s",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/04.6-Kubernetes-Observability_and_Maintenance.md",
 "text": "Edit"
 },
 "history": {

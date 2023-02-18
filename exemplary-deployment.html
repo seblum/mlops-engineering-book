@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | MLOps Engineering</title>
+  <title>1.5 Exemplary Deployment | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | MLOps Engineering" />
+  <meta property="og:title" content="1.5 Exemplary Deployment | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | MLOps Engineering" />
+  <meta name="twitter:title" content="1.5 Exemplary Deployment | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="additional-tips-tricks.html"/>
+<link rel="next" href="kubernetes.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -243,19 +243,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="exemplary-deployment" class="section level2 hasAnchor">
+<h2><span class="header-section-number">1.5</span> Exemplary Deployment<a href="exemplary-deployment.html#exemplary-deployment" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Building a VPC with EC2 &amp; S3</strong></p>
+<p>Finally, we want to put everything together and provision our own cloud infrastructure using Terraform. We will create a AWS Virtual private Cloud with EC2 Instances running on it, and S3 Buckets attached to the them. We will use <em>for_each</em> and <em>count</em> to create multiple instaces. The Terraform infrastructure is separated into three modules <em>VPS</em>, <em>EC2</em>, and <em>S3</em>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="exemplary-deployment.html#cb26-1"></a><span class="ex">root</span></span>
+<span id="cb26-2"><a href="exemplary-deployment.html#cb26-2"></a>│   <span class="ex">main.tf</span></span>
+<span id="cb26-3"><a href="exemplary-deployment.html#cb26-3"></a>│   <span class="ex">variables.tf</span></span>
+<span id="cb26-4"><a href="exemplary-deployment.html#cb26-4"></a>│   <span class="ex">outputs.tf</span></span>
+<span id="cb26-5"><a href="exemplary-deployment.html#cb26-5"></a>│</span>
+<span id="cb26-6"><a href="exemplary-deployment.html#cb26-6"></a>└── <span class="ex">networking</span></span>
+<span id="cb26-7"><a href="exemplary-deployment.html#cb26-7"></a>│   │   <span class="ex">main.tf</span></span>
+<span id="cb26-8"><a href="exemplary-deployment.html#cb26-8"></a>│   │   <span class="ex">variables.tf</span></span>
+<span id="cb26-9"><a href="exemplary-deployment.html#cb26-9"></a>│   │   <span class="ex">outputs.tf</span></span>
+<span id="cb26-10"><a href="exemplary-deployment.html#cb26-10"></a>│</span>
+<span id="cb26-11"><a href="exemplary-deployment.html#cb26-11"></a>└── <span class="ex">ec2</span></span>
+<span id="cb26-12"><a href="exemplary-deployment.html#cb26-12"></a>│   │   <span class="ex">main.tf</span></span>
+<span id="cb26-13"><a href="exemplary-deployment.html#cb26-13"></a>│   │   <span class="ex">variables.tf</span></span>
+<span id="cb26-14"><a href="exemplary-deployment.html#cb26-14"></a>│   │   <span class="ex">outputs.tf</span></span>
+<span id="cb26-15"><a href="exemplary-deployment.html#cb26-15"></a>│</span>
+<span id="cb26-16"><a href="exemplary-deployment.html#cb26-16"></a>└── <span class="ex">s3</span></span>
+<span id="cb26-17"><a href="exemplary-deployment.html#cb26-17"></a>    │   <span class="ex">main.tf</span></span>
+<span id="cb26-18"><a href="exemplary-deployment.html#cb26-18"></a>    │   <span class="ex">variables.tf</span></span>
+<span id="cb26-19"><a href="exemplary-deployment.html#cb26-19"></a>    │   <span class="ex">outputs.tf</span></span></code></pre></div>
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="additional-tips-tricks.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="kubernetes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -286,7 +306,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/%s",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/02.5-Terraform-Exemplary_deployment.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -4,26 +4,26 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>MLOps Architecture from scratch</title>
-  <meta name="description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
+  <title>MLOps Engineering</title>
+  <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="MLOps Architecture from scratch" />
+  <meta property="og:title" content="MLOps Engineering" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
-  <meta name="github-repo" content="seblum/mlops-practice" />
+  <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="MLOps Architecture from scratch" />
+  <meta name="twitter:title" content="MLOps Engineering" />
   
-  <meta name="twitter:description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
+  <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
 
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-02-14" />
+<meta name="date" content="2023-02-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 
-<link rel="next" href="introduction.html"/>
+<link rel="next" href="terraform.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -140,70 +140,88 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#a-work-in-progress"><i class="fa fa-check"></i>A work in progress</a></li>
+<li class="chapter" data-level="1" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>1</b> Terraform</a><ul>
+<li class="chapter" data-level="" data-path="terraform.html"><a href="terraform.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="1.1" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>1.1</b> Basic usage</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="basic-usage.html"><a href="basic-usage.html#terraform-init"><i class="fa fa-check"></i><b>1.1.1</b> terraform init</a></li>
+<li class="chapter" data-level="1.1.2" data-path="basic-usage.html"><a href="basic-usage.html#terraform-validate"><i class="fa fa-check"></i><b>1.1.2</b> terraform validate</a></li>
+<li class="chapter" data-level="1.1.3" data-path="basic-usage.html"><a href="basic-usage.html#terraform-plan"><i class="fa fa-check"></i><b>1.1.3</b> terraform plan</a></li>
+<li class="chapter" data-level="1.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>1.1.4</b> terraform apply</a></li>
+<li class="chapter" data-level="1.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>1.1.5</b> terraform destroy</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>2</b> Terraform</a><ul>
-<li class="chapter" data-level="2.1" data-path="terraform.html"><a href="terraform.html#prerequisites"><i class="fa fa-check"></i><b>2.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="2.2" data-path="terraform.html"><a href="terraform.html#basic-usage"><i class="fa fa-check"></i><b>2.2</b> Basic usage</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="terraform.html"><a href="terraform.html#terraform-init"><i class="fa fa-check"></i><b>2.2.1</b> terraform init</a></li>
-<li class="chapter" data-level="2.2.2" data-path="terraform.html"><a href="terraform.html#terraform-validate"><i class="fa fa-check"></i><b>2.2.2</b> terraform validate</a></li>
-<li class="chapter" data-level="2.2.3" data-path="terraform.html"><a href="terraform.html#terraform-plan"><i class="fa fa-check"></i><b>2.2.3</b> terraform plan</a></li>
-<li class="chapter" data-level="2.2.4" data-path="terraform.html"><a href="terraform.html#terraform-apply"><i class="fa fa-check"></i><b>2.2.4</b> terraform apply</a></li>
-<li class="chapter" data-level="2.2.5" data-path="terraform.html"><a href="terraform.html#terraform-destroy"><i class="fa fa-check"></i><b>2.2.5</b> terraform destroy</a></li>
+<li class="chapter" data-level="1.2" data-path="core-concepts.html"><a href="core-concepts.html"><i class="fa fa-check"></i><b>1.2</b> Core Concepts</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="core-concepts.html"><a href="core-concepts.html#providers"><i class="fa fa-check"></i><b>1.2.1</b> Providers</a></li>
+<li class="chapter" data-level="1.2.2" data-path="core-concepts.html"><a href="core-concepts.html#resources"><i class="fa fa-check"></i><b>1.2.2</b> Resources</a></li>
+<li class="chapter" data-level="1.2.3" data-path="core-concepts.html"><a href="core-concepts.html#data-sources"><i class="fa fa-check"></i><b>1.2.3</b> Data Sources</a></li>
+<li class="chapter" data-level="1.2.4" data-path="core-concepts.html"><a href="core-concepts.html#state"><i class="fa fa-check"></i><b>1.2.4</b> State</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="terraform.html"><a href="terraform.html#core-concepts"><i class="fa fa-check"></i><b>2.3</b> Core Concepts</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="terraform.html"><a href="terraform.html#providers"><i class="fa fa-check"></i><b>2.3.1</b> Providers</a></li>
-<li class="chapter" data-level="2.3.2" data-path="terraform.html"><a href="terraform.html#resources"><i class="fa fa-check"></i><b>2.3.2</b> Resources</a></li>
-<li class="chapter" data-level="2.3.3" data-path="terraform.html"><a href="terraform.html#data-sources"><i class="fa fa-check"></i><b>2.3.3</b> Data Sources</a></li>
+<li class="chapter" data-level="1.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>1.3</b> Modules</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>1.3.1</b> Input Variables</a></li>
+<li class="chapter" data-level="1.3.2" data-path="modules.html"><a href="modules.html#output-variables"><i class="fa fa-check"></i><b>1.3.2</b> Output Variables</a></li>
+<li class="chapter" data-level="1.3.3" data-path="modules.html"><a href="modules.html#local-variables"><i class="fa fa-check"></i><b>1.3.3</b> Local Variables</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="terraform.html"><a href="terraform.html#state"><i class="fa fa-check"></i><b>2.4</b> State</a></li>
-<li class="chapter" data-level="2.5" data-path="terraform.html"><a href="terraform.html#modules"><i class="fa fa-check"></i><b>2.5</b> Modules</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="terraform.html"><a href="terraform.html#input-variables"><i class="fa fa-check"></i><b>2.5.1</b> Input Variables</a></li>
-<li class="chapter" data-level="2.5.2" data-path="terraform.html"><a href="terraform.html#output-variables"><i class="fa fa-check"></i><b>2.5.2</b> Output Variables</a></li>
-<li class="chapter" data-level="2.5.3" data-path="terraform.html"><a href="terraform.html#local-variables"><i class="fa fa-check"></i><b>2.5.3</b> Local Variables</a></li>
+<li class="chapter" data-level="1.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html"><i class="fa fa-check"></i><b>1.4</b> Additional tips &amp; tricks</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#count"><i class="fa fa-check"></i><b>1.4.1</b> count</a></li>
+<li class="chapter" data-level="1.4.2" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for-each"><i class="fa fa-check"></i><b>1.4.2</b> for-each</a></li>
+<li class="chapter" data-level="1.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>1.4.3</b> for</a></li>
+<li class="chapter" data-level="1.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>1.4.4</b> Workspaces</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="terraform.html"><a href="terraform.html#additional-tips-tricks"><i class="fa fa-check"></i><b>2.6</b> Additional tips &amp; tricks</a><ul>
-<li class="chapter" data-level="2.6.1" data-path="terraform.html"><a href="terraform.html#count"><i class="fa fa-check"></i><b>2.6.1</b> count</a></li>
-<li class="chapter" data-level="2.6.2" data-path="terraform.html"><a href="terraform.html#for-each"><i class="fa fa-check"></i><b>2.6.2</b> for-each</a></li>
-<li class="chapter" data-level="2.6.3" data-path="terraform.html"><a href="terraform.html#for"><i class="fa fa-check"></i><b>2.6.3</b> for</a></li>
-<li class="chapter" data-level="2.6.4" data-path="terraform.html"><a href="terraform.html#workspaces"><i class="fa fa-check"></i><b>2.6.4</b> Workspaces</a></li>
+<li class="chapter" data-level="1.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>1.5</b> Exemplary Deployment</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="terraform.html"><a href="terraform.html#putting-it-together"><i class="fa fa-check"></i><b>2.7</b> Putting it together</a></li>
+<li class="chapter" data-level="2" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>2</b> Kubernetes</a><ul>
+<li class="chapter" data-level="" data-path="kubernetes.html"><a href="kubernetes.html#prerequisites-1"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="2.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html"><i class="fa fa-check"></i><b>2.1</b> Core Concepts</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html#nodes"><i class="fa fa-check"></i><b>2.1.1</b> Nodes</a></li>
+<li class="chapter" data-level="2.1.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html#pods"><i class="fa fa-check"></i><b>2.1.2</b> Pods</a></li>
+<li class="chapter" data-level="2.1.3" data-path="core-concepts-1.html"><a href="core-concepts-1.html#imperative-declarative-management"><i class="fa fa-check"></i><b>2.1.3</b> Imperative &amp; Declarative Management</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>3</b> Kubernetes</a><ul>
-<li class="chapter" data-level="3.1" data-path="kubernetes.html"><a href="kubernetes.html#prerequisites-1"><i class="fa fa-check"></i><b>3.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="3.2" data-path="kubernetes.html"><a href="kubernetes.html#nodes"><i class="fa fa-check"></i><b>3.2</b> Nodes</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="kubernetes.html"><a href="kubernetes.html#master-control-plane"><i class="fa fa-check"></i><b>3.2.1</b> Master &amp; Control Plane</a></li>
-<li class="chapter" data-level="3.2.2" data-path="kubernetes.html"><a href="kubernetes.html#worker-nodes"><i class="fa fa-check"></i><b>3.2.2</b> Worker Nodes</a></li>
+<li class="chapter" data-level="2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>2.2</b> Application Deployment &amp; Design</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>2.2.1</b> Deployments</a></li>
+<li class="chapter" data-level="2.2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html#resource-management"><i class="fa fa-check"></i><b>2.2.2</b> Resource Management</a></li>
+<li class="chapter" data-level="2.2.3" data-path="application-deployment-design.html"><a href="application-deployment-design.html#daemonsets"><i class="fa fa-check"></i><b>2.2.3</b> DaemonSets</a></li>
+<li class="chapter" data-level="2.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>2.2.4</b> StatefulSets</a></li>
+<li class="chapter" data-level="2.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>2.2.5</b> Jobs &amp; Cron Jobs</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="kubernetes.html"><a href="kubernetes.html#pods"><i class="fa fa-check"></i><b>3.3</b> Pods</a><ul>
-<li class="chapter" data-level="" data-path="kubernetes.html"><a href="kubernetes.html#imperative-declarative-management"><i class="fa fa-check"></i>Imperative &amp; Declarative Management</a></li>
+<li class="chapter" data-level="2.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>2.3</b> Services &amp; Networking</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>2.3.1</b> Services</a></li>
+<li class="chapter" data-level="2.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>2.3.2</b> Service Discovery</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="kubernetes.html"><a href="kubernetes.html#deployments"><i class="fa fa-check"></i><b>3.4</b> Deployments</a></li>
-<li class="chapter" data-level="3.5" data-path="kubernetes.html"><a href="kubernetes.html#services"><i class="fa fa-check"></i><b>3.5</b> Services</a><ul>
-<li class="chapter" data-level="3.5.1" data-path="kubernetes.html"><a href="kubernetes.html#exemplary-setup-of-database-and-frontend-microservices"><i class="fa fa-check"></i><b>3.5.1</b> Exemplary setup of database and frontend microservices</a></li>
+<li class="chapter" data-level="2.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>2.4</b> Volume &amp; Storage</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>2.4.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="2.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>2.4.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="2.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>2.4.3</b> Persistent Volumes</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="kubernetes.html"><a href="kubernetes.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>3.6</b> Labels, Selectors and Annotations</a></li>
-<li class="chapter" data-level="3.7" data-path="kubernetes.html"><a href="kubernetes.html#namespaces"><i class="fa fa-check"></i><b>3.7</b> Namespaces</a></li>
-<li class="chapter" data-level="3.8" data-path="kubernetes.html"><a href="kubernetes.html#service-discovery"><i class="fa fa-check"></i><b>3.8</b> Service Discovery</a></li>
-<li class="chapter" data-level="3.9" data-path="kubernetes.html"><a href="kubernetes.html#volume-storage"><i class="fa fa-check"></i><b>3.9</b> Volume &amp; Storage</a><ul>
-<li class="chapter" data-level="3.9.1" data-path="kubernetes.html"><a href="kubernetes.html#emptydir-volume"><i class="fa fa-check"></i><b>3.9.1</b> EmptyDir Volume</a></li>
-<li class="chapter" data-level="3.9.2" data-path="kubernetes.html"><a href="kubernetes.html#hostpath-volume"><i class="fa fa-check"></i><b>3.9.2</b> HostPath Volume</a></li>
-<li class="chapter" data-level="3.9.3" data-path="kubernetes.html"><a href="kubernetes.html#persistent-volumes"><i class="fa fa-check"></i><b>3.9.3</b> Persistent Volumes</a></li>
+<li class="chapter" data-level="2.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>2.5</b> Environment, Configuration &amp; Security</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#namespaces"><i class="fa fa-check"></i><b>2.5.1</b> Namespaces</a></li>
+<li class="chapter" data-level="2.5.2" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>2.5.2</b> Labels, Selectors and Annotations</a></li>
+<li class="chapter" data-level="2.5.3" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#configmaps"><i class="fa fa-check"></i><b>2.5.3</b> ConfigMaps</a></li>
+<li class="chapter" data-level="2.5.4" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#secrets"><i class="fa fa-check"></i><b>2.5.4</b> Secrets</a></li>
 </ul></li>
-<li class="chapter" data-level="3.10" data-path="kubernetes.html"><a href="kubernetes.html#configmaps"><i class="fa fa-check"></i><b>3.10</b> ConfigMaps</a></li>
-<li class="chapter" data-level="3.11" data-path="kubernetes.html"><a href="kubernetes.html#secrets"><i class="fa fa-check"></i><b>3.11</b> Secrets</a><ul>
-<li class="chapter" data-level="3.11.1" data-path="kubernetes.html"><a href="kubernetes.html#exemplary-use-case-of-secrets"><i class="fa fa-check"></i><b>3.11.1</b> Exemplary use case of secrets</a></li>
+<li class="chapter" data-level="2.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>2.6</b> Observability &amp; Maintenance</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>2.6.1</b> Health Checks</a></li>
+<li class="chapter" data-level="2.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>2.6.2</b> Debugging</a></li>
 </ul></li>
-<li class="chapter" data-level="3.12" data-path="kubernetes.html"><a href="kubernetes.html#health-checks"><i class="fa fa-check"></i><b>3.12</b> Health Checks</a><ul>
-<li class="chapter" data-level="3.12.1" data-path="kubernetes.html"><a href="kubernetes.html#liveness-probe"><i class="fa fa-check"></i><b>3.12.1</b> Liveness Probe</a></li>
-<li class="chapter" data-level="3.12.2" data-path="kubernetes.html"><a href="kubernetes.html#readiness-probe"><i class="fa fa-check"></i><b>3.12.2</b> Readiness Probe</a></li>
+<li class="chapter" data-level="2.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>2.7</b> Helm</a></li>
 </ul></li>
-<li class="chapter" data-level="3.13" data-path="kubernetes.html"><a href="kubernetes.html#resource-management"><i class="fa fa-check"></i><b>3.13</b> Resource Management</a></li>
-<li class="chapter" data-level="3.14" data-path="kubernetes.html"><a href="kubernetes.html#daemon-sets"><i class="fa fa-check"></i><b>3.14</b> Daemon Sets</a></li>
-<li class="chapter" data-level="3.15" data-path="kubernetes.html"><a href="kubernetes.html#statefulsets"><i class="fa fa-check"></i><b>3.15</b> StatefulSets</a></li>
-<li class="chapter" data-level="3.16" data-path="kubernetes.html"><a href="kubernetes.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>3.16</b> Jobs &amp; Cron Jobs</a></li>
+<li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a><ul>
+<li class="chapter" data-level="" data-path="airflow.html"><a href="airflow.html#prerequisites-2"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="3.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html"><i class="fa fa-check"></i><b>3.1</b> Fundamental concepts</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#dags"><i class="fa fa-check"></i><b>3.1.1</b> DAGs</a></li>
+<li class="chapter" data-level="3.1.2" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#operators"><i class="fa fa-check"></i><b>3.1.2</b> Operators</a></li>
+<li class="chapter" data-level="3.1.3" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#tasks"><i class="fa fa-check"></i><b>3.1.3</b> Tasks</a></li>
+<li class="chapter" data-level="3.1.4" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#xcom"><i class="fa fa-check"></i><b>3.1.4</b> XCom</a></li>
+<li class="chapter" data-level="3.1.5" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#scheduling"><i class="fa fa-check"></i><b>3.1.5</b> Scheduling</a></li>
+<li class="chapter" data-level="3.1.6" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#taskflow"><i class="fa fa-check"></i><b>3.1.6</b> Taskflow</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>3.2</b> Exemplary ML workflow</a></li>
+<li class="chapter" data-level="3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>3.3</b> Airflow infrastructure</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#airflow-as-a-distributed-system"><i class="fa fa-check"></i><b>3.3.1</b> Airflow as a distributed system</a></li>
+<li class="chapter" data-level="3.3.2" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#scheduler-1"><i class="fa fa-check"></i><b>3.3.2</b> Scheduler</a></li>
+<li class="chapter" data-level="3.3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#webserver"><i class="fa fa-check"></i><b>3.3.3</b> Webserver</a></li>
+<li class="chapter" data-level="3.3.4" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#executor"><i class="fa fa-check"></i><b>3.3.4</b> Executor</a></li>
+<li class="chapter" data-level="3.3.5" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#dag-directory"><i class="fa fa-check"></i><b>3.3.5</b> DAG Directory</a></li>
+<li class="chapter" data-level="3.3.6" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#metadata-database"><i class="fa fa-check"></i><b>3.3.6</b> Metadata Database</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -217,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MLOps Architecture from scratch</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MLOps Engineering</a>
           </h1>
         </div>
 
@@ -226,15 +244,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">MLOps Architecture from scratch</h1>
+<h1 class="title">MLOps Engineering</h1>
 <p class="author"><em>Sebastian Blum</em></p>
-<p class="date"><em>2023-02-14</em></p>
+<p class="date"><em>2023-02-18</em></p>
 </div>
 <div id="preamble" class="section level1 unnumbered hasAnchor">
 <h1>Preamble<a href="index.html#preamble" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This document is written during my journey in the realm of MLOps. It is therefore in a state of continuous development.</p>
-<div id="topics" class="section level2 unnumbered hasAnchor">
-<h2>Topics<a href="index.html#topics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="topics" class="section level3 unlisted unnumbered hasAnchor">
+<h3>Topics<a href="index.html#topics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The overall aim is to build and create a MLOps architecture based on Airflow running on AWS EKS. Ideally, this architecture is create using terraform. Model tracking might be done using MLFlow, Data tracking using DVC. Further mentioned might be best practices in software development, CI/CD, Docker, and pipelines. I might also include a small Data Science use case utilizing the Airflow Cluster we built.</p>
 
 </div>
@@ -245,7 +263,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 
-<a href="introduction.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="terraform.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -260,10 +278,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
-"facebook": true,
+"github": true,
+"facebook": false,
 "twitter": true,
-"linkedin": false,
+"linkedin": true,
 "weibo": false,
 "instapaper": false,
 "vk": false,
@@ -287,7 +305,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null
