@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.4 Additional tips &amp; tricks | MLOps Engineering</title>
+  <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.4 Additional tips &amp; tricks | MLOps Engineering" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  <meta name="github-repo" content="seblum/mlops-engineering-book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.4 Additional tips &amp; tricks | MLOps Engineering" />
+  
+  <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  
+
+<meta name="author" content="Sebastian Blum" />
+
+
+<meta name="date" content="2023-02-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="modules.html"/>
+<link rel="next" href="exemplary-deployment.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a></li>
+<li class="chapter" data-level="1" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>1</b> Terraform</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>1.1</b> Basic usage</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="basic-usage.html"><a href="basic-usage.html#terraform-init"><i class="fa fa-check"></i><b>1.1.1</b> terraform init</a></li>
+<li class="chapter" data-level="1.1.2" data-path="basic-usage.html"><a href="basic-usage.html#terraform-validate"><i class="fa fa-check"></i><b>1.1.2</b> terraform validate</a></li>
+<li class="chapter" data-level="1.1.3" data-path="basic-usage.html"><a href="basic-usage.html#terraform-plan"><i class="fa fa-check"></i><b>1.1.3</b> terraform plan</a></li>
+<li class="chapter" data-level="1.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>1.1.4</b> terraform apply</a></li>
+<li class="chapter" data-level="1.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>1.1.5</b> terraform destroy</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="core-concepts.html"><a href="core-concepts.html"><i class="fa fa-check"></i><b>1.2</b> Core Concepts</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="core-concepts.html"><a href="core-concepts.html#providers"><i class="fa fa-check"></i><b>1.2.1</b> Providers</a></li>
+<li class="chapter" data-level="1.2.2" data-path="core-concepts.html"><a href="core-concepts.html#resources"><i class="fa fa-check"></i><b>1.2.2</b> Resources</a></li>
+<li class="chapter" data-level="1.2.3" data-path="core-concepts.html"><a href="core-concepts.html#data-sources"><i class="fa fa-check"></i><b>1.2.3</b> Data Sources</a></li>
+<li class="chapter" data-level="1.2.4" data-path="core-concepts.html"><a href="core-concepts.html#state"><i class="fa fa-check"></i><b>1.2.4</b> State</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>1.3</b> Modules</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>1.3.1</b> Input Variables</a></li>
+<li class="chapter" data-level="1.3.2" data-path="modules.html"><a href="modules.html#output-variables"><i class="fa fa-check"></i><b>1.3.2</b> Output Variables</a></li>
+<li class="chapter" data-level="1.3.3" data-path="modules.html"><a href="modules.html#local-variables"><i class="fa fa-check"></i><b>1.3.3</b> Local Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html"><i class="fa fa-check"></i><b>1.4</b> Additional tips &amp; tricks</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#count"><i class="fa fa-check"></i><b>1.4.1</b> count</a></li>
+<li class="chapter" data-level="1.4.2" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for-each"><i class="fa fa-check"></i><b>1.4.2</b> for-each</a></li>
+<li class="chapter" data-level="1.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>1.4.3</b> for</a></li>
+<li class="chapter" data-level="1.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>1.4.4</b> Workspaces</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>1.5</b> Exemplary Deployment</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>2</b> Kubernetes</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html"><i class="fa fa-check"></i><b>2.1</b> Core Concepts</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html#nodes"><i class="fa fa-check"></i><b>2.1.1</b> Nodes</a></li>
+<li class="chapter" data-level="2.1.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html#pods"><i class="fa fa-check"></i><b>2.1.2</b> Pods</a></li>
+<li class="chapter" data-level="2.1.3" data-path="core-concepts-1.html"><a href="core-concepts-1.html#imperative-declarative-management"><i class="fa fa-check"></i><b>2.1.3</b> Imperative &amp; Declarative Management</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>2.2</b> Application Deployment &amp; Design</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>2.2.1</b> Deployments</a></li>
+<li class="chapter" data-level="2.2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html#resource-management"><i class="fa fa-check"></i><b>2.2.2</b> Resource Management</a></li>
+<li class="chapter" data-level="2.2.3" data-path="application-deployment-design.html"><a href="application-deployment-design.html#daemonsets"><i class="fa fa-check"></i><b>2.2.3</b> DaemonSets</a></li>
+<li class="chapter" data-level="2.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>2.2.4</b> StatefulSets</a></li>
+<li class="chapter" data-level="2.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>2.2.5</b> Jobs &amp; Cron Jobs</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>2.3</b> Services &amp; Networking</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>2.3.1</b> Services</a></li>
+<li class="chapter" data-level="2.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>2.3.2</b> Service Discovery</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>2.4</b> Volume &amp; Storage</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>2.4.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="2.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>2.4.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="2.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>2.4.3</b> Persistent Volumes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>2.5</b> Environment, Configuration &amp; Security</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#namespaces"><i class="fa fa-check"></i><b>2.5.1</b> Namespaces</a></li>
+<li class="chapter" data-level="2.5.2" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>2.5.2</b> Labels, Selectors and Annotations</a></li>
+<li class="chapter" data-level="2.5.3" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#configmaps"><i class="fa fa-check"></i><b>2.5.3</b> ConfigMaps</a></li>
+<li class="chapter" data-level="2.5.4" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#secrets"><i class="fa fa-check"></i><b>2.5.4</b> Secrets</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>2.6</b> Observability &amp; Maintenance</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>2.6.1</b> Health Checks</a></li>
+<li class="chapter" data-level="2.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>2.6.2</b> Debugging</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>2.7</b> Helm</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html"><i class="fa fa-check"></i><b>3.1</b> Fundamental concepts</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#dags"><i class="fa fa-check"></i><b>3.1.1</b> DAGs</a></li>
+<li class="chapter" data-level="3.1.2" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#operators"><i class="fa fa-check"></i><b>3.1.2</b> Operators</a></li>
+<li class="chapter" data-level="3.1.3" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#tasks"><i class="fa fa-check"></i><b>3.1.3</b> Tasks</a></li>
+<li class="chapter" data-level="3.1.4" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#scheduling"><i class="fa fa-check"></i><b>3.1.4</b> Scheduling</a></li>
+<li class="chapter" data-level="3.1.5" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#xcom"><i class="fa fa-check"></i><b>3.1.5</b> XCom</a></li>
+<li class="chapter" data-level="3.1.6" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#taskflow"><i class="fa fa-check"></i><b>3.1.6</b> Taskflow</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>3.2</b> Exemplary ML workflow</a></li>
+<li class="chapter" data-level="3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>3.3</b> Airflow infrastructure</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#airflow-as-a-distributed-system"><i class="fa fa-check"></i><b>3.3.1</b> Airflow as a distributed system</a></li>
+<li class="chapter" data-level="3.3.2" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#scheduler-1"><i class="fa fa-check"></i><b>3.3.2</b> Scheduler</a></li>
+<li class="chapter" data-level="3.3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#webserver"><i class="fa fa-check"></i><b>3.3.3</b> Webserver</a></li>
+<li class="chapter" data-level="3.3.4" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#executor"><i class="fa fa-check"></i><b>3.3.4</b> Executor</a></li>
+<li class="chapter" data-level="3.3.5" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#dag-directory"><i class="fa fa-check"></i><b>3.3.5</b> DAG Directory</a></li>
+<li class="chapter" data-level="3.3.6" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#metadata-database"><i class="fa fa-check"></i><b>3.3.6</b> Metadata Database</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MLOps Engineering</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="additional-tips-tricks" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Additional tips &amp; tricks<a href="additional-tips-tricks.html#additional-tips-tricks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Of course there is much more to Terraform than these small examples can provide. Yet there are also some contrains when working with Terraform or declarative languages in general. Typically they do not have for-loops or other traditional procedural logic built into the language to repeat a piece of logic or conditional if-statements to configure reasources on demand. However, there are ways there are some ways to deal with this issue and to create multiple respurces without copy and paste.</p>
+<p>Terraform comes with different looping constructs, each used slightly different. The <em>count</em> and <em>for_each</em> meta arguments enable us to create multiple instances of a resource.</p>
+<div id="count" class="section level3 hasAnchor" number="1.4.1">
+<h3><span class="header-section-number">1.4.1</span> count<a href="additional-tips-tricks.html#count" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Count can be used to loop over any resource and module. Every Terraform resource has a meta-parameter <em>count</em> one can use. Count is the simplest, and most limited iteration construct and all it does is to define how many copies to create of a resource. When creating multiple instance with one specification, the problem is that each instance must have a unique name, otherwise Terraform would cause an error. Therefore we need to index the meta-parameter just like doing it in a for-loop to give each resource a unique name. The example below shows how to do this on an AWS IAM user.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="additional-tips-tricks.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_iam_user&quot;</span> <span class="st">&quot;example&quot;</span> {</span>
+<span id="cb18-2"><a href="additional-tips-tricks.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">count</span> = 2</span>
+<span id="cb18-3"><a href="additional-tips-tricks.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>  = <span class="st">&quot;neo.</span><span class="va">${count</span><span class="er">.index</span><span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb18-4"><a href="additional-tips-tricks.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<div class="figure">
+<img src="images/02-Terraform/additionals_count.png" alt="" />
+<p class="caption">count</p>
+</div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="additional-tips-tricks.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">variable</span> <span class="st">&quot;user_names&quot;</span> {</span>
+<span id="cb19-2"><a href="additional-tips-tricks.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">description</span> = <span class="st">&quot;Create IAM users with these names&quot;</span></span>
+<span id="cb19-3"><a href="additional-tips-tricks.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">type</span>        = list<span class="er">(</span><span class="ex">string</span><span class="kw">)</span></span>
+<span id="cb19-4"><a href="additional-tips-tricks.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">default</span>     = [<span class="st">&quot;adam&quot;</span>, <span class="st">&quot;eve&quot;</span>, <span class="st">&quot;snake&quot;</span>, <span class="st">&quot;apple&quot;</span>]</span>
+<span id="cb19-5"><a href="additional-tips-tricks.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb19-6"><a href="additional-tips-tricks.html#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="additional-tips-tricks.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_iam_user&quot;</span> <span class="st">&quot;example&quot;</span> {</span>
+<span id="cb19-8"><a href="additional-tips-tricks.html#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">count</span> = length<span class="er">(</span><span class="ex">var.user_names</span><span class="kw">)</span> <span class="co"># returns the number of items in the given array</span></span>
+<span id="cb19-9"><a href="additional-tips-tricks.html#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>  = var.user_names[count.index]</span>
+<span id="cb19-10"><a href="additional-tips-tricks.html#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<div class="figure">
+<img src="images/02-Terraform/additionals_count_list.png" alt="" />
+<p class="caption">count list</p>
+</div>
+<p>After using count on a resource it becomes an array of resources rather than one single resource. The same hold when using count on modules. When adding count to a module it turns it into an array of modules.</p>
+<p>This can round into problems because the way Terraform identifies each resource within the array is by its index. Now, when removing an item from the middle of the array, all items after it shift one index back. This will result in Terraform deleting every resource after that item and then re-creating these resources again from scratch</p>
+<p>So after running <code>terraform plan</code> with just three names, Terraform’s internal representation will look like this:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="additional-tips-tricks.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">variable</span> <span class="st">&quot;user_names&quot;</span> {</span>
+<span id="cb20-2"><a href="additional-tips-tricks.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">description</span> = <span class="st">&quot;Create IAM users with these names&quot;</span></span>
+<span id="cb20-3"><a href="additional-tips-tricks.html#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">type</span>        = list<span class="er">(</span><span class="ex">string</span><span class="kw">)</span></span>
+<span id="cb20-4"><a href="additional-tips-tricks.html#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">default</span>     = [<span class="st">&quot;adam&quot;</span>, <span class="st">&quot;eve&quot;</span>, <span class="st">&quot;apple&quot;</span>]</span>
+<span id="cb20-5"><a href="additional-tips-tricks.html#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb20-6"><a href="additional-tips-tricks.html#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="additional-tips-tricks.html#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_iam_user&quot;</span> <span class="st">&quot;example&quot;</span> {</span>
+<span id="cb20-8"><a href="additional-tips-tricks.html#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">count</span> = length<span class="er">(</span><span class="ex">var.user_names</span><span class="kw">)</span> <span class="co"># returns the number of items in the given array</span></span>
+<span id="cb20-9"><a href="additional-tips-tricks.html#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>  = var.user_names[count.index]</span>
+<span id="cb20-10"><a href="additional-tips-tricks.html#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<div class="figure">
+<img src="images/02-Terraform/additionals_count_index_deletion.png" alt="" />
+<p class="caption">count index deletion</p>
+</div>
+<p><strong>Count as conditional</strong>
+Count can also be used as a form of a conditional if statement. This is possible as Terraform supports <em>conditional expressions</em>. If <code>count</code> is set to one 1, one copy of that resource is created; if set to 0, the resource is not created at all. Writing this as a conditional expression could look something like the follow, where var.enable_autoscaling is a boolean variable either set to <code>True</code> or <code>False</code>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="additional-tips-tricks.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;example-1&quot;</span> <span class="st">&quot;example&quot;</span> {</span>
+<span id="cb21-2"><a href="additional-tips-tricks.html#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">count</span> = var.enable_autoscaling <span class="pp">?</span> 1 : 0</span>
+<span id="cb21-3"><a href="additional-tips-tricks.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>  = var.user_names[count.index]</span>
+<span id="cb21-4"><a href="additional-tips-tricks.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+</div>
+<div id="for-each" class="section level3 hasAnchor" number="1.4.2">
+<h3><span class="header-section-number">1.4.2</span> for-each<a href="additional-tips-tricks.html#for-each" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <em>for_each</em> expression allows to loop over lists, sets, and maps to create multiple copies of a resource just like the <em>count</em> meta. The main difference between them is that <em>count</em> expects a non-negative number, whereas <em>for_each</em> only accepts a list or map of values. Using the same example as above it would look like this:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="additional-tips-tricks.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">variable</span> <span class="st">&quot;user_names&quot;</span> {</span>
+<span id="cb22-2"><a href="additional-tips-tricks.html#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">description</span> = <span class="st">&quot;Create IAM users with these names&quot;</span></span>
+<span id="cb22-3"><a href="additional-tips-tricks.html#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">type</span>        = list<span class="er">(</span><span class="ex">string</span><span class="kw">)</span></span>
+<span id="cb22-4"><a href="additional-tips-tricks.html#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">default</span>     = [<span class="st">&quot;adam&quot;</span>, <span class="st">&quot;eve&quot;</span>, <span class="st">&quot;snake&quot;</span>, <span class="st">&quot;apple&quot;</span>]</span>
+<span id="cb22-5"><a href="additional-tips-tricks.html#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb22-6"><a href="additional-tips-tricks.html#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="additional-tips-tricks.html#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_iam_user&quot;</span> <span class="st">&quot;example&quot;</span> {</span>
+<span id="cb22-8"><a href="additional-tips-tricks.html#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">for_each</span> = toset<span class="er">(</span><span class="ex">var.user_names</span><span class="kw">)</span></span>
+<span id="cb22-9"><a href="additional-tips-tricks.html#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>     = each.value</span>
+<span id="cb22-10"><a href="additional-tips-tricks.html#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb22-11"><a href="additional-tips-tricks.html#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="additional-tips-tricks.html#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;all_users&quot;</span> {  </span>
+<span id="cb22-13"><a href="additional-tips-tricks.html#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value</span> = aws_iam_user.example  </span>
+<span id="cb22-14"><a href="additional-tips-tricks.html#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<div class="figure">
+<img src="images/02-Terraform/additionals_for_each_on_list.png" alt="" />
+<p class="caption">for each on list</p>
+</div>
+<p>Using a map of resource with the <em>for_each</em> meta rather than an array of resources as with <em>count</em> has the benefit to remove items from the middle of the collection safely and without re-creating the resources following the deleted item. Of course, the same can also be done for modules.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="additional-tips-tricks.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> <span class="st">&quot;users&quot;</span> {  </span>
+<span id="cb23-2"><a href="additional-tips-tricks.html#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">source</span> = <span class="st">&quot;./iam-user&quot;</span>  </span>
+<span id="cb23-3"><a href="additional-tips-tricks.html#cb23-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-4"><a href="additional-tips-tricks.html#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">for_each</span>  = toset<span class="er">(</span><span class="ex">var.user_names</span><span class="kw">)</span>  </span>
+<span id="cb23-5"><a href="additional-tips-tricks.html#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">user_name</span> = each.value  </span>
+<span id="cb23-6"><a href="additional-tips-tricks.html#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+</div>
+<div id="for" class="section level3 hasAnchor" number="1.4.3">
+<h3><span class="header-section-number">1.4.3</span> for<a href="additional-tips-tricks.html#for" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Terraform also offers a similar functionality as python list comprehension in the form of a for expression. This should not be confused with the <em>for-each</em> expression seen above. The basic syntax is shown below to convert the list of names of previous examples in var.names to uppercase:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="additional-tips-tricks.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;upper_names&quot;</span> {</span>
+<span id="cb24-2"><a href="additional-tips-tricks.html#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value</span> = [for name in var.names : upper<span class="er">(</span><span class="ex">name</span><span class="kw">)</span><span class="ex">]</span></span>
+<span id="cb24-3"><a href="additional-tips-tricks.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb24-4"><a href="additional-tips-tricks.html#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="additional-tips-tricks.html#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;short_upper_names&quot;</span> {</span>
+<span id="cb24-6"><a href="additional-tips-tricks.html#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value</span> = [for name in var.names : upper<span class="er">(</span><span class="ex">name</span><span class="kw">)</span> <span class="cf">if</span> <span class="ex">length</span><span class="er">(</span><span class="ex">name</span><span class="kw">)</span> <span class="op">&lt;</span> 5]</span>
+<span id="cb24-7"><a href="additional-tips-tricks.html#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<div class="figure">
+<img src="images/02-Terraform/additionals_for_on_list.png" alt="" />
+<p class="caption">for on list</p>
+</div>
+<p>Using for to loop over lists and maps within a string can be used similarly. This allows us to use control statements directly withing strings using a syntax similar to string interpolation.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="additional-tips-tricks.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;for_directive&quot;</span> {  </span>
+<span id="cb25-2"><a href="additional-tips-tricks.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value</span> = <span class="st">&quot;%{ for name in var.names }</span><span class="va">${name}</span><span class="st">, %{ endfor }&quot;</span>  </span>
+<span id="cb25-3"><a href="additional-tips-tricks.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<div class="figure">
+<img src="images/02-Terraform/additionals_for_on_string.png" title="Bild nicht gefunden: images/02-Terraform/additionals_for_on_string.png" alt="" />
+<p class="caption">Bild nicht gefunden: images/02-Terraform/additionals_for_on_string.png</p>
+</div>
+</div>
+<div id="workspaces" class="section level3 hasAnchor" number="1.4.4">
+<h3><span class="header-section-number">1.4.4</span> Workspaces<a href="additional-tips-tricks.html#workspaces" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Terraform workspaces allow us to keep multiple state files for the same project. When we run Terraform for the first time in a project, the generated state file will go into the <em>default</em> workspace. Later, we can create a new workspace with the <code>terraform workspace new</code> command, optionally supplying an existing state file as a parameter.</p>
+<div class="figure">
+<img src="images/02-Terraform/additionals_workspaces.png" alt="" />
+<p class="caption">workspaces</p>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modules.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exemplary-deployment.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": true,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/seblum/kubernetes-training/edit/master/02.4-Terraform-Tips_and_Tricks.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

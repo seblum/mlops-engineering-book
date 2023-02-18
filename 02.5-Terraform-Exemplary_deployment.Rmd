@@ -1,0 +1,28 @@
+
+## Exemplary Deployment
+
+**Building a VPC with EC2 & S3**
+
+Finally, we want to put everything together and provision our own cloud infrastructure using Terraform. We will create a AWS Virtual private Cloud with EC2 Instances running on it, and S3 Buckets attached to the them. We will use *for_each* and *count* to create multiple instaces. The Terraform infrastructure is separated into three modules *VPS*, *EC2*, and *S3*.
+
+```bash
+root
+│   main.tf
+│   variables.tf
+│   outputs.tf
+│
+└── networking
+│   │   main.tf
+│   │   variables.tf
+│   │   outputs.tf
+│
+└── ec2
+│   │   main.tf
+│   │   variables.tf
+│   │   outputs.tf
+│
+└── s3
+    │   main.tf
+    │   variables.tf
+    │   outputs.tf
+```
