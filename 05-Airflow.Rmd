@@ -1,16 +1,17 @@
 # Airflow
 
-[Apache Airflow](https://github.com/apache/airflow) is an open-source platform to develop, schedule and monitor workflows. Airflow comes with a web interface to interact with and manage the state of workflows. The web user interface aims to make managing workflows as easy as possible and provides a good overview of each workflow over time and the ability to inspect logs and manage tasks, for example retrying a task in case of failure.
+[Apache Airflow](https://github.com/apache/airflow) is an open-source platform to develop, schedule and monitor workflows. Airflow comes with a web user interface that aims to make managing workflows as easy as possible and provides a good overview of each workflow over time and the ability to inspect logs and manage tasks, for example retrying a task in case of failure.
 
 ![web-interface_overview](./images/05-Airflow/web-interface_overview.png)
 
-However, the philosophy of Airflow is to define workflows as code so coding will always be required. Thus, Airflow can also be referred to as a “Workflows as code”-tool that allows for a dynamic, extensible, and flexible management of its workflows.
+However, the philosophy of Airflow is to define workflows as code, so coding will always be required. Thus, Airflow can also be referred to as a *“Workflows as code”*-tool that allows for a dynamic, extensible, and flexible management of its workflows.
 
-The Airflow platform contains different operators to connect with many other technologies to easily extend and connect with new technologies. Being able to manage a workflow for all stages of the training of ML models, and the possibility to combine Airflow with other tools e.g. for the tracking of ML models (MLflow), make Apache Airflow a create tool to incorporate in a MLOps architecture.
+The Airflow platform contains different operators to easily extend and connect with many other technologies. Being able to manage a workflow for all stages of the training of ML models, and the possibility to combine Airflow with other tools like MLflow for model tracking, make Apache Airflow a great tool to incorporate in an MLOps architecture.
 
-The aim of this chapter is to give a tutorial on how to use Airflow from a user perspective, as well as give a short overview on its deployment. Airflow can be deployed in multiple ways, starting from a single process on a local machine to a distributed setup with multiple compute resources for large workflows in a production setting. A detailed description of what an Airflow deployment involves is shown in the section Airflow Infrastructure. This tutorial is based based on the local installation of Airflow. Please refer to the prerequisits on what is needed to follow through.
+The aim of this chapter is to give a tutorial on how to use Airflow from a user perspective, as well as give a short overview of its deployment. Airflow can be deployed in multiple ways, starting from a single processing unit on a local machine to a distributed setup with multiple compute resources for large workflows in a production setting. A detailed description of what an Airflow deployment involves is shown in the section Airflow Infrastructure. 
+The usage tutorial is based on the local installation of Airflow. Please refer to the prerequisits on what is needed to follow through.
 
 ### Prerequisites {.unlisted .unnumbered}
 
-The main prerequisites to follow this tutorial to have an Apache Airflow instance installed. The official documentation gives a good overview on [how to do](https://airflow.apache.org/docs/apache-airflow/stable/start.html) it. It is sufficient to run Airflow on a local deployment and there is no need to to set up a complex Airflow deployment on a cluster or else. Also needed is knowledge of the programming language Python and basic knowledge of bash.
+The main prerequisites to follow this tutorial to have an Apache Airflow instance installed. The official documentation gives a good overview on [how to do](https://airflow.apache.org/docs/apache-airflow/stable/start.html). It is sufficient to run Airflow on a local deployment and there is no need to to set up a complex Airflow deployment on a cluster or else. Further needed is intermediate knowledge of the programming language Python and basic knowledge of bash.
 
