@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Kubernetes Training/Tutorial | A Minimal Book Example</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Kubernetes Training/Tutorial | A Minimal Book Example" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Kubernetes Training/Tutorial | A Minimal Book Example" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="John Doe" />
+
+
+<meta name="date" content="2022-07-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="hello-bookdown-2.html"/>
+<link rel="next" href="blocks.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#usage"><i class="fa fa-check"></i><b>1.1</b> Usage</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#render-book"><i class="fa fa-check"></i><b>1.2</b> Render book</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#preview-book"><i class="fa fa-check"></i><b>1.3</b> Preview book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="hello-bookdown.html"><a href="hello-bookdown.html"><i class="fa fa-check"></i><b>2</b> Hello bookdown</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="hello-bookdown.html"><a href="hello-bookdown.html#a-section"><i class="fa fa-check"></i><b>2.1</b> A section</a>
+<ul>
+<li class="chapter" data-level="" data-path="hello-bookdown.html"><a href="hello-bookdown.html#an-unnumbered-section"><i class="fa fa-check"></i>An unnumbered section</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="hello-bookdown-1.html"><a href="hello-bookdown-1.html"><i class="fa fa-check"></i><b>3</b> Hello bookdown</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="hello-bookdown-1.html"><a href="hello-bookdown-1.html#a-section-1"><i class="fa fa-check"></i><b>3.1</b> A section</a>
+<ul>
+<li class="chapter" data-level="" data-path="hello-bookdown-1.html"><a href="hello-bookdown-1.html#an-unnumbered-section-1"><i class="fa fa-check"></i>An unnumbered section</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="hello-bookdown-2.html"><a href="hello-bookdown-2.html"><i class="fa fa-check"></i><b>4</b> Hello bookdown</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="hello-bookdown-2.html"><a href="hello-bookdown-2.html#a-section-2"><i class="fa fa-check"></i><b>4.1</b> A section</a>
+<ul>
+<li class="chapter" data-level="" data-path="hello-bookdown-2.html"><a href="hello-bookdown-2.html#an-unnumbered-section-2"><i class="fa fa-check"></i>An unnumbered section</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="kubernetes-trainingtutorial.html"><a href="kubernetes-trainingtutorial.html"><i class="fa fa-check"></i><b>5</b> Kubernetes Training/Tutorial</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="kubernetes-trainingtutorial.html"><a href="kubernetes-trainingtutorial.html#pods---tbf"><i class="fa fa-check"></i><b>5.1</b> Pods - TBF</a></li>
+<li class="chapter" data-level="5.2" data-path="kubernetes-trainingtutorial.html"><a href="kubernetes-trainingtutorial.html#kubectl"><i class="fa fa-check"></i><b>5.2</b> Kubectl</a></li>
+<li class="chapter" data-level="5.3" data-path="kubernetes-trainingtutorial.html"><a href="kubernetes-trainingtutorial.html#labels-selectors-and-annotations---tbf"><i class="fa fa-check"></i><b>5.3</b> Labels, Selectors and Annotations - TBF</a></li>
+<li class="chapter" data-level="5.4" data-path="kubernetes-trainingtutorial.html"><a href="kubernetes-trainingtutorial.html#service-discovery"><i class="fa fa-check"></i><b>5.4</b> Service Discovery</a></li>
+<li class="chapter" data-level="5.5" data-path="kubernetes-trainingtutorial.html"><a href="kubernetes-trainingtutorial.html#volume-storage"><i class="fa fa-check"></i><b>5.5</b> Volume &amp; Storage</a></li>
+<li class="chapter" data-level="5.6" data-path="kubernetes-trainingtutorial.html"><a href="kubernetes-trainingtutorial.html#namespaces"><i class="fa fa-check"></i><b>5.6</b> Namespaces</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="blocks.html"><a href="blocks.html"><i class="fa fa-check"></i><b>6</b> Blocks</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="blocks.html"><a href="blocks.html#equations"><i class="fa fa-check"></i><b>6.1</b> Equations</a></li>
+<li class="chapter" data-level="6.2" data-path="blocks.html"><a href="blocks.html#theorems-and-proofs"><i class="fa fa-check"></i><b>6.2</b> Theorems and proofs</a></li>
+<li class="chapter" data-level="6.3" data-path="blocks.html"><a href="blocks.html#callout-blocks"><i class="fa fa-check"></i><b>6.3</b> Callout blocks</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="sharing-your-book.html"><a href="sharing-your-book.html"><i class="fa fa-check"></i><b>7</b> Sharing your book</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="sharing-your-book.html"><a href="sharing-your-book.html#publishing"><i class="fa fa-check"></i><b>7.1</b> Publishing</a></li>
+<li class="chapter" data-level="7.2" data-path="sharing-your-book.html"><a href="sharing-your-book.html#pages"><i class="fa fa-check"></i><b>7.2</b> 404 pages</a></li>
+<li class="chapter" data-level="7.3" data-path="sharing-your-book.html"><a href="sharing-your-book.html#metadata-for-sharing"><i class="fa fa-check"></i><b>7.3</b> Metadata for sharing</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="cross.html"><a href="cross.html"><i class="fa fa-check"></i><b>8</b> Cross-references</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="cross.html"><a href="cross.html#chapters-and-sub-chapters"><i class="fa fa-check"></i><b>8.1</b> Chapters and sub-chapters</a></li>
+<li class="chapter" data-level="8.2" data-path="cross.html"><a href="cross.html#captioned-figures-and-tables"><i class="fa fa-check"></i><b>8.2</b> Captioned figures and tables</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="blocks-1.html"><a href="blocks-1.html"><i class="fa fa-check"></i><b>9</b> Blocks</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="blocks-1.html"><a href="blocks-1.html#equations-1"><i class="fa fa-check"></i><b>9.1</b> Equations</a></li>
+<li class="chapter" data-level="9.2" data-path="blocks-1.html"><a href="blocks-1.html#theorems-and-proofs-1"><i class="fa fa-check"></i><b>9.2</b> Theorems and proofs</a></li>
+<li class="chapter" data-level="9.3" data-path="blocks-1.html"><a href="blocks-1.html#callout-blocks-1"><i class="fa fa-check"></i><b>9.3</b> Callout blocks</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html"><i class="fa fa-check"></i><b>10</b> Footnotes and citations</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html#footnotes"><i class="fa fa-check"></i><b>10.1</b> Footnotes</a></li>
+<li class="chapter" data-level="10.2" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html#citations"><i class="fa fa-check"></i><b>10.2</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="parts.html"><a href="parts.html"><i class="fa fa-check"></i><b>11</b> Parts</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="12" data-path="sharing-your-book-1.html"><a href="sharing-your-book-1.html"><i class="fa fa-check"></i><b>12</b> Sharing your book</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="sharing-your-book-1.html"><a href="sharing-your-book-1.html#publishing-1"><i class="fa fa-check"></i><b>12.1</b> Publishing</a></li>
+<li class="chapter" data-level="12.2" data-path="sharing-your-book-1.html"><a href="sharing-your-book-1.html#pages-1"><i class="fa fa-check"></i><b>12.2</b> 404 pages</a></li>
+<li class="chapter" data-level="12.3" data-path="sharing-your-book-1.html"><a href="sharing-your-book-1.html#metadata-for-sharing-1"><i class="fa fa-check"></i><b>12.3</b> Metadata for sharing</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Minimal Book Example</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="kubernetes-trainingtutorial" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Kubernetes Training/Tutorial<a href="kubernetes-trainingtutorial.html#kubernetes-trainingtutorial" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="pods---tbf" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Pods - TBF<a href="kubernetes-trainingtutorial.html#pods---tbf" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In K8s, a pod is the smallest deployable unit (and not containers | In contrast to K8s, the smallest deployable unit for docker are containers.). Within a pod there is always one <em>main container</em> representing the application (in whatever language written, e.g. JS, Python, Go). Further within a pod, there may or may not be <em>init containers</em>, and/or <em>side containers</em>. Init containers are containers that are executed before the main container. Side containers are containers that support the main containers, e.g. a container that acts as a proxy to your main container. Also within pods there may also be volumes, which enables containers to share data between them.</p>
+<!--- TODO: insert image --->
+<div class="figure">
+<img src="kubernetes_pod.png" alt="" />
+<p class="caption">Pod</p>
+</div>
+<p>Containers communicate with each other within a pod using localhost and whatever port they expose. The port itself has a unique ip adress. This enables communication between pods via the unique adress.</p>
+<ul>
+<li>group of one or more Container</li>
+<li>represents a running process</li>
+<li>shares Network and Volumes</li>
+<li>Never Create Pods on its own. Use Controllers instead, e.g. Deployments</li>
+<li>Ephemeral (not a long lifetime) and disposable</li>
+</ul>
+<div id="imperative-declarative-management" class="section level4 hasAnchor" number="5.1.0.1">
+<h4><span class="header-section-number">5.1.0.1</span> Imperative &amp; Declarative Management<a href="kubernetes-trainingtutorial.html#imperative-declarative-management" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The imperative approach is good for learning, troubleshooting, and experimenting on the cluster. While the declarative approach is reproducible, which means the same configuration can be applied in different environments (prod/dev). This is best practice to use when building a cluster. This differentiation does not only hold for pods, but for all ressources within a cluster.</p>
+<div id="imperative-management" class="section level5 hasAnchor" number="5.1.0.1.1">
+<h5><span class="header-section-number">5.1.0.1.1</span> Imperative Management<a href="kubernetes-trainingtutorial.html#imperative-management" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="kubernetes-trainingtutorial.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> run <span class="op">&lt;</span>pod-name<span class="op">&gt;</span> --image=<span class="st">&quot;image-name&quot;</span> <span class="at">--port</span><span class="op">=</span>80</span>
+<span id="cb3-2"><a href="kubernetes-trainingtutorial.html#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="kubernetes-trainingtutorial.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># run following to test your pods</span></span>
+<span id="cb3-4"><a href="kubernetes-trainingtutorial.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># in your browser, go to localhost:8080</span></span>
+<span id="cb3-5"><a href="kubernetes-trainingtutorial.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> port-forward pod/<span class="op">&lt;</span>pod-name<span class="op">&gt;</span> 8080:80</span></code></pre></div>
+</div>
+<div id="declarative-management-configuration" class="section level5 hasAnchor" number="5.1.0.1.2">
+<h5><span class="header-section-number">5.1.0.1.2</span> Declarative Management / Configuration<a href="kubernetes-trainingtutorial.html#declarative-management-configuration" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Declarative configuration is done using a <em>yaml</em>. This works basically on key-value pairs.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="kubernetes-trainingtutorial.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb4-2"><a href="kubernetes-trainingtutorial.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
+<span id="cb4-3"><a href="kubernetes-trainingtutorial.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb4-4"><a href="kubernetes-trainingtutorial.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> hello-world</span></span>
+<span id="cb4-5"><a href="kubernetes-trainingtutorial.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb4-6"><a href="kubernetes-trainingtutorial.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> hello-world</span></span>
+<span id="cb4-7"><a href="kubernetes-trainingtutorial.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb4-8"><a href="kubernetes-trainingtutorial.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">    # remember: a pod is a selection of one or more containers, </span></span>
+<span id="cb4-9"><a href="kubernetes-trainingtutorial.html#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">    # we can also set more</span></span>
+<span id="cb4-10"><a href="kubernetes-trainingtutorial.html#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb4-11"><a href="kubernetes-trainingtutorial.html#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> hello</span></span>
+<span id="cb4-12"><a href="kubernetes-trainingtutorial.html#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;image-name&quot;</span></span>
+<span id="cb4-13"><a href="kubernetes-trainingtutorial.html#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">        # This pod can access only a the amount of ressources specified under limits</span></span>
+<span id="cb4-14"><a href="kubernetes-trainingtutorial.html#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">ressources</span><span class="kw">:</span></span>
+<span id="cb4-15"><a href="kubernetes-trainingtutorial.html#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb4-16"><a href="kubernetes-trainingtutorial.html#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb4-17"><a href="kubernetes-trainingtutorial.html#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb4-18"><a href="kubernetes-trainingtutorial.html#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb4-19"><a href="kubernetes-trainingtutorial.html#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">ContainerPorts</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span></code></pre></div>
+<p>Appyl this declarative configuration using the following kubectl command.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="kubernetes-trainingtutorial.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> <span class="st">&quot;file-name.yaml&quot;</span></span>
+<span id="cb5-2"><a href="kubernetes-trainingtutorial.html#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="kubernetes-trainingtutorial.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># run following to test your pods</span></span>
+<span id="cb5-4"><a href="kubernetes-trainingtutorial.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># in your browser, go to localhost:8080</span></span>
+<span id="cb5-5"><a href="kubernetes-trainingtutorial.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> port-forward pod/<span class="op">&lt;</span>pod-name<span class="op">&gt;</span> 8080:80</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="kubectl" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Kubectl<a href="kubernetes-trainingtutorial.html#kubectl" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="kubernetes-trainingtutorial.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run following to test your pods</span></span>
+<span id="cb6-2"><a href="kubernetes-trainingtutorial.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in your browser, go to localhost:8080</span></span>
+<span id="cb6-3"><a href="kubernetes-trainingtutorial.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> port-forward pod/<span class="op">&lt;</span>pod-name<span class="op">&gt;</span> 8080:80</span>
+<span id="cb6-4"><a href="kubernetes-trainingtutorial.html#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="kubernetes-trainingtutorial.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># show all pods currently running in the cluster</span></span>
+<span id="cb6-6"><a href="kubernetes-trainingtutorial.html#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods</span>
+<span id="cb6-7"><a href="kubernetes-trainingtutorial.html#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="kubernetes-trainingtutorial.html#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># delete a pod</span></span>
+<span id="cb6-9"><a href="kubernetes-trainingtutorial.html#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> delete pods <span class="op">&lt;</span>pod-name<span class="op">&gt;</span></span></code></pre></div>
+</div>
+<div id="labels-selectors-and-annotations---tbf" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Labels, Selectors and Annotations - TBF<a href="kubernetes-trainingtutorial.html#labels-selectors-and-annotations---tbf" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We have seen labels in the yamls under metadata beforehand. What are they actually doing? Labels are a key-value pair that can be attached to objects such as Pods, Deployments, Replicaset, Services, etc. They are used to organize and select objects.</p>
+<p>Selectors are used to filter K8s objects based on a set of labels. A selector basically simply uses a boolean language to select pods. The selector matches all or nothing. Everything specified in the selector must be fulfilled in the labels. However, this goes not the other way around. If we have multiple labels and the only one selector, which actually matches one of the labels, the selector will match the object This is seen in below example.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="kubernetes-trainingtutorial.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show all pods including their labels</span></span>
+<span id="cb7-2"><a href="kubernetes-trainingtutorial.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods <span class="at">--show-labels</span></span>
+<span id="cb7-3"><a href="kubernetes-trainingtutorial.html#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="kubernetes-trainingtutorial.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Show only pods that match the specified selector key-value pairs</span></span>
+<span id="cb7-5"><a href="kubernetes-trainingtutorial.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods <span class="at">--selector</span><span class="op">=</span><span class="st">&quot;key=value&quot;</span></span>
+<span id="cb7-6"><a href="kubernetes-trainingtutorial.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods <span class="at">--selector</span><span class="op">=</span><span class="st">&quot;key=value,key2=value2&quot;</span></span>
+<span id="cb7-7"><a href="kubernetes-trainingtutorial.html#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="kubernetes-trainingtutorial.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># in short you can also write</span></span>
+<span id="cb7-9"><a href="kubernetes-trainingtutorial.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods <span class="at">-l</span> key=value</span>
+<span id="cb7-10"><a href="kubernetes-trainingtutorial.html#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># or also look for multiple</span></span>
+<span id="cb7-11"><a href="kubernetes-trainingtutorial.html#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods <span class="at">-l</span> <span class="st">&#39;key in (value1, value2)&#39;</span></span></code></pre></div>
+<p>Match a replicaset to a Pod. Any Pods has the label app:customer. The replicaset create replicas by selecting only labels matching to app: customer. We can also use multiple labels.
+Service matches to both pods, blue and green. The Service labels-and-selectors-2 has no endpoints, as it is all or none, and no pod has the label environment=service.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb8-1"><a href="kubernetes-trainingtutorial.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb8-2"><a href="kubernetes-trainingtutorial.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
+<span id="cb8-3"><a href="kubernetes-trainingtutorial.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb8-4"><a href="kubernetes-trainingtutorial.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> blue</span></span>
+<span id="cb8-5"><a href="kubernetes-trainingtutorial.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb8-6"><a href="kubernetes-trainingtutorial.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> blue</span></span>
+<span id="cb8-7"><a href="kubernetes-trainingtutorial.html#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">annotations</span><span class="kw">:</span></span>
+<span id="cb8-8"><a href="kubernetes-trainingtutorial.html#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">kubernetes.io/change-cause</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;seblum/kubernetes:hello-world&quot;</span></span>
+<span id="cb8-9"><a href="kubernetes-trainingtutorial.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb8-10"><a href="kubernetes-trainingtutorial.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb8-11"><a href="kubernetes-trainingtutorial.html#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> blue</span></span>
+<span id="cb8-12"><a href="kubernetes-trainingtutorial.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;seblum/kubernetes:blue&quot;</span></span>
+<span id="cb8-13"><a href="kubernetes-trainingtutorial.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb8-14"><a href="kubernetes-trainingtutorial.html#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb8-15"><a href="kubernetes-trainingtutorial.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb8-16"><a href="kubernetes-trainingtutorial.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">cpu</span><span class="kw">:</span><span class="at">    </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb8-17"><a href="kubernetes-trainingtutorial.html#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb8-18"><a href="kubernetes-trainingtutorial.html#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb8-19"><a href="kubernetes-trainingtutorial.html#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
+<span id="cb8-20"><a href="kubernetes-trainingtutorial.html#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb8-21"><a href="kubernetes-trainingtutorial.html#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> green</span></span>
+<span id="cb8-22"><a href="kubernetes-trainingtutorial.html#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb8-23"><a href="kubernetes-trainingtutorial.html#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> blue    </span></span>
+<span id="cb8-24"><a href="kubernetes-trainingtutorial.html#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb8-25"><a href="kubernetes-trainingtutorial.html#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb8-26"><a href="kubernetes-trainingtutorial.html#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> green</span></span>
+<span id="cb8-27"><a href="kubernetes-trainingtutorial.html#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;seblum/kubernetes:green&quot;</span></span>
+<span id="cb8-28"><a href="kubernetes-trainingtutorial.html#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb8-29"><a href="kubernetes-trainingtutorial.html#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb8-30"><a href="kubernetes-trainingtutorial.html#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb8-31"><a href="kubernetes-trainingtutorial.html#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">cpu</span><span class="kw">:</span><span class="at">    </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb8-32"><a href="kubernetes-trainingtutorial.html#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb8-33"><a href="kubernetes-trainingtutorial.html#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb8-34"><a href="kubernetes-trainingtutorial.html#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb8-35"><a href="kubernetes-trainingtutorial.html#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb8-36"><a href="kubernetes-trainingtutorial.html#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> labels-and-selectors</span></span>
+<span id="cb8-37"><a href="kubernetes-trainingtutorial.html#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb8-38"><a href="kubernetes-trainingtutorial.html#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">type</span><span class="kw">:</span><span class="at"> NodePort</span></span>
+<span id="cb8-39"><a href="kubernetes-trainingtutorial.html#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb8-40"><a href="kubernetes-trainingtutorial.html#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> blue</span></span>
+<span id="cb8-41"><a href="kubernetes-trainingtutorial.html#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb8-42"><a href="kubernetes-trainingtutorial.html#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb8-43"><a href="kubernetes-trainingtutorial.html#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">8080</span></span>
+<span id="cb8-44"><a href="kubernetes-trainingtutorial.html#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb8-45"><a href="kubernetes-trainingtutorial.html#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb8-46"><a href="kubernetes-trainingtutorial.html#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb8-47"><a href="kubernetes-trainingtutorial.html#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb8-48"><a href="kubernetes-trainingtutorial.html#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> labels-and-selectors-2</span></span>
+<span id="cb8-49"><a href="kubernetes-trainingtutorial.html#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb8-50"><a href="kubernetes-trainingtutorial.html#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">type</span><span class="kw">:</span><span class="at"> NodePort</span></span>
+<span id="cb8-51"><a href="kubernetes-trainingtutorial.html#cb8-51" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb8-52"><a href="kubernetes-trainingtutorial.html#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> blue</span></span>
+<span id="cb8-53"><a href="kubernetes-trainingtutorial.html#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">environment</span><span class="kw">:</span><span class="at"> service</span></span>
+<span id="cb8-54"><a href="kubernetes-trainingtutorial.html#cb8-54" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb8-55"><a href="kubernetes-trainingtutorial.html#cb8-55" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb8-56"><a href="kubernetes-trainingtutorial.html#cb8-56" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">8081</span></span></code></pre></div>
+<p>Test it using:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="kubernetes-trainingtutorial.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show all pods including their labels</span></span>
+<span id="cb9-2"><a href="kubernetes-trainingtutorial.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> describe svc labels-and-selectors</span>
+<span id="cb9-3"><a href="kubernetes-trainingtutorial.html#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="kubernetes-trainingtutorial.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Show only pods that match the specified selector key-value pairs</span></span>
+<span id="cb9-5"><a href="kubernetes-trainingtutorial.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods <span class="at">--selector</span><span class="op">=</span><span class="st">&quot;key=value&quot;</span></span></code></pre></div>
+<p>Annotations is an unstructures key value map stored with a resource that may be set by external tools to store and retrieve any metadata. They are not used for queriying purposes. They are used to assist tools and libraries to work with the Kubernetes object. For e.g. to pass configuration around between systems. Send some value that external tools know more perform informed decisions based on the annotiations provided.</p>
+</div>
+<div id="service-discovery" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Service Discovery<a href="kubernetes-trainingtutorial.html#service-discovery" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Service Discovery is a mechanism for applications and microservices to locate each other on a network. Actually, we have used Service Discovery already in the previous sections, we just haven’t mentioned it yet. As the name says, Service Discovery happens through services.</p>
+<p>If a client wants to communicate with the application, we should not use the individual pod ip, because pods are ephemeral. Instead, we should rely on services, because they have a stable IP address. Also, it has a DNS.</p>
+<p>DNS (Domain Name System) translates domain names to IP addresses so browsers can load internet resources.</p>
+<!--- TODO: insert image --->
+<div class="figure">
+<img src="kubernetes_service-discovery.png" alt="" />
+<p class="caption">Service Discovery</p>
+</div>
+<p>How does service registration work?
+When a service is created, it is registered in the service registry with the service name and the service IP. Most clusters use CoreDNS as a service registry. Looking it the cluster, one will see that der is a core-dns service running. If you have a closer look using describe, this service has only one endpoint. Now you know what it is good for.</p>
+<p>If you want to have an even closer look, you can look on the pods themselves and check the file /etc/resolv.conf. There you find a nameserver <IP> where the IP is the one of the core-dns</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="kubernetes-trainingtutorial.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods <span class="at">-n</span> kube-system</span>
+<span id="cb10-2"><a href="kubernetes-trainingtutorial.html#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="kubernetes-trainingtutorial.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get service <span class="at">-n</span> kube-system</span>
+<span id="cb10-4"><a href="kubernetes-trainingtutorial.html#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="kubernetes-trainingtutorial.html#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># command for queriying the dns  </span></span>
+<span id="cb10-6"><a href="kubernetes-trainingtutorial.html#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ex">nslookup</span> <span class="op">&lt;</span>podname<span class="op">&gt;</span></span></code></pre></div>
+<p>Accessing services from different namespaces. Querying services depends on the namespace you are in.</p>
+<p>With a service, one gets an associated endpoint with it. The endpoint contains a list of ip adresses to pods which have matched a particular selector, and also which are healthy. If a pod is not healthy, there is no point of a service to loadbalance traffic between those pods.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="kubernetes-trainingtutorial.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get endpoints</span></code></pre></div>
+<div id="kube-proxy" class="section level4 hasAnchor" number="5.4.0.1">
+<h4><span class="header-section-number">5.4.0.1</span> kube-proxy<a href="kubernetes-trainingtutorial.html#kube-proxy" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Each node has three components: Kubelet, Container Runtime, Kube Proxy.</p>
+<p>Kubeproxy is a networkd proxy that runs on each node. Implementing part of the K8s service. It maintains networks rules to allow communication to pods from inside and outside the cluster. Kubeproxy also implements a controller that watches the API server for new services and endpoints. When there is a new service or endpoint, the kubeproxy creates a local IPVS rule that tells the node to intercept traffic destined to the service clusterIP. IPVS (IP virtual server) is built on top of the net filter and implements a transport layer load balancing as part of the linux kernel. It gives the ability to load balance to real service.
+Kubepory also redirects traffic to pods that match service label selectors.</p>
+<p>Kubeproy is intercepting all the requests and makes sure that when a request to the cluster ip is sent. using endpoints. Request is sent to the healthy pods behind the endpoints.</p>
+</div>
+</div>
+<div id="volume-storage" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Volume &amp; Storage<a href="kubernetes-trainingtutorial.html#volume-storage" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Since Pods are ephemeral, any data associated is deleted when a pod or container restarts. However, there are times when data wants to be kept, share data between Pods, or persist data to the host file system (disk). The majority of the times, applications are run stateless, meaning we dont want to keep data on the node and store data in a DB. Yet, there are times we want to have access to the file system.
+When we look at the previous section of the pods. A pod can contain volumes. They are used to store and access data which can be sure or long lived on K8s.</p>
+<p>Different types of volumes
++ EmptyDir
++ HostPath Volume</p>
+<p>Volume: EmptyDir
+The volume is initially empty (as the name suggests), and the volume is a temporary directory that shares the pods lifetime. If the pod dies, the contents of the emptyDir are lost. It is also used to share data between containers inside a Pod.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb12-1"><a href="kubernetes-trainingtutorial.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb12-2"><a href="kubernetes-trainingtutorial.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb12-3"><a href="kubernetes-trainingtutorial.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb12-4"><a href="kubernetes-trainingtutorial.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> emptydir-volume</span></span>
+<span id="cb12-5"><a href="kubernetes-trainingtutorial.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb12-6"><a href="kubernetes-trainingtutorial.html#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb12-7"><a href="kubernetes-trainingtutorial.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb12-8"><a href="kubernetes-trainingtutorial.html#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> emptydir-volume</span></span>
+<span id="cb12-9"><a href="kubernetes-trainingtutorial.html#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb12-10"><a href="kubernetes-trainingtutorial.html#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb12-11"><a href="kubernetes-trainingtutorial.html#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb12-12"><a href="kubernetes-trainingtutorial.html#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> emptydir-volume</span></span>
+<span id="cb12-13"><a href="kubernetes-trainingtutorial.html#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb12-14"><a href="kubernetes-trainingtutorial.html#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb12-15"><a href="kubernetes-trainingtutorial.html#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">        # mimic a caching memory type</span></span>
+<span id="cb12-16"><a href="kubernetes-trainingtutorial.html#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">        # we can also add a second volume</span></span>
+<span id="cb12-17"><a href="kubernetes-trainingtutorial.html#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cache</span></span>
+<span id="cb12-18"><a href="kubernetes-trainingtutorial.html#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">          # now that we have this temp directory, we can use it in the containers</span></span>
+<span id="cb12-19"><a href="kubernetes-trainingtutorial.html#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">emptyDir</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span><span class="at">    </span></span>
+<span id="cb12-20"><a href="kubernetes-trainingtutorial.html#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb12-21"><a href="kubernetes-trainingtutorial.html#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> container-one</span></span>
+<span id="cb12-22"><a href="kubernetes-trainingtutorial.html#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox </span></span>
+<span id="cb12-23"><a href="kubernetes-trainingtutorial.html#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co">        # image used for testing purposes</span></span>
+<span id="cb12-24"><a href="kubernetes-trainingtutorial.html#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co">        # since the testing image immediately dies, we want to</span></span>
+<span id="cb12-25"><a href="kubernetes-trainingtutorial.html#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co">        # execute our own sh command to interact with the volume</span></span>
+<span id="cb12-26"><a href="kubernetes-trainingtutorial.html#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb12-27"><a href="kubernetes-trainingtutorial.html#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="co">            # The name must match the name of the volume</span></span>
+<span id="cb12-28"><a href="kubernetes-trainingtutorial.html#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cache</span></span>
+<span id="cb12-29"><a href="kubernetes-trainingtutorial.html#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="co">            # interal reference of the pod </span></span>
+<span id="cb12-30"><a href="kubernetes-trainingtutorial.html#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /foo</span></span>
+<span id="cb12-31"><a href="kubernetes-trainingtutorial.html#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb12-32"><a href="kubernetes-trainingtutorial.html#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;/bin/sh&quot;</span></span>
+<span id="cb12-33"><a href="kubernetes-trainingtutorial.html#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">args</span><span class="kw">:</span></span>
+<span id="cb12-34"><a href="kubernetes-trainingtutorial.html#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;-c&quot;</span></span>
+<span id="cb12-35"><a href="kubernetes-trainingtutorial.html#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;touch /foo/bar.txt &amp;&amp; sleep 3600&quot;</span></span>
+<span id="cb12-36"><a href="kubernetes-trainingtutorial.html#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb12-37"><a href="kubernetes-trainingtutorial.html#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb12-38"><a href="kubernetes-trainingtutorial.html#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb12-39"><a href="kubernetes-trainingtutorial.html#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb12-40"><a href="kubernetes-trainingtutorial.html#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> container-two</span></span>
+<span id="cb12-41"><a href="kubernetes-trainingtutorial.html#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox</span></span>
+<span id="cb12-42"><a href="kubernetes-trainingtutorial.html#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb12-43"><a href="kubernetes-trainingtutorial.html#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cache</span></span>
+<span id="cb12-44"><a href="kubernetes-trainingtutorial.html#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /footwo</span></span>
+<span id="cb12-45"><a href="kubernetes-trainingtutorial.html#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb12-46"><a href="kubernetes-trainingtutorial.html#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;sleep&quot;</span></span>
+<span id="cb12-47"><a href="kubernetes-trainingtutorial.html#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;3600&quot;</span></span>
+<span id="cb12-48"><a href="kubernetes-trainingtutorial.html#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb12-49"><a href="kubernetes-trainingtutorial.html#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb12-50"><a href="kubernetes-trainingtutorial.html#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb12-51"><a href="kubernetes-trainingtutorial.html#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span></code></pre></div>
+<p>if we would create it without the shell commands, the pod will be in a crashloopbackoff. So it is caught in the sleep command. We can check whether the foo/bar.txt is actually created.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="kubernetes-trainingtutorial.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get in container</span></span>
+<span id="cb13-2"><a href="kubernetes-trainingtutorial.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> exec <span class="at">-it</span> <span class="op">&lt;</span>emptydir-volume-name<span class="op">&gt;</span> -c container-one <span class="at">--</span> sh</span>
+<span id="cb13-3"><a href="kubernetes-trainingtutorial.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># check whether bar.txt is present</span></span>
+<span id="cb13-4"><a href="kubernetes-trainingtutorial.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb13-5"><a href="kubernetes-trainingtutorial.html#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="kubernetes-trainingtutorial.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># going in the second container, there is also a file foo/bar.txt</span></span>
+<span id="cb13-7"><a href="kubernetes-trainingtutorial.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># remember, both containers share the same volume</span></span>
+<span id="cb13-8"><a href="kubernetes-trainingtutorial.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> exec <span class="at">-it</span> <span class="op">&lt;</span>emptydir-volume-name<span class="op">&gt;</span> -c container-two <span class="at">--</span> sh</span>
+<span id="cb13-9"><a href="kubernetes-trainingtutorial.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div>
+<p>Volume: HostPath Volume type is used when an application need to access the underlying host file system, so the node file system. This can be quite dangerous. If you have the right access, the application can mess up the host. Thus, it is recommended to have it read only. HostPath represents a pre-existing file or directory on the host machine.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb14-1"><a href="kubernetes-trainingtutorial.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb14-2"><a href="kubernetes-trainingtutorial.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb14-3"><a href="kubernetes-trainingtutorial.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb14-4"><a href="kubernetes-trainingtutorial.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> hostpath-volume</span></span>
+<span id="cb14-5"><a href="kubernetes-trainingtutorial.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb14-6"><a href="kubernetes-trainingtutorial.html#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb14-7"><a href="kubernetes-trainingtutorial.html#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb14-8"><a href="kubernetes-trainingtutorial.html#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> hostpath-volume</span></span>
+<span id="cb14-9"><a href="kubernetes-trainingtutorial.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb14-10"><a href="kubernetes-trainingtutorial.html#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb14-11"><a href="kubernetes-trainingtutorial.html#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb14-12"><a href="kubernetes-trainingtutorial.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> hostpath-volume</span></span>
+<span id="cb14-13"><a href="kubernetes-trainingtutorial.html#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb14-14"><a href="kubernetes-trainingtutorial.html#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb14-15"><a href="kubernetes-trainingtutorial.html#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> var-log</span></span>
+<span id="cb14-16"><a href="kubernetes-trainingtutorial.html#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">HostPath</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb14-17"><a href="kubernetes-trainingtutorial.html#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">path</span><span class="kw">:</span><span class="at"> /var/log</span></span>
+<span id="cb14-18"><a href="kubernetes-trainingtutorial.html#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb14-19"><a href="kubernetes-trainingtutorial.html#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> container-one</span></span>
+<span id="cb14-20"><a href="kubernetes-trainingtutorial.html#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox </span></span>
+<span id="cb14-21"><a href="kubernetes-trainingtutorial.html#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb14-22"><a href="kubernetes-trainingtutorial.html#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> var-log</span></span>
+<span id="cb14-23"><a href="kubernetes-trainingtutorial.html#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="at">             </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /var/log</span></span>
+<span id="cb14-24"><a href="kubernetes-trainingtutorial.html#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb14-25"><a href="kubernetes-trainingtutorial.html#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;/bin/sh&quot;</span></span>
+<span id="cb14-26"><a href="kubernetes-trainingtutorial.html#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">args</span><span class="kw">:</span></span>
+<span id="cb14-27"><a href="kubernetes-trainingtutorial.html#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;-c&quot;</span></span>
+<span id="cb14-28"><a href="kubernetes-trainingtutorial.html#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;touch /foo/bar.txt &amp;&amp; sleep 3600&quot;</span></span>
+<span id="cb14-29"><a href="kubernetes-trainingtutorial.html#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb14-30"><a href="kubernetes-trainingtutorial.html#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb14-31"><a href="kubernetes-trainingtutorial.html#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb14-32"><a href="kubernetes-trainingtutorial.html#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span></code></pre></div>
+<p>If you ssh into the node, you see the file /foo/bar.txt</p>
+<p>Other volume types
++ awsElasticBlockStore: EBS volumes are persisted and originally unmounted. Read Write one only
++ Full list can be found here: <a href="https://kubernetes.io/docs/concepts/storage/volumes/#volume-types" class="uri">https://kubernetes.io/docs/concepts/storage/volumes/#volume-types</a></p>
+<div id="persistent-volumes" class="section level4 hasAnchor" number="5.5.0.1">
+<h4><span class="header-section-number">5.5.0.1</span> Persistent Volumes<a href="kubernetes-trainingtutorial.html#persistent-volumes" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Persistent Volumes allow us to store data beyond Pod lifecycle. If a Pod fails, dies or moves to a different node, it does not matter. The data is still intact and will be shared between pods. Persistent Volume types are implemented as plugins (a full list can be found online). Kubernetes supports different persistent volume types, such as:
++ NFS
++ Local
++ Cloud Network storage (AWS EBS, Azure File Storage, Google Persistent Disk)</p>
+<p>How it works:
+K8s is running on EKS. We have a AWS EBS. In K8s we have a Container storage interface (CSI). This CSI has to be implemented by the EBS. There is a aws-ebs-plugin, which is implemented by the provider. This gives us a persistent volume. Really, a Persistent Volume is the mapping between the storage provider (EBS) To the kubernetes cluster. If a pod wants to consume storage of a volume, We have to use a persistent volume claim (PVC)</p>
+<!--- TODO: insert image --->
+<div class="figure">
+<img src="kubernetes_Persistent-Volume-Subsystem.png" alt="" />
+<p class="caption">Persistent Volume Subsystem</p>
+</div>
+<p>All of this is part of a Persistent Volume Subsystem. A Persistent Volume Subsystem provides an API for users and administrators that abstracts details of how storage is provided from how it is consumed. This is done using Persistent Volume and PVC.</p>
+<p>From a PV, we can configure the storage class. Do we want a fast, slow, or both storage. What are the paramters to configure our storage?
+PVC is how an enduser (pods) gets access to the persistent volume.</p>
+<p>Persistent Volume: is a storage resource provisioned by an administrator
+PVC: is a user’s request for and claim to a persistent volume.
+Storage Class: describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb15-1"><a href="kubernetes-trainingtutorial.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb15-2"><a href="kubernetes-trainingtutorial.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> PersistentVolume</span></span>
+<span id="cb15-3"><a href="kubernetes-trainingtutorial.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb15-4"><a href="kubernetes-trainingtutorial.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> mypv</span></span>
+<span id="cb15-5"><a href="kubernetes-trainingtutorial.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb15-6"><a href="kubernetes-trainingtutorial.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">capacity</span><span class="kw">:</span></span>
+<span id="cb15-7"><a href="kubernetes-trainingtutorial.html#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">storage</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;100Mi&quot;</span></span>
+<span id="cb15-8"><a href="kubernetes-trainingtutorial.html#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">volumeMode</span><span class="kw">:</span><span class="at"> Filesystem</span></span>
+<span id="cb15-9"><a href="kubernetes-trainingtutorial.html#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">accessModes</span><span class="kw">:</span></span>
+<span id="cb15-10"><a href="kubernetes-trainingtutorial.html#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> ReadWriteOnce</span></span>
+<span id="cb15-11"><a href="kubernetes-trainingtutorial.html#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">persistentVolumeReclaimPolicy</span><span class="kw">:</span><span class="at"> Recycle</span></span>
+<span id="cb15-12"><a href="kubernetes-trainingtutorial.html#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">storageClassName</span><span class="kw">:</span><span class="at"> manual</span></span>
+<span id="cb15-13"><a href="kubernetes-trainingtutorial.html#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">hostPath</span><span class="kw">:</span></span>
+<span id="cb15-14"><a href="kubernetes-trainingtutorial.html#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">    # this path on node</span></span>
+<span id="cb15-15"><a href="kubernetes-trainingtutorial.html#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">path</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;/mnt/data&quot;</span></span>
+<span id="cb15-16"><a href="kubernetes-trainingtutorial.html#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="kubernetes-trainingtutorial.html#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb15-18"><a href="kubernetes-trainingtutorial.html#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="kubernetes-trainingtutorial.html#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb15-20"><a href="kubernetes-trainingtutorial.html#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> PersistentVolumeClaim</span></span>
+<span id="cb15-21"><a href="kubernetes-trainingtutorial.html#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb15-22"><a href="kubernetes-trainingtutorial.html#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> mypvc</span></span>
+<span id="cb15-23"><a href="kubernetes-trainingtutorial.html#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb15-24"><a href="kubernetes-trainingtutorial.html#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb15-25"><a href="kubernetes-trainingtutorial.html#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">requests</span><span class="kw">:</span></span>
+<span id="cb15-26"><a href="kubernetes-trainingtutorial.html#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">storage</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;100Mi&quot;</span></span>
+<span id="cb15-27"><a href="kubernetes-trainingtutorial.html#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">volumeMode</span><span class="kw">:</span><span class="at"> Filesystem</span></span>
+<span id="cb15-28"><a href="kubernetes-trainingtutorial.html#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">storageClassName</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;manual&quot;</span></span>
+<span id="cb15-29"><a href="kubernetes-trainingtutorial.html#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">accessModes</span><span class="kw">:</span></span>
+<span id="cb15-30"><a href="kubernetes-trainingtutorial.html#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> ReadWriteOnce</span></span>
+<span id="cb15-31"><a href="kubernetes-trainingtutorial.html#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-32"><a href="kubernetes-trainingtutorial.html#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb15-33"><a href="kubernetes-trainingtutorial.html#cb15-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-34"><a href="kubernetes-trainingtutorial.html#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb15-35"><a href="kubernetes-trainingtutorial.html#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb15-36"><a href="kubernetes-trainingtutorial.html#cb15-36" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb15-37"><a href="kubernetes-trainingtutorial.html#cb15-37" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> pv-pvc-deployment</span></span>
+<span id="cb15-38"><a href="kubernetes-trainingtutorial.html#cb15-38" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> engineering</span></span>
+<span id="cb15-39"><a href="kubernetes-trainingtutorial.html#cb15-39" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb15-40"><a href="kubernetes-trainingtutorial.html#cb15-40" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb15-41"><a href="kubernetes-trainingtutorial.html#cb15-41" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb15-42"><a href="kubernetes-trainingtutorial.html#cb15-42" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
+<span id="cb15-43"><a href="kubernetes-trainingtutorial.html#cb15-43" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb15-44"><a href="kubernetes-trainingtutorial.html#cb15-44" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb15-45"><a href="kubernetes-trainingtutorial.html#cb15-45" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb15-46"><a href="kubernetes-trainingtutorial.html#cb15-46" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
+<span id="cb15-47"><a href="kubernetes-trainingtutorial.html#cb15-47" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb15-48"><a href="kubernetes-trainingtutorial.html#cb15-48" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb15-49"><a href="kubernetes-trainingtutorial.html#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> data</span></span>
+<span id="cb15-50"><a href="kubernetes-trainingtutorial.html#cb15-50" aria-hidden="true" tabindex="-1"></a><span class="co">          # here we define that we want to use the PVC by the name</span></span>
+<span id="cb15-51"><a href="kubernetes-trainingtutorial.html#cb15-51" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">persistentVolumeClaim</span><span class="kw">:</span></span>
+<span id="cb15-52"><a href="kubernetes-trainingtutorial.html#cb15-52" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">claimName</span><span class="kw">:</span><span class="at"> mypvc</span></span>
+<span id="cb15-53"><a href="kubernetes-trainingtutorial.html#cb15-53" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb15-54"><a href="kubernetes-trainingtutorial.html#cb15-54" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
+<span id="cb15-55"><a href="kubernetes-trainingtutorial.html#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="co">        # default image</span></span>
+<span id="cb15-56"><a href="kubernetes-trainingtutorial.html#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> nginx</span></span>
+<span id="cb15-57"><a href="kubernetes-trainingtutorial.html#cb15-57" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb15-58"><a href="kubernetes-trainingtutorial.html#cb15-58" aria-hidden="true" tabindex="-1"></a><span class="co">            # now that we have the claim, we have to mount inside the container</span></span>
+<span id="cb15-59"><a href="kubernetes-trainingtutorial.html#cb15-59" aria-hidden="true" tabindex="-1"></a><span class="co">            # is this on pod</span></span>
+<span id="cb15-60"><a href="kubernetes-trainingtutorial.html#cb15-60" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;/usr/share/nginx/html&quot;</span></span>
+<span id="cb15-61"><a href="kubernetes-trainingtutorial.html#cb15-61" aria-hidden="true" tabindex="-1"></a><span class="co">            # name is equal to the pvc name specified</span></span>
+<span id="cb15-62"><a href="kubernetes-trainingtutorial.html#cb15-62" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> data</span></span>
+<span id="cb15-63"><a href="kubernetes-trainingtutorial.html#cb15-63" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb15-64"><a href="kubernetes-trainingtutorial.html#cb15-64" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb15-65"><a href="kubernetes-trainingtutorial.html#cb15-65" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb15-66"><a href="kubernetes-trainingtutorial.html#cb15-66" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb15-67"><a href="kubernetes-trainingtutorial.html#cb15-67" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb15-68"><a href="kubernetes-trainingtutorial.html#cb15-68" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb15-69"><a href="kubernetes-trainingtutorial.html#cb15-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-70"><a href="kubernetes-trainingtutorial.html#cb15-70" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb15-71"><a href="kubernetes-trainingtutorial.html#cb15-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-72"><a href="kubernetes-trainingtutorial.html#cb15-72" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb15-73"><a href="kubernetes-trainingtutorial.html#cb15-73" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb15-74"><a href="kubernetes-trainingtutorial.html#cb15-74" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb15-75"><a href="kubernetes-trainingtutorial.html#cb15-75" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
+<span id="cb15-76"><a href="kubernetes-trainingtutorial.html#cb15-76" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb15-77"><a href="kubernetes-trainingtutorial.html#cb15-77" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> LoadBalancer</span></span>
+<span id="cb15-78"><a href="kubernetes-trainingtutorial.html#cb15-78" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb15-79"><a href="kubernetes-trainingtutorial.html#cb15-79" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
+<span id="cb15-80"><a href="kubernetes-trainingtutorial.html#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb15-81"><a href="kubernetes-trainingtutorial.html#cb15-81" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb15-82"><a href="kubernetes-trainingtutorial.html#cb15-82" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span></code></pre></div>
+</div>
+</div>
+<div id="namespaces" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Namespaces<a href="kubernetes-trainingtutorial.html#namespaces" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Namespaces allows us to organize objects in the cluster. Maybe we want to organize by team, department, environment, etc. By default, kubectl interacts with the defaul namespace.</p>
+<ul>
+<li>default The default namespace for objects with no other namespace</li>
+<li>kube-system The namespace for objects created by the Kubernetes system</li>
+<li>kube-public This namespace is created automatically and is readable by all users (including those not authenticated). This namespace is mostly reserved for cluster usage, in case that some resources should be visible and readable publicly throughout the whole cluster. The public aspect of this namespace is only a convention, not a requirement.</li>
+<li>kube-node-lease This namespace for the lease objects associated with each node which improves the performance of the node heartbeats as the cluster scales.</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb16-1"><a href="kubernetes-trainingtutorial.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb16-2"><a href="kubernetes-trainingtutorial.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Namespace</span></span>
+<span id="cb16-3"><a href="kubernetes-trainingtutorial.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb16-4"><a href="kubernetes-trainingtutorial.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> dev</span></span>
+<span id="cb16-5"><a href="kubernetes-trainingtutorial.html#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb16-6"><a href="kubernetes-trainingtutorial.html#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb16-7"><a href="kubernetes-trainingtutorial.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Namespace</span></span>
+<span id="cb16-8"><a href="kubernetes-trainingtutorial.html#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb16-9"><a href="kubernetes-trainingtutorial.html#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> prod</span></span>
+<span id="cb16-10"><a href="kubernetes-trainingtutorial.html#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb16-11"><a href="kubernetes-trainingtutorial.html#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb16-12"><a href="kubernetes-trainingtutorial.html#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Namespace</span></span>
+<span id="cb16-13"><a href="kubernetes-trainingtutorial.html#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb16-14"><a href="kubernetes-trainingtutorial.html#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> monitoring</span></span>
+<span id="cb16-15"><a href="kubernetes-trainingtutorial.html#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb16-16"><a href="kubernetes-trainingtutorial.html#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb16-17"><a href="kubernetes-trainingtutorial.html#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Namespace</span></span>
+<span id="cb16-18"><a href="kubernetes-trainingtutorial.html#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb16-19"><a href="kubernetes-trainingtutorial.html#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> logging</span></span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="hello-bookdown-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="blocks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/seblum/kubernetes-training/edit/master/04-Kubernetes.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
