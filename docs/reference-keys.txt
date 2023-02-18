@@ -79,8 +79,8 @@ transfer-operators
 sensors
 tasks
 task-dependencies
-scheduling
 xcom
+scheduling
 taskflow
 exemplary-ml-workflow
 airflow-infrastructure
