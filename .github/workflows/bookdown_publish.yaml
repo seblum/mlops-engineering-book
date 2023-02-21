@@ -13,7 +13,7 @@ jobs:
     runs-on: macOS-latest
     # defaults:
     #   run:
-    #     working-directory: manuscript
+    #     working-directory: bookdown-documents
     steps:
       - uses: actions/checkout@v1
       - uses: r-lib/actions/setup-r@v1
@@ -39,7 +39,7 @@ jobs:
     needs: bookdown
     # defaults:
     #   run:
-    #     working-directory: manuscript
+    #     working-directory: bookdown-documents/
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -50,7 +50,6 @@ jobs:
           name: docs # optional
           # Destination path
           path: docs # optional
-        working-directory: ./manuscript
       - name: Deploy to GitHub Pages
         uses: Cecilapp/GitHub-Pages-deploy@v3
         env:
