@@ -1,0 +1,32 @@
+
+## MLFflow Architecture
+
+While MLflow can be run locally for your personal model implementation, it is usually deployed on a distributed architecture for large organizations or teams. The MLflow backend consists of three different main components, *Tracking Server*, *Backend Store*, and *Artifact Store*, all of which can reside on remote hosts.
+
+The MLflow client can interface with a variety of backend and artifact storage configurations. The official [MLflow documentation](https://mlflow.org/docs/latest/tracking.html#how-runs-and-artifacts-are-recorded) outlines several detailed configurations. The example below depicts the main interaction between the different architectural components of a remote MLflow Tracking Server, a Postgres database for backend storage, and an S3 bucket for artifact storage.
+
+![MLflow Architecture Diagram](images/06-MLflow/MLflow_architecture_diagram.png)
+
+
+### MLflow Tracking Server
+
+The MLflow *Tracking Server* is the main component that handles the communication between the REST API to log parameters, metrics, experiments and metadata to a storage solution. The server uses both, the backend store and the artifact store to store and read data from. 
+Although it is possible to track parameters without running a server (e.g. locally), it is recommended to create a MLflow tracking server to log your data to. Some of the functionality of the API is also available via the web interface, for example to create an experiment. Further, the Tracking web user interface allows to view runs easily in the web browser.
+
+Running the CLI command `mlflow ui` starts a web server on your local machine serving the MLFlow UI. Alternatively, a remote [MLflow tracking server](https://mlflow.org/docs/latest/tracking.html#tracking-server) serves the same UI which can be accessed using the server's URL `http://<TRACKING-SERVER-IP-ADDRESS>:5000` from any machine that can connect to the tracking server.
+
+
+### MLflow Backend Store
+
+The MLflow *Backend Store* is where MLflow stores experiment and run data like parameters, and metrics. It is usually a relational database which means that all metadata will be stored, but no large data files.
+
+MLflow supports two types of backend stores: *file store* and *database-backed store*. By default, the backend store is set to the local file store backend at the `./mlruns` directory. A database-backed store must be configures using the `--backend-store-uri`. MLflow supports encoded Databases like *mysql*, *mssql*, *sqlite*, and *postgresql*, and it is possible to use a variety of externally hosted metadata stores like Azure MySQL, or AWS RDS. To be able to use the *MLflow Model Registry* the server must use a database-backed store.
+
+
+### MLflow Artifact Store
+
+In addition to the Backend Store the *Artifact Store* is another storage place for the MLflow tracking server. It is the location to store large data of an ML run that are not suitable for the Backend Store or a relational database respectively. This is where MLflow users log their artifact outputs, or data and image files to. The user can access these artifacts via HTTP requests to the MLflow Tracking Server. 
+
+The location to the server’s artifact store defaults to local `./mlruns` directory. It is possible to specify another artifact store server using `--default-artifact-root`. The MLflow client caches the artifact location information on a per-run basis. It is therefore not recommended to alter a run’s artifact location before it has terminated.
+
+The *Artifact Store* needs to be configured when running MLflow on a distributed system. In addition to local file paths, MLflow supports to configure the following cloud storage resources as an artifact stores: Amazon S3, Azure Blob Storage, Google Cloud Storage, SFTP server, and NFS.
