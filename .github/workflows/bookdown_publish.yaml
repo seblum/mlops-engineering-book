@@ -20,12 +20,15 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v1
       - name: Install rmarkdown
         run: Rscript -e 'install.packages(c("rmarkdown","bookdown"))'
+        working-directory: ./manuscript
       - name: Render Book
         run: Rscript -e 'bookdown::render_book("index.Rmd")'
+        working-directory: ./manuscript
       - uses: actions/upload-artifact@v1
         with:
           name: docs
           path: docs/
+        working-directory: ./manuscript
     
 # Need to first create an empty gh-pages branch
 # see https://pkgdown.r-lib.org/reference/deploy_site_github.html
@@ -47,6 +50,7 @@ jobs:
           name: docs # optional
           # Destination path
           path: docs # optional
+        working-directory: ./manuscript
       - name: Deploy to GitHub Pages
         uses: Cecilapp/GitHub-Pages-deploy@v3
         env:
@@ -55,4 +59,5 @@ jobs:
             EMAIL: ${{ SECRETS.EMAIL }}               # must be a verified email
             BUILD_DIR: docs/     
             branch: gh-pages
+        working-directory: ./manuscript
 
