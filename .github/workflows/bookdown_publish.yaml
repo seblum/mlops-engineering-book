@@ -11,6 +11,9 @@ jobs:
   bookdown:
     name: Render-Book
     runs-on: macOS-latest
+    defaults:
+      run:
+        working-directory: bookdown-documents/
     steps:
       - uses: actions/checkout@v1
       - uses: r-lib/actions/setup-r@v1
@@ -23,34 +26,33 @@ jobs:
         with:
           name: docs
           path: docs/
-    defaults:
-      run:
-        working-directory: bookdown-documents/
+    
 # Need to first create an empty gh-pages branch
 # see https://pkgdown.r-lib.org/reference/deploy_site_github.html
 # and also add secrets for a GH_PAT and EMAIL to the repository
 # gh-action from Cecilapp/GitHub-Pages-deploy
   checkout-and-deploy:
-   runs-on: ubuntu-latest
-   needs: bookdown
-   steps:
-     - name: Checkout
-       uses: actions/checkout@master
-     - name: Download artifact
-       uses: actions/download-artifact@v1.0.0
-       with:
-         # Artifact name
-         name: docs # optional
-         # Destination path
-         path: docs # optional
-     - name: Deploy to GitHub Pages
-       uses: Cecilapp/GitHub-Pages-deploy@v3
-       env:
-          GITHUB_TOKEN: ${{ SECRETS.GITHUB_TOKEN }}           # https://github.com/settings/tokens
-       with:
-          EMAIL: ${{ SECRETS.EMAIL }}               # must be a verified email
-          BUILD_DIR: docs/     
-          branch: gh-pages
+    runs-on: ubuntu-latest
+    needs: bookdown
     defaults:
       run:
         working-directory: bookdown-documents/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Download artifact
+        uses: actions/download-artifact@v1.0.0
+        with:
+          # Artifact name
+          name: docs # optional
+          # Destination path
+          path: docs # optional
+      - name: Deploy to GitHub Pages
+        uses: Cecilapp/GitHub-Pages-deploy@v3
+        env:
+            GITHUB_TOKEN: ${{ SECRETS.GITHUB_TOKEN }}           # https://github.com/settings/tokens
+        with:
+            EMAIL: ${{ SECRETS.EMAIL }}               # must be a verified email
+            BUILD_DIR: docs/     
+            branch: gh-pages
+
