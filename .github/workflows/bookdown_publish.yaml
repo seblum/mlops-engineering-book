@@ -28,7 +28,7 @@ jobs:
         with:
           name: docs
           path: docs/
-        working-directory: ./manuscript
+        #working-directory: ./manuscript
     
 # Need to first create an empty gh-pages branch
 # see https://pkgdown.r-lib.org/reference/deploy_site_github.html
@@ -58,5 +58,5 @@ jobs:
             EMAIL: ${{ SECRETS.EMAIL }}               # must be a verified email
             BUILD_DIR: docs/     
             branch: gh-pages
-        working-directory: ./manuscript
+        #working-directory: ./manuscript
 
