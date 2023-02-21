@@ -21,6 +21,9 @@ rmd_files: ["index.Rmd",
             "05-Airflow.Rmd",
             "05.1-Airflow-Fundamental_Concepts.Rmd",
             "05.2-Airflow-Exemplary_ML_Workflow.Rmd",
-            "05.3-Airflow-infrastructure.Rmd"]
+            "05.3-Airflow-infrastructure.Rmd",
+            "06-MlFlow.Rmd",
+            "06.1-MlFlow-Models.Rmd",
+            "06.2-MlFlow-Architecture.Rmd"]
 
 

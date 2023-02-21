@@ -4,34 +4,34 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Airflow | MLOps Architecture from scratch</title>
-  <meta name="description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
+  <title>Chapter 3 Airflow | MLOps Engineering</title>
+  <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Airflow | MLOps Architecture from scratch" />
+  <meta property="og:title" content="Chapter 3 Airflow | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
-  <meta name="github-repo" content="seblum/mlops-practice" />
+  <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Airflow | MLOps Architecture from scratch" />
+  <meta name="twitter:title" content="Chapter 3 Airflow | MLOps Engineering" />
   
-  <meta name="twitter:description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
+  <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
 
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-01-24" />
+<meta name="date" content="2023-02-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="kubernetes.html"/>
-<link rel="next" href="mlflow.html"/>
+<link rel="prev" href="helm.html"/>
+<link rel="next" href="fundamental-concepts.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -136,119 +136,118 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">A Minimal Book Example</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a></li>
+<li class="chapter" data-level="1" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>1</b> Terraform</a>
 <ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="1.1" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>1.1</b> Basic usage</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="basic-usage.html"><a href="basic-usage.html#terraform-init"><i class="fa fa-check"></i><b>1.1.1</b> terraform init</a></li>
+<li class="chapter" data-level="1.1.2" data-path="basic-usage.html"><a href="basic-usage.html#terraform-validate"><i class="fa fa-check"></i><b>1.1.2</b> terraform validate</a></li>
+<li class="chapter" data-level="1.1.3" data-path="basic-usage.html"><a href="basic-usage.html#terraform-plan"><i class="fa fa-check"></i><b>1.1.3</b> terraform plan</a></li>
+<li class="chapter" data-level="1.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>1.1.4</b> terraform apply</a></li>
+<li class="chapter" data-level="1.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>1.1.5</b> terraform destroy</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<li class="chapter" data-level="1.2" data-path="core-concepts.html"><a href="core-concepts.html"><i class="fa fa-check"></i><b>1.2</b> Core Concepts</a>
 <ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#a-work-in-progress"><i class="fa fa-check"></i>A work in progress</a></li>
+<li class="chapter" data-level="1.2.1" data-path="core-concepts.html"><a href="core-concepts.html#providers"><i class="fa fa-check"></i><b>1.2.1</b> Providers</a></li>
+<li class="chapter" data-level="1.2.2" data-path="core-concepts.html"><a href="core-concepts.html#resources"><i class="fa fa-check"></i><b>1.2.2</b> Resources</a></li>
+<li class="chapter" data-level="1.2.3" data-path="core-concepts.html"><a href="core-concepts.html#data-sources"><i class="fa fa-check"></i><b>1.2.3</b> Data Sources</a></li>
+<li class="chapter" data-level="1.2.4" data-path="core-concepts.html"><a href="core-concepts.html#state"><i class="fa fa-check"></i><b>1.2.4</b> State</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>2</b> Terraform</a>
+<li class="chapter" data-level="1.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>1.3</b> Modules</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="terraform.html"><a href="terraform.html#prerequisites"><i class="fa fa-check"></i><b>2.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="2.2" data-path="terraform.html"><a href="terraform.html#basic-usage"><i class="fa fa-check"></i><b>2.2</b> Basic usage</a>
-<ul>
-<li class="chapter" data-level="2.2.1" data-path="terraform.html"><a href="terraform.html#terraform-init"><i class="fa fa-check"></i><b>2.2.1</b> terraform init</a></li>
-<li class="chapter" data-level="2.2.2" data-path="terraform.html"><a href="terraform.html#terraform-validate"><i class="fa fa-check"></i><b>2.2.2</b> terraform validate</a></li>
-<li class="chapter" data-level="2.2.3" data-path="terraform.html"><a href="terraform.html#terraform-plan"><i class="fa fa-check"></i><b>2.2.3</b> terraform plan</a></li>
-<li class="chapter" data-level="2.2.4" data-path="terraform.html"><a href="terraform.html#terraform-apply"><i class="fa fa-check"></i><b>2.2.4</b> terraform apply</a></li>
-<li class="chapter" data-level="2.2.5" data-path="terraform.html"><a href="terraform.html#terraform-destroy"><i class="fa fa-check"></i><b>2.2.5</b> terraform destroy</a></li>
+<li class="chapter" data-level="1.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>1.3.1</b> Input Variables</a></li>
+<li class="chapter" data-level="1.3.2" data-path="modules.html"><a href="modules.html#output-variables"><i class="fa fa-check"></i><b>1.3.2</b> Output Variables</a></li>
+<li class="chapter" data-level="1.3.3" data-path="modules.html"><a href="modules.html#local-variables"><i class="fa fa-check"></i><b>1.3.3</b> Local Variables</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="terraform.html"><a href="terraform.html#core-concepts"><i class="fa fa-check"></i><b>2.3</b> Core Concepts</a>
+<li class="chapter" data-level="1.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html"><i class="fa fa-check"></i><b>1.4</b> Additional tips &amp; tricks</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="terraform.html"><a href="terraform.html#providers"><i class="fa fa-check"></i><b>2.3.1</b> Providers</a></li>
-<li class="chapter" data-level="2.3.2" data-path="terraform.html"><a href="terraform.html#resources"><i class="fa fa-check"></i><b>2.3.2</b> Resources</a></li>
-<li class="chapter" data-level="2.3.3" data-path="terraform.html"><a href="terraform.html#data-sources"><i class="fa fa-check"></i><b>2.3.3</b> Data Sources</a></li>
+<li class="chapter" data-level="1.4.1" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#count"><i class="fa fa-check"></i><b>1.4.1</b> count</a></li>
+<li class="chapter" data-level="1.4.2" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for-each"><i class="fa fa-check"></i><b>1.4.2</b> for-each</a></li>
+<li class="chapter" data-level="1.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>1.4.3</b> for</a></li>
+<li class="chapter" data-level="1.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>1.4.4</b> Workspaces</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="terraform.html"><a href="terraform.html#state"><i class="fa fa-check"></i><b>2.4</b> State</a></li>
-<li class="chapter" data-level="2.5" data-path="terraform.html"><a href="terraform.html#modules"><i class="fa fa-check"></i><b>2.5</b> Modules</a>
-<ul>
-<li class="chapter" data-level="2.5.1" data-path="terraform.html"><a href="terraform.html#input-variables"><i class="fa fa-check"></i><b>2.5.1</b> Input Variables</a></li>
-<li class="chapter" data-level="2.5.2" data-path="terraform.html"><a href="terraform.html#output-variables"><i class="fa fa-check"></i><b>2.5.2</b> Output Variables</a></li>
-<li class="chapter" data-level="2.5.3" data-path="terraform.html"><a href="terraform.html#local-variables"><i class="fa fa-check"></i><b>2.5.3</b> Local Variables</a></li>
+<li class="chapter" data-level="1.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>1.5</b> Exemplary Deployment</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="terraform.html"><a href="terraform.html#additional-tips-tricks"><i class="fa fa-check"></i><b>2.6</b> Additional tips &amp; tricks</a>
+<li class="chapter" data-level="2" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>2</b> Kubernetes</a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="terraform.html"><a href="terraform.html#count"><i class="fa fa-check"></i><b>2.6.1</b> count</a></li>
-<li class="chapter" data-level="2.6.2" data-path="terraform.html"><a href="terraform.html#for-each"><i class="fa fa-check"></i><b>2.6.2</b> for-each</a></li>
-<li class="chapter" data-level="2.6.3" data-path="terraform.html"><a href="terraform.html#for"><i class="fa fa-check"></i><b>2.6.3</b> for</a></li>
-<li class="chapter" data-level="2.6.4" data-path="terraform.html"><a href="terraform.html#workspaces"><i class="fa fa-check"></i><b>2.6.4</b> Workspaces</a></li>
+<li class="chapter" data-level="2.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html"><i class="fa fa-check"></i><b>2.1</b> Core Concepts</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html#nodes"><i class="fa fa-check"></i><b>2.1.1</b> Nodes</a></li>
+<li class="chapter" data-level="2.1.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html#pods"><i class="fa fa-check"></i><b>2.1.2</b> Pods</a></li>
+<li class="chapter" data-level="2.1.3" data-path="core-concepts-1.html"><a href="core-concepts-1.html#imperative-declarative-management"><i class="fa fa-check"></i><b>2.1.3</b> Imperative &amp; Declarative Management</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="terraform.html"><a href="terraform.html#putting-it-together"><i class="fa fa-check"></i><b>2.7</b> Putting it together</a></li>
+<li class="chapter" data-level="2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>2.2</b> Application Deployment &amp; Design</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>2.2.1</b> Deployments</a></li>
+<li class="chapter" data-level="2.2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html#resource-management"><i class="fa fa-check"></i><b>2.2.2</b> Resource Management</a></li>
+<li class="chapter" data-level="2.2.3" data-path="application-deployment-design.html"><a href="application-deployment-design.html#daemonsets"><i class="fa fa-check"></i><b>2.2.3</b> DaemonSets</a></li>
+<li class="chapter" data-level="2.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>2.2.4</b> StatefulSets</a></li>
+<li class="chapter" data-level="2.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>2.2.5</b> Jobs &amp; Cron Jobs</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>3</b> Kubernetes</a>
+<li class="chapter" data-level="2.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>2.3</b> Services &amp; Networking</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="kubernetes.html"><a href="kubernetes.html#prerequisites-1"><i class="fa fa-check"></i><b>3.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="3.2" data-path="kubernetes.html"><a href="kubernetes.html#nodes"><i class="fa fa-check"></i><b>3.2</b> Nodes</a>
-<ul>
-<li class="chapter" data-level="3.2.1" data-path="kubernetes.html"><a href="kubernetes.html#master-control-plane"><i class="fa fa-check"></i><b>3.2.1</b> Master &amp; Control Plane</a></li>
-<li class="chapter" data-level="3.2.2" data-path="kubernetes.html"><a href="kubernetes.html#worker-nodes"><i class="fa fa-check"></i><b>3.2.2</b> Worker Nodes</a></li>
+<li class="chapter" data-level="2.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>2.3.1</b> Services</a></li>
+<li class="chapter" data-level="2.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>2.3.2</b> Service Discovery</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="kubernetes.html"><a href="kubernetes.html#pods"><i class="fa fa-check"></i><b>3.3</b> Pods</a>
+<li class="chapter" data-level="2.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>2.4</b> Volume &amp; Storage</a>
 <ul>
-<li class="chapter" data-level="" data-path="kubernetes.html"><a href="kubernetes.html#imperative-declarative-management"><i class="fa fa-check"></i>Imperative &amp; Declarative Management</a></li>
+<li class="chapter" data-level="2.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>2.4.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="2.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>2.4.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="2.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>2.4.3</b> Persistent Volumes</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="kubernetes.html"><a href="kubernetes.html#deployments"><i class="fa fa-check"></i><b>3.4</b> Deployments</a></li>
-<li class="chapter" data-level="3.5" data-path="kubernetes.html"><a href="kubernetes.html#services"><i class="fa fa-check"></i><b>3.5</b> Services</a>
+<li class="chapter" data-level="2.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>2.5</b> Environment, Configuration &amp; Security</a>
 <ul>
-<li class="chapter" data-level="3.5.1" data-path="kubernetes.html"><a href="kubernetes.html#exemplary-setup-of-database-and-frontend-microservices"><i class="fa fa-check"></i><b>3.5.1</b> Exemplary setup of database and frontend microservices</a></li>
+<li class="chapter" data-level="2.5.1" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#namespaces"><i class="fa fa-check"></i><b>2.5.1</b> Namespaces</a></li>
+<li class="chapter" data-level="2.5.2" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>2.5.2</b> Labels, Selectors and Annotations</a></li>
+<li class="chapter" data-level="2.5.3" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#configmaps"><i class="fa fa-check"></i><b>2.5.3</b> ConfigMaps</a></li>
+<li class="chapter" data-level="2.5.4" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#secrets"><i class="fa fa-check"></i><b>2.5.4</b> Secrets</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="kubernetes.html"><a href="kubernetes.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>3.6</b> Labels, Selectors and Annotations</a></li>
-<li class="chapter" data-level="3.7" data-path="kubernetes.html"><a href="kubernetes.html#namespaces"><i class="fa fa-check"></i><b>3.7</b> Namespaces</a></li>
-<li class="chapter" data-level="3.8" data-path="kubernetes.html"><a href="kubernetes.html#service-discovery"><i class="fa fa-check"></i><b>3.8</b> Service Discovery</a></li>
-<li class="chapter" data-level="3.9" data-path="kubernetes.html"><a href="kubernetes.html#volume-storage"><i class="fa fa-check"></i><b>3.9</b> Volume &amp; Storage</a>
+<li class="chapter" data-level="2.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>2.6</b> Observability &amp; Maintenance</a>
 <ul>
-<li class="chapter" data-level="3.9.1" data-path="kubernetes.html"><a href="kubernetes.html#emptydir-volume"><i class="fa fa-check"></i><b>3.9.1</b> EmptyDir Volume</a></li>
-<li class="chapter" data-level="3.9.2" data-path="kubernetes.html"><a href="kubernetes.html#hostpath-volume"><i class="fa fa-check"></i><b>3.9.2</b> HostPath Volume</a></li>
-<li class="chapter" data-level="3.9.3" data-path="kubernetes.html"><a href="kubernetes.html#persistent-volumes"><i class="fa fa-check"></i><b>3.9.3</b> Persistent Volumes</a></li>
+<li class="chapter" data-level="2.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>2.6.1</b> Health Checks</a></li>
+<li class="chapter" data-level="2.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>2.6.2</b> Debugging</a></li>
 </ul></li>
-<li class="chapter" data-level="3.10" data-path="kubernetes.html"><a href="kubernetes.html#configmaps"><i class="fa fa-check"></i><b>3.10</b> ConfigMaps</a></li>
-<li class="chapter" data-level="3.11" data-path="kubernetes.html"><a href="kubernetes.html#secrets"><i class="fa fa-check"></i><b>3.11</b> Secrets</a>
-<ul>
-<li class="chapter" data-level="3.11.1" data-path="kubernetes.html"><a href="kubernetes.html#exemplary-use-case-of-secrets"><i class="fa fa-check"></i><b>3.11.1</b> Exemplary use case of secrets</a></li>
+<li class="chapter" data-level="2.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>2.7</b> Helm</a></li>
 </ul></li>
-<li class="chapter" data-level="3.12" data-path="kubernetes.html"><a href="kubernetes.html#health-checks"><i class="fa fa-check"></i><b>3.12</b> Health Checks</a>
+<li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a>
 <ul>
-<li class="chapter" data-level="3.12.1" data-path="kubernetes.html"><a href="kubernetes.html#liveness-probe"><i class="fa fa-check"></i><b>3.12.1</b> Liveness Probe</a></li>
-<li class="chapter" data-level="3.12.2" data-path="kubernetes.html"><a href="kubernetes.html#readiness-probe"><i class="fa fa-check"></i><b>3.12.2</b> Readiness Probe</a></li>
+<li class="chapter" data-level="3.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html"><i class="fa fa-check"></i><b>3.1</b> Fundamental concepts</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#dags"><i class="fa fa-check"></i><b>3.1.1</b> DAGs</a></li>
+<li class="chapter" data-level="3.1.2" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#operators"><i class="fa fa-check"></i><b>3.1.2</b> Operators</a></li>
+<li class="chapter" data-level="3.1.3" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#tasks"><i class="fa fa-check"></i><b>3.1.3</b> Tasks</a></li>
+<li class="chapter" data-level="3.1.4" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#xcom"><i class="fa fa-check"></i><b>3.1.4</b> XCom</a></li>
+<li class="chapter" data-level="3.1.5" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#scheduling"><i class="fa fa-check"></i><b>3.1.5</b> Scheduling</a></li>
+<li class="chapter" data-level="3.1.6" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#taskflow"><i class="fa fa-check"></i><b>3.1.6</b> Taskflow</a></li>
 </ul></li>
-<li class="chapter" data-level="3.13" data-path="kubernetes.html"><a href="kubernetes.html#resource-management"><i class="fa fa-check"></i><b>3.13</b> Resource Management</a></li>
-<li class="chapter" data-level="3.14" data-path="kubernetes.html"><a href="kubernetes.html#daemon-sets"><i class="fa fa-check"></i><b>3.14</b> Daemon Sets</a></li>
-<li class="chapter" data-level="3.15" data-path="kubernetes.html"><a href="kubernetes.html#statefulsets"><i class="fa fa-check"></i><b>3.15</b> StatefulSets</a></li>
-<li class="chapter" data-level="3.16" data-path="kubernetes.html"><a href="kubernetes.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>3.16</b> Jobs &amp; Cron Jobs</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>4</b> Airflow</a>
+<li class="chapter" data-level="3.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>3.2</b> Exemplary ML workflow</a></li>
+<li class="chapter" data-level="3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>3.3</b> Airflow infrastructure</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="airflow.html"><a href="airflow.html#prerequisites-2"><i class="fa fa-check"></i><b>4.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="4.2" data-path="airflow.html"><a href="airflow.html#introduction-1"><i class="fa fa-check"></i><b>4.2</b> Introduction</a></li>
-<li class="chapter" data-level="4.3" data-path="airflow.html"><a href="airflow.html#dags"><i class="fa fa-check"></i><b>4.3</b> DAGs</a>
-<ul>
-<li class="chapter" data-level="4.3.1" data-path="airflow.html"><a href="airflow.html#operators"><i class="fa fa-check"></i><b>4.3.1</b> Operators</a></li>
-<li class="chapter" data-level="4.3.2" data-path="airflow.html"><a href="airflow.html#tasks"><i class="fa fa-check"></i><b>4.3.2</b> Tasks</a></li>
-<li class="chapter" data-level="4.3.3" data-path="airflow.html"><a href="airflow.html#scheduling"><i class="fa fa-check"></i><b>4.3.3</b> Scheduling</a></li>
-<li class="chapter" data-level="4.3.4" data-path="airflow.html"><a href="airflow.html#sensors"><i class="fa fa-check"></i><b>4.3.4</b> Sensors</a></li>
-</ul></li>
-<li class="chapter" data-level="4.4" data-path="airflow.html"><a href="airflow.html#templates"><i class="fa fa-check"></i><b>4.4</b> Templates</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>5</b> MLflow</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="mlflow.html"><a href="mlflow.html#prerequisites-3"><i class="fa fa-check"></i><b>5.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="5.2" data-path="mlflow.html"><a href="mlflow.html#functionality"><i class="fa fa-check"></i><b>5.2</b> Functionality</a>
-<ul>
-<li class="chapter" data-level="5.2.1" data-path="mlflow.html"><a href="mlflow.html#mlflow-tracking"><i class="fa fa-check"></i><b>5.2.1</b> MLflow Tracking</a></li>
-<li class="chapter" data-level="5.2.2" data-path="mlflow.html"><a href="mlflow.html#mlflow-models"><i class="fa fa-check"></i><b>5.2.2</b> MLflow Models</a></li>
-<li class="chapter" data-level="5.2.3" data-path="mlflow.html"><a href="mlflow.html#mlflow-model-registry"><i class="fa fa-check"></i><b>5.2.3</b> MLflow Model Registry</a></li>
-<li class="chapter" data-level="5.2.4" data-path="mlflow.html"><a href="mlflow.html#mlflow-projects"><i class="fa fa-check"></i><b>5.2.4</b> MLflow Projects</a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="mlflow.html"><a href="mlflow.html#mlfflow-architecture"><i class="fa fa-check"></i><b>5.3</b> MLFflow Architecture</a>
-<ul>
-<li class="chapter" data-level="5.3.1" data-path="mlflow.html"><a href="mlflow.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>5.3.1</b> MLflow Tracking Server</a></li>
-<li class="chapter" data-level="5.3.2" data-path="mlflow.html"><a href="mlflow.html#mlflow-backend-store"><i class="fa fa-check"></i><b>5.3.2</b> MLflow Backend Store</a></li>
-<li class="chapter" data-level="5.3.3" data-path="mlflow.html"><a href="mlflow.html#mlflow-artifact-store"><i class="fa fa-check"></i><b>5.3.3</b> MLflow Artifact Store</a></li>
+<li class="chapter" data-level="3.3.1" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#airflow-as-a-distributed-system"><i class="fa fa-check"></i><b>3.3.1</b> Airflow as a distributed system</a></li>
+<li class="chapter" data-level="3.3.2" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#scheduler-1"><i class="fa fa-check"></i><b>3.3.2</b> Scheduler</a></li>
+<li class="chapter" data-level="3.3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#webserver"><i class="fa fa-check"></i><b>3.3.3</b> Webserver</a></li>
+<li class="chapter" data-level="3.3.4" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#executor"><i class="fa fa-check"></i><b>3.3.4</b> Executor</a></li>
+<li class="chapter" data-level="3.3.5" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#dag-directory"><i class="fa fa-check"></i><b>3.3.5</b> DAG Directory</a></li>
+<li class="chapter" data-level="3.3.6" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#metadata-database"><i class="fa fa-check"></i><b>3.3.6</b> Metadata Database</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="todo.html"><a href="todo.html"><i class="fa fa-check"></i><b>6</b> TODO</a></li>
+<li class="chapter" data-level="4" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>4</b> MLflow</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="fundamental-components.html"><a href="fundamental-components.html"><i class="fa fa-check"></i><b>4.1</b> Fundamental Components</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-tracking"><i class="fa fa-check"></i><b>4.1.1</b> MLflow Tracking</a></li>
+<li class="chapter" data-level="4.1.2" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-models"><i class="fa fa-check"></i><b>4.1.2</b> MLflow Models</a></li>
+<li class="chapter" data-level="4.1.3" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-model-registry"><i class="fa fa-check"></i><b>4.1.3</b> MLflow Model Registry</a></li>
+<li class="chapter" data-level="4.1.4" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-projects"><i class="fa fa-check"></i><b>4.1.4</b> MLflow Projects</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html"><i class="fa fa-check"></i><b>4.2</b> MLFflow Architecture</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>4.2.1</b> MLflow Tracking Server</a></li>
+<li class="chapter" data-level="4.2.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-backend-store"><i class="fa fa-check"></i><b>4.2.2</b> MLflow Backend Store</a></li>
+<li class="chapter" data-level="4.2.3" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-artifact-store"><i class="fa fa-check"></i><b>4.2.3</b> MLflow Artifact Store</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -261,7 +260,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MLOps Architecture from scratch</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MLOps Engineering</a>
           </h1>
         </div>
 
@@ -269,172 +268,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="airflow" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Airflow<a href="airflow.html#airflow" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><a href="https://github.com/apache/airflow">Apache Airflow</a> is an open-source platform for developing, scheduling, and monitoring batch-oriented workflows. Airflow comes with a web interface to help you manage the state of your workflows.</p>
-<p>Airflow can be deployed deployable in many ways, starting from a single process on your own laptop to a distributed setup with multiple compute resources for the biggest workflows. The aim of this tutorial is to show you how to use Airflow from a developer / user perspective and is based on the local installation. Please refer to the prerequisits on what is needed to follow through.
-A detailed description of what an Airflow deployment involves is shown in the chapter <a href="https://github.com/apache/airflow">Airflow Infrastructure</a>.</p>
-<div id="prerequisites-2" class="section level2 hasAnchor" number="4.1">
-<h2><span class="header-section-number">4.1</span> Prerequisites<a href="airflow.html#prerequisites-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>installation with pip?</p>
-</div>
-<div id="introduction-1" class="section level2 hasAnchor" number="4.2">
-<h2><span class="header-section-number">4.2</span> Introduction<a href="airflow.html#introduction-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>What is Airflow?</strong>
-Airflow is a platform to program workflows, including their creation, schedulung, and monitoring.</p>
-<p>A workflow describes here a set of steps to accomplish a given data engineering tasks, e.g. downloading files, copying data, filtering information, writing to a database, etc.
-Workflows can be of varying levels of complexity and in general it is a term with various meaning depending on context.</p>
-<p>Airflow can also be referred to as “Workflows as code”. It serves several purposes:
-+ dynamic
-+ extensible
-+ flexible
-+</p>
-<p>Airflow can implement programs from any language, but workflows are defined in Python.
-They can be assessed via code, command-line, or via web interface.</p>
-<p>Airflow’s user interface provides both in-depth views of pipelines and individual tasks, and an overview of pipelines over time. From the interface, you can inspect logs and manage tasks, for example retrying a task in case of failure.</p>
-<p>The web interface aims to make managing workflows as easy as possible. However, the philosophy of Airflow is to define workflows as code so coding will always be required.</p>
+<div id="airflow" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Airflow<a href="airflow.html#airflow" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><a href="https://github.com/apache/airflow">Apache Airflow</a> is an open-source platform to develop, schedule and monitor workflows. Airflow comes with a web user interface that aims to make managing workflows as easy as possible and provides a good overview of each workflow over time and the ability to inspect logs and manage tasks, for example retrying a task in case of failure.</p>
 <div class="figure">
-<img src="images/05-Airflow/web-interface-overview.png" alt="" />
-<p class="caption">Airflow Web Interface</p>
+<img src="images/05-Airflow/web-interface_overview.png" alt="" />
+<p class="caption">web-interface_overview</p>
 </div>
-<p><strong>Why Airflow?</strong>
-Airflow serves as a batch workflow orchestration plattform. contains operators to connect with many technologies and is easily extensible to connect with new technologies.</p>
-<p>If you prefer coding over clicking, Airflow is the tool for you. Workflows are defined as Python code which means:</p>
-<ul>
-<li>Workflows can be stored in version control so that you can roll back to previous versions</li>
-<li>Workflows can be developed by multiple people simultaneously</li>
-<li>Tests can be written to validate functionality</li>
-<li>Components are extensible and you can build on a wide collection of existing components</li>
-</ul>
-</div>
-<div id="dags" class="section level2 hasAnchor" number="4.3">
-<h2><span class="header-section-number">4.3</span> DAGs<a href="airflow.html#dags" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Workflows are implemented as DAGs: Directed Acyclic Graphs.</p>
-<ul>
-<li>It is Directed, because there is an inherent flow representing dependencies between components.</li>
-<li>It is Acyclic, because it does not loop / cycle / repeat.</li>
-<li>Graph describes the actual set of components.</li>
-</ul>
-<p>DAGs are also seen in Airflow, Apache Spark, Luigi</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="airflow.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow.models <span class="im">import</span> DAG</span>
-<span id="cb60-2"><a href="airflow.html#cb60-2" aria-hidden="true" tabindex="-1"></a>default_args <span class="op">=</span> {</span>
-<span id="cb60-3"><a href="airflow.html#cb60-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;start_data&#39;</span>:<span class="st">&#39;2023-01-01&#39;</span></span>
-<span id="cb60-4"><a href="airflow.html#cb60-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb60-5"><a href="airflow.html#cb60-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-6"><a href="airflow.html#cb60-6" aria-hidden="true" tabindex="-1"></a>example_dag <span class="op">=</span> DAG(</span>
-<span id="cb60-7"><a href="airflow.html#cb60-7" aria-hidden="true" tabindex="-1"></a>    dag_id<span class="op">=</span><span class="st">&#39;etl_pipeline&#39;</span>,</span>
-<span id="cb60-8"><a href="airflow.html#cb60-8" aria-hidden="true" tabindex="-1"></a>    default_args<span class="op">=</span>default_args</span>
-<span id="cb60-9"><a href="airflow.html#cb60-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p>a workflow can be run via the cli using</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb61-1"><a href="airflow.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="ex">airflow</span> run <span class="op">&lt;</span>dag_id<span class="op">&gt;</span> <span class="op">&lt;</span>task_id<span class="op">&gt;</span> <span class="op">&lt;</span>start_date<span class="op">&gt;</span></span></code></pre></div>
-<div id="operators" class="section level3 hasAnchor" number="4.3.1">
-<h3><span class="header-section-number">4.3.1</span> Operators<a href="airflow.html#operators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Operators represent a single task in a workflow. They run independently (usually) and generally do not share any information. There are various operators to perform different tasks.</p>
-<p>Gotchas: They are not guaranteed to run in the same location/environment. May require extensive use of Environment variables. Can be difficult to run tasks with elevated privileges.</p>
-<p>BashOperator - expects a bash_command</p>
-<p>PythonOperator - expects a python_callable</p>
-<p>BranchPython - requires a python_callable and provide_context=True. The callable must accept <code>**kwargs</code></p>
-<p>EmailOperator</p>
-<p>The EmailOperator does require the Airflow system to be configured with email server details.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="airflow.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow.operators.email_operator <span class="im">import</span> EmailOperator</span>
-<span id="cb62-2"><a href="airflow.html#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-3"><a href="airflow.html#cb62-3" aria-hidden="true" tabindex="-1"></a>email_task <span class="op">=</span> EmailOperator(</span>
-<span id="cb62-4"><a href="airflow.html#cb62-4" aria-hidden="true" tabindex="-1"></a>    task_id<span class="op">=</span><span class="st">&#39;email_sales_report&#39;</span>,</span>
-<span id="cb62-5"><a href="airflow.html#cb62-5" aria-hidden="true" tabindex="-1"></a>    to<span class="op">=</span><span class="st">&#39;sales_manager@example.com&#39;</span>,</span>
-<span id="cb62-6"><a href="airflow.html#cb62-6" aria-hidden="true" tabindex="-1"></a>    subject<span class="op">=</span><span class="st">&#39;automated Sales Report&#39;</span>,</span>
-<span id="cb62-7"><a href="airflow.html#cb62-7" aria-hidden="true" tabindex="-1"></a>    html_content<span class="op">=</span><span class="st">&#39;Attached is the latest sales report&#39;</span>,</span>
-<span id="cb62-8"><a href="airflow.html#cb62-8" aria-hidden="true" tabindex="-1"></a>    files<span class="op">=</span><span class="st">&#39;latest_sales.xlsx&#39;</span>,</span>
-<span id="cb62-9"><a href="airflow.html#cb62-9" aria-hidden="true" tabindex="-1"></a>    dag<span class="op">=</span>example_dag</span>
-<span id="cb62-10"><a href="airflow.html#cb62-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-</div>
-<div id="tasks" class="section level3 hasAnchor" number="4.3.2">
-<h3><span class="header-section-number">4.3.2</span> Tasks<a href="airflow.html#tasks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Tasks are Instances of operators. They are usually assigned to a variable on Python.
-They are referred to by the task_id within the airflow tools.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="airflow.html#cb63-1" aria-hidden="true" tabindex="-1"></a>example_task <span class="op">=</span> BashOperator(task_id<span class="op">=</span><span class="st">&#39;bash_example&#39;</span>,</span>
-<span id="cb63-2"><a href="airflow.html#cb63-2" aria-hidden="true" tabindex="-1"></a>                           bash_command<span class="op">=</span><span class="st">&#39;echo &quot;Example!&quot;&#39;</span>,</span>
-<span id="cb63-3"><a href="airflow.html#cb63-3" aria-hidden="true" tabindex="-1"></a>                           dag<span class="op">=</span>example_dag)</span></code></pre></div>
-<p>It is possible to define a give order of task completion, meaning task dependencies. They are either referred to as upstream or downstream tasks.
-In Airflow 1.8 and later, they are defined using the bitshift operators:
-* &gt;&gt;, or the upstream operator (before)
-* &lt;&lt;, or the downstream operator (after)</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="airflow.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># chained dependencies</span></span>
-<span id="cb64-2"><a href="airflow.html#cb64-2" aria-hidden="true" tabindex="-1"></a>task_1 <span class="op">&gt;&gt;</span> task_2 <span class="op">&gt;&gt;</span> task_3</span>
-<span id="cb64-3"><a href="airflow.html#cb64-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-4"><a href="airflow.html#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mixed dependencies</span></span>
-<span id="cb64-5"><a href="airflow.html#cb64-5" aria-hidden="true" tabindex="-1"></a>task_1 <span class="op">&gt;&gt;</span> task_2 <span class="op">&lt;&lt;</span> task_3</span>
-<span id="cb64-6"><a href="airflow.html#cb64-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-7"><a href="airflow.html#cb64-7" aria-hidden="true" tabindex="-1"></a>task_1 <span class="op">&gt;&gt;</span> task_2</span>
-<span id="cb64-8"><a href="airflow.html#cb64-8" aria-hidden="true" tabindex="-1"></a>task_3 <span class="op">&gt;&gt;</span> task_2</span></code></pre></div>
-<p><em>arguments</em></p>
-<p>supports arguments to tasks
-* Positional
-* Keyword</p>
-<p>Use the <code>op_kwargs</code> dictionary</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb65-1"><a href="airflow.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sleep(length_of_time):</span>
-<span id="cb65-2"><a href="airflow.html#cb65-2" aria-hidden="true" tabindex="-1"></a>    time.sleep(lenght_of_time)</span>
-<span id="cb65-3"><a href="airflow.html#cb65-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb65-4"><a href="airflow.html#cb65-4" aria-hidden="true" tabindex="-1"></a>sleep_task <span class="op">=</span> PythonOperator(</span>
-<span id="cb65-5"><a href="airflow.html#cb65-5" aria-hidden="true" tabindex="-1"></a>    task_id<span class="op">=</span><span class="st">&#39;sleep&#39;</span>,</span>
-<span id="cb65-6"><a href="airflow.html#cb65-6" aria-hidden="true" tabindex="-1"></a>    python_callable<span class="op">=</span>sleep,</span>
-<span id="cb65-7"><a href="airflow.html#cb65-7" aria-hidden="true" tabindex="-1"></a>    op_kwargs<span class="op">=</span>{<span class="st">&#39;length_of_time&#39;</span>:<span class="dv">5</span>},</span>
-<span id="cb65-8"><a href="airflow.html#cb65-8" aria-hidden="true" tabindex="-1"></a>    dag<span class="op">=</span>example_dag</span>
-<span id="cb65-9"><a href="airflow.html#cb65-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-</div>
-<div id="scheduling" class="section level3 hasAnchor" number="4.3.3">
-<h3><span class="header-section-number">4.3.3</span> Scheduling<a href="airflow.html#scheduling" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>DAG Runs
-A DAG run is a specific instance of a workflow at a point in time. It can be run manually or via schedule_interval. Maintain state for each workflow and the tasks within:
-* running
-* failed
-* success</p>
-<p>When scheduling a DAG, there are severyl attributes to note:
-* start_date - the date/time to initially schedule the DAG run
-* end_date - optional attribute for when to stop running new DAG instances
-* max_tries - optional attribute for how many attempts to make
-* schedule_interval - how often to run</p>
-</div>
-<div id="sensors" class="section level3 hasAnchor" number="4.3.4">
-<h3><span class="header-section-number">4.3.4</span> Sensors<a href="airflow.html#sensors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A Sensor is an operator that waits for a certain condition to be true, e.g.:
-* creation of a file (existence of a file FileSensor)
-* upload of a database record
-* certain response from a web request</p>
-<p>It can define how often to check for the condition to be true
-Sensors are assigned to tasks.</p>
-<p>Sensors have different arguments:
-mode: how to check for a condition
-<code>mode='poke'</code> the default, run repeatedly
-<code>mode='reschedule'</code> give up task slot and try again later
-poke_interval: how often to wait between checks
-timeout: how long to wait before failing task</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb66-1"><a href="airflow.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow.sensors.base_sensor_operator</span></code></pre></div>
-<div class="sourceCode" id="cb67"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="airflow.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow.contrib.sensors.file_sensor <span class="im">import</span> FileSensor</span>
-<span id="cb67-2"><a href="airflow.html#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-3"><a href="airflow.html#cb67-3" aria-hidden="true" tabindex="-1"></a>file_sensor_task <span class="op">=</span> FileSensor(task<span class="op">=</span><span class="st">&#39;file_sense&#39;</span>,</span>
-<span id="cb67-4"><a href="airflow.html#cb67-4" aria-hidden="true" tabindex="-1"></a>                             filepath<span class="op">=</span><span class="st">&#39;salesdata.csv&#39;</span>,</span>
-<span id="cb67-5"><a href="airflow.html#cb67-5" aria-hidden="true" tabindex="-1"></a>                             poke_intervall<span class="op">=</span><span class="dv">300</span>,</span>
-<span id="cb67-6"><a href="airflow.html#cb67-6" aria-hidden="true" tabindex="-1"></a>                             dag<span class="op">=</span>sales_report_dag</span>
-<span id="cb67-7"><a href="airflow.html#cb67-7" aria-hidden="true" tabindex="-1"></a>                             )</span>
-<span id="cb67-8"><a href="airflow.html#cb67-8" aria-hidden="true" tabindex="-1"></a>init_sales_cleanup <span class="op">&gt;&gt;</span> file_sensor_task <span class="op">&gt;&gt;</span> generate_report</span></code></pre></div>
-<p>Other sensors:
-* ExternalTaskSensor - wait for a task in another DAG to complete
-* HttpSensor - Request a web URL and check for content
-* SqlSensor - Runs a SQL query to check for content
-* Many other in <code>aorflow.sensors</code> and <code>airflow.contrib.sensors</code>
-*
-### Executor</p>
-<p>What is an executor?
-Executors run tasks. Different executors handle running the tasks differently, e.g.
-+ SequentialExecutor
-+ LocalExecutor
-+ CeleryExecutor
-+</p>
-</div>
-</div>
-<div id="templates" class="section level2 hasAnchor" number="4.4">
-<h2><span class="header-section-number">4.4</span> Templates<a href="airflow.html#templates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>allow substituting DAG information</p>
+<p>However, the philosophy of Airflow is to define workflows as code, so coding will always be required. Thus, Airflow can also be referred to as a <em>“Workflows as code”</em>-tool that allows for a dynamic, extensible, and flexible management of its workflows.</p>
+<p>The Airflow platform contains different operators to easily extend and connect with many other technologies. Being able to manage a workflow for all stages of the training of ML models, and the possibility to combine Airflow with other tools like MLflow for model tracking, make Apache Airflow a great tool to incorporate in an MLOps architecture.</p>
+<p>The aim of this chapter is to give a tutorial on how to use Airflow from a user perspective, as well as give a short overview of its deployment. Airflow can be deployed in multiple ways, starting from a single processing unit on a local machine to a distributed setup with multiple compute resources for large workflows in a production setting. A detailed description of what an Airflow deployment involves is shown in the section Airflow Infrastructure.
+The usage tutorial is based on the local installation of Airflow. Please refer to the prerequisits on what is needed to follow through.</p>
+<div id="prerequisites-2" class="section level3 unlisted unnumbered hasAnchor">
+<h3>Prerequisites<a href="airflow.html#prerequisites-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The main prerequisites to follow this tutorial to have an Apache Airflow instance installed. The official documentation gives a good overview on <a href="https://airflow.apache.org/docs/apache-airflow/stable/start.html">how to do</a>. It is sufficient to run Airflow on a local deployment and there is no need to to set up a complex Airflow deployment on a cluster or else. Further needed is intermediate knowledge of the programming language Python and basic knowledge of bash.</p>
 
 </div>
 </div>
@@ -443,8 +290,8 @@ Executors run tasks. Different executors handle running the tasks differently, e
           </div>
         </div>
       </div>
-<a href="kubernetes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="mlflow.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="helm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="fundamental-concepts.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -459,10 +306,10 @@ Executors run tasks. Different executors handle running the tasks differently, e
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
-"facebook": true,
+"github": true,
+"facebook": false,
 "twitter": true,
-"linkedin": false,
+"linkedin": true,
 "weibo": false,
 "instapaper": false,
 "vk": false,
@@ -486,7 +333,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null
