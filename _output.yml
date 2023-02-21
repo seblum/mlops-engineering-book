@@ -10,6 +10,7 @@ bookdown::gitbook:
     toc:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       collapse: subsection 
 =======
       collapse: subsection
@@ -17,6 +18,9 @@ bookdown::gitbook:
 =======
       collapse: subsection
 >>>>>>> 2519db1 (added code and copied webpage)
+=======
+      collapse: subsection
+>>>>>>> 2bfcb51151c9abd391f73c2b01160286b6f58a5b
       before: |
         <li><a href="./">A Minimal Book Example</a></li>
       after: |
