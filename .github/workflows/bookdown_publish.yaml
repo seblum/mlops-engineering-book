@@ -22,8 +22,10 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: docs
-          path: bookdown-documents/docs/
-  
+          path: docs/
+    defaults:
+      run:
+        working-directory: bookdown-documents/
 # Need to first create an empty gh-pages branch
 # see https://pkgdown.r-lib.org/reference/deploy_site_github.html
 # and also add secrets for a GH_PAT and EMAIL to the repository
@@ -40,13 +42,15 @@ jobs:
          # Artifact name
          name: docs # optional
          # Destination path
-         path: bookdown-documents/docs # optional
+         path: docs # optional
      - name: Deploy to GitHub Pages
        uses: Cecilapp/GitHub-Pages-deploy@v3
        env:
           GITHUB_TOKEN: ${{ SECRETS.GITHUB_TOKEN }}           # https://github.com/settings/tokens
        with:
           EMAIL: ${{ SECRETS.EMAIL }}               # must be a verified email
-          BUILD_DIR: bookdown-documents/docs/     
+          BUILD_DIR: docs/     
           branch: gh-pages
- 
+    defaults:
+      run:
+        working-directory: bookdown-documents/
