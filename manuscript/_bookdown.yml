@@ -4,6 +4,8 @@ language:
   ui:
     chapter_name: "Chapter "
 rmd_files: ["index.Rmd",
+            "00-Preamble.Rmd",
+            "01-Introduction.Rmd",
             "02-Terraform.Rmd",
             "02.1-Terraform-Basic_Usage.Rmd",
             "02.2-Terraform-Core_Concepts.Rmd",
