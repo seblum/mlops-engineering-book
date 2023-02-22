@@ -17,3 +17,7 @@ files/02-Terraform/.DS_Store
 
 # MLflow runs folder
 **/mlruns
+
+
+# Build Folder
+./docs
