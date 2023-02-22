@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2.1 Core Concepts | MLOps Engineering</title>
+  <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2.1 Core Concepts | MLOps Engineering" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  <meta name="github-repo" content="seblum/mlops-engineering-book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2.1 Core Concepts | MLOps Engineering" />
+  
+  <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  
+
+<meta name="author" content="Sebastian Blum" />
+
+
+<meta name="date" content="2023-02-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="kubernetes.html"/>
+<link rel="next" href="application-deployment-design.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a></li>
+<li class="chapter" data-level="1" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>1</b> Terraform</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>1.1</b> Basic usage</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="basic-usage.html"><a href="basic-usage.html#terraform-init"><i class="fa fa-check"></i><b>1.1.1</b> terraform init</a></li>
+<li class="chapter" data-level="1.1.2" data-path="basic-usage.html"><a href="basic-usage.html#terraform-validate"><i class="fa fa-check"></i><b>1.1.2</b> terraform validate</a></li>
+<li class="chapter" data-level="1.1.3" data-path="basic-usage.html"><a href="basic-usage.html#terraform-plan"><i class="fa fa-check"></i><b>1.1.3</b> terraform plan</a></li>
+<li class="chapter" data-level="1.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>1.1.4</b> terraform apply</a></li>
+<li class="chapter" data-level="1.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>1.1.5</b> terraform destroy</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="core-concepts.html"><a href="core-concepts.html"><i class="fa fa-check"></i><b>1.2</b> Core Concepts</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="core-concepts.html"><a href="core-concepts.html#providers"><i class="fa fa-check"></i><b>1.2.1</b> Providers</a></li>
+<li class="chapter" data-level="1.2.2" data-path="core-concepts.html"><a href="core-concepts.html#resources"><i class="fa fa-check"></i><b>1.2.2</b> Resources</a></li>
+<li class="chapter" data-level="1.2.3" data-path="core-concepts.html"><a href="core-concepts.html#data-sources"><i class="fa fa-check"></i><b>1.2.3</b> Data Sources</a></li>
+<li class="chapter" data-level="1.2.4" data-path="core-concepts.html"><a href="core-concepts.html#state"><i class="fa fa-check"></i><b>1.2.4</b> State</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>1.3</b> Modules</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>1.3.1</b> Input Variables</a></li>
+<li class="chapter" data-level="1.3.2" data-path="modules.html"><a href="modules.html#output-variables"><i class="fa fa-check"></i><b>1.3.2</b> Output Variables</a></li>
+<li class="chapter" data-level="1.3.3" data-path="modules.html"><a href="modules.html#local-variables"><i class="fa fa-check"></i><b>1.3.3</b> Local Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html"><i class="fa fa-check"></i><b>1.4</b> Additional tips &amp; tricks</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#count"><i class="fa fa-check"></i><b>1.4.1</b> count</a></li>
+<li class="chapter" data-level="1.4.2" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for-each"><i class="fa fa-check"></i><b>1.4.2</b> for-each</a></li>
+<li class="chapter" data-level="1.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>1.4.3</b> for</a></li>
+<li class="chapter" data-level="1.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>1.4.4</b> Workspaces</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>1.5</b> Exemplary Deployment</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>2</b> Kubernetes</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html"><i class="fa fa-check"></i><b>2.1</b> Core Concepts</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html#nodes"><i class="fa fa-check"></i><b>2.1.1</b> Nodes</a></li>
+<li class="chapter" data-level="2.1.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html#pods"><i class="fa fa-check"></i><b>2.1.2</b> Pods</a></li>
+<li class="chapter" data-level="2.1.3" data-path="core-concepts-1.html"><a href="core-concepts-1.html#imperative-declarative-management"><i class="fa fa-check"></i><b>2.1.3</b> Imperative &amp; Declarative Management</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>2.2</b> Application Deployment &amp; Design</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>2.2.1</b> Deployments</a></li>
+<li class="chapter" data-level="2.2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html#resource-management"><i class="fa fa-check"></i><b>2.2.2</b> Resource Management</a></li>
+<li class="chapter" data-level="2.2.3" data-path="application-deployment-design.html"><a href="application-deployment-design.html#daemonsets"><i class="fa fa-check"></i><b>2.2.3</b> DaemonSets</a></li>
+<li class="chapter" data-level="2.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>2.2.4</b> StatefulSets</a></li>
+<li class="chapter" data-level="2.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>2.2.5</b> Jobs &amp; Cron Jobs</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>2.3</b> Services &amp; Networking</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>2.3.1</b> Services</a></li>
+<li class="chapter" data-level="2.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>2.3.2</b> Service Discovery</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>2.4</b> Volume &amp; Storage</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>2.4.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="2.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>2.4.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="2.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>2.4.3</b> Persistent Volumes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>2.5</b> Environment, Configuration &amp; Security</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#namespaces"><i class="fa fa-check"></i><b>2.5.1</b> Namespaces</a></li>
+<li class="chapter" data-level="2.5.2" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>2.5.2</b> Labels, Selectors and Annotations</a></li>
+<li class="chapter" data-level="2.5.3" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#configmaps"><i class="fa fa-check"></i><b>2.5.3</b> ConfigMaps</a></li>
+<li class="chapter" data-level="2.5.4" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#secrets"><i class="fa fa-check"></i><b>2.5.4</b> Secrets</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>2.6</b> Observability &amp; Maintenance</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>2.6.1</b> Health Checks</a></li>
+<li class="chapter" data-level="2.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>2.6.2</b> Debugging</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>2.7</b> Helm</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html"><i class="fa fa-check"></i><b>3.1</b> Fundamental concepts</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#dags"><i class="fa fa-check"></i><b>3.1.1</b> DAGs</a></li>
+<li class="chapter" data-level="3.1.2" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#operators"><i class="fa fa-check"></i><b>3.1.2</b> Operators</a></li>
+<li class="chapter" data-level="3.1.3" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#tasks"><i class="fa fa-check"></i><b>3.1.3</b> Tasks</a></li>
+<li class="chapter" data-level="3.1.4" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#xcom"><i class="fa fa-check"></i><b>3.1.4</b> XCom</a></li>
+<li class="chapter" data-level="3.1.5" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#scheduling"><i class="fa fa-check"></i><b>3.1.5</b> Scheduling</a></li>
+<li class="chapter" data-level="3.1.6" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#taskflow"><i class="fa fa-check"></i><b>3.1.6</b> Taskflow</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>3.2</b> Exemplary ML workflow</a></li>
+<li class="chapter" data-level="3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>3.3</b> Airflow infrastructure</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#airflow-as-a-distributed-system"><i class="fa fa-check"></i><b>3.3.1</b> Airflow as a distributed system</a></li>
+<li class="chapter" data-level="3.3.2" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#scheduler-1"><i class="fa fa-check"></i><b>3.3.2</b> Scheduler</a></li>
+<li class="chapter" data-level="3.3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#webserver"><i class="fa fa-check"></i><b>3.3.3</b> Webserver</a></li>
+<li class="chapter" data-level="3.3.4" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#executor"><i class="fa fa-check"></i><b>3.3.4</b> Executor</a></li>
+<li class="chapter" data-level="3.3.5" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#dag-directory"><i class="fa fa-check"></i><b>3.3.5</b> DAG Directory</a></li>
+<li class="chapter" data-level="3.3.6" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#metadata-database"><i class="fa fa-check"></i><b>3.3.6</b> Metadata Database</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>4</b> MLflow</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="fundamental-components.html"><a href="fundamental-components.html"><i class="fa fa-check"></i><b>4.1</b> Fundamental Components</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-tracking"><i class="fa fa-check"></i><b>4.1.1</b> MLflow Tracking</a></li>
+<li class="chapter" data-level="4.1.2" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-models"><i class="fa fa-check"></i><b>4.1.2</b> MLflow Models</a></li>
+<li class="chapter" data-level="4.1.3" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-model-registry"><i class="fa fa-check"></i><b>4.1.3</b> MLflow Model Registry</a></li>
+<li class="chapter" data-level="4.1.4" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-projects"><i class="fa fa-check"></i><b>4.1.4</b> MLflow Projects</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html"><i class="fa fa-check"></i><b>4.2</b> MLFflow Architecture</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>4.2.1</b> MLflow Tracking Server</a></li>
+<li class="chapter" data-level="4.2.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-backend-store"><i class="fa fa-check"></i><b>4.2.2</b> MLflow Backend Store</a></li>
+<li class="chapter" data-level="4.2.3" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-artifact-store"><i class="fa fa-check"></i><b>4.2.3</b> MLflow Artifact Store</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MLOps Engineering</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="core-concepts-1" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Core Concepts<a href="core-concepts-1.html#core-concepts-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="nodes" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Nodes<a href="core-concepts-1.html#nodes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A K8s Cluster usually consistes of a set of nodes. A Node can hereby be a virtual machine (VM) in the cloud, e.g. AWS, Azure, or GCP, or a node can also be of course a physical on-premise instance. K8s distinguishes the nodes between a <em>master node</em> and <em>worker nodes</em>. The master node is basically the brain of the cluster. This is where everything is organized, handled, and managed. In comparison, a worker nodes is where the heavy lifting is happening, such as running application. Both, master and worker nodes communicate with each other via the so called kubelet. One cluster has only one master node and usually multiple worker nodes.</p>
+<div class="figure">
+<img src="images/04-Kubernetes/k8s-cluster.png" alt="" />
+<p class="caption">K8s Cluster</p>
+</div>
+<div id="master-control-plane" class="section level4 hasAnchor" number="2.1.1.1">
+<h4><span class="header-section-number">2.1.1.1</span> Master &amp; Control Plane<a href="core-concepts-1.html#master-control-plane" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>To be able to work as the brain of the cluster, the master node contains a controll plane made of several components, each of which serves a different function.</p>
+<ul>
+<li>Scheduler</li>
+<li>Cluster Store</li>
+<li>API Server</li>
+<li>Controller Manager</li>
+<li>Cloud Controller Manager</li>
+</ul>
+<div class="figure">
+<img src="images/04-Kubernetes/master-node.png" alt="" />
+<p class="caption">Master Node</p>
+</div>
+<div id="api-server" class="section level5 hasAnchor" number="2.1.1.1.1">
+<h5><span class="header-section-number">2.1.1.1.1</span> API Server<a href="core-concepts-1.html#api-server" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The api servers serves as the connection between the frontend and the K8s controll plane. All communications, external and interal, go through it. Frontend to Kubernetes Controll Plane. It exposes a restful api on port 443 to allow communication, as well as performes authentication and authorization checks. Whenever we perform something on the K8s cluster, e.g. using a command like <code>kubectl apply -f &lt;file.yaml&gt;</code>, we communicate with the api server (what we do here is shown in the section about pods).</p>
+</div>
+<div id="cluster-store" class="section level5 hasAnchor" number="2.1.1.1.2">
+<h5><span class="header-section-number">2.1.1.1.2</span> Cluster store<a href="core-concepts-1.html#cluster-store" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The cluster store stores the configuration and state of the entire cluster. It is a distributed key-value data store and the single source of truth database of the cluster. As in the example before, whenever we apply a command like <code>kubectl apply -f &lt;file.yaml&gt;</code>, the file is stored on the cluster store to store the configuration.</p>
+</div>
+<div id="scheduler" class="section level5 hasAnchor" number="2.1.1.1.3">
+<h5><span class="header-section-number">2.1.1.1.3</span> Scheduler<a href="core-concepts-1.html#scheduler" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The scheduler of the control plane watches for new workloads/pods and assigns them to a node based on several scheduling factors. These factors include whether a node is healthy, whether there are enough resources available, whether the port is available, or according to affinity or anti-affinity rules.</p>
+</div>
+<div id="controller-manager" class="section level5 hasAnchor" number="2.1.1.1.4">
+<h5><span class="header-section-number">2.1.1.1.4</span> Controller manager<a href="core-concepts-1.html#controller-manager" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The controller manager is a daemon that manages the control loop. This means, the controller manager is basically a controller of other controllers. Each controller watches the api server for changes to their state. Whenever a current state of a controller does not match the desired state, the control manager administers the changes. These controllers are for example replicasets, endpoints, namespace, or service accounts. There is also the cloud controller manager, which is responsible to interact with the underlying cloud infrastructure.</p>
+</div>
+</div>
+<div id="worker-nodes" class="section level4 hasAnchor" number="2.1.1.2">
+<h4><span class="header-section-number">2.1.1.2</span> Worker Nodes<a href="core-concepts-1.html#worker-nodes" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>There worker nodes are the part of the cluster where the heavy lifting happens. Their VMs (or physical machines) often run linux and thus provide a suitable and running environment for each application.</p>
+<div class="figure">
+<img src="images/04-Kubernetes/worker-node.png" alt="" />
+<p class="caption">Worker Node</p>
+</div>
+<p>A worker node consists of three main components.</p>
+<ul>
+<li>Kubelet</li>
+<li>Container runtime</li>
+<li>Kube proxy</li>
+</ul>
+<div id="kubelet" class="section level5 hasAnchor" number="2.1.1.2.1">
+<h5><span class="header-section-number">2.1.1.2.1</span> Kubelet<a href="core-concepts-1.html#kubelet" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The kubelet is the main agent of a worker node that runs on every single node. It receives pod definitions from the API server and interacts with the container runtime to run containers associated with the corresponding pods. The kubelet also reports node and pod state to the master node.</p>
+</div>
+<div id="container-runtime" class="section level5 hasAnchor" number="2.1.1.2.2">
+<h5><span class="header-section-number">2.1.1.2.2</span> Container runtime<a href="core-concepts-1.html#container-runtime" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The container runtime is responsible to pull images from container registries, e.g. from DockerHub, or AWS ECR, as well as starting, and stoping containers. The container runtime thus abstracts container management for K8s and runs a Container Runtime Interface (CRI) within.</p>
+</div>
+<div id="kube-proxy" class="section level5 hasAnchor" number="2.1.1.2.3">
+<h5><span class="header-section-number">2.1.1.2.3</span> Kube-proxy<a href="core-concepts-1.html#kube-proxy" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The kube-proxy runs on every node via a DaemondSet. It is responsible for network communications by maintaining network rules to allow communication to pods from inside and outside the cluster. If two pods want to talk to each other, the kube-proxy handles their communication. Each node of the cluster gets its own unique IP adress. The kube-proxy handels the local cluster networking as well as routing the network traffic to a load balanced service.</p>
+</div>
+</div>
+</div>
+<div id="pods" class="section level3 hasAnchor" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Pods<a href="core-concepts-1.html#pods" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A pod is the smallest deployable unit in K8s (In contrast to K8s, the smallest deployable unit for docker are containers.). Therefore, a pod is a running process that runs on a clusters’ node. Within a pod, there is always one <em>main container</em> representing the application (in whatever language written, e.g. JS, Python, Go). There also may or may not be <em>init containers</em>, and/or <em>side containers</em>. Init containers are containers that are executed before the main container. Side containers are containers that support the main containers, e.g. a container that acts as a proxy to your main container. There may be volumes specified within a pod, which enables containers to share and store data.</p>
+<div class="figure">
+<img src="images/04-Kubernetes/pod.png" alt="" />
+<p class="caption">Pod</p>
+</div>
+<p>The containers running within a pod communicate with each other using localhost and whatever port they expose. The port itself has a unique ip adress, which enables outward communication between pods.</p>
+<p>The problem is that a pods does not have a long lifetime (also denoted as ephemeral) and is disposable. This suggests to never create a pod on its own within a K8s cluster and to rather use controllers instead to deploy and maintain a pods lifecycle, e.g. controllers like <em>Deployments</em>. In general, managing ressources in K8s is done via an imperative or declarative management.</p>
+</div>
+<div id="imperative-declarative-management" class="section level3 hasAnchor" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> Imperative &amp; Declarative Management<a href="core-concepts-1.html#imperative-declarative-management" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Imperative management means managing the pods via a CLI and specifying all necessary parameters using it. It is good for learning, troubleshooting, and experimenting on the cluster. In contrast, the declarative approach uses a yaml file to state all necessary parameters needed for a ressource, and then using the CLI to administer the changes. The declarative approach is reproducible, which means the same configuration can be applied in different environments (prod/dev). This is best practice to use when building a cluster. As stated, this differentiation does not only hold for pods, but for all ressources within a cluster.</p>
+<div id="imperative-management" class="section level4 hasAnchor" number="2.1.3.1">
+<h4><span class="header-section-number">2.1.3.1</span> Imperative Management<a href="core-concepts-1.html#imperative-management" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="core-concepts-1.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># start a pod by specifying the pods name, </span></span>
+<span id="cb27-2"><a href="core-concepts-1.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the container image to run, and the port exposed</span></span>
+<span id="cb27-3"><a href="core-concepts-1.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> run <span class="op">&lt;</span>pod-name<span class="op">&gt;</span> --image=<span class="st">&quot;&lt;image-name&gt;&quot;</span> <span class="at">--port</span><span class="op">=</span>80</span>
+<span id="cb27-4"><a href="core-concepts-1.html#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="core-concepts-1.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># run following command to test the pod specified</span></span>
+<span id="cb27-6"><a href="core-concepts-1.html#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># It will forward to localhost:8080</span></span>
+<span id="cb27-7"><a href="core-concepts-1.html#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> port-forward pod/<span class="op">&lt;</span>pod-name<span class="op">&gt;</span> 8080:80</span></code></pre></div>
+</div>
+<div id="declarative-management-configuration" class="section level4 hasAnchor" number="2.1.3.2">
+<h4><span class="header-section-number">2.1.3.2</span> Declarative Management / Configuration<a href="core-concepts-1.html#declarative-management-configuration" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Declarative configuration is done using a <em>yaml</em> format, which works on key-value pairs.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb28-1"><a href="core-concepts-1.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pod.yaml</span></span>
+<span id="cb28-2"><a href="core-concepts-1.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb28-3"><a href="core-concepts-1.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># specify which kind of configuration this is</span></span>
+<span id="cb28-4"><a href="core-concepts-1.html#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># lets configure a simple pod</span></span>
+<span id="cb28-5"><a href="core-concepts-1.html#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
+<span id="cb28-6"><a href="core-concepts-1.html#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># metadata will be explained later on in more detail</span></span>
+<span id="cb28-7"><a href="core-concepts-1.html#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb28-8"><a href="core-concepts-1.html#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> hello-world</span></span>
+<span id="cb28-9"><a href="core-concepts-1.html#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb28-10"><a href="core-concepts-1.html#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> hello-world</span></span>
+<span id="cb28-11"><a href="core-concepts-1.html#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb28-12"><a href="core-concepts-1.html#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="co">  # remember: a pod is a selection of one or more containers</span></span>
+<span id="cb28-13"><a href="core-concepts-1.html#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co">  # we could therefore specify multiple containers</span></span>
+<span id="cb28-14"><a href="core-concepts-1.html#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb28-15"><a href="core-concepts-1.html#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="co">    # specify the container name</span></span>
+<span id="cb28-16"><a href="core-concepts-1.html#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> hello</span></span>
+<span id="cb28-17"><a href="core-concepts-1.html#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="co">  # specify which container image should be pulled</span></span>
+<span id="cb28-18"><a href="core-concepts-1.html#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span><span class="at"> seblum/mlops-public:cat-v1</span></span>
+<span id="cb28-19"><a href="core-concepts-1.html#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="co">  # ressource configurations will be handled later as well</span></span>
+<span id="cb28-20"><a href="core-concepts-1.html#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ressources</span><span class="kw">:</span></span>
+<span id="cb28-21"><a href="core-concepts-1.html#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb28-22"><a href="core-concepts-1.html#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb28-23"><a href="core-concepts-1.html#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb28-24"><a href="core-concepts-1.html#cb28-24" aria-hidden="true" tabindex="-1"></a><span class="co">  # specify the port on which the container should be exposed</span></span>
+<span id="cb28-25"><a href="core-concepts-1.html#cb28-25" aria-hidden="true" tabindex="-1"></a><span class="co">  # similar to the imperative approach</span></span>
+<span id="cb28-26"><a href="core-concepts-1.html#cb28-26" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb28-27"><a href="core-concepts-1.html#cb28-27" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">ContainerPorts</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span></code></pre></div>
+<p>Appyl this declarative configuration using the following kubectl command via the CLI.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="core-concepts-1.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> apply <span class="at">-f</span> <span class="st">&quot;file-name.yaml&quot;</span></span>
+<span id="cb29-2"><a href="core-concepts-1.html#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="core-concepts-1.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># similar to before, run following to test your pod on localhost:8080</span></span>
+<span id="cb29-4"><a href="core-concepts-1.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> port-forward pod/<span class="op">&lt;</span>pod-name<span class="op">&gt;</span> 8080:80</span></code></pre></div>
+</div>
+<div id="kubectl" class="section level4 hasAnchor" number="2.1.3.3">
+<h4><span class="header-section-number">2.1.3.3</span> Kubectl<a href="core-concepts-1.html#kubectl" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>One word to interacting with the cluster using the CLI. In general, <em>kubectl</em> is used to interact with the K8s cluster. This allows to run and apply pod configurations such as seen before, as well as the already shown port forwarding. We can also inspect the cluster, see what ressources are running on which nodes, see their configurations, and watch their logs. A small selection of commands are shown below.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="core-concepts-1.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># forward the pods to localhost:8080</span></span>
+<span id="cb30-2"><a href="core-concepts-1.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> port-forward <span class="op">&lt;</span>ressource<span class="op">&gt;</span>/<span class="op">&lt;</span>pod-name<span class="op">&gt;</span> 8080:80</span>
+<span id="cb30-3"><a href="core-concepts-1.html#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="core-concepts-1.html#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># show all pods currently running in the cluster</span></span>
+<span id="cb30-5"><a href="core-concepts-1.html#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods</span>
+<span id="cb30-6"><a href="core-concepts-1.html#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="core-concepts-1.html#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># delete a specific pod</span></span>
+<span id="cb30-8"><a href="core-concepts-1.html#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> delete pods <span class="op">&lt;</span>pod-name<span class="op">&gt;</span></span>
+<span id="cb30-9"><a href="core-concepts-1.html#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="core-concepts-1.html#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="co"># delete a previously applied configuration</span></span>
+<span id="cb30-11"><a href="core-concepts-1.html#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> delete <span class="at">-f</span> <span class="op">&lt;</span>file-name<span class="op">&gt;</span></span>
+<span id="cb30-12"><a href="core-concepts-1.html#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="core-concepts-1.html#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="co"># show all instances of a specific resource running on the cluster</span></span>
+<span id="cb30-14"><a href="core-concepts-1.html#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="co"># (nodes, pods, deployments, statefulsets, etc) </span></span>
+<span id="cb30-15"><a href="core-concepts-1.html#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get <span class="op">&lt;</span>resource<span class="op">&gt;</span></span>
+<span id="cb30-16"><a href="core-concepts-1.html#cb30-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-17"><a href="core-concepts-1.html#cb30-17" aria-hidden="true" tabindex="-1"></a><span class="co"># describe and show specific settings of a pods</span></span>
+<span id="cb30-18"><a href="core-concepts-1.html#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> describe pod <span class="op">&lt;</span>pod-name<span class="op">&gt;</span></span></code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="kubernetes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="application-deployment-design.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": true,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/seblum/kubernetes-training/edit/master/04.1-Kubernetes-Core_Concepts.md",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

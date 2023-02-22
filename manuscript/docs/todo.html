@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 TODO | MLOps Architecture from scratch</title>
+  <meta name="description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 TODO | MLOps Architecture from scratch" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
+  <meta name="github-repo" content="seblum/mlops-practice" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 TODO | MLOps Architecture from scratch" />
+  
+  <meta name="twitter:description" content="This is a tutorial to build a MLOps Airflow architecture utilizing K8s, Terraform, MLFlow, and DVC." />
+  
+
+<meta name="author" content="Sebastian Blum" />
+
+
+<meta name="date" content="2023-02-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="mlflow.html"/>
+<link rel="next" href="mlflow-1.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#a-work-in-progress"><i class="fa fa-check"></i>A work in progress</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>2</b> Terraform</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="terraform.html"><a href="terraform.html#prerequisites"><i class="fa fa-check"></i><b>2.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2.2" data-path="terraform.html"><a href="terraform.html#basic-usage"><i class="fa fa-check"></i><b>2.2</b> Basic usage</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="terraform.html"><a href="terraform.html#terraform-init"><i class="fa fa-check"></i><b>2.2.1</b> terraform init</a></li>
+<li class="chapter" data-level="2.2.2" data-path="terraform.html"><a href="terraform.html#terraform-validate"><i class="fa fa-check"></i><b>2.2.2</b> terraform validate</a></li>
+<li class="chapter" data-level="2.2.3" data-path="terraform.html"><a href="terraform.html#terraform-plan"><i class="fa fa-check"></i><b>2.2.3</b> terraform plan</a></li>
+<li class="chapter" data-level="2.2.4" data-path="terraform.html"><a href="terraform.html#terraform-apply"><i class="fa fa-check"></i><b>2.2.4</b> terraform apply</a></li>
+<li class="chapter" data-level="2.2.5" data-path="terraform.html"><a href="terraform.html#terraform-destroy"><i class="fa fa-check"></i><b>2.2.5</b> terraform destroy</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="terraform.html"><a href="terraform.html#core-concepts"><i class="fa fa-check"></i><b>2.3</b> Core Concepts</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="terraform.html"><a href="terraform.html#providers"><i class="fa fa-check"></i><b>2.3.1</b> Providers</a></li>
+<li class="chapter" data-level="2.3.2" data-path="terraform.html"><a href="terraform.html#resources"><i class="fa fa-check"></i><b>2.3.2</b> Resources</a></li>
+<li class="chapter" data-level="2.3.3" data-path="terraform.html"><a href="terraform.html#data-sources"><i class="fa fa-check"></i><b>2.3.3</b> Data Sources</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="terraform.html"><a href="terraform.html#state"><i class="fa fa-check"></i><b>2.4</b> State</a></li>
+<li class="chapter" data-level="2.5" data-path="terraform.html"><a href="terraform.html#modules"><i class="fa fa-check"></i><b>2.5</b> Modules</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="terraform.html"><a href="terraform.html#input-variables"><i class="fa fa-check"></i><b>2.5.1</b> Input Variables</a></li>
+<li class="chapter" data-level="2.5.2" data-path="terraform.html"><a href="terraform.html#output-variables"><i class="fa fa-check"></i><b>2.5.2</b> Output Variables</a></li>
+<li class="chapter" data-level="2.5.3" data-path="terraform.html"><a href="terraform.html#local-variables"><i class="fa fa-check"></i><b>2.5.3</b> Local Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="terraform.html"><a href="terraform.html#additional-tips-tricks"><i class="fa fa-check"></i><b>2.6</b> Additional tips &amp; tricks</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="terraform.html"><a href="terraform.html#count"><i class="fa fa-check"></i><b>2.6.1</b> count</a></li>
+<li class="chapter" data-level="2.6.2" data-path="terraform.html"><a href="terraform.html#for-each"><i class="fa fa-check"></i><b>2.6.2</b> for-each</a></li>
+<li class="chapter" data-level="2.6.3" data-path="terraform.html"><a href="terraform.html#for"><i class="fa fa-check"></i><b>2.6.3</b> for</a></li>
+<li class="chapter" data-level="2.6.4" data-path="terraform.html"><a href="terraform.html#workspaces"><i class="fa fa-check"></i><b>2.6.4</b> Workspaces</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="terraform.html"><a href="terraform.html#putting-it-together"><i class="fa fa-check"></i><b>2.7</b> Putting it together</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>3</b> Kubernetes</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="kubernetes.html"><a href="kubernetes.html#prerequisites-1"><i class="fa fa-check"></i><b>3.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="3.2" data-path="kubernetes.html"><a href="kubernetes.html#nodes"><i class="fa fa-check"></i><b>3.2</b> Nodes</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="kubernetes.html"><a href="kubernetes.html#master-control-plane"><i class="fa fa-check"></i><b>3.2.1</b> Master &amp; Control Plane</a></li>
+<li class="chapter" data-level="3.2.2" data-path="kubernetes.html"><a href="kubernetes.html#worker-nodes"><i class="fa fa-check"></i><b>3.2.2</b> Worker Nodes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="kubernetes.html"><a href="kubernetes.html#pods"><i class="fa fa-check"></i><b>3.3</b> Pods</a>
+<ul>
+<li class="chapter" data-level="" data-path="kubernetes.html"><a href="kubernetes.html#imperative-declarative-management"><i class="fa fa-check"></i>Imperative &amp; Declarative Management</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="kubernetes.html"><a href="kubernetes.html#deployments"><i class="fa fa-check"></i><b>3.4</b> Deployments</a></li>
+<li class="chapter" data-level="3.5" data-path="kubernetes.html"><a href="kubernetes.html#services"><i class="fa fa-check"></i><b>3.5</b> Services</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="kubernetes.html"><a href="kubernetes.html#exemplary-setup-of-database-and-frontend-microservices"><i class="fa fa-check"></i><b>3.5.1</b> Exemplary setup of database and frontend microservices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="kubernetes.html"><a href="kubernetes.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>3.6</b> Labels, Selectors and Annotations</a></li>
+<li class="chapter" data-level="3.7" data-path="kubernetes.html"><a href="kubernetes.html#namespaces"><i class="fa fa-check"></i><b>3.7</b> Namespaces</a></li>
+<li class="chapter" data-level="3.8" data-path="kubernetes.html"><a href="kubernetes.html#service-discovery"><i class="fa fa-check"></i><b>3.8</b> Service Discovery</a></li>
+<li class="chapter" data-level="3.9" data-path="kubernetes.html"><a href="kubernetes.html#volume-storage"><i class="fa fa-check"></i><b>3.9</b> Volume &amp; Storage</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="kubernetes.html"><a href="kubernetes.html#emptydir-volume"><i class="fa fa-check"></i><b>3.9.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="3.9.2" data-path="kubernetes.html"><a href="kubernetes.html#hostpath-volume"><i class="fa fa-check"></i><b>3.9.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="3.9.3" data-path="kubernetes.html"><a href="kubernetes.html#persistent-volumes"><i class="fa fa-check"></i><b>3.9.3</b> Persistent Volumes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="kubernetes.html"><a href="kubernetes.html#configmaps"><i class="fa fa-check"></i><b>3.10</b> ConfigMaps</a></li>
+<li class="chapter" data-level="3.11" data-path="kubernetes.html"><a href="kubernetes.html#secrets"><i class="fa fa-check"></i><b>3.11</b> Secrets</a>
+<ul>
+<li class="chapter" data-level="3.11.1" data-path="kubernetes.html"><a href="kubernetes.html#exemplary-use-case-of-secrets"><i class="fa fa-check"></i><b>3.11.1</b> Exemplary use case of secrets</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="kubernetes.html"><a href="kubernetes.html#health-checks"><i class="fa fa-check"></i><b>3.12</b> Health Checks</a>
+<ul>
+<li class="chapter" data-level="3.12.1" data-path="kubernetes.html"><a href="kubernetes.html#liveness-probe"><i class="fa fa-check"></i><b>3.12.1</b> Liveness Probe</a></li>
+<li class="chapter" data-level="3.12.2" data-path="kubernetes.html"><a href="kubernetes.html#readiness-probe"><i class="fa fa-check"></i><b>3.12.2</b> Readiness Probe</a></li>
+</ul></li>
+<li class="chapter" data-level="3.13" data-path="kubernetes.html"><a href="kubernetes.html#resource-management"><i class="fa fa-check"></i><b>3.13</b> Resource Management</a></li>
+<li class="chapter" data-level="3.14" data-path="kubernetes.html"><a href="kubernetes.html#daemon-sets"><i class="fa fa-check"></i><b>3.14</b> Daemon Sets</a></li>
+<li class="chapter" data-level="3.15" data-path="kubernetes.html"><a href="kubernetes.html#statefulsets"><i class="fa fa-check"></i><b>3.15</b> StatefulSets</a></li>
+<li class="chapter" data-level="3.16" data-path="kubernetes.html"><a href="kubernetes.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>3.16</b> Jobs &amp; Cron Jobs</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>4</b> MLflow</a></li>
+<li class="chapter" data-level="5" data-path="todo.html"><a href="todo.html"><i class="fa fa-check"></i><b>5</b> TODO</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="todo.html"><a href="todo.html#fundamental-concept"><i class="fa fa-check"></i><b>5.1</b> Fundamental Concept</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="todo.html"><a href="todo.html#mlflow-tracking"><i class="fa fa-check"></i><b>5.1.1</b> MLflow Tracking</a></li>
+<li class="chapter" data-level="5.1.2" data-path="todo.html"><a href="todo.html#mlflow-models"><i class="fa fa-check"></i><b>5.1.2</b> MLflow Models</a></li>
+<li class="chapter" data-level="5.1.3" data-path="todo.html"><a href="todo.html#mlflow-model-registry"><i class="fa fa-check"></i><b>5.1.3</b> MLflow Model Registry</a></li>
+<li class="chapter" data-level="5.1.4" data-path="todo.html"><a href="todo.html#mlflow-projects"><i class="fa fa-check"></i><b>5.1.4</b> MLflow Projects</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="mlflow-1.html"><a href="mlflow-1.html"><i class="fa fa-check"></i><b>6</b> MLflow</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="mlflow-1.html"><a href="mlflow-1.html#prerequisites-3"><i class="fa fa-check"></i><b>6.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="6.2" data-path="mlflow-1.html"><a href="mlflow-1.html#functionality"><i class="fa fa-check"></i><b>6.2</b> Functionality</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="mlflow-1.html"><a href="mlflow-1.html#mlflow-tracking-1"><i class="fa fa-check"></i><b>6.2.1</b> MLflow Tracking</a></li>
+<li class="chapter" data-level="6.2.2" data-path="mlflow-1.html"><a href="mlflow-1.html#mlflow-models-1"><i class="fa fa-check"></i><b>6.2.2</b> MLflow Models</a></li>
+<li class="chapter" data-level="6.2.3" data-path="mlflow-1.html"><a href="mlflow-1.html#mlflow-model-registry-1"><i class="fa fa-check"></i><b>6.2.3</b> MLflow Model Registry</a></li>
+<li class="chapter" data-level="6.2.4" data-path="mlflow-1.html"><a href="mlflow-1.html#mlflow-projects-1"><i class="fa fa-check"></i><b>6.2.4</b> MLflow Projects</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="mlflow-1.html"><a href="mlflow-1.html#mlfflow-architecture"><i class="fa fa-check"></i><b>6.3</b> MLFflow Architecture</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="mlflow-1.html"><a href="mlflow-1.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>6.3.1</b> MLflow Tracking Server</a></li>
+<li class="chapter" data-level="6.3.2" data-path="mlflow-1.html"><a href="mlflow-1.html#mlflow-backend-store"><i class="fa fa-check"></i><b>6.3.2</b> MLflow Backend Store</a></li>
+<li class="chapter" data-level="6.3.3" data-path="mlflow-1.html"><a href="mlflow-1.html#mlflow-artifact-store"><i class="fa fa-check"></i><b>6.3.3</b> MLflow Artifact Store</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="todo-1.html"><a href="todo-1.html"><i class="fa fa-check"></i><b>7</b> TODO</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MLOps Architecture from scratch</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="todo" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> TODO<a href="todo.html#todo" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" checked="" />
+set prerequisites</li>
+<li><input type="checkbox" disabled="" checked="" />
+insert images</li>
+<li><input type="checkbox" disabled="" checked="" />
+insert code</li>
+<li><input type="checkbox" disabled="" checked="" />
+run code</li>
+<li><input type="checkbox" disabled="" checked="" />
+write architecture</li>
+<li><input type="checkbox" disabled="" />
+architectural diagram</li>
+<li><input type="checkbox" disabled="" />
+proof read</li>
+<li><input type="checkbox" disabled="" checked="" />
+<a href="https://MLflow.org/docs/latest/concepts.html#the-machine-learning-workflow" class="uri">https://MLflow.org/docs/latest/concepts.html#the-machine-learning-workflow</a> workflow into mlops intro</li>
+<li><input type="checkbox" disabled="" checked="" />
+resolve todos</li>
+<li><input type="checkbox" disabled="" checked="" />
+check order of MLflow components</li>
+<li><input type="checkbox" disabled="" checked="" />
+add MLflow projects example</li>
+<li><input type="checkbox" disabled="" checked="" />
+Check Tutorial</li>
+<li><input type="checkbox" disabled="" checked="" />
+check that intro is shorter than</li>
+<li><input type="checkbox" disabled="" checked="" />
+Test MLProjects yourself</li>
+<li><input type="checkbox" disabled="" checked="" />
+Build example project as code</li>
+</ul>
+
+<div id="fundamental-concept" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Fundamental Concept<a href="todo.html#fundamental-concept" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In the following the four primary components of MLflow are shown in more detail and with exemplary code.</p>
+<div id="mlflow-tracking" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> MLflow Tracking<a href="todo.html#mlflow-tracking" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>MLflow Tracking allows to log and compare parameters, code versions, metrics, and artifacts. This can be easily done by minimal changes to your code using the MLflow Tracking API. The following examples depict the basic concepts and show how to use it. To use MLflow within our code it needs to be imported first.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="todo.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlflow</span></code></pre></div>
+<div id="mlflow-experiment" class="section level4 hasAnchor" number="5.1.1.1">
+<h4><span class="header-section-number">5.1.1.1</span> MLflow experiment<a href="todo.html#mlflow-experiment" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>MLflow experiments are a part of MLflow’s tracking component that allow to group runs together based on custom criteria. For example we might create a new experiment for each new model architecture we want to evaluate.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="todo.html#cb61-1" aria-hidden="true" tabindex="-1"></a>experiment_name <span class="op">=</span> <span class="st">&quot;introduction-experiment&quot;</span></span>
+<span id="cb61-2"><a href="todo.html#cb61-2" aria-hidden="true" tabindex="-1"></a>mlflow.set_experiment(experiment_name)</span></code></pre></div>
+</div>
+<div id="mlflow-run" class="section level4 hasAnchor" number="5.1.1.2">
+<h4><span class="header-section-number">5.1.1.2</span> MLflow run<a href="todo.html#mlflow-run" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>An MLflow run is an execution environment for a piece of machine learning code. Whenever we want to track parameters or performance of a ML run or experiment we need to create a new MLflow. This can be done using <code>MLflow.start_run()</code>. Using <code>MLflow.end_run()</code> we can similarly end the run. It is a good practice to pass a run name to the MLflow run to identify it easily afterwards.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="todo.html#cb62-1" aria-hidden="true" tabindex="-1"></a>run_name <span class="op">=</span> <span class="st">&quot;example-run&quot;</span></span>
+<span id="cb62-2"><a href="todo.html#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="todo.html#cb62-3" aria-hidden="true" tabindex="-1"></a>mlflow.start_run()</span>
+<span id="cb62-4"><a href="todo.html#cb62-4" aria-hidden="true" tabindex="-1"></a>run <span class="op">=</span> mlflow.active_run()</span>
+<span id="cb62-5"><a href="todo.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Active run_id: </span><span class="sc">{</span>run<span class="sc">.</span>info<span class="sc">.</span>run_id<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb62-6"><a href="todo.html#cb62-6" aria-hidden="true" tabindex="-1"></a>mlflow.end_run()</span></code></pre></div>
+<p>This will start and end a MLflow run. It is also possible to use the context manager as shown below, which allows for a smoother style.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="todo.html#cb63-1" aria-hidden="true" tabindex="-1"></a>run_name <span class="op">=</span> <span class="st">&quot;context-manager-run&quot;</span></span>
+<span id="cb63-2"><a href="todo.html#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-3"><a href="todo.html#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run(run_name<span class="op">=</span>run_name) <span class="im">as</span> run:</span>
+<span id="cb63-4"><a href="todo.html#cb63-4" aria-hidden="true" tabindex="-1"></a>    run_id <span class="op">=</span> run.info.run_id</span>
+<span id="cb63-5"><a href="todo.html#cb63-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Active run_id: </span><span class="sc">{</span>run_id<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<p><strong>Child runs</strong>
+It is possible to create child runs of the current run, based on the run ID. This can be used for example to gain a better overview of multiple run. Belows code depicts and example on how to create a child run.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="todo.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create child runs based on the run ID</span></span>
+<span id="cb64-2"><a href="todo.html#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run(run_id<span class="op">=</span>run_id) <span class="im">as</span> parent_run:</span>
+<span id="cb64-3"><a href="todo.html#cb64-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;parent run_id: </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(parent_run.info.run_id))</span>
+<span id="cb64-4"><a href="todo.html#cb64-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> mlflow.start_run(nested<span class="op">=</span><span class="va">True</span>, run_name<span class="op">=</span><span class="st">&quot;test_dataset_abc.csv&quot;</span>) <span class="im">as</span> child_run:</span>
+<span id="cb64-5"><a href="todo.html#cb64-5" aria-hidden="true" tabindex="-1"></a>        mlflow.log_metric(<span class="st">&quot;acc&quot;</span>, <span class="fl">0.91</span>)</span>
+<span id="cb64-6"><a href="todo.html#cb64-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;child run_id : </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(child_run.info.run_id))</span>
+<span id="cb64-7"><a href="todo.html#cb64-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-8"><a href="todo.html#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run(run_id<span class="op">=</span>run_id) <span class="im">as</span> parent_run:</span>
+<span id="cb64-9"><a href="todo.html#cb64-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;parent run_id: </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(parent_run.info.run_id))</span>
+<span id="cb64-10"><a href="todo.html#cb64-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> mlflow.start_run(nested<span class="op">=</span><span class="va">True</span>, run_name<span class="op">=</span><span class="st">&quot;test_dataset_xyz.csv&quot;</span>) <span class="im">as</span> child_run:</span>
+<span id="cb64-11"><a href="todo.html#cb64-11" aria-hidden="true" tabindex="-1"></a>        mlflow.log_metric(<span class="st">&quot;acc&quot;</span>, <span class="fl">0.90</span>)</span>
+<span id="cb64-12"><a href="todo.html#cb64-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;child run_id : </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(child_run.info.run_id))</span></code></pre></div>
+</div>
+<div id="logging-metrics-parameters" class="section level4 hasAnchor" number="5.1.1.3">
+<h4><span class="header-section-number">5.1.1.3</span> Logging metrics &amp; parameters<a href="todo.html#logging-metrics-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The main reason we use MLflow Tracking is to log and store parameters and metrics during our MLflow run. <em>Parameters</em> represent the input parameters used for training, e.g. the initial learning rate. <em>Metrics:</em> are used to track the progress of the model training and are usually updated over the course of a run. MLflow allows to keep track of the model’s train and validation losses and visualize their development across the training run. Parameters and metrics can be easily logged by calling <code>MLflow.log_param</code>, or <code>MLflow.log_metric</code>. We can also specify a tag to identify our run using <code>MLflow.set_tag</code>. Belows example show how to use each method within a run.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb65-1"><a href="todo.html#cb65-1" aria-hidden="true" tabindex="-1"></a>run_name <span class="op">=</span> <span class="st">&quot;tracking-example-run&quot;</span></span>
+<span id="cb65-2"><a href="todo.html#cb65-2" aria-hidden="true" tabindex="-1"></a>experiment_name <span class="op">=</span> <span class="st">&quot;tracking-experiment&quot;</span></span>
+<span id="cb65-3"><a href="todo.html#cb65-3" aria-hidden="true" tabindex="-1"></a>mlflow.set_experiment(experiment_name)</span>
+<span id="cb65-4"><a href="todo.html#cb65-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="todo.html#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run(run_name<span class="op">=</span>run_name) <span class="im">as</span> run:</span>
+<span id="cb65-6"><a href="todo.html#cb65-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-7"><a href="todo.html#cb65-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Parameters</span></span>
+<span id="cb65-8"><a href="todo.html#cb65-8" aria-hidden="true" tabindex="-1"></a>    mlflow.log_param(<span class="st">&quot;learning_rate&quot;</span>, <span class="fl">0.01</span>)</span>
+<span id="cb65-9"><a href="todo.html#cb65-9" aria-hidden="true" tabindex="-1"></a>    mlflow.log_params({<span class="st">&quot;epochs&quot;</span>: <span class="fl">0.05</span>, <span class="st">&quot;final_activation&quot;</span>: <span class="st">&quot;sigmoid&quot;</span>})</span>
+<span id="cb65-10"><a href="todo.html#cb65-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-11"><a href="todo.html#cb65-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Tags</span></span>
+<span id="cb65-12"><a href="todo.html#cb65-12" aria-hidden="true" tabindex="-1"></a>    mlflow.set_tag(<span class="st">&quot;env&quot;</span>, <span class="st">&quot;dev&quot;</span>)</span>
+<span id="cb65-13"><a href="todo.html#cb65-13" aria-hidden="true" tabindex="-1"></a>    mlflow.set_tags({<span class="st">&quot;some_tag&quot;</span>: <span class="va">False</span>, <span class="st">&quot;project&quot;</span>: <span class="st">&quot;xyz&quot;</span>})</span>
+<span id="cb65-14"><a href="todo.html#cb65-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-15"><a href="todo.html#cb65-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Metrics</span></span>
+<span id="cb65-16"><a href="todo.html#cb65-16" aria-hidden="true" tabindex="-1"></a>    mlflow.log_metric(<span class="st">&quot;loss&quot;</span>, <span class="fl">0.001</span>)</span>
+<span id="cb65-17"><a href="todo.html#cb65-17" aria-hidden="true" tabindex="-1"></a>    mlflow.log_metrics({<span class="st">&quot;acc&quot;</span>: <span class="fl">0.92</span>, <span class="st">&quot;auc&quot;</span>: <span class="fl">0.90</span>})</span>
+<span id="cb65-18"><a href="todo.html#cb65-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-19"><a href="todo.html#cb65-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># It is possible to log a metrics series (for example a training history)</span></span>
+<span id="cb65-20"><a href="todo.html#cb65-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> val_loss <span class="kw">in</span> [<span class="fl">0.1</span>, <span class="fl">0.01</span>, <span class="fl">0.001</span>, <span class="fl">0.00001</span>]:</span>
+<span id="cb65-21"><a href="todo.html#cb65-21" aria-hidden="true" tabindex="-1"></a>        mlflow.log_metric(<span class="st">&quot;val_loss&quot;</span>, val_loss)</span>
+<span id="cb65-22"><a href="todo.html#cb65-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-23"><a href="todo.html#cb65-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> val_acc <span class="kw">in</span> [<span class="fl">0.6</span>, <span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="fl">0.9</span>]:</span>
+<span id="cb65-24"><a href="todo.html#cb65-24" aria-hidden="true" tabindex="-1"></a>        mlflow.log_metric(<span class="st">&quot;val_acc&quot;</span>, val_acc)</span>
+<span id="cb65-25"><a href="todo.html#cb65-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-26"><a href="todo.html#cb65-26" aria-hidden="true" tabindex="-1"></a>    run_id <span class="op">=</span> run.info.run_id</span>
+<span id="cb65-27"><a href="todo.html#cb65-27" aria-hidden="true" tabindex="-1"></a>    experiment_id <span class="op">=</span> run.info.experiment_id</span>
+<span id="cb65-28"><a href="todo.html#cb65-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;run_id: </span><span class="sc">{</span>run_id<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb65-29"><a href="todo.html#cb65-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;experiment_id: </span><span class="sc">{</span>experiment_id<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<p>It is also possible to add information after the experiment ran. We just need to specifiy our run ID from the previous run for our new run. We use the <code>mlflow.client.MLflowClient</code> in this example. The <code>mlflow.client</code> module provides a Python CRUD interface, which is a lower level API directly translating to the MLflow <a href="https://mlflow.org/docs/latest/rest-api.html">REST API</a> calls. It can be used similarly to <code>mlflow</code>-module of the higher level API. We want to mention it here to give you a hint of its existence.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb66-1"><a href="todo.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlflow.tracking <span class="im">import</span> MLflowClient</span>
+<span id="cb66-2"><a href="todo.html#cb66-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-3"><a href="todo.html#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="co"># add a note to the experiment</span></span>
+<span id="cb66-4"><a href="todo.html#cb66-4" aria-hidden="true" tabindex="-1"></a>MLflowClient().set_experiment_tag(</span>
+<span id="cb66-5"><a href="todo.html#cb66-5" aria-hidden="true" tabindex="-1"></a>    experiment_id, <span class="st">&quot;MLflow.note.content&quot;</span>, <span class="st">&quot;my experiment note&quot;</span>)</span>
+<span id="cb66-6"><a href="todo.html#cb66-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add a note to the run</span></span>
+<span id="cb66-7"><a href="todo.html#cb66-7" aria-hidden="true" tabindex="-1"></a>MLflowClient().set_tag(run_id, <span class="st">&quot;MLflow.note.content&quot;</span>, <span class="st">&quot;my run note&quot;</span>)</span>
+<span id="cb66-8"><a href="todo.html#cb66-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-9"><a href="todo.html#cb66-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Or we can even log further metrics by calling MLflow.start_run on a specific ID</span></span>
+<span id="cb66-10"><a href="todo.html#cb66-10" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run(run_id<span class="op">=</span>run_id):</span>
+<span id="cb66-11"><a href="todo.html#cb66-11" aria-hidden="true" tabindex="-1"></a>    run <span class="op">=</span> mlflow.active_run()</span>
+<span id="cb66-12"><a href="todo.html#cb66-12" aria-hidden="true" tabindex="-1"></a>    mlflow.log_metric(<span class="st">&quot;f1&quot;</span>, <span class="fl">0.9</span>)</span>
+<span id="cb66-13"><a href="todo.html#cb66-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;run_id: </span><span class="sc">{</span>run<span class="sc">.</span>info<span class="sc">.</span>run_id<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+</div>
+<div id="display-view-metrics" class="section level4 hasAnchor" number="5.1.1.4">
+<h4><span class="header-section-number">5.1.1.4</span> Display &amp; View metrics<a href="todo.html#display-view-metrics" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>How can we use the logged parameters and metrics afterwards? It is possible to give an overview of the currently stored runs using the MLflow API and printing the results.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="todo.html#cb67-1" aria-hidden="true" tabindex="-1"></a>current_experiment <span class="op">=</span> <span class="bu">dict</span>(mlflow.get_experiment_by_name(experiment_name))</span>
+<span id="cb67-2"><a href="todo.html#cb67-2" aria-hidden="true" tabindex="-1"></a>mlflow_run <span class="op">=</span> mlflow.search_runs([current_experiment[<span class="st">&#39;experiment_id&#39;</span>]])</span>
+<span id="cb67-3"><a href="todo.html#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;MLflow_run: </span><span class="sc">{</span>mlflow_run<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<div class="figure">
+<img src="images/06-MLFlow/MLflow_cli_interface-tracking.png" alt="" />
+<p class="caption">MLflow Model Tracking CLI Run Overview</p>
+</div>
+<p>Yet, viewing all the results in the web interface of MLflow gives a much better overview. By default, the tracking API writes the data to the local filesystem of the machine it’s running on under a <code>./mlruns</code> directory. We can acces the MLflow’s Tracking UI by running <code>MLflow ui</code> via our console, and view it in our browser under <a href="http://localhost:5000" class="uri">http://localhost:5000</a> (The port: 5000 is the MLflow default). The metrics dashboard of a run looks like to following</p>
+<div class="figure">
+<img src="images/06-MLFlow/mlflow_web_interface-tracking.png" alt="" />
+<p class="caption">MLflow Model Tracking Dashboard</p>
+</div>
+<p>It is also possible to configure MLflow to log to a remote tracking server, to manage results centrally or share them across a team. To get access to a remote tracking server it is needed to set a MLflow tracking URI. This can be done either by setting an environment variable <code>MLflow_TRACKING_URI</code> to the servers URI, or by adding it to the start of our code.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb68-1"><a href="todo.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlflow</span>
+<span id="cb68-2"><a href="todo.html#cb68-2" aria-hidden="true" tabindex="-1"></a>mlflow.set_tracking_uri(<span class="st">&quot;http://YOUR-SERVER:YOUR-PORT&quot;</span>)</span>
+<span id="cb68-3"><a href="todo.html#cb68-3" aria-hidden="true" tabindex="-1"></a>mlflow.set_experiment(<span class="st">&quot;my-experiment&quot;</span>)</span></code></pre></div>
+</div>
+<div id="logging-artifacts" class="section level4 hasAnchor" number="5.1.1.5">
+<h4><span class="header-section-number">5.1.1.5</span> Logging artifacts<a href="todo.html#logging-artifacts" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><em>Artifacts</em> can represent any kind of file to save during training, e.g. plots and model weights. It is possible to log such files as well and place them within the same run (via its URI. So everything created within our ML run can be saves at one point. Those files can be either single local files or full directories. The following example creates a local files and logs it to our previous model run.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb69-1"><a href="todo.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb69-2"><a href="todo.html#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-3"><a href="todo.html#cb69-3" aria-hidden="true" tabindex="-1"></a>mlflow.set_tracking_uri(<span class="st">&quot;http://127.0.0.1:5000/&quot;</span>)</span>
+<span id="cb69-4"><a href="todo.html#cb69-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-5"><a href="todo.html#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an example file output/test.txt</span></span>
+<span id="cb69-6"><a href="todo.html#cb69-6" aria-hidden="true" tabindex="-1"></a>file_path <span class="op">=</span> <span class="st">&quot;outputs/test.txt&quot;</span></span>
+<span id="cb69-7"><a href="todo.html#cb69-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(<span class="st">&quot;outputs&quot;</span>):</span>
+<span id="cb69-8"><a href="todo.html#cb69-8" aria-hidden="true" tabindex="-1"></a>    os.makedirs(<span class="st">&quot;outputs&quot;</span>)</span>
+<span id="cb69-9"><a href="todo.html#cb69-9" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">&quot;w&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb69-10"><a href="todo.html#cb69-10" aria-hidden="true" tabindex="-1"></a>    f.write(<span class="st">&quot;hello world!&quot;</span>)</span>
+<span id="cb69-11"><a href="todo.html#cb69-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-12"><a href="todo.html#cb69-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Start the run based on the run ID and log the artifact</span></span>
+<span id="cb69-13"><a href="todo.html#cb69-13" aria-hidden="true" tabindex="-1"></a><span class="co"># we just created</span></span>
+<span id="cb69-14"><a href="todo.html#cb69-14" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run(run_id<span class="op">=</span>run_id) <span class="im">as</span> run:</span>
+<span id="cb69-15"><a href="todo.html#cb69-15" aria-hidden="true" tabindex="-1"></a>    mlflow.log_artifact(</span>
+<span id="cb69-16"><a href="todo.html#cb69-16" aria-hidden="true" tabindex="-1"></a>        local_path<span class="op">=</span>file_path,</span>
+<span id="cb69-17"><a href="todo.html#cb69-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># store the artifact directly in run&#39;s root</span></span>
+<span id="cb69-18"><a href="todo.html#cb69-18" aria-hidden="true" tabindex="-1"></a>        artifact_path<span class="op">=</span><span class="va">None</span></span>
+<span id="cb69-19"><a href="todo.html#cb69-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb69-20"><a href="todo.html#cb69-20" aria-hidden="true" tabindex="-1"></a>    mlflow.log_artifact(</span>
+<span id="cb69-21"><a href="todo.html#cb69-21" aria-hidden="true" tabindex="-1"></a>        local_path<span class="op">=</span>file_path,</span>
+<span id="cb69-22"><a href="todo.html#cb69-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># store the artifact in a specific directory</span></span>
+<span id="cb69-23"><a href="todo.html#cb69-23" aria-hidden="true" tabindex="-1"></a>        artifact_path<span class="op">=</span><span class="st">&quot;data/subfolder&quot;</span></span>
+<span id="cb69-24"><a href="todo.html#cb69-24" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb69-25"><a href="todo.html#cb69-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-26"><a href="todo.html#cb69-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get and print the URI where the artifacts have been logged to</span></span>
+<span id="cb69-27"><a href="todo.html#cb69-27" aria-hidden="true" tabindex="-1"></a>    artifact_uri <span class="op">=</span> mlflow.get_artifact_uri()</span>
+<span id="cb69-28"><a href="todo.html#cb69-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;run_id: </span><span class="sc">{</span>run<span class="sc">.</span>info<span class="sc">.</span>run_id<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb69-29"><a href="todo.html#cb69-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Artifact uri: </span><span class="sc">{</span>artifact_uri<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+</div>
+<div id="autolog" class="section level4 hasAnchor" number="5.1.1.6">
+<h4><span class="header-section-number">5.1.1.6</span> Autolog<a href="todo.html#autolog" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Previously, we logged all the parameters, metrics, and files automatically. The <em>autolog</em>-feature of MLflow allows for automatic logging of log metrics, parameters, and models without the need for explicit log statements. We need to active this feature previous to the run by calling <code>MLflow.sklearn.autolog()</code>.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb70-1"><a href="todo.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlflow.sklearn</span>
+<span id="cb70-2"><a href="todo.html#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb70-3"><a href="todo.html#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
+<span id="cb70-4"><a href="todo.html#cb70-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-5"><a href="todo.html#cb70-5" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">&quot;n_estimators&quot;</span>: <span class="dv">4</span>, <span class="st">&quot;random_state&quot;</span>: <span class="dv">42</span>}</span>
+<span id="cb70-6"><a href="todo.html#cb70-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-7"><a href="todo.html#cb70-7" aria-hidden="true" tabindex="-1"></a>mlflow.sklearn.autolog()</span>
+<span id="cb70-8"><a href="todo.html#cb70-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-9"><a href="todo.html#cb70-9" aria-hidden="true" tabindex="-1"></a>run_name <span class="op">=</span> <span class="st">&#39;autologging model example&#39;</span></span>
+<span id="cb70-10"><a href="todo.html#cb70-10" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run(run_name<span class="op">=</span>run_name) <span class="im">as</span> run:</span>
+<span id="cb70-11"><a href="todo.html#cb70-11" aria-hidden="true" tabindex="-1"></a>    rfr <span class="op">=</span> RandomForestRegressor(</span>
+<span id="cb70-12"><a href="todo.html#cb70-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>params).fit(np.array([[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>]]), [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb70-13"><a href="todo.html#cb70-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;run_id: </span><span class="sc">{</span>run<span class="sc">.</span>info<span class="sc">.</span>run_id<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb70-14"><a href="todo.html#cb70-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-15"><a href="todo.html#cb70-15" aria-hidden="true" tabindex="-1"></a>mlflow.sklearn.autolog(disable<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<p>Even though this is a very convenient feature, it is a good practice to log metrics manually as this gives you more control over your ML run.</p>
+</div>
+</div>
+<div id="mlflow-models" class="section level3 hasAnchor" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> MLflow Models<a href="todo.html#mlflow-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>MLflow Models manages and deploys models from various different ML libraries such as scikit-learn, TensorFlow, PyTorch, Spark, or <a href="https://MLflow.org/docs/latest/models.html">many more</a>. It includes a generic <code>MLmodel</code> format that acts as a standard format to package ML models so they can be used in different projects and environments. The stored model can then be served as a python functions in an easy and convenient way that are run either locally or or Docker containers or commercial serving platforms.</p>
+<p>The format defines a convention that lets you save a model in so called “flavors”, for example <code>mlflow.sklearn</code> allows to load mlflow models back into scikit-learn.
+Flavors are a key concept of MLflow since a stored model can be used by different deployment tools. This allows to load a TensorFlow model as a TensorFlow DAG for example, or to deploy a Python model to a Docker-based REST server, or to cloud platforms such as Azure ML and AWS SageMaker. The following example is based on the scikit-learn library.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb71-1"><a href="todo.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the sklearn models from MLflow</span></span>
+<span id="cb71-2"><a href="todo.html#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlflow.sklearn</span>
+<span id="cb71-3"><a href="todo.html#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
+<span id="cb71-4"><a href="todo.html#cb71-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-5"><a href="todo.html#cb71-5" aria-hidden="true" tabindex="-1"></a>mlflow.set_tracking_uri(<span class="st">&quot;http://127.0.0.1:5000/&quot;</span>)</span>
+<span id="cb71-6"><a href="todo.html#cb71-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-7"><a href="todo.html#cb71-7" aria-hidden="true" tabindex="-1"></a>run_name <span class="op">=</span> <span class="st">&quot;models-example-run&quot;</span></span>
+<span id="cb71-8"><a href="todo.html#cb71-8" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">&quot;n_estimators&quot;</span>: <span class="dv">4</span>, <span class="st">&quot;random_state&quot;</span>: <span class="dv">42</span>}</span>
+<span id="cb71-9"><a href="todo.html#cb71-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-10"><a href="todo.html#cb71-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Start an MLflow run, train the RandomForestRegressor example model, and</span></span>
+<span id="cb71-11"><a href="todo.html#cb71-11" aria-hidden="true" tabindex="-1"></a><span class="co"># log its parameeters. In the end the model itself is logged and stored in MLflow</span></span>
+<span id="cb71-12"><a href="todo.html#cb71-12" aria-hidden="true" tabindex="-1"></a>run_name <span class="op">=</span> <span class="st">&#39;Model example&#39;</span></span>
+<span id="cb71-13"><a href="todo.html#cb71-13" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run(run_name<span class="op">=</span>run_name) <span class="im">as</span> run:</span>
+<span id="cb71-14"><a href="todo.html#cb71-14" aria-hidden="true" tabindex="-1"></a>    rfr <span class="op">=</span> RandomForestRegressor(<span class="op">**</span>params).fit([[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>]], [<span class="dv">1</span>])</span>
+<span id="cb71-15"><a href="todo.html#cb71-15" aria-hidden="true" tabindex="-1"></a>    mlflow.log_params(params)</span>
+<span id="cb71-16"><a href="todo.html#cb71-16" aria-hidden="true" tabindex="-1"></a>    mlflow.sklearn.log_model(rfr, artifact_path<span class="op">=</span><span class="st">&quot;sklearn-model&quot;</span>)</span>
+<span id="cb71-17"><a href="todo.html#cb71-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-18"><a href="todo.html#cb71-18" aria-hidden="true" tabindex="-1"></a>model_uri <span class="op">=</span> <span class="st">&quot;runs:/</span><span class="sc">{}</span><span class="st">/sklearn-model&quot;</span>.<span class="bu">format</span>(run.info.run_id)</span>
+<span id="cb71-19"><a href="todo.html#cb71-19" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="ss">f&quot;RandomForestRegressionModel&quot;</span></span>
+<span id="cb71-20"><a href="todo.html#cb71-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-21"><a href="todo.html#cb71-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;model_uri: </span><span class="sc">{</span>model_uri<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb71-22"><a href="todo.html#cb71-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;model_name: </span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<p>Once a model is stored in the correct format it can be identified by its <code>model_uri</code>, and loaded and used for prediction.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb72-1"><a href="todo.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlflow.pyfunc</span>
+<span id="cb72-2"><a href="todo.html#cb72-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-3"><a href="todo.html#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model and use it for predictions</span></span>
+<span id="cb72-4"><a href="todo.html#cb72-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> mlflow.pyfunc.load_model(model_uri<span class="op">=</span>model_uri)</span>
+<span id="cb72-5"><a href="todo.html#cb72-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> [[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>]]</span>
+<span id="cb72-6"><a href="todo.html#cb72-6" aria-hidden="true" tabindex="-1"></a>model_pred <span class="op">=</span> model.predict(data)</span>
+<span id="cb72-7"><a href="todo.html#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;model_pred: </span><span class="sc">{</span>model_pred<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<div class="figure">
+<img src="images/06-MLFlow/mlflow_web_interface-models.png" alt="" />
+<p class="caption">MLflow Models</p>
+</div>
+</div>
+<div id="mlflow-model-registry" class="section level3 hasAnchor" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> MLflow Model Registry<a href="todo.html#mlflow-model-registry" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The MLflow Model Registry provides a central model store to manage the lifecycle of an ML Model. This allows to register MLflow models, such as the <em>RandomForestRegressor</em> from the previous section, to the Model Registry and include model versioning, stage transitions, and annotations. In fact, by running <code>MLflow.sklearn.log_model</code> we already did exactly that. Look at how easy the MLflow API is to use. Let’s have a look at the code again.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb73-1"><a href="todo.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlflow.sklearn</span>
+<span id="cb73-2"><a href="todo.html#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlflow.pyfunc</span>
+<span id="cb73-3"><a href="todo.html#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
+<span id="cb73-4"><a href="todo.html#cb73-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-5"><a href="todo.html#cb73-5" aria-hidden="true" tabindex="-1"></a>mlflow.set_tracking_uri(<span class="st">&quot;http://127.0.0.1:5000/&quot;</span>)</span>
+<span id="cb73-6"><a href="todo.html#cb73-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-7"><a href="todo.html#cb73-7" aria-hidden="true" tabindex="-1"></a>run_name <span class="op">=</span> <span class="st">&quot;registry-example-run&quot;</span></span>
+<span id="cb73-8"><a href="todo.html#cb73-8" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">&quot;n_estimators&quot;</span>: <span class="dv">4</span>,</span>
+<span id="cb73-9"><a href="todo.html#cb73-9" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;random_state&quot;</span>: <span class="dv">42</span>}</span>
+<span id="cb73-10"><a href="todo.html#cb73-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-11"><a href="todo.html#cb73-11" aria-hidden="true" tabindex="-1"></a>run_name <span class="op">=</span> <span class="st">&#39;model registry example&#39;</span></span>
+<span id="cb73-12"><a href="todo.html#cb73-12" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run(run_name<span class="op">=</span>run_name) <span class="im">as</span> run:</span>
+<span id="cb73-13"><a href="todo.html#cb73-13" aria-hidden="true" tabindex="-1"></a>    rfr <span class="op">=</span> RandomForestRegressor(<span class="op">**</span>params).fit([[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>]], [<span class="dv">1</span>])</span>
+<span id="cb73-14"><a href="todo.html#cb73-14" aria-hidden="true" tabindex="-1"></a>    mlflow.log_params(params)</span>
+<span id="cb73-15"><a href="todo.html#cb73-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log and store the model and the MLflow Model Registry</span></span>
+<span id="cb73-16"><a href="todo.html#cb73-16" aria-hidden="true" tabindex="-1"></a>    mlflow.sklearn.log_model(rfr, artifact_path<span class="op">=</span><span class="st">&quot;sklearn-model&quot;</span>)</span>
+<span id="cb73-17"><a href="todo.html#cb73-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-18"><a href="todo.html#cb73-18" aria-hidden="true" tabindex="-1"></a>model_uri <span class="op">=</span> <span class="ss">f&quot;runs:/</span><span class="sc">{</span>run<span class="sc">.</span>info<span class="sc">.</span>run_id<span class="sc">}</span><span class="ss">/sklearn-model&quot;</span></span>
+<span id="cb73-19"><a href="todo.html#cb73-19" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="ss">f&quot;RandomForestRegressionModel&quot;</span></span>
+<span id="cb73-20"><a href="todo.html#cb73-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-21"><a href="todo.html#cb73-21" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> mlflow.pyfunc.load_model(model_uri<span class="op">=</span>model_uri)</span>
+<span id="cb73-22"><a href="todo.html#cb73-22" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> [[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>]]</span>
+<span id="cb73-23"><a href="todo.html#cb73-23" aria-hidden="true" tabindex="-1"></a>model_pred <span class="op">=</span> model.predict(data)</span>
+<span id="cb73-24"><a href="todo.html#cb73-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;model_pred: </span><span class="sc">{</span>model_pred<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<p>Yet, it is also possible to register the MLflow model in the model registry by calling <code>MLflow.register_model</code> such as show in belows example.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb74-1"><a href="todo.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The previously stated Model URI and name are needed to register a MLflow Model</span></span>
+<span id="cb74-2"><a href="todo.html#cb74-2" aria-hidden="true" tabindex="-1"></a>mv <span class="op">=</span> mlflow.register_model(model_uri, model_name)</span>
+<span id="cb74-3"><a href="todo.html#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Name: </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(mv.name))</span>
+<span id="cb74-4"><a href="todo.html#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Version: </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(mv.version))</span>
+<span id="cb74-5"><a href="todo.html#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Stage: </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(mv.current_stage))</span></code></pre></div>
+<p>Once registered to the model registry the model is already versioned. This allows to load a model based on its specific version. A registered model can be also modified to transition to another version or stage. Both use cases are shown in the example below.</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb75-1"><a href="todo.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlflow.pyfunc</span>
+<span id="cb75-2"><a href="todo.html#cb75-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-3"><a href="todo.html#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load model for prediction. Keep note that we now specified the model version.</span></span>
+<span id="cb75-4"><a href="todo.html#cb75-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> mlflow.pyfunc.load_model(</span>
+<span id="cb75-5"><a href="todo.html#cb75-5" aria-hidden="true" tabindex="-1"></a>    model_uri<span class="op">=</span><span class="ss">f&quot;models:/</span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>mv<span class="sc">.</span>version<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb75-6"><a href="todo.html#cb75-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb75-7"><a href="todo.html#cb75-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-8"><a href="todo.html#cb75-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict based on the loaded model</span></span>
+<span id="cb75-9"><a href="todo.html#cb75-9" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> [[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>]]</span>
+<span id="cb75-10"><a href="todo.html#cb75-10" aria-hidden="true" tabindex="-1"></a>model_pred <span class="op">=</span> model.predict(data)</span>
+<span id="cb75-11"><a href="todo.html#cb75-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;model_pred: </span><span class="sc">{</span>model_pred<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<p>Let’s stage a model to <code>'Staging'</code> and have a look what models we have registered.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb76-1"><a href="todo.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transition the model to another stage</span></span>
+<span id="cb76-2"><a href="todo.html#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlflow.client <span class="im">import</span> MLflowClient </span>
+<span id="cb76-3"><a href="todo.html#cb76-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-4"><a href="todo.html#cb76-4" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> MlflowClient()</span>
+<span id="cb76-5"><a href="todo.html#cb76-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-6"><a href="todo.html#cb76-6" aria-hidden="true" tabindex="-1"></a>stage <span class="op">=</span> <span class="st">&#39;Staging&#39;</span>  <span class="co"># None, Production</span></span>
+<span id="cb76-7"><a href="todo.html#cb76-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-8"><a href="todo.html#cb76-8" aria-hidden="true" tabindex="-1"></a>client.transition_model_version_stage(</span>
+<span id="cb76-9"><a href="todo.html#cb76-9" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span>model_name,</span>
+<span id="cb76-10"><a href="todo.html#cb76-10" aria-hidden="true" tabindex="-1"></a>    version<span class="op">=</span>mv.version,</span>
+<span id="cb76-11"><a href="todo.html#cb76-11" aria-hidden="true" tabindex="-1"></a>    stage<span class="op">=</span>stage</span>
+<span id="cb76-12"><a href="todo.html#cb76-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb76-13"><a href="todo.html#cb76-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-14"><a href="todo.html#cb76-14" aria-hidden="true" tabindex="-1"></a><span class="co"># print registered models</span></span>
+<span id="cb76-15"><a href="todo.html#cb76-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> rm <span class="kw">in</span> client.search_registered_models():</span>
+<span id="cb76-16"><a href="todo.html#cb76-16" aria-hidden="true" tabindex="-1"></a>    pprint(<span class="bu">dict</span>(rm), indent<span class="op">=</span><span class="dv">4</span>)</span></code></pre></div>
+</div>
+<div id="mlflow-projects" class="section level3 hasAnchor" number="5.1.4">
+<h3><span class="header-section-number">5.1.4</span> MLflow Projects<a href="todo.html#mlflow-projects" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>MLflow Projects allows to package code and its dependencies as a <em>project</em> that can be run reproducible on other data. Each project includes a <em>MLproject</em> file written in the <em>YAML</em> syntax that defines the projects dependencies and the commands and arguments it takes to run the project. It basically is a convention to organizes and describe your model code so other data scientists or automated tools can run it. MLflow currently supports the following environments to run your code: Virtualenv, conda, Docker Container, and system environment. A very basic <code>MLproject</code> file is shown below.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb77-1"><a href="todo.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> mlprojects_tutorial</span></span>
+<span id="cb77-2"><a href="todo.html#cb77-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-3"><a href="todo.html#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Use Virtualenv: alternatively conda_env, docker_env.image</span></span>
+<span id="cb77-4"><a href="todo.html#cb77-4" aria-hidden="true" tabindex="-1"></a><span class="fu">python_env</span><span class="kw">:</span><span class="at"> &lt;MLFLOW_PROJECT_DIRECTORY&gt;/python_env.yaml </span></span>
+<span id="cb77-5"><a href="todo.html#cb77-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-6"><a href="todo.html#cb77-6" aria-hidden="true" tabindex="-1"></a><span class="fu">entry_points</span><span class="kw">:</span></span>
+<span id="cb77-7"><a href="todo.html#cb77-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">main</span><span class="kw">:</span></span>
+<span id="cb77-8"><a href="todo.html#cb77-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">parameters</span><span class="kw">:</span></span>
+<span id="cb77-9"><a href="todo.html#cb77-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">alpha</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">type</span><span class="kw">:</span><span class="at"> float</span><span class="kw">,</span><span class="at"> </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">}</span></span>
+<span id="cb77-10"><a href="todo.html#cb77-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">l1_ratio</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span><span class="fu">type</span><span class="kw">:</span><span class="at"> float</span><span class="kw">,</span><span class="at"> </span><span class="fu">default</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.1</span><span class="kw">}</span></span>
+<span id="cb77-11"><a href="todo.html#cb77-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;python wine_model.py {alpha} {l1_ratio}&quot;</span></span></code></pre></div>
+<p>A project can be run using the <code>MLflow run</code> command in the command line, which runs a project from either a local directory or a GitHub URI. The <code>MLproject</code> file shows that two parameters can be passed to the command. This is optional in this case as they have default values.It is also possible to specify extra parameters such as the experiment name or to specify the tracking uri (check the !(official documentation)[<a href="https://mlflow.org/docs/latest/python_api/mlflow.projects.html" class="uri">https://mlflow.org/docs/latest/python_api/mlflow.projects.html</a>]for more). By setting the MLFLOW_TRACKING_URI environment variable it is possible to specify an execution backend for the run.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb78-1"><a href="todo.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the MLflow project from the current directory</span></span>
+<span id="cb78-2"><a href="todo.html#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The parameters are optional in this case as the MLproject file has defaults</span></span>
+<span id="cb78-3"><a href="todo.html#cb78-3" aria-hidden="true" tabindex="-1"></a>mlflow run . <span class="op">-</span>P alpha<span class="op">=</span><span class="fl">5.0</span></span>
+<span id="cb78-4"><a href="todo.html#cb78-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-5"><a href="todo.html#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="co"># It is also possible to specify an experiment name or to specify the </span></span>
+<span id="cb78-6"><a href="todo.html#cb78-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Tracking_URI, e.g.</span></span>
+<span id="cb78-7"><a href="todo.html#cb78-7" aria-hidden="true" tabindex="-1"></a>MLFLOW_TRACKING_URI<span class="op">=</span>http:<span class="op">//</span>localhost:<span class="op">&lt;</span>PORT<span class="op">&gt;</span> mlflow run . <span class="op">--</span>experiment<span class="op">-</span>name<span class="op">=</span><span class="st">&quot;models-experiment&quot;</span></span>
+<span id="cb78-8"><a href="todo.html#cb78-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-9"><a href="todo.html#cb78-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the MLflow project from a Github URI and use the localhost as backend</span></span>
+<span id="cb78-10"><a href="todo.html#cb78-10" aria-hidden="true" tabindex="-1"></a>MLFLOW_TRACKING_URI<span class="op">=</span>http:<span class="op">//</span>localhost:<span class="op">&lt;</span>PORT<span class="op">&gt;</span> MLflow run https:<span class="op">//</span>github.com<span class="op">/</span>seblum<span class="op">/</span>mlops<span class="op">-</span>practice<span class="co">#files/06-MLFlow/mlprojects --version=chapter/mlflow</span></span>
+<span id="cb78-11"><a href="todo.html#cb78-11" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<p>The MLflow Projects API allows to chain projects together into workflows and also supports launching multiple runs in parallel. Combining this with for example the MLflow Tracking API enables an easy way of hyperparameter tuning to develop a model with a good fit.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="mlflow.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="mlflow-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/seblum/kubernetes-training/edit/master/06-MlFlow.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
