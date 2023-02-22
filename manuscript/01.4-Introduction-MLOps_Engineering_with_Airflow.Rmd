@@ -1,0 +1,20 @@
+## MLOps Engineering with Airflow and MLflow on Kubernetes
+
+This work shows an example of a MLOps plattform in form of a deployment of Airflow and MLflow on a Kubernetes cluster using Terraform. It wil focus in the part of MLOps engineering as the whole infrastructure is set up from scratch. It will also introduce the work done by machine learning scientist and data scientists to implement basic machine learning models on the MLOps plattform.
+
+Hencefore it gives an introductory tutorial each on the implementation of the previously introduced tools. A machine learning workflow using Airflow is set up on the deployed infrastructure, including data preprocessing, model training, and model deployment, as well as tracking the experiment and deploying the model into production using MLFlow. 
+
+The structure on Git can be distinguished on two different repositories, one for infrastructure deployment, and the other for the used machine learning models. The project has the following architecture. 
+
+![Architecture Overview](images/01-Introduction/architecture-overview.png)
+
+The necessary AWS infrastructure is set up using Terraform. This includes creating an AWS EKS cluster and the associated ressources like a virtual private cloud (VPC), subnets, security groups, IAM roles, as well as further AWS ressources needed to deploy Airflow and MLflow.
+Once the EKS cluster is set up, Kubernetes can be used to deploy and manage applications on the cluster. Helm, a package manager for Kubernetes, is used to manage the deployment of Airflow and MLflow. The EKS cluster allows for easy scalability and management of these platforms. Github Actions is used for automating the deployment of the infrastructure using CI/CD principles. 
+
+Once the infrastructure is set up, machine learning models can be deployed to the EKS cluster as Kubernetes pods, using Helm charts as well. This is can be done in an automated fashion using Airflow's ability to scan the second repository responsible for the machine learning models. Similarly, to building Airflow workflows, those algorithms would also include the use of the MLFlow API to enable model tracking and serving. Github Actions is used as a CI/CD pipeline to automatically build, test, and deploy machine learning models to this repository similarly as it is used in the repository for the infrastructure. 
+
+<!---
+Monitoring and logging would be achieved using CloudWatch to monitor the health and performance of the EKS cluster and its components, such as worker nodes, Kubernetes pods, etc and ELK stack or similar for logging of the system and applications. Networking would be handled by AWS Elastic Load Balancing service or Ingress controller to route traffic to the correct service/pod in the cluster.
+-->
+
+Whereas the deployment of the infrastructure would be taken care of by MLOps-, DevOps-, and Data Engineers, the development of the Airflow workflows including MLFlow would be taken care of by Data Scientist and ML Engineers.
