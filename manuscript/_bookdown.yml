@@ -4,8 +4,11 @@ language:
   ui:
     chapter_name: "Chapter "
 rmd_files: ["index.Rmd",
-            "00-Preamble.Rmd",
             "01-Introduction.Rmd",
+            "01.1-Introduction-Machine_Learning_Workflow.Rmd",
+            "01.2-Introduction-MLOps.Rmd",
+            "01.3-Introduction-Roles_and_Tasks.Rmd",
+            "01.4-Introduction-MLOps_Engineering_with_Airflow.Rmd",
             "03-Airflow.Rmd",
             "03.1-Airflow-Fundamental_Concepts.Rmd",
             "03.2-Airflow-Exemplary_ML_Workflow.Rmd",

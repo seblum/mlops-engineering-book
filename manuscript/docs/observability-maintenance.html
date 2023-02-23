@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.6 Observability &amp; Maintenance | MLOps Engineering</title>
+  <title>4.6 Observability &amp; Maintenance | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.6 Observability &amp; Maintenance | MLOps Engineering" />
+  <meta property="og:title" content="4.6 Observability &amp; Maintenance | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.6 Observability &amp; Maintenance | MLOps Engineering" />
+  <meta name="twitter:title" content="4.6 Observability &amp; Maintenance | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-02-22" />
+<meta name="date" content="2023-02-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -133,143 +133,135 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">A Minimal Book Example</a></li>
+<li><a href="./">MLOps Engineering</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a></li>
-<li class="chapter" data-level="1" data-path="preamble-1.html"><a href="preamble-1.html"><i class="fa fa-check"></i><b>1</b> Preamble</a>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
-<li class="chapter" data-level="" data-path="preamble-1.html"><a href="preamble-1.html#a-work-in-progress"><i class="fa fa-check"></i>A work in progress</a></li>
+<li class="chapter" data-level="1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html"><i class="fa fa-check"></i><b>1.1</b> Machine Learning Workflow</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html#ml-worflow-tools"><i class="fa fa-check"></i><b>1.1.1</b> ML Worflow Tools</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<li class="chapter" data-level="1.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html"><i class="fa fa-check"></i><b>1.2</b> Machine Learning Operations (MLOps)</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html"><i class="fa fa-check"></i><b>2.1</b> Machine Learning Workflow</a>
-<ul>
-<li class="chapter" data-level="2.1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html#ml-worflow-tools"><i class="fa fa-check"></i><b>2.1.1</b> ML Worflow Tools</a></li>
+<li class="chapter" data-level="1.2.1" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#ml-dev-ops"><i class="fa fa-check"></i><b>1.2.1</b> ML + (Dev)-Ops</a></li>
+<li class="chapter" data-level="1.2.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#mlops-engineering"><i class="fa fa-check"></i><b>1.2.2</b> MLOps Engineering</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html"><i class="fa fa-check"></i><b>2.2</b> Machine Learning Operations (MLOps)</a>
-<ul>
-<li class="chapter" data-level="2.2.1" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#ml-dev-ops"><i class="fa fa-check"></i><b>2.2.1</b> ML + (Dev)-Ops</a></li>
-<li class="chapter" data-level="2.2.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#mlops-engineering"><i class="fa fa-check"></i><b>2.2.2</b> MLOps Engineering</a></li>
+<li class="chapter" data-level="1.3" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html"><i class="fa fa-check"></i><b>1.3</b> Roles and Tasks in MLOps</a></li>
+<li class="chapter" data-level="1.4" data-path="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><a href="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><i class="fa fa-check"></i><b>1.4</b> MLOps Engineering with Airflow and MLflow on Kubernetes</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html"><i class="fa fa-check"></i><b>2.3</b> Roles and Tasks in MLOps</a></li>
-<li class="chapter" data-level="2.4" data-path="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><a href="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><i class="fa fa-check"></i><b>2.4</b> MLOps Engineering with Airflow and MLflow on Kubernetes</a></li>
+<li class="chapter" data-level="2" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>2</b> Airflow</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html"><i class="fa fa-check"></i><b>2.1</b> Fundamental concepts</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#dags"><i class="fa fa-check"></i><b>2.1.1</b> DAGs</a></li>
+<li class="chapter" data-level="2.1.2" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#operators"><i class="fa fa-check"></i><b>2.1.2</b> Operators</a></li>
+<li class="chapter" data-level="2.1.3" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#tasks"><i class="fa fa-check"></i><b>2.1.3</b> Tasks</a></li>
+<li class="chapter" data-level="2.1.4" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#xcom"><i class="fa fa-check"></i><b>2.1.4</b> XCom</a></li>
+<li class="chapter" data-level="2.1.5" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#scheduling"><i class="fa fa-check"></i><b>2.1.5</b> Scheduling</a></li>
+<li class="chapter" data-level="2.1.6" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#taskflow"><i class="fa fa-check"></i><b>2.1.6</b> Taskflow</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="todo.html"><a href="todo.html"><i class="fa fa-check"></i><b>3</b> TODO:</a></li>
-<li class="chapter" data-level="4" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>4</b> Terraform</a>
+<li class="chapter" data-level="2.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>2.2</b> Exemplary ML workflow</a></li>
+<li class="chapter" data-level="2.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>2.3</b> Airflow infrastructure</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>4.1</b> Basic usage</a>
-<ul>
-<li class="chapter" data-level="4.1.1" data-path="basic-usage.html"><a href="basic-usage.html#terraform-init"><i class="fa fa-check"></i><b>4.1.1</b> terraform init</a></li>
-<li class="chapter" data-level="4.1.2" data-path="basic-usage.html"><a href="basic-usage.html#terraform-validate"><i class="fa fa-check"></i><b>4.1.2</b> terraform validate</a></li>
-<li class="chapter" data-level="4.1.3" data-path="basic-usage.html"><a href="basic-usage.html#terraform-plan"><i class="fa fa-check"></i><b>4.1.3</b> terraform plan</a></li>
-<li class="chapter" data-level="4.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>4.1.4</b> terraform apply</a></li>
-<li class="chapter" data-level="4.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>4.1.5</b> terraform destroy</a></li>
-</ul></li>
-<li class="chapter" data-level="4.2" data-path="core-concepts.html"><a href="core-concepts.html"><i class="fa fa-check"></i><b>4.2</b> Core Concepts</a>
-<ul>
-<li class="chapter" data-level="4.2.1" data-path="core-concepts.html"><a href="core-concepts.html#providers"><i class="fa fa-check"></i><b>4.2.1</b> Providers</a></li>
-<li class="chapter" data-level="4.2.2" data-path="core-concepts.html"><a href="core-concepts.html#resources"><i class="fa fa-check"></i><b>4.2.2</b> Resources</a></li>
-<li class="chapter" data-level="4.2.3" data-path="core-concepts.html"><a href="core-concepts.html#data-sources"><i class="fa fa-check"></i><b>4.2.3</b> Data Sources</a></li>
-<li class="chapter" data-level="4.2.4" data-path="core-concepts.html"><a href="core-concepts.html#state"><i class="fa fa-check"></i><b>4.2.4</b> State</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>4.3</b> Modules</a>
-<ul>
-<li class="chapter" data-level="4.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>4.3.1</b> Input Variables</a></li>
-<li class="chapter" data-level="4.3.2" data-path="modules.html"><a href="modules.html#output-variables"><i class="fa fa-check"></i><b>4.3.2</b> Output Variables</a></li>
-<li class="chapter" data-level="4.3.3" data-path="modules.html"><a href="modules.html#local-variables"><i class="fa fa-check"></i><b>4.3.3</b> Local Variables</a></li>
-</ul></li>
-<li class="chapter" data-level="4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html"><i class="fa fa-check"></i><b>4.4</b> Additional tips &amp; tricks</a>
-<ul>
-<li class="chapter" data-level="4.4.1" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#count"><i class="fa fa-check"></i><b>4.4.1</b> count</a></li>
-<li class="chapter" data-level="4.4.2" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for-each"><i class="fa fa-check"></i><b>4.4.2</b> for-each</a></li>
-<li class="chapter" data-level="4.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>4.4.3</b> for</a></li>
-<li class="chapter" data-level="4.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>4.4.4</b> Workspaces</a></li>
-</ul></li>
-<li class="chapter" data-level="4.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>4.5</b> Exemplary Deployment</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>5</b> Kubernetes</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html"><i class="fa fa-check"></i><b>5.1</b> Core Concepts</a>
-<ul>
-<li class="chapter" data-level="5.1.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html#nodes"><i class="fa fa-check"></i><b>5.1.1</b> Nodes</a></li>
-<li class="chapter" data-level="5.1.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html#pods"><i class="fa fa-check"></i><b>5.1.2</b> Pods</a></li>
-<li class="chapter" data-level="5.1.3" data-path="core-concepts-1.html"><a href="core-concepts-1.html#imperative-declarative-management"><i class="fa fa-check"></i><b>5.1.3</b> Imperative &amp; Declarative Management</a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>5.2</b> Application Deployment &amp; Design</a>
-<ul>
-<li class="chapter" data-level="5.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>5.2.1</b> Deployments</a></li>
-<li class="chapter" data-level="5.2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html#resource-management"><i class="fa fa-check"></i><b>5.2.2</b> Resource Management</a></li>
-<li class="chapter" data-level="5.2.3" data-path="application-deployment-design.html"><a href="application-deployment-design.html#daemonsets"><i class="fa fa-check"></i><b>5.2.3</b> DaemonSets</a></li>
-<li class="chapter" data-level="5.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>5.2.4</b> StatefulSets</a></li>
-<li class="chapter" data-level="5.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>5.2.5</b> Jobs &amp; Cron Jobs</a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>5.3</b> Services &amp; Networking</a>
-<ul>
-<li class="chapter" data-level="5.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>5.3.1</b> Services</a></li>
-<li class="chapter" data-level="5.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>5.3.2</b> Service Discovery</a></li>
-</ul></li>
-<li class="chapter" data-level="5.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>5.4</b> Volume &amp; Storage</a>
-<ul>
-<li class="chapter" data-level="5.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>5.4.1</b> EmptyDir Volume</a></li>
-<li class="chapter" data-level="5.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>5.4.2</b> HostPath Volume</a></li>
-<li class="chapter" data-level="5.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>5.4.3</b> Persistent Volumes</a></li>
-</ul></li>
-<li class="chapter" data-level="5.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>5.5</b> Environment, Configuration &amp; Security</a>
-<ul>
-<li class="chapter" data-level="5.5.1" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#namespaces"><i class="fa fa-check"></i><b>5.5.1</b> Namespaces</a></li>
-<li class="chapter" data-level="5.5.2" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>5.5.2</b> Labels, Selectors and Annotations</a></li>
-<li class="chapter" data-level="5.5.3" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#configmaps"><i class="fa fa-check"></i><b>5.5.3</b> ConfigMaps</a></li>
-<li class="chapter" data-level="5.5.4" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#secrets"><i class="fa fa-check"></i><b>5.5.4</b> Secrets</a></li>
-</ul></li>
-<li class="chapter" data-level="5.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>5.6</b> Observability &amp; Maintenance</a>
-<ul>
-<li class="chapter" data-level="5.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>5.6.1</b> Health Checks</a></li>
-<li class="chapter" data-level="5.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>5.6.2</b> Debugging</a></li>
-</ul></li>
-<li class="chapter" data-level="5.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>5.7</b> Helm</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>6</b> Airflow</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html"><i class="fa fa-check"></i><b>6.1</b> Fundamental concepts</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#dags"><i class="fa fa-check"></i><b>6.1.1</b> DAGs</a></li>
-<li class="chapter" data-level="6.1.2" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#operators"><i class="fa fa-check"></i><b>6.1.2</b> Operators</a></li>
-<li class="chapter" data-level="6.1.3" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#tasks"><i class="fa fa-check"></i><b>6.1.3</b> Tasks</a></li>
-<li class="chapter" data-level="6.1.4" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#xcom"><i class="fa fa-check"></i><b>6.1.4</b> XCom</a></li>
-<li class="chapter" data-level="6.1.5" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#scheduling"><i class="fa fa-check"></i><b>6.1.5</b> Scheduling</a></li>
-<li class="chapter" data-level="6.1.6" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#taskflow"><i class="fa fa-check"></i><b>6.1.6</b> Taskflow</a></li>
-</ul></li>
-<li class="chapter" data-level="6.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>6.2</b> Exemplary ML workflow</a></li>
-<li class="chapter" data-level="6.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>6.3</b> Airflow infrastructure</a>
-<ul>
-<li class="chapter" data-level="6.3.1" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#airflow-as-a-distributed-system"><i class="fa fa-check"></i><b>6.3.1</b> Airflow as a distributed system</a></li>
-<li class="chapter" data-level="6.3.2" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#scheduler-1"><i class="fa fa-check"></i><b>6.3.2</b> Scheduler</a></li>
-<li class="chapter" data-level="6.3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#webserver"><i class="fa fa-check"></i><b>6.3.3</b> Webserver</a></li>
-<li class="chapter" data-level="6.3.4" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#executor"><i class="fa fa-check"></i><b>6.3.4</b> Executor</a></li>
-<li class="chapter" data-level="6.3.5" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#dag-directory"><i class="fa fa-check"></i><b>6.3.5</b> DAG Directory</a></li>
-<li class="chapter" data-level="6.3.6" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#metadata-database"><i class="fa fa-check"></i><b>6.3.6</b> Metadata Database</a></li>
+<li class="chapter" data-level="2.3.1" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#airflow-as-a-distributed-system"><i class="fa fa-check"></i><b>2.3.1</b> Airflow as a distributed system</a></li>
+<li class="chapter" data-level="2.3.2" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#scheduler"><i class="fa fa-check"></i><b>2.3.2</b> Scheduler</a></li>
+<li class="chapter" data-level="2.3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#webserver"><i class="fa fa-check"></i><b>2.3.3</b> Webserver</a></li>
+<li class="chapter" data-level="2.3.4" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#executor"><i class="fa fa-check"></i><b>2.3.4</b> Executor</a></li>
+<li class="chapter" data-level="2.3.5" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#dag-directory"><i class="fa fa-check"></i><b>2.3.5</b> DAG Directory</a></li>
+<li class="chapter" data-level="2.3.6" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#metadata-database"><i class="fa fa-check"></i><b>2.3.6</b> Metadata Database</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>7</b> MLflow</a>
+<li class="chapter" data-level="3" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>3</b> MLflow</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="fundamental-components.html"><a href="fundamental-components.html"><i class="fa fa-check"></i><b>7.1</b> Fundamental Components</a>
+<li class="chapter" data-level="3.1" data-path="fundamental-components.html"><a href="fundamental-components.html"><i class="fa fa-check"></i><b>3.1</b> Fundamental Components</a>
 <ul>
-<li class="chapter" data-level="7.1.1" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-tracking"><i class="fa fa-check"></i><b>7.1.1</b> MLflow Tracking</a></li>
-<li class="chapter" data-level="7.1.2" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-models"><i class="fa fa-check"></i><b>7.1.2</b> MLflow Models</a></li>
-<li class="chapter" data-level="7.1.3" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-model-registry"><i class="fa fa-check"></i><b>7.1.3</b> MLflow Model Registry</a></li>
-<li class="chapter" data-level="7.1.4" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-projects"><i class="fa fa-check"></i><b>7.1.4</b> MLflow Projects</a></li>
+<li class="chapter" data-level="3.1.1" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-tracking"><i class="fa fa-check"></i><b>3.1.1</b> MLflow Tracking</a></li>
+<li class="chapter" data-level="3.1.2" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-models"><i class="fa fa-check"></i><b>3.1.2</b> MLflow Models</a></li>
+<li class="chapter" data-level="3.1.3" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-model-registry"><i class="fa fa-check"></i><b>3.1.3</b> MLflow Model Registry</a></li>
+<li class="chapter" data-level="3.1.4" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-projects"><i class="fa fa-check"></i><b>3.1.4</b> MLflow Projects</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html"><i class="fa fa-check"></i><b>7.2</b> MLFflow Architecture</a>
+<li class="chapter" data-level="3.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html"><i class="fa fa-check"></i><b>3.2</b> MLFflow Architecture</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>7.2.1</b> MLflow Tracking Server</a></li>
-<li class="chapter" data-level="7.2.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-backend-store"><i class="fa fa-check"></i><b>7.2.2</b> MLflow Backend Store</a></li>
-<li class="chapter" data-level="7.2.3" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-artifact-store"><i class="fa fa-check"></i><b>7.2.3</b> MLflow Artifact Store</a></li>
+<li class="chapter" data-level="3.2.1" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>3.2.1</b> MLflow Tracking Server</a></li>
+<li class="chapter" data-level="3.2.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-backend-store"><i class="fa fa-check"></i><b>3.2.2</b> MLflow Backend Store</a></li>
+<li class="chapter" data-level="3.2.3" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-artifact-store"><i class="fa fa-check"></i><b>3.2.3</b> MLflow Artifact Store</a></li>
 </ul></li>
 </ul></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
+<li class="chapter" data-level="4" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>4</b> Kubernetes</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="core-concepts.html"><a href="core-concepts.html"><i class="fa fa-check"></i><b>4.1</b> Core Concepts</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="core-concepts.html"><a href="core-concepts.html#nodes"><i class="fa fa-check"></i><b>4.1.1</b> Nodes</a></li>
+<li class="chapter" data-level="4.1.2" data-path="core-concepts.html"><a href="core-concepts.html#pods"><i class="fa fa-check"></i><b>4.1.2</b> Pods</a></li>
+<li class="chapter" data-level="4.1.3" data-path="core-concepts.html"><a href="core-concepts.html#imperative-declarative-management"><i class="fa fa-check"></i><b>4.1.3</b> Imperative &amp; Declarative Management</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>4.2</b> Application Deployment &amp; Design</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>4.2.1</b> Deployments</a></li>
+<li class="chapter" data-level="4.2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html#resource-management"><i class="fa fa-check"></i><b>4.2.2</b> Resource Management</a></li>
+<li class="chapter" data-level="4.2.3" data-path="application-deployment-design.html"><a href="application-deployment-design.html#daemonsets"><i class="fa fa-check"></i><b>4.2.3</b> DaemonSets</a></li>
+<li class="chapter" data-level="4.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>4.2.4</b> StatefulSets</a></li>
+<li class="chapter" data-level="4.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>4.2.5</b> Jobs &amp; Cron Jobs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>4.3</b> Services &amp; Networking</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>4.3.1</b> Services</a></li>
+<li class="chapter" data-level="4.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>4.3.2</b> Service Discovery</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>4.4</b> Volume &amp; Storage</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>4.4.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="4.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>4.4.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="4.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>4.4.3</b> Persistent Volumes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>4.5</b> Environment, Configuration &amp; Security</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#namespaces"><i class="fa fa-check"></i><b>4.5.1</b> Namespaces</a></li>
+<li class="chapter" data-level="4.5.2" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>4.5.2</b> Labels, Selectors and Annotations</a></li>
+<li class="chapter" data-level="4.5.3" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#configmaps"><i class="fa fa-check"></i><b>4.5.3</b> ConfigMaps</a></li>
+<li class="chapter" data-level="4.5.4" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#secrets"><i class="fa fa-check"></i><b>4.5.4</b> Secrets</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>4.6</b> Observability &amp; Maintenance</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>4.6.1</b> Health Checks</a></li>
+<li class="chapter" data-level="4.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>4.6.2</b> Debugging</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>4.7</b> Helm</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>5</b> Terraform</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>5.1</b> Basic usage</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="basic-usage.html"><a href="basic-usage.html#terraform-init"><i class="fa fa-check"></i><b>5.1.1</b> terraform init</a></li>
+<li class="chapter" data-level="5.1.2" data-path="basic-usage.html"><a href="basic-usage.html#terraform-validate"><i class="fa fa-check"></i><b>5.1.2</b> terraform validate</a></li>
+<li class="chapter" data-level="5.1.3" data-path="basic-usage.html"><a href="basic-usage.html#terraform-plan"><i class="fa fa-check"></i><b>5.1.3</b> terraform plan</a></li>
+<li class="chapter" data-level="5.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>5.1.4</b> terraform apply</a></li>
+<li class="chapter" data-level="5.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>5.1.5</b> terraform destroy</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html"><i class="fa fa-check"></i><b>5.2</b> Core Concepts</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html#providers"><i class="fa fa-check"></i><b>5.2.1</b> Providers</a></li>
+<li class="chapter" data-level="5.2.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html#resources"><i class="fa fa-check"></i><b>5.2.2</b> Resources</a></li>
+<li class="chapter" data-level="5.2.3" data-path="core-concepts-1.html"><a href="core-concepts-1.html#data-sources"><i class="fa fa-check"></i><b>5.2.3</b> Data Sources</a></li>
+<li class="chapter" data-level="5.2.4" data-path="core-concepts-1.html"><a href="core-concepts-1.html#state"><i class="fa fa-check"></i><b>5.2.4</b> State</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>5.3</b> Modules</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>5.3.1</b> Input Variables</a></li>
+<li class="chapter" data-level="5.3.2" data-path="modules.html"><a href="modules.html#output-variables"><i class="fa fa-check"></i><b>5.3.2</b> Output Variables</a></li>
+<li class="chapter" data-level="5.3.3" data-path="modules.html"><a href="modules.html#local-variables"><i class="fa fa-check"></i><b>5.3.3</b> Local Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html"><i class="fa fa-check"></i><b>5.4</b> Additional tips &amp; tricks</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#count"><i class="fa fa-check"></i><b>5.4.1</b> count</a></li>
+<li class="chapter" data-level="5.4.2" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for-each"><i class="fa fa-check"></i><b>5.4.2</b> for-each</a></li>
+<li class="chapter" data-level="5.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>5.4.3</b> for</a></li>
+<li class="chapter" data-level="5.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>5.4.4</b> Workspaces</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>5.5</b> Exemplary Deployment</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -287,17 +279,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="observability-maintenance" class="section level2 hasAnchor" number="5.6">
-<h2><span class="header-section-number">5.6</span> Observability &amp; Maintenance<a href="observability-maintenance.html#observability-maintenance" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="health-checks" class="section level3 hasAnchor" number="5.6.1">
-<h3><span class="header-section-number">5.6.1</span> Health Checks<a href="observability-maintenance.html#health-checks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="observability-maintenance" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Observability &amp; Maintenance<a href="observability-maintenance.html#observability-maintenance" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="health-checks" class="section level3 hasAnchor" number="4.6.1">
+<h3><span class="header-section-number">4.6.1</span> Health Checks<a href="observability-maintenance.html#health-checks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Applications running in service need to be healthy at all times so they are ready to receive traffic. K8s uses a process called health checks to test whether an application is alive. If there are any issues and the application is unhealthy, K8s will restart the process. Yet, checking only whether a process is up and running might be not sufficient. What if, e.g., a client wants to connect to a database and the connection cannot be established, even though the app is up and running? To solve more specific issues like this, health checks like a <em>liveness probe</em> or <em>readiness probe</em> can be used. If there have not been specified, K8s will use the default checks to test whether a process is running.</p>
-<div id="liveness-probe" class="section level4 hasAnchor" number="5.6.1.1">
-<h4><span class="header-section-number">5.6.1.1</span> Liveness Probe<a href="observability-maintenance.html#liveness-probe" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="liveness-probe" class="section level4 hasAnchor" number="4.6.1.1">
+<h4><span class="header-section-number">4.6.1.1</span> Liveness Probe<a href="observability-maintenance.html#liveness-probe" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The Kubelet of a node uses <em>Liveness Probes</em> to check whether an application runs fine or whether it is unable to make progress and its stuck on a broken state. For example, it could catch a deadlock, a database connection failure, etc. The Liveness Probe can restart a container accordingly. To use a Liveness Probe, an endpoint needs to be specified. The benefit of this is, that it is simple to define what it means for an application to be healthy just by defining a path.</p>
 </div>
-<div id="readiness-probe" class="section level4 hasAnchor" number="5.6.1.2">
-<h4><span class="header-section-number">5.6.1.2</span> Readiness Probe<a href="observability-maintenance.html#readiness-probe" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="readiness-probe" class="section level4 hasAnchor" number="4.6.1.2">
+<h4><span class="header-section-number">4.6.1.2</span> Readiness Probe<a href="observability-maintenance.html#readiness-probe" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Similar to a Liveness Probe, the <em>Readniness Probe</em> is used by the kubelet to check when the container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready. Its configuration is also done by specifying a path to what it means the application is healthy. A lot of frameworks, like e.g. springboot, actually provide a path to use.</p>
 <p>Belows configuration shows a Deployment which includes a Liveness and a Readiness Probe. The image of the deployment is set up so its process is killed after a given number of seconds. This has been passed using environment variables such as seen in the script. Both, the Liveness and the Readiness Probe have the same parameters in the given example.</p>
 <ul>
@@ -306,90 +298,90 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>periodSeconds: The probe is called every x seconds by K8s</li>
 <li>failureThreshold: The container will fail and restart if more than x consecutive probes fail</li>
 </ul>
-<div class="sourceCode" id="cb59"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb59-1"><a href="observability-maintenance.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># healthchecks.yaml</span></span>
-<span id="cb59-2"><a href="observability-maintenance.html#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
-<span id="cb59-3"><a href="observability-maintenance.html#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
-<span id="cb59-4"><a href="observability-maintenance.html#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb59-5"><a href="observability-maintenance.html#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
-<span id="cb59-6"><a href="observability-maintenance.html#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb59-7"><a href="observability-maintenance.html#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">replicas</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb59-8"><a href="observability-maintenance.html#cb59-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb59-9"><a href="observability-maintenance.html#cb59-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
-<span id="cb59-10"><a href="observability-maintenance.html#cb59-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
-<span id="cb59-11"><a href="observability-maintenance.html#cb59-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
-<span id="cb59-12"><a href="observability-maintenance.html#cb59-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb59-13"><a href="observability-maintenance.html#cb59-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
-<span id="cb59-14"><a href="observability-maintenance.html#cb59-14" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
-<span id="cb59-15"><a href="observability-maintenance.html#cb59-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">environment</span><span class="kw">:</span><span class="at"> test</span></span>
-<span id="cb59-16"><a href="observability-maintenance.html#cb59-16" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">tier</span><span class="kw">:</span><span class="at"> backend</span></span>
-<span id="cb59-17"><a href="observability-maintenance.html#cb59-17" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> engineering</span></span>
-<span id="cb59-18"><a href="observability-maintenance.html#cb59-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb59-19"><a href="observability-maintenance.html#cb59-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
-<span id="cb59-20"><a href="observability-maintenance.html#cb59-20" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
-<span id="cb59-21"><a href="observability-maintenance.html#cb59-21" aria-hidden="true" tabindex="-1"></a><span class="co">          # check whether I have to change the backend app to do this.</span></span>
-<span id="cb59-22"><a href="observability-maintenance.html#cb59-22" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;seblum/mlops-public:backend-flask&quot;</span></span>
-<span id="cb59-23"><a href="observability-maintenance.html#cb59-23" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">imagePullPolicy</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Always&quot;</span></span>
-<span id="cb59-24"><a href="observability-maintenance.html#cb59-24" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb59-25"><a href="observability-maintenance.html#cb59-25" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">limits</span><span class="kw">:</span></span>
-<span id="cb59-26"><a href="observability-maintenance.html#cb59-26" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
-<span id="cb59-27"><a href="observability-maintenance.html#cb59-27" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
-<span id="cb59-28"><a href="observability-maintenance.html#cb59-28" aria-hidden="true" tabindex="-1"></a><span class="co">          # Specification of the the Liveness Probe</span></span>
-<span id="cb59-29"><a href="observability-maintenance.html#cb59-29" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">livenessProbe</span><span class="kw">:</span></span>
-<span id="cb59-30"><a href="observability-maintenance.html#cb59-30" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">httpGet</span><span class="kw">:</span></span>
-<span id="cb59-31"><a href="observability-maintenance.html#cb59-31" aria-hidden="true" tabindex="-1"></a><span class="co">              # path of the url</span></span>
-<span id="cb59-32"><a href="observability-maintenance.html#cb59-32" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">path</span><span class="kw">:</span><span class="at"> /liveness</span></span>
-<span id="cb59-33"><a href="observability-maintenance.html#cb59-33" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
-<span id="cb59-34"><a href="observability-maintenance.html#cb59-34" aria-hidden="true" tabindex="-1"></a><span class="co">            # time the liveness probe starts after pod is started</span></span>
-<span id="cb59-35"><a href="observability-maintenance.html#cb59-35" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">initialDelaySeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
-<span id="cb59-36"><a href="observability-maintenance.html#cb59-36" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">timeoutSeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb59-37"><a href="observability-maintenance.html#cb59-37" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">failureThreshold</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
-<span id="cb59-38"><a href="observability-maintenance.html#cb59-38" aria-hidden="true" tabindex="-1"></a><span class="co">            # period of time when the checks should be performed</span></span>
-<span id="cb59-39"><a href="observability-maintenance.html#cb59-39" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">periodSeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
-<span id="cb59-40"><a href="observability-maintenance.html#cb59-40" aria-hidden="true" tabindex="-1"></a><span class="co">          # Specification of the Readiness Probe</span></span>
-<span id="cb59-41"><a href="observability-maintenance.html#cb59-41" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">readinessProbe</span><span class="kw">:</span></span>
-<span id="cb59-42"><a href="observability-maintenance.html#cb59-42" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">httpGet</span><span class="kw">:</span></span>
-<span id="cb59-43"><a href="observability-maintenance.html#cb59-43" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">path</span><span class="kw">:</span><span class="at"> /readiness</span></span>
-<span id="cb59-44"><a href="observability-maintenance.html#cb59-44" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
-<span id="cb59-45"><a href="observability-maintenance.html#cb59-45" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">initialDelaySeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span>
-<span id="cb59-46"><a href="observability-maintenance.html#cb59-46" aria-hidden="true" tabindex="-1"></a><span class="co">            # change to 1 seconds and see the pod not going to go ready</span></span>
-<span id="cb59-47"><a href="observability-maintenance.html#cb59-47" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">timeoutSeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
-<span id="cb59-48"><a href="observability-maintenance.html#cb59-48" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">failureThreshold</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb59-49"><a href="observability-maintenance.html#cb59-49" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">periodSeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
-<span id="cb59-50"><a href="observability-maintenance.html#cb59-50" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">env</span><span class="kw">:</span></span>
-<span id="cb59-51"><a href="observability-maintenance.html#cb59-51" aria-hidden="true" tabindex="-1"></a><span class="co">            # variable for the container to be killed after 60 seconds</span></span>
-<span id="cb59-52"><a href="observability-maintenance.html#cb59-52" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;KILL_IN_SECONDS&quot;</span></span>
-<span id="cb59-53"><a href="observability-maintenance.html#cb59-53" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">value</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;60&quot;</span></span>
-<span id="cb59-54"><a href="observability-maintenance.html#cb59-54" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb59-55"><a href="observability-maintenance.html#cb59-55" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
-<span id="cb59-56"><a href="observability-maintenance.html#cb59-56" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb59-57"><a href="observability-maintenance.html#cb59-57" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb59-58"><a href="observability-maintenance.html#cb59-58" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
-<span id="cb59-59"><a href="observability-maintenance.html#cb59-59" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb59-60"><a href="observability-maintenance.html#cb59-60" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
-<span id="cb59-61"><a href="observability-maintenance.html#cb59-61" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb59-62"><a href="observability-maintenance.html#cb59-62" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> NodePort</span></span>
-<span id="cb59-63"><a href="observability-maintenance.html#cb59-63" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb59-64"><a href="observability-maintenance.html#cb59-64" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
-<span id="cb59-65"><a href="observability-maintenance.html#cb59-65" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb59-66"><a href="observability-maintenance.html#cb59-66" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
-<span id="cb59-67"><a href="observability-maintenance.html#cb59-67" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">8080</span></span>
-<span id="cb59-68"><a href="observability-maintenance.html#cb59-68" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">nodePort</span><span class="kw">:</span><span class="at"> </span><span class="dv">30000</span></span>
-<span id="cb59-69"><a href="observability-maintenance.html#cb59-69" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb59-70"><a href="observability-maintenance.html#cb59-70" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb59-71"><a href="observability-maintenance.html#cb59-71" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
-<span id="cb59-72"><a href="observability-maintenance.html#cb59-72" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb59-73"><a href="observability-maintenance.html#cb59-73" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
-<span id="cb59-74"><a href="observability-maintenance.html#cb59-74" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb59-75"><a href="observability-maintenance.html#cb59-75" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> ClusterIP</span></span>
-<span id="cb59-76"><a href="observability-maintenance.html#cb59-76" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb59-77"><a href="observability-maintenance.html#cb59-77" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
-<span id="cb59-78"><a href="observability-maintenance.html#cb59-78" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb59-79"><a href="observability-maintenance.html#cb59-79" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
-<span id="cb59-80"><a href="observability-maintenance.html#cb59-80" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">8080</span></span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb74-1"><a href="observability-maintenance.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># healthchecks.yaml</span></span>
+<span id="cb74-2"><a href="observability-maintenance.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb74-3"><a href="observability-maintenance.html#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb74-4"><a href="observability-maintenance.html#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb74-5"><a href="observability-maintenance.html#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb74-6"><a href="observability-maintenance.html#cb74-6" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb74-7"><a href="observability-maintenance.html#cb74-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">replicas</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb74-8"><a href="observability-maintenance.html#cb74-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb74-9"><a href="observability-maintenance.html#cb74-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb74-10"><a href="observability-maintenance.html#cb74-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb74-11"><a href="observability-maintenance.html#cb74-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb74-12"><a href="observability-maintenance.html#cb74-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb74-13"><a href="observability-maintenance.html#cb74-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb74-14"><a href="observability-maintenance.html#cb74-14" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb74-15"><a href="observability-maintenance.html#cb74-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">environment</span><span class="kw">:</span><span class="at"> test</span></span>
+<span id="cb74-16"><a href="observability-maintenance.html#cb74-16" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">tier</span><span class="kw">:</span><span class="at"> backend</span></span>
+<span id="cb74-17"><a href="observability-maintenance.html#cb74-17" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> engineering</span></span>
+<span id="cb74-18"><a href="observability-maintenance.html#cb74-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb74-19"><a href="observability-maintenance.html#cb74-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb74-20"><a href="observability-maintenance.html#cb74-20" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb74-21"><a href="observability-maintenance.html#cb74-21" aria-hidden="true" tabindex="-1"></a><span class="co">          # check whether I have to change the backend app to do this.</span></span>
+<span id="cb74-22"><a href="observability-maintenance.html#cb74-22" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;seblum/mlops-public:backend-flask&quot;</span></span>
+<span id="cb74-23"><a href="observability-maintenance.html#cb74-23" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">imagePullPolicy</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Always&quot;</span></span>
+<span id="cb74-24"><a href="observability-maintenance.html#cb74-24" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb74-25"><a href="observability-maintenance.html#cb74-25" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb74-26"><a href="observability-maintenance.html#cb74-26" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb74-27"><a href="observability-maintenance.html#cb74-27" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb74-28"><a href="observability-maintenance.html#cb74-28" aria-hidden="true" tabindex="-1"></a><span class="co">          # Specification of the the Liveness Probe</span></span>
+<span id="cb74-29"><a href="observability-maintenance.html#cb74-29" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">livenessProbe</span><span class="kw">:</span></span>
+<span id="cb74-30"><a href="observability-maintenance.html#cb74-30" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">httpGet</span><span class="kw">:</span></span>
+<span id="cb74-31"><a href="observability-maintenance.html#cb74-31" aria-hidden="true" tabindex="-1"></a><span class="co">              # path of the url</span></span>
+<span id="cb74-32"><a href="observability-maintenance.html#cb74-32" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">path</span><span class="kw">:</span><span class="at"> /liveness</span></span>
+<span id="cb74-33"><a href="observability-maintenance.html#cb74-33" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
+<span id="cb74-34"><a href="observability-maintenance.html#cb74-34" aria-hidden="true" tabindex="-1"></a><span class="co">            # time the liveness probe starts after pod is started</span></span>
+<span id="cb74-35"><a href="observability-maintenance.html#cb74-35" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">initialDelaySeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb74-36"><a href="observability-maintenance.html#cb74-36" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">timeoutSeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb74-37"><a href="observability-maintenance.html#cb74-37" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">failureThreshold</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
+<span id="cb74-38"><a href="observability-maintenance.html#cb74-38" aria-hidden="true" tabindex="-1"></a><span class="co">            # period of time when the checks should be performed</span></span>
+<span id="cb74-39"><a href="observability-maintenance.html#cb74-39" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">periodSeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb74-40"><a href="observability-maintenance.html#cb74-40" aria-hidden="true" tabindex="-1"></a><span class="co">          # Specification of the Readiness Probe</span></span>
+<span id="cb74-41"><a href="observability-maintenance.html#cb74-41" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">readinessProbe</span><span class="kw">:</span></span>
+<span id="cb74-42"><a href="observability-maintenance.html#cb74-42" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">httpGet</span><span class="kw">:</span></span>
+<span id="cb74-43"><a href="observability-maintenance.html#cb74-43" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">path</span><span class="kw">:</span><span class="at"> /readiness</span></span>
+<span id="cb74-44"><a href="observability-maintenance.html#cb74-44" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
+<span id="cb74-45"><a href="observability-maintenance.html#cb74-45" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">initialDelaySeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span>
+<span id="cb74-46"><a href="observability-maintenance.html#cb74-46" aria-hidden="true" tabindex="-1"></a><span class="co">            # change to 1 seconds and see the pod not going to go ready</span></span>
+<span id="cb74-47"><a href="observability-maintenance.html#cb74-47" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">timeoutSeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
+<span id="cb74-48"><a href="observability-maintenance.html#cb74-48" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">failureThreshold</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb74-49"><a href="observability-maintenance.html#cb74-49" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">periodSeconds</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb74-50"><a href="observability-maintenance.html#cb74-50" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb74-51"><a href="observability-maintenance.html#cb74-51" aria-hidden="true" tabindex="-1"></a><span class="co">            # variable for the container to be killed after 60 seconds</span></span>
+<span id="cb74-52"><a href="observability-maintenance.html#cb74-52" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;KILL_IN_SECONDS&quot;</span></span>
+<span id="cb74-53"><a href="observability-maintenance.html#cb74-53" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">value</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;60&quot;</span></span>
+<span id="cb74-54"><a href="observability-maintenance.html#cb74-54" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb74-55"><a href="observability-maintenance.html#cb74-55" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
+<span id="cb74-56"><a href="observability-maintenance.html#cb74-56" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb74-57"><a href="observability-maintenance.html#cb74-57" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb74-58"><a href="observability-maintenance.html#cb74-58" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb74-59"><a href="observability-maintenance.html#cb74-59" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb74-60"><a href="observability-maintenance.html#cb74-60" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb74-61"><a href="observability-maintenance.html#cb74-61" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb74-62"><a href="observability-maintenance.html#cb74-62" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> NodePort</span></span>
+<span id="cb74-63"><a href="observability-maintenance.html#cb74-63" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb74-64"><a href="observability-maintenance.html#cb74-64" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb74-65"><a href="observability-maintenance.html#cb74-65" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb74-66"><a href="observability-maintenance.html#cb74-66" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb74-67"><a href="observability-maintenance.html#cb74-67" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">8080</span></span>
+<span id="cb74-68"><a href="observability-maintenance.html#cb74-68" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">nodePort</span><span class="kw">:</span><span class="at"> </span><span class="dv">30000</span></span>
+<span id="cb74-69"><a href="observability-maintenance.html#cb74-69" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb74-70"><a href="observability-maintenance.html#cb74-70" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb74-71"><a href="observability-maintenance.html#cb74-71" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb74-72"><a href="observability-maintenance.html#cb74-72" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb74-73"><a href="observability-maintenance.html#cb74-73" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb74-74"><a href="observability-maintenance.html#cb74-74" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb74-75"><a href="observability-maintenance.html#cb74-75" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> ClusterIP</span></span>
+<span id="cb74-76"><a href="observability-maintenance.html#cb74-76" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb74-77"><a href="observability-maintenance.html#cb74-77" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask-healthcheck</span></span>
+<span id="cb74-78"><a href="observability-maintenance.html#cb74-78" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb74-79"><a href="observability-maintenance.html#cb74-79" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb74-80"><a href="observability-maintenance.html#cb74-80" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">8080</span></span></code></pre></div>
 </div>
 </div>
-<div id="debugging" class="section level3 hasAnchor" number="5.6.2">
-<h3><span class="header-section-number">5.6.2</span> Debugging<a href="observability-maintenance.html#debugging" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="debugging" class="section level3 hasAnchor" number="4.6.2">
+<h3><span class="header-section-number">4.6.2</span> Debugging<a href="observability-maintenance.html#debugging" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 
 </div>
 </div>
@@ -430,7 +422,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/04.6-Kubernetes-Observability_and_Maintenance.md",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/05.6-Kubernetes-Observability_and_Maintenance.md",
 "text": "Edit"
 },
 "history": {
