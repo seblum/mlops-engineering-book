@@ -11,7 +11,7 @@ MLflow is library-agnostic, which means one can use it with any ML library and  
 The aim is to make its use as reproducible and reusable as possible so Data Scientists require minimal changes to integrate MLflow into their existing codebase. 
 MLflow also comes with a user web interface to conveniently view and compare models and metrics.
 
-![Web Interface of MLflow](images/06-MLflow/MLflow_web_interface-overview.png)
+![Web Interface of MLflow](images/04-MLflow/MLflow_web_interface-overview.png)
 
 
 ### Prerequisites {.unlisted .unnumbered}

@@ -2,7 +2,7 @@
 
 [Apache Airflow](https://github.com/apache/airflow) is an open-source platform to develop, schedule and monitor workflows. Airflow comes with a web user interface that aims to make managing workflows as easy as possible and provides a good overview of each workflow over time and the ability to inspect logs and manage tasks, for example retrying a task in case of failure.
 
-![web-interface_overview](./images/05-Airflow/web-interface_overview.png)
+![web-interface_overview](./images/03-Airflow/web-interface_overview.png)
 
 However, the philosophy of Airflow is to define workflows as code, so coding will always be required. Thus, Airflow can also be referred to as a *“Workflows as code”*-tool that allows for a dynamic, extensible, and flexible management of its workflows.
 

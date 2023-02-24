@@ -16,7 +16,7 @@ resource "aws_iam_user" "example" {
 }
 ```
 
-![count](images/02-Terraform/additionals_count.png) 
+![count](images/06-Terraform/additionals_count.png) 
 
 
 ```bash
@@ -32,7 +32,7 @@ resource "aws_iam_user" "example" {
 }
 ```
 
-![count list](images/02-Terraform/additionals_count_list.png) 
+![count list](images/06-Terraform/additionals_count_list.png) 
 
 After using count on a resource it becomes an array of resources rather than one single resource. The same hold when using count on modules. When adding count to a module it turns it into an array of modules.
 
@@ -52,7 +52,7 @@ resource "aws_iam_user" "example" {
 }
 ```
 
-![count index deletion](images/02-Terraform/additionals_count_index_deletion.png)
+![count index deletion](images/06-Terraform/additionals_count_index_deletion.png)
 
 **Count as conditional**
 Count can also be used as a form of a conditional if statement. This is possible as Terraform  supports *conditional expressions*. If `count` is set to one 1, one copy of that resource is created; if set to 0, the resource is not created at all. Writing this as a conditional expression could look something like the follow, where var.enable_autoscaling is a boolean variable either set to `True` or `False`.
@@ -85,7 +85,7 @@ output "all_users" {
 }
 ```
 
-![for each on list](images/02-Terraform/additionals_for_each_on_list.png)
+![](images/06-Terraform/additionals_for_each_on_list.png)
 
 Using a map of resource with the *for_each* meta rather than an array of resources as with *count* has the benefit to remove items from the middle of the collection safely and without re-creating the resources following the deleted item. Of course, the same can also be done for modules.
 
@@ -113,7 +113,7 @@ output "short_upper_names" {
 }
 ```
 
-![for on list](images/02-Terraform/additionals_for_on_list.png) 
+![](images/06-Terraform/additionals_for_on_list.png) 
 
 Using for to loop over lists and maps within a string can be used similarly. This allows us to use control statements directly withing strings using a syntax similar to string interpolation.
 
@@ -123,12 +123,12 @@ output "for_directive" {
 }
 ```
 
-![Bild nicht gefunden: images/02-Terraform/additionals_for_on_string.png](images/02-Terraform/additionals_for_on_string.png "Bild nicht gefunden: images/02-Terraform/additionals_for_on_string.png") 
+![](images/06-Terraform/additionals_for_on_string.png) 
 
 
 ### Workspaces
 
 Terraform workspaces allow us to keep multiple state files for the same project. When we run Terraform for the first time in a project, the generated state file will go into the *default* workspace. Later, we can create a new workspace with the `terraform workspace new` command, optionally supplying an existing state file as a parameter.
 
-![workspaces](images/02-Terraform/additionals_workspaces.png)
+![workspaces](images/06-Terraform/additionals_workspaces.png)
 
