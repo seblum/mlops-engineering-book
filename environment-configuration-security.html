@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.5 Environment, Configuration &amp; Security | MLOps Engineering</title>
+  <title>4.5 Environment, Configuration &amp; Security | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.5 Environment, Configuration &amp; Security | MLOps Engineering" />
+  <meta property="og:title" content="4.5 Environment, Configuration &amp; Security | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.5 Environment, Configuration &amp; Security | MLOps Engineering" />
+  <meta name="twitter:title" content="4.5 Environment, Configuration &amp; Security | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-02-21" />
+<meta name="date" content="2023-02-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -134,112 +134,130 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">A Minimal Book Example</a></li>
+<li><a href="./">MLOps Engineering</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#a-work-in-progress"><i class="fa fa-check"></i>A work in progress</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>1</b> Terraform</a><ul>
-<li class="chapter" data-level="" data-path="terraform.html"><a href="terraform.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="1.1" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>1.1</b> Basic usage</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="basic-usage.html"><a href="basic-usage.html#terraform-init"><i class="fa fa-check"></i><b>1.1.1</b> terraform init</a></li>
-<li class="chapter" data-level="1.1.2" data-path="basic-usage.html"><a href="basic-usage.html#terraform-validate"><i class="fa fa-check"></i><b>1.1.2</b> terraform validate</a></li>
-<li class="chapter" data-level="1.1.3" data-path="basic-usage.html"><a href="basic-usage.html#terraform-plan"><i class="fa fa-check"></i><b>1.1.3</b> terraform plan</a></li>
-<li class="chapter" data-level="1.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>1.1.4</b> terraform apply</a></li>
-<li class="chapter" data-level="1.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>1.1.5</b> terraform destroy</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html"><i class="fa fa-check"></i><b>1.1</b> Machine Learning Workflow</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html#ml-worflow-tools"><i class="fa fa-check"></i><b>1.1.1</b> ML Worflow Tools</a></li>
+<li class="chapter" data-level="1.1.2" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html#developing-machine-learning-models"><i class="fa fa-check"></i><b>1.1.2</b> Developing Machine Learning Models</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="core-concepts.html"><a href="core-concepts.html"><i class="fa fa-check"></i><b>1.2</b> Core Concepts</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="core-concepts.html"><a href="core-concepts.html#providers"><i class="fa fa-check"></i><b>1.2.1</b> Providers</a></li>
-<li class="chapter" data-level="1.2.2" data-path="core-concepts.html"><a href="core-concepts.html#resources"><i class="fa fa-check"></i><b>1.2.2</b> Resources</a></li>
-<li class="chapter" data-level="1.2.3" data-path="core-concepts.html"><a href="core-concepts.html#data-sources"><i class="fa fa-check"></i><b>1.2.3</b> Data Sources</a></li>
-<li class="chapter" data-level="1.2.4" data-path="core-concepts.html"><a href="core-concepts.html#state"><i class="fa fa-check"></i><b>1.2.4</b> State</a></li>
+<li class="chapter" data-level="1.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html"><i class="fa fa-check"></i><b>1.2</b> Machine Learning Operations (MLOps)</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#ml-dev-ops"><i class="fa fa-check"></i><b>1.2.1</b> ML + (Dev)-Ops</a></li>
+<li class="chapter" data-level="1.2.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#mlops-lifecycle"><i class="fa fa-check"></i><b>1.2.2</b> MLOps Lifecycle</a></li>
+<li class="chapter" data-level="1.2.3" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#mlops-engineering"><i class="fa fa-check"></i><b>1.2.3</b> MLOps Engineering</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>1.3</b> Modules</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>1.3.1</b> Input Variables</a></li>
-<li class="chapter" data-level="1.3.2" data-path="modules.html"><a href="modules.html#output-variables"><i class="fa fa-check"></i><b>1.3.2</b> Output Variables</a></li>
-<li class="chapter" data-level="1.3.3" data-path="modules.html"><a href="modules.html#local-variables"><i class="fa fa-check"></i><b>1.3.3</b> Local Variables</a></li>
+<li class="chapter" data-level="1.3" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html"><i class="fa fa-check"></i><b>1.3</b> Roles and Tasks in MLOps</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#data-engineer"><i class="fa fa-check"></i><b>1.3.1</b> Data Engineer</a></li>
+<li class="chapter" data-level="1.3.2" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#data-scientist"><i class="fa fa-check"></i><b>1.3.2</b> Data Scientist</a></li>
+<li class="chapter" data-level="1.3.3" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#ml-engineer"><i class="fa fa-check"></i><b>1.3.3</b> ML Engineer</a></li>
+<li class="chapter" data-level="1.3.4" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#mlops-engineer"><i class="fa fa-check"></i><b>1.3.4</b> MLOps Engineer</a></li>
+<li class="chapter" data-level="1.3.5" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#devops-engineer"><i class="fa fa-check"></i><b>1.3.5</b> DevOps Engineer</a></li>
+<li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html"><i class="fa fa-check"></i><b>1.4</b> Additional tips &amp; tricks</a><ul>
-<li class="chapter" data-level="1.4.1" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#count"><i class="fa fa-check"></i><b>1.4.1</b> count</a></li>
-<li class="chapter" data-level="1.4.2" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for-each"><i class="fa fa-check"></i><b>1.4.2</b> for-each</a></li>
-<li class="chapter" data-level="1.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>1.4.3</b> for</a></li>
-<li class="chapter" data-level="1.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>1.4.4</b> Workspaces</a></li>
+<li class="chapter" data-level="1.4" data-path="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><a href="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><i class="fa fa-check"></i><b>1.4</b> MLOps Engineering with Airflow and MLflow on Kubernetes</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>1.5</b> Exemplary Deployment</a></li>
+<li class="chapter" data-level="2" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>2</b> Airflow</a><ul>
+<li class="chapter" data-level="" data-path="airflow.html"><a href="airflow.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="2.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html"><i class="fa fa-check"></i><b>2.1</b> Fundamental concepts</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#dags"><i class="fa fa-check"></i><b>2.1.1</b> DAGs</a></li>
+<li class="chapter" data-level="2.1.2" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#operators"><i class="fa fa-check"></i><b>2.1.2</b> Operators</a></li>
+<li class="chapter" data-level="2.1.3" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#tasks"><i class="fa fa-check"></i><b>2.1.3</b> Tasks</a></li>
+<li class="chapter" data-level="2.1.4" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#xcom"><i class="fa fa-check"></i><b>2.1.4</b> XCom</a></li>
+<li class="chapter" data-level="2.1.5" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#scheduling"><i class="fa fa-check"></i><b>2.1.5</b> Scheduling</a></li>
+<li class="chapter" data-level="2.1.6" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#taskflow"><i class="fa fa-check"></i><b>2.1.6</b> Taskflow</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>2</b> Kubernetes</a><ul>
-<li class="chapter" data-level="" data-path="kubernetes.html"><a href="kubernetes.html#prerequisites-1"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="2.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html"><i class="fa fa-check"></i><b>2.1</b> Core Concepts</a><ul>
-<li class="chapter" data-level="2.1.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html#nodes"><i class="fa fa-check"></i><b>2.1.1</b> Nodes</a></li>
-<li class="chapter" data-level="2.1.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html#pods"><i class="fa fa-check"></i><b>2.1.2</b> Pods</a></li>
-<li class="chapter" data-level="2.1.3" data-path="core-concepts-1.html"><a href="core-concepts-1.html#imperative-declarative-management"><i class="fa fa-check"></i><b>2.1.3</b> Imperative &amp; Declarative Management</a></li>
-</ul></li>
-<li class="chapter" data-level="2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>2.2</b> Application Deployment &amp; Design</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>2.2.1</b> Deployments</a></li>
-<li class="chapter" data-level="2.2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html#resource-management"><i class="fa fa-check"></i><b>2.2.2</b> Resource Management</a></li>
-<li class="chapter" data-level="2.2.3" data-path="application-deployment-design.html"><a href="application-deployment-design.html#daemonsets"><i class="fa fa-check"></i><b>2.2.3</b> DaemonSets</a></li>
-<li class="chapter" data-level="2.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>2.2.4</b> StatefulSets</a></li>
-<li class="chapter" data-level="2.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>2.2.5</b> Jobs &amp; Cron Jobs</a></li>
-</ul></li>
-<li class="chapter" data-level="2.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>2.3</b> Services &amp; Networking</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>2.3.1</b> Services</a></li>
-<li class="chapter" data-level="2.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>2.3.2</b> Service Discovery</a></li>
-</ul></li>
-<li class="chapter" data-level="2.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>2.4</b> Volume &amp; Storage</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>2.4.1</b> EmptyDir Volume</a></li>
-<li class="chapter" data-level="2.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>2.4.2</b> HostPath Volume</a></li>
-<li class="chapter" data-level="2.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>2.4.3</b> Persistent Volumes</a></li>
-</ul></li>
-<li class="chapter" data-level="2.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>2.5</b> Environment, Configuration &amp; Security</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#namespaces"><i class="fa fa-check"></i><b>2.5.1</b> Namespaces</a></li>
-<li class="chapter" data-level="2.5.2" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>2.5.2</b> Labels, Selectors and Annotations</a></li>
-<li class="chapter" data-level="2.5.3" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#configmaps"><i class="fa fa-check"></i><b>2.5.3</b> ConfigMaps</a></li>
-<li class="chapter" data-level="2.5.4" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#secrets"><i class="fa fa-check"></i><b>2.5.4</b> Secrets</a></li>
-</ul></li>
-<li class="chapter" data-level="2.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>2.6</b> Observability &amp; Maintenance</a><ul>
-<li class="chapter" data-level="2.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>2.6.1</b> Health Checks</a></li>
-<li class="chapter" data-level="2.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>2.6.2</b> Debugging</a></li>
-</ul></li>
-<li class="chapter" data-level="2.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>2.7</b> Helm</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a><ul>
-<li class="chapter" data-level="" data-path="airflow.html"><a href="airflow.html#prerequisites-2"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="3.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html"><i class="fa fa-check"></i><b>3.1</b> Fundamental concepts</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#dags"><i class="fa fa-check"></i><b>3.1.1</b> DAGs</a></li>
-<li class="chapter" data-level="3.1.2" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#operators"><i class="fa fa-check"></i><b>3.1.2</b> Operators</a></li>
-<li class="chapter" data-level="3.1.3" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#tasks"><i class="fa fa-check"></i><b>3.1.3</b> Tasks</a></li>
-<li class="chapter" data-level="3.1.4" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#xcom"><i class="fa fa-check"></i><b>3.1.4</b> XCom</a></li>
-<li class="chapter" data-level="3.1.5" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#scheduling"><i class="fa fa-check"></i><b>3.1.5</b> Scheduling</a></li>
-<li class="chapter" data-level="3.1.6" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#taskflow"><i class="fa fa-check"></i><b>3.1.6</b> Taskflow</a></li>
-</ul></li>
-<li class="chapter" data-level="3.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>3.2</b> Exemplary ML workflow</a></li>
-<li class="chapter" data-level="3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>3.3</b> Airflow infrastructure</a><ul>
-<li class="chapter" data-level="3.3.1" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#airflow-as-a-distributed-system"><i class="fa fa-check"></i><b>3.3.1</b> Airflow as a distributed system</a></li>
-<li class="chapter" data-level="3.3.2" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#scheduler-1"><i class="fa fa-check"></i><b>3.3.2</b> Scheduler</a></li>
-<li class="chapter" data-level="3.3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#webserver"><i class="fa fa-check"></i><b>3.3.3</b> Webserver</a></li>
-<li class="chapter" data-level="3.3.4" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#executor"><i class="fa fa-check"></i><b>3.3.4</b> Executor</a></li>
-<li class="chapter" data-level="3.3.5" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#dag-directory"><i class="fa fa-check"></i><b>3.3.5</b> DAG Directory</a></li>
-<li class="chapter" data-level="3.3.6" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#metadata-database"><i class="fa fa-check"></i><b>3.3.6</b> Metadata Database</a></li>
+<li class="chapter" data-level="2.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>2.2</b> Exemplary ML workflow</a></li>
+<li class="chapter" data-level="2.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>2.3</b> Airflow infrastructure</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#airflow-as-a-distributed-system"><i class="fa fa-check"></i><b>2.3.1</b> Airflow as a distributed system</a></li>
+<li class="chapter" data-level="2.3.2" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#scheduler"><i class="fa fa-check"></i><b>2.3.2</b> Scheduler</a></li>
+<li class="chapter" data-level="2.3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#webserver"><i class="fa fa-check"></i><b>2.3.3</b> Webserver</a></li>
+<li class="chapter" data-level="2.3.4" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#executor"><i class="fa fa-check"></i><b>2.3.4</b> Executor</a></li>
+<li class="chapter" data-level="2.3.5" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#dag-directory"><i class="fa fa-check"></i><b>2.3.5</b> DAG Directory</a></li>
+<li class="chapter" data-level="2.3.6" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#metadata-database"><i class="fa fa-check"></i><b>2.3.6</b> Metadata Database</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>4</b> MLflow</a><ul>
-<li class="chapter" data-level="" data-path="mlflow.html"><a href="mlflow.html#prerequisites-3"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="4.1" data-path="fundamental-components.html"><a href="fundamental-components.html"><i class="fa fa-check"></i><b>4.1</b> Fundamental Components</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-tracking"><i class="fa fa-check"></i><b>4.1.1</b> MLflow Tracking</a></li>
-<li class="chapter" data-level="4.1.2" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-models"><i class="fa fa-check"></i><b>4.1.2</b> MLflow Models</a></li>
-<li class="chapter" data-level="4.1.3" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-model-registry"><i class="fa fa-check"></i><b>4.1.3</b> MLflow Model Registry</a></li>
-<li class="chapter" data-level="4.1.4" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-projects"><i class="fa fa-check"></i><b>4.1.4</b> MLflow Projects</a></li>
+<li class="chapter" data-level="3" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>3</b> MLflow</a><ul>
+<li class="chapter" data-level="" data-path="mlflow.html"><a href="mlflow.html#prerequisites-1"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="3.1" data-path="fundamental-components.html"><a href="fundamental-components.html"><i class="fa fa-check"></i><b>3.1</b> Fundamental Components</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-tracking"><i class="fa fa-check"></i><b>3.1.1</b> MLflow Tracking</a></li>
+<li class="chapter" data-level="3.1.2" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-models"><i class="fa fa-check"></i><b>3.1.2</b> MLflow Models</a></li>
+<li class="chapter" data-level="3.1.3" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-model-registry"><i class="fa fa-check"></i><b>3.1.3</b> MLflow Model Registry</a></li>
+<li class="chapter" data-level="3.1.4" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-projects"><i class="fa fa-check"></i><b>3.1.4</b> MLflow Projects</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html"><i class="fa fa-check"></i><b>4.2</b> MLFflow Architecture</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>4.2.1</b> MLflow Tracking Server</a></li>
-<li class="chapter" data-level="4.2.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-backend-store"><i class="fa fa-check"></i><b>4.2.2</b> MLflow Backend Store</a></li>
-<li class="chapter" data-level="4.2.3" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-artifact-store"><i class="fa fa-check"></i><b>4.2.3</b> MLflow Artifact Store</a></li>
+<li class="chapter" data-level="3.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html"><i class="fa fa-check"></i><b>3.2</b> MLFflow Architecture</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>3.2.1</b> MLflow Tracking Server</a></li>
+<li class="chapter" data-level="3.2.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-backend-store"><i class="fa fa-check"></i><b>3.2.2</b> MLflow Backend Store</a></li>
+<li class="chapter" data-level="3.2.3" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-artifact-store"><i class="fa fa-check"></i><b>3.2.3</b> MLflow Artifact Store</a></li>
 </ul></li>
 </ul></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
+<li class="chapter" data-level="4" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>4</b> Kubernetes</a><ul>
+<li class="chapter" data-level="" data-path="kubernetes.html"><a href="kubernetes.html#prerequisites-2"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="4.1" data-path="core-concepts.html"><a href="core-concepts.html"><i class="fa fa-check"></i><b>4.1</b> Core Concepts</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="core-concepts.html"><a href="core-concepts.html#nodes"><i class="fa fa-check"></i><b>4.1.1</b> Nodes</a></li>
+<li class="chapter" data-level="4.1.2" data-path="core-concepts.html"><a href="core-concepts.html#pods"><i class="fa fa-check"></i><b>4.1.2</b> Pods</a></li>
+<li class="chapter" data-level="4.1.3" data-path="core-concepts.html"><a href="core-concepts.html#imperative-declarative-management"><i class="fa fa-check"></i><b>4.1.3</b> Imperative &amp; Declarative Management</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>4.2</b> Application Deployment &amp; Design</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>4.2.1</b> Deployments</a></li>
+<li class="chapter" data-level="4.2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html#resource-management"><i class="fa fa-check"></i><b>4.2.2</b> Resource Management</a></li>
+<li class="chapter" data-level="4.2.3" data-path="application-deployment-design.html"><a href="application-deployment-design.html#daemonsets"><i class="fa fa-check"></i><b>4.2.3</b> DaemonSets</a></li>
+<li class="chapter" data-level="4.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>4.2.4</b> StatefulSets</a></li>
+<li class="chapter" data-level="4.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>4.2.5</b> Jobs &amp; Cron Jobs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>4.3</b> Services &amp; Networking</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>4.3.1</b> Services</a></li>
+<li class="chapter" data-level="4.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>4.3.2</b> Service Discovery</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>4.4</b> Volume &amp; Storage</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>4.4.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="4.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>4.4.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="4.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>4.4.3</b> Persistent Volumes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>4.5</b> Environment, Configuration &amp; Security</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#namespaces"><i class="fa fa-check"></i><b>4.5.1</b> Namespaces</a></li>
+<li class="chapter" data-level="4.5.2" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>4.5.2</b> Labels, Selectors and Annotations</a></li>
+<li class="chapter" data-level="4.5.3" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#configmaps"><i class="fa fa-check"></i><b>4.5.3</b> ConfigMaps</a></li>
+<li class="chapter" data-level="4.5.4" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#secrets"><i class="fa fa-check"></i><b>4.5.4</b> Secrets</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>4.6</b> Observability &amp; Maintenance</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>4.6.1</b> Health Checks</a></li>
+<li class="chapter" data-level="4.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>4.6.2</b> Debugging</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>4.7</b> Helm</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>5</b> Terraform</a><ul>
+<li class="chapter" data-level="" data-path="terraform.html"><a href="terraform.html#prerequisites-3"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="5.1" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>5.1</b> Basic usage</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="basic-usage.html"><a href="basic-usage.html#terraform-init"><i class="fa fa-check"></i><b>5.1.1</b> terraform init</a></li>
+<li class="chapter" data-level="5.1.2" data-path="basic-usage.html"><a href="basic-usage.html#terraform-validate"><i class="fa fa-check"></i><b>5.1.2</b> terraform validate</a></li>
+<li class="chapter" data-level="5.1.3" data-path="basic-usage.html"><a href="basic-usage.html#terraform-plan"><i class="fa fa-check"></i><b>5.1.3</b> terraform plan</a></li>
+<li class="chapter" data-level="5.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>5.1.4</b> terraform apply</a></li>
+<li class="chapter" data-level="5.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>5.1.5</b> terraform destroy</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html"><i class="fa fa-check"></i><b>5.2</b> Core Concepts</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html#providers"><i class="fa fa-check"></i><b>5.2.1</b> Providers</a></li>
+<li class="chapter" data-level="5.2.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html#resources"><i class="fa fa-check"></i><b>5.2.2</b> Resources</a></li>
+<li class="chapter" data-level="5.2.3" data-path="core-concepts-1.html"><a href="core-concepts-1.html#data-sources"><i class="fa fa-check"></i><b>5.2.3</b> Data Sources</a></li>
+<li class="chapter" data-level="5.2.4" data-path="core-concepts-1.html"><a href="core-concepts-1.html#state"><i class="fa fa-check"></i><b>5.2.4</b> State</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>5.3</b> Modules</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>5.3.1</b> Input Variables</a></li>
+<li class="chapter" data-level="5.3.2" data-path="modules.html"><a href="modules.html#output-variables"><i class="fa fa-check"></i><b>5.3.2</b> Output Variables</a></li>
+<li class="chapter" data-level="5.3.3" data-path="modules.html"><a href="modules.html#local-variables"><i class="fa fa-check"></i><b>5.3.3</b> Local Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html"><i class="fa fa-check"></i><b>5.4</b> Additional tips &amp; tricks</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#count"><i class="fa fa-check"></i><b>5.4.1</b> count</a></li>
+<li class="chapter" data-level="5.4.2" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for-each"><i class="fa fa-check"></i><b>5.4.2</b> for-each</a></li>
+<li class="chapter" data-level="5.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>5.4.3</b> for</a></li>
+<li class="chapter" data-level="5.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>5.4.4</b> Workspaces</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>5.5</b> Exemplary Deployment</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -258,9 +276,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="environment-configuration-security" class="section level2 hasAnchor">
-<h2><span class="header-section-number">2.5</span> Environment, Configuration &amp; Security<a href="environment-configuration-security.html#environment-configuration-security" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">4.5</span> Environment, Configuration &amp; Security<a href="environment-configuration-security.html#environment-configuration-security" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="namespaces" class="section level3 hasAnchor">
-<h3><span class="header-section-number">2.5.1</span> Namespaces<a href="environment-configuration-security.html#namespaces" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">4.5.1</span> Namespaces<a href="environment-configuration-security.html#namespaces" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Namespaces allow to organize resources in the cluster, which makes it more overseeable when there are multiple resources for different needs. Maybe we want to organize by team, department, or according to a development environment (dev/prod), etc. By default, K8s will use the <em>default</em>-namespace for resources that have not been specified otherwise. Similarly, kubectl interacts with the default namespace as well. Yet, there are already different namespace in a basic K8s cluster</p>
 <ul>
 <li><strong>default</strong> - The default namespace for objects with no other namespace</li>
@@ -269,352 +287,352 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><em>kube-node-lease</em> - This namespace for the lease objects associated with each node which improves the performance of the node heartbeats as the cluster scales.</li>
 </ul>
 <p>Of course, there is also the possibility of creating ones own namespace and using it by attaching a e.g. Deployment to it, such as seen in the following example.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb49-1"><a href="environment-configuration-security.html#cb49-1"></a><span class="co"># namespace.yaml</span></span>
-<span id="cb49-2"><a href="environment-configuration-security.html#cb49-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb49-3"><a href="environment-configuration-security.html#cb49-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Namespace</span></span>
-<span id="cb49-4"><a href="environment-configuration-security.html#cb49-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb49-5"><a href="environment-configuration-security.html#cb49-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> monitoring</span></span>
-<span id="cb49-6"><a href="environment-configuration-security.html#cb49-6"></a><span class="pp">---</span></span>
-<span id="cb49-7"><a href="environment-configuration-security.html#cb49-7"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
-<span id="cb49-8"><a href="environment-configuration-security.html#cb49-8"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
-<span id="cb49-9"><a href="environment-configuration-security.html#cb49-9"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb49-10"><a href="environment-configuration-security.html#cb49-10"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> monitoring-deployment</span></span>
-<span id="cb49-11"><a href="environment-configuration-security.html#cb49-11"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> monitoring</span></span>
-<span id="cb49-12"><a href="environment-configuration-security.html#cb49-12"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb49-13"><a href="environment-configuration-security.html#cb49-13"></a><span class="at">  </span><span class="fu">replicas</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb49-14"><a href="environment-configuration-security.html#cb49-14"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb49-15"><a href="environment-configuration-security.html#cb49-15"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
-<span id="cb49-16"><a href="environment-configuration-security.html#cb49-16"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> monitoring-deployment</span></span>
-<span id="cb49-17"><a href="environment-configuration-security.html#cb49-17"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
-<span id="cb49-18"><a href="environment-configuration-security.html#cb49-18"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb49-19"><a href="environment-configuration-security.html#cb49-19"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
-<span id="cb49-20"><a href="environment-configuration-security.html#cb49-20"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> monitoring-deployment</span></span>
-<span id="cb49-21"><a href="environment-configuration-security.html#cb49-21"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb49-22"><a href="environment-configuration-security.html#cb49-22"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
-<span id="cb49-23"><a href="environment-configuration-security.html#cb49-23"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> monitoring-deployment</span></span>
-<span id="cb49-24"><a href="environment-configuration-security.html#cb49-24"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;grafana/grafana:latest&quot;</span></span>
-<span id="cb49-25"><a href="environment-configuration-security.html#cb49-25"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb49-26"><a href="environment-configuration-security.html#cb49-26"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
-<span id="cb49-27"><a href="environment-configuration-security.html#cb49-27"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
-<span id="cb49-28"><a href="environment-configuration-security.html#cb49-28"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
-<span id="cb49-29"><a href="environment-configuration-security.html#cb49-29"></a><span class="at">        </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb49-30"><a href="environment-configuration-security.html#cb49-30"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb64-1"><a href="environment-configuration-security.html#cb64-1"></a><span class="co"># namespace.yaml</span></span>
+<span id="cb64-2"><a href="environment-configuration-security.html#cb64-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb64-3"><a href="environment-configuration-security.html#cb64-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Namespace</span></span>
+<span id="cb64-4"><a href="environment-configuration-security.html#cb64-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb64-5"><a href="environment-configuration-security.html#cb64-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> monitoring</span></span>
+<span id="cb64-6"><a href="environment-configuration-security.html#cb64-6"></a><span class="pp">---</span></span>
+<span id="cb64-7"><a href="environment-configuration-security.html#cb64-7"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb64-8"><a href="environment-configuration-security.html#cb64-8"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb64-9"><a href="environment-configuration-security.html#cb64-9"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb64-10"><a href="environment-configuration-security.html#cb64-10"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> monitoring-deployment</span></span>
+<span id="cb64-11"><a href="environment-configuration-security.html#cb64-11"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> monitoring</span></span>
+<span id="cb64-12"><a href="environment-configuration-security.html#cb64-12"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb64-13"><a href="environment-configuration-security.html#cb64-13"></a><span class="at">  </span><span class="fu">replicas</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb64-14"><a href="environment-configuration-security.html#cb64-14"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb64-15"><a href="environment-configuration-security.html#cb64-15"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb64-16"><a href="environment-configuration-security.html#cb64-16"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> monitoring-deployment</span></span>
+<span id="cb64-17"><a href="environment-configuration-security.html#cb64-17"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb64-18"><a href="environment-configuration-security.html#cb64-18"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb64-19"><a href="environment-configuration-security.html#cb64-19"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb64-20"><a href="environment-configuration-security.html#cb64-20"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> monitoring-deployment</span></span>
+<span id="cb64-21"><a href="environment-configuration-security.html#cb64-21"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb64-22"><a href="environment-configuration-security.html#cb64-22"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb64-23"><a href="environment-configuration-security.html#cb64-23"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> monitoring-deployment</span></span>
+<span id="cb64-24"><a href="environment-configuration-security.html#cb64-24"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;grafana/grafana:latest&quot;</span></span>
+<span id="cb64-25"><a href="environment-configuration-security.html#cb64-25"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb64-26"><a href="environment-configuration-security.html#cb64-26"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb64-27"><a href="environment-configuration-security.html#cb64-27"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb64-28"><a href="environment-configuration-security.html#cb64-28"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb64-29"><a href="environment-configuration-security.html#cb64-29"></a><span class="at">        </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb64-30"><a href="environment-configuration-security.html#cb64-30"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span></code></pre></div>
 <p>When creating a Service, a corresponding DNS entry is created as well, such as seen in the Services section when calling <code>backendflask</code> directly. This entry is created according to the namespace which is denoted to the service. This can be useful when using the same configuration across multiple namespaces such as development, staging, and production. It is also possible to reach across namespaces. One needs to use the fully qualified domain name (FQDN) tough, such as <code>&lt;service-name&gt;.&lt;namespace-name&gt;.svc.cluster.local</code>.</p>
 </div>
 <div id="labels-selectors-and-annotations" class="section level3 hasAnchor">
-<h3><span class="header-section-number">2.5.2</span> Labels, Selectors and Annotations<a href="environment-configuration-security.html#labels-selectors-and-annotations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">4.5.2</span> Labels, Selectors and Annotations<a href="environment-configuration-security.html#labels-selectors-and-annotations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In the previous sections we already made use of labels, selectors, and annotations, e.g. when matching the ClusterIP service to the back-deployments. Labels are a key-value pair that can be attached to objects such as Pods, Deployments, Replicaset, Services, etc. Overall, they are used to organize and select objects.</p>
 <p>Annotations are an unstructured key-value mapping stored with a resource that may be set by external tools to store and retrieve any metadata. In contrast to labels and selectors, annotations are not used for querying purposes but rather to attach arbitrary non-identifying metadata. These data are used to assist tools and libraries to work with the K8s ressource, for example to pass configuration around between systems, or to send values so external tools can perform more informed decisions based on the annotations provided.</p>
 <p>Selectors are used to filter K8s objects based on a set of labels. A selector basically simply uses a boolean language to select pods. The selector matches the labels under a an all or nothing principle, meaning everything specified in the selector must be fulfilled by the labels. However, this works not the other way around. If there are multiple labels specified and the selector matches only one of them, the selector will match the ressource itself. How a selector matches the labels can be tested using the <code>kubectl</code> commands as seen below.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb50-1"><a href="environment-configuration-security.html#cb50-1"></a><span class="co"># Show all pods including their labels</span></span>
-<span id="cb50-2"><a href="environment-configuration-security.html#cb50-2"></a><span class="ex">kubectl</span> get pods --show-labels</span>
-<span id="cb50-3"><a href="environment-configuration-security.html#cb50-3"></a></span>
-<span id="cb50-4"><a href="environment-configuration-security.html#cb50-4"></a><span class="co"># Show only pods that match the specified selector key-value pairs</span></span>
-<span id="cb50-5"><a href="environment-configuration-security.html#cb50-5"></a><span class="ex">kubectl</span> get pods --selector=<span class="st">&quot;key=value&quot;</span></span>
-<span id="cb50-6"><a href="environment-configuration-security.html#cb50-6"></a><span class="ex">kubectl</span> get pods --selector=<span class="st">&quot;key=value,key2=value2&quot;</span></span>
-<span id="cb50-7"><a href="environment-configuration-security.html#cb50-7"></a></span>
-<span id="cb50-8"><a href="environment-configuration-security.html#cb50-8"></a><span class="co"># in short one can also write</span></span>
-<span id="cb50-9"><a href="environment-configuration-security.html#cb50-9"></a><span class="ex">kubectl</span> get pods -l key=value</span>
-<span id="cb50-10"><a href="environment-configuration-security.html#cb50-10"></a><span class="co"># or also look for multiple</span></span>
-<span id="cb50-11"><a href="environment-configuration-security.html#cb50-11"></a><span class="ex">kubectl</span> get pods -l <span class="st">&#39;key in (value1, value2)&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb65-1"><a href="environment-configuration-security.html#cb65-1"></a><span class="co"># Show all pods including their labels</span></span>
+<span id="cb65-2"><a href="environment-configuration-security.html#cb65-2"></a><span class="ex">kubectl</span> get pods --show-labels</span>
+<span id="cb65-3"><a href="environment-configuration-security.html#cb65-3"></a></span>
+<span id="cb65-4"><a href="environment-configuration-security.html#cb65-4"></a><span class="co"># Show only pods that match the specified selector key-value pairs</span></span>
+<span id="cb65-5"><a href="environment-configuration-security.html#cb65-5"></a><span class="ex">kubectl</span> get pods --selector=<span class="st">&quot;key=value&quot;</span></span>
+<span id="cb65-6"><a href="environment-configuration-security.html#cb65-6"></a><span class="ex">kubectl</span> get pods --selector=<span class="st">&quot;key=value,key2=value2&quot;</span></span>
+<span id="cb65-7"><a href="environment-configuration-security.html#cb65-7"></a></span>
+<span id="cb65-8"><a href="environment-configuration-security.html#cb65-8"></a><span class="co"># in short one can also write</span></span>
+<span id="cb65-9"><a href="environment-configuration-security.html#cb65-9"></a><span class="ex">kubectl</span> get pods -l key=value</span>
+<span id="cb65-10"><a href="environment-configuration-security.html#cb65-10"></a><span class="co"># or also look for multiple</span></span>
+<span id="cb65-11"><a href="environment-configuration-security.html#cb65-11"></a><span class="ex">kubectl</span> get pods -l <span class="st">&#39;key in (value1, value2)&#39;</span></span></code></pre></div>
 <p>When using ReplicaSets in a Deployment, their selector matches the labels to a specific pod (check e.g. the section describing Deployments). Any Pods matching the label of the selector will be created according to the specified replicas. Of course, there can also be multiple labels specified.
 The same principle accounts when working with Services. Below example shows two different Pods and two NodePort services. Each service matches to a Pod based on their selector-label relationship. Have a look at their specific settings using <code>kubectl</code>. The Nodeport Service <em>labels-and-selectors-2</em> has no endpoints, as it is a all-or-none-principle and none of the created Pods matches the label <code>environment=dev</code>. In contrast, even though the Pod <em>cat-v1</em> has multiple labels specified <code>app: cat-v1; version: one</code>, the NodePort Service <em>labels-and-selectors</em> is linked to it. It is also linked to the second Pod <em>cat-v2</em>.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb51-1"><a href="environment-configuration-security.html#cb51-1"></a><span class="co"># labels.yaml</span></span>
-<span id="cb51-2"><a href="environment-configuration-security.html#cb51-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb51-3"><a href="environment-configuration-security.html#cb51-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
-<span id="cb51-4"><a href="environment-configuration-security.html#cb51-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb51-5"><a href="environment-configuration-security.html#cb51-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cat-v1</span></span>
-<span id="cb51-6"><a href="environment-configuration-security.html#cb51-6"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span></span>
-<span id="cb51-7"><a href="environment-configuration-security.html#cb51-7"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> cat-v1  </span></span>
-<span id="cb51-8"><a href="environment-configuration-security.html#cb51-8"></a><span class="at">    </span><span class="fu">version</span><span class="kw">:</span><span class="at"> one  </span></span>
-<span id="cb51-9"><a href="environment-configuration-security.html#cb51-9"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb51-10"><a href="environment-configuration-security.html#cb51-10"></a><span class="at">  </span><span class="fu">containers</span><span class="kw">:</span></span>
-<span id="cb51-11"><a href="environment-configuration-security.html#cb51-11"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cat-v1</span></span>
-<span id="cb51-12"><a href="environment-configuration-security.html#cb51-12"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;seblum/mlops-public:cat-v1&quot;</span></span>
-<span id="cb51-13"><a href="environment-configuration-security.html#cb51-13"></a><span class="at">    </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb51-14"><a href="environment-configuration-security.html#cb51-14"></a><span class="at">      </span><span class="fu">limits</span><span class="kw">:</span></span>
-<span id="cb51-15"><a href="environment-configuration-security.html#cb51-15"></a><span class="at">        </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
-<span id="cb51-16"><a href="environment-configuration-security.html#cb51-16"></a><span class="at">        </span><span class="fu">cpu</span><span class="kw">:</span><span class="at">  </span><span class="st">&quot;500m&quot;</span></span>
-<span id="cb51-17"><a href="environment-configuration-security.html#cb51-17"></a><span class="pp">---</span></span>
-<span id="cb51-18"><a href="environment-configuration-security.html#cb51-18"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb51-19"><a href="environment-configuration-security.html#cb51-19"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
-<span id="cb51-20"><a href="environment-configuration-security.html#cb51-20"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb51-21"><a href="environment-configuration-security.html#cb51-21"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cat-v2</span></span>
-<span id="cb51-22"><a href="environment-configuration-security.html#cb51-22"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span></span>
-<span id="cb51-23"><a href="environment-configuration-security.html#cb51-23"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> cat-v1</span></span>
-<span id="cb51-24"><a href="environment-configuration-security.html#cb51-24"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb51-25"><a href="environment-configuration-security.html#cb51-25"></a><span class="at">  </span><span class="fu">containers</span><span class="kw">:</span></span>
-<span id="cb51-26"><a href="environment-configuration-security.html#cb51-26"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cat-v2</span></span>
-<span id="cb51-27"><a href="environment-configuration-security.html#cb51-27"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;seblum/mlops-public:cat-v2&quot;</span></span>
-<span id="cb51-28"><a href="environment-configuration-security.html#cb51-28"></a><span class="at">    </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb51-29"><a href="environment-configuration-security.html#cb51-29"></a><span class="at">      </span><span class="fu">limits</span><span class="kw">:</span></span>
-<span id="cb51-30"><a href="environment-configuration-security.html#cb51-30"></a><span class="at">        </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
-<span id="cb51-31"><a href="environment-configuration-security.html#cb51-31"></a><span class="at">        </span><span class="fu">cpu</span><span class="kw">:</span><span class="at">  </span><span class="st">&quot;500m&quot;</span></span>
-<span id="cb51-32"><a href="environment-configuration-security.html#cb51-32"></a><span class="pp">---</span></span>
-<span id="cb51-33"><a href="environment-configuration-security.html#cb51-33"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb51-34"><a href="environment-configuration-security.html#cb51-34"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
-<span id="cb51-35"><a href="environment-configuration-security.html#cb51-35"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb51-36"><a href="environment-configuration-security.html#cb51-36"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> labels-and-selectors</span></span>
-<span id="cb51-37"><a href="environment-configuration-security.html#cb51-37"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb51-38"><a href="environment-configuration-security.html#cb51-38"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> NodePort</span></span>
-<span id="cb51-39"><a href="environment-configuration-security.html#cb51-39"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb51-40"><a href="environment-configuration-security.html#cb51-40"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> cat-v1</span></span>
-<span id="cb51-41"><a href="environment-configuration-security.html#cb51-41"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb51-42"><a href="environment-configuration-security.html#cb51-42"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
-<span id="cb51-43"><a href="environment-configuration-security.html#cb51-43"></a><span class="at">    </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
-<span id="cb51-44"><a href="environment-configuration-security.html#cb51-44"></a><span class="pp">---</span></span>
-<span id="cb51-45"><a href="environment-configuration-security.html#cb51-45"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb51-46"><a href="environment-configuration-security.html#cb51-46"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
-<span id="cb51-47"><a href="environment-configuration-security.html#cb51-47"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb51-48"><a href="environment-configuration-security.html#cb51-48"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> labels-and-selectors-2</span></span>
-<span id="cb51-49"><a href="environment-configuration-security.html#cb51-49"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb51-50"><a href="environment-configuration-security.html#cb51-50"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> NodePort</span></span>
-<span id="cb51-51"><a href="environment-configuration-security.html#cb51-51"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb51-52"><a href="environment-configuration-security.html#cb51-52"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> cat-v1</span></span>
-<span id="cb51-53"><a href="environment-configuration-security.html#cb51-53"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span><span class="at"> dev</span></span>
-<span id="cb51-54"><a href="environment-configuration-security.html#cb51-54"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb51-55"><a href="environment-configuration-security.html#cb51-55"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
-<span id="cb51-56"><a href="environment-configuration-security.html#cb51-56"></a><span class="at">    </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb66-1"><a href="environment-configuration-security.html#cb66-1"></a><span class="co"># labels.yaml</span></span>
+<span id="cb66-2"><a href="environment-configuration-security.html#cb66-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb66-3"><a href="environment-configuration-security.html#cb66-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
+<span id="cb66-4"><a href="environment-configuration-security.html#cb66-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb66-5"><a href="environment-configuration-security.html#cb66-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cat-v1</span></span>
+<span id="cb66-6"><a href="environment-configuration-security.html#cb66-6"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb66-7"><a href="environment-configuration-security.html#cb66-7"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> cat-v1  </span></span>
+<span id="cb66-8"><a href="environment-configuration-security.html#cb66-8"></a><span class="at">    </span><span class="fu">version</span><span class="kw">:</span><span class="at"> one  </span></span>
+<span id="cb66-9"><a href="environment-configuration-security.html#cb66-9"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb66-10"><a href="environment-configuration-security.html#cb66-10"></a><span class="at">  </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb66-11"><a href="environment-configuration-security.html#cb66-11"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cat-v1</span></span>
+<span id="cb66-12"><a href="environment-configuration-security.html#cb66-12"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;seblum/mlops-public:cat-v1&quot;</span></span>
+<span id="cb66-13"><a href="environment-configuration-security.html#cb66-13"></a><span class="at">    </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb66-14"><a href="environment-configuration-security.html#cb66-14"></a><span class="at">      </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb66-15"><a href="environment-configuration-security.html#cb66-15"></a><span class="at">        </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb66-16"><a href="environment-configuration-security.html#cb66-16"></a><span class="at">        </span><span class="fu">cpu</span><span class="kw">:</span><span class="at">  </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb66-17"><a href="environment-configuration-security.html#cb66-17"></a><span class="pp">---</span></span>
+<span id="cb66-18"><a href="environment-configuration-security.html#cb66-18"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb66-19"><a href="environment-configuration-security.html#cb66-19"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
+<span id="cb66-20"><a href="environment-configuration-security.html#cb66-20"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb66-21"><a href="environment-configuration-security.html#cb66-21"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cat-v2</span></span>
+<span id="cb66-22"><a href="environment-configuration-security.html#cb66-22"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb66-23"><a href="environment-configuration-security.html#cb66-23"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> cat-v1</span></span>
+<span id="cb66-24"><a href="environment-configuration-security.html#cb66-24"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb66-25"><a href="environment-configuration-security.html#cb66-25"></a><span class="at">  </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb66-26"><a href="environment-configuration-security.html#cb66-26"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cat-v2</span></span>
+<span id="cb66-27"><a href="environment-configuration-security.html#cb66-27"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;seblum/mlops-public:cat-v2&quot;</span></span>
+<span id="cb66-28"><a href="environment-configuration-security.html#cb66-28"></a><span class="at">    </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb66-29"><a href="environment-configuration-security.html#cb66-29"></a><span class="at">      </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb66-30"><a href="environment-configuration-security.html#cb66-30"></a><span class="at">        </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb66-31"><a href="environment-configuration-security.html#cb66-31"></a><span class="at">        </span><span class="fu">cpu</span><span class="kw">:</span><span class="at">  </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb66-32"><a href="environment-configuration-security.html#cb66-32"></a><span class="pp">---</span></span>
+<span id="cb66-33"><a href="environment-configuration-security.html#cb66-33"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb66-34"><a href="environment-configuration-security.html#cb66-34"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb66-35"><a href="environment-configuration-security.html#cb66-35"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb66-36"><a href="environment-configuration-security.html#cb66-36"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> labels-and-selectors</span></span>
+<span id="cb66-37"><a href="environment-configuration-security.html#cb66-37"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb66-38"><a href="environment-configuration-security.html#cb66-38"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> NodePort</span></span>
+<span id="cb66-39"><a href="environment-configuration-security.html#cb66-39"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb66-40"><a href="environment-configuration-security.html#cb66-40"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> cat-v1</span></span>
+<span id="cb66-41"><a href="environment-configuration-security.html#cb66-41"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb66-42"><a href="environment-configuration-security.html#cb66-42"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb66-43"><a href="environment-configuration-security.html#cb66-43"></a><span class="at">    </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
+<span id="cb66-44"><a href="environment-configuration-security.html#cb66-44"></a><span class="pp">---</span></span>
+<span id="cb66-45"><a href="environment-configuration-security.html#cb66-45"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb66-46"><a href="environment-configuration-security.html#cb66-46"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb66-47"><a href="environment-configuration-security.html#cb66-47"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb66-48"><a href="environment-configuration-security.html#cb66-48"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> labels-and-selectors-2</span></span>
+<span id="cb66-49"><a href="environment-configuration-security.html#cb66-49"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb66-50"><a href="environment-configuration-security.html#cb66-50"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> NodePort</span></span>
+<span id="cb66-51"><a href="environment-configuration-security.html#cb66-51"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb66-52"><a href="environment-configuration-security.html#cb66-52"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> cat-v1</span></span>
+<span id="cb66-53"><a href="environment-configuration-security.html#cb66-53"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span><span class="at"> dev</span></span>
+<span id="cb66-54"><a href="environment-configuration-security.html#cb66-54"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb66-55"><a href="environment-configuration-security.html#cb66-55"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb66-56"><a href="environment-configuration-security.html#cb66-56"></a><span class="at">    </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span></code></pre></div>
 </div>
 <div id="configmaps" class="section level3 hasAnchor">
-<h3><span class="header-section-number">2.5.3</span> ConfigMaps<a href="environment-configuration-security.html#configmaps" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">4.5.3</span> ConfigMaps<a href="environment-configuration-security.html#configmaps" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When building software, the same container image should be used for development, testing, staging, and production stage. Thus, container images should be reusable. What usually changes are only the configuration settings of the application. <em>ConfigMaps</em> allow to store such configurations as a simple mapping of key-value pairs. Most of the time, the configuration within a config map is injected using environment variables and volumes. However, ConfigMaps should only be used to store configuration files, not sensitive data, as they do not secure them.
 Besides allow for an easy change of variables, another benefit of using ConfigMaps is that changes in the configuration are not disruptive, meaning the application can still run while the configuration changes without affecting the application. However, one needs to keep in mind that change made to ConfigMaps and environment variables will not be reflected on already and currently running containers.</p>
 <p>The following example creates two different ConfigMaps. The first one includes three environment variables as data. The second one include a more complex configuration of an nginx server.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb52-1"><a href="environment-configuration-security.html#cb52-1"></a><span class="co"># configmaps.yaml</span></span>
-<span id="cb52-2"><a href="environment-configuration-security.html#cb52-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb52-3"><a href="environment-configuration-security.html#cb52-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> ConfigMap</span></span>
-<span id="cb52-4"><a href="environment-configuration-security.html#cb52-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb52-5"><a href="environment-configuration-security.html#cb52-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
-<span id="cb52-6"><a href="environment-configuration-security.html#cb52-6"></a><span class="fu">data</span><span class="kw">:</span></span>
-<span id="cb52-7"><a href="environment-configuration-security.html#cb52-7"></a><span class="at">  </span><span class="fu">app-name</span><span class="kw">:</span><span class="at"> kitty</span></span>
-<span id="cb52-8"><a href="environment-configuration-security.html#cb52-8"></a><span class="at">  </span><span class="fu">app-version</span><span class="kw">:</span><span class="at"> </span><span class="fl">1.0.0</span></span>
-<span id="cb52-9"><a href="environment-configuration-security.html#cb52-9"></a><span class="at">  </span><span class="fu">team</span><span class="kw">:</span><span class="at"> engineering</span></span>
-<span id="cb52-10"><a href="environment-configuration-security.html#cb52-10"></a><span class="pp">---</span></span>
-<span id="cb52-11"><a href="environment-configuration-security.html#cb52-11"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb52-12"><a href="environment-configuration-security.html#cb52-12"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> ConfigMap</span></span>
-<span id="cb52-13"><a href="environment-configuration-security.html#cb52-13"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb52-14"><a href="environment-configuration-security.html#cb52-14"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx-conf</span></span>
-<span id="cb52-15"><a href="environment-configuration-security.html#cb52-15"></a><span class="fu">data</span><span class="kw">:</span></span>
-<span id="cb52-16"><a href="environment-configuration-security.html#cb52-16"></a><span class="co">  # configuration in .conf</span></span>
-<span id="cb52-17"><a href="environment-configuration-security.html#cb52-17"></a><span class="fu">  nginx.conf</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb52-18"><a href="environment-configuration-security.html#cb52-18"></a>    server {</span>
-<span id="cb52-19"><a href="environment-configuration-security.html#cb52-19"></a>        listen       80;</span>
-<span id="cb52-20"><a href="environment-configuration-security.html#cb52-20"></a>        server_name  localhost;</span>
-<span id="cb52-21"><a href="environment-configuration-security.html#cb52-21"></a></span>
-<span id="cb52-22"><a href="environment-configuration-security.html#cb52-22"></a>        location / {</span>
-<span id="cb52-23"><a href="environment-configuration-security.html#cb52-23"></a>            root   /usr/share/nginx/html;</span>
-<span id="cb52-24"><a href="environment-configuration-security.html#cb52-24"></a>            index  index.html index.htm;</span>
-<span id="cb52-25"><a href="environment-configuration-security.html#cb52-25"></a>        }</span>
-<span id="cb52-26"><a href="environment-configuration-security.html#cb52-26"></a></span>
-<span id="cb52-27"><a href="environment-configuration-security.html#cb52-27"></a>        # redirect server error pages to the static page /50x.html</span>
-<span id="cb52-28"><a href="environment-configuration-security.html#cb52-28"></a>        #</span>
-<span id="cb52-29"><a href="environment-configuration-security.html#cb52-29"></a>        error_page   500 502 503 504  /50x.html;</span>
-<span id="cb52-30"><a href="environment-configuration-security.html#cb52-30"></a>        location = /50x.html {</span>
-<span id="cb52-31"><a href="environment-configuration-security.html#cb52-31"></a>            root   /usr/share/nginx/html;</span>
-<span id="cb52-32"><a href="environment-configuration-security.html#cb52-32"></a>        }</span>
-<span id="cb52-33"><a href="environment-configuration-security.html#cb52-33"></a></span>
-<span id="cb52-34"><a href="environment-configuration-security.html#cb52-34"></a>        location /health {</span>
-<span id="cb52-35"><a href="environment-configuration-security.html#cb52-35"></a>            access_log off;</span>
-<span id="cb52-36"><a href="environment-configuration-security.html#cb52-36"></a>            return 200 &quot;healthy\n&quot;;</span>
-<span id="cb52-37"><a href="environment-configuration-security.html#cb52-37"></a>        }</span>
-<span id="cb52-38"><a href="environment-configuration-security.html#cb52-38"></a>    }</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb67-1"><a href="environment-configuration-security.html#cb67-1"></a><span class="co"># configmaps.yaml</span></span>
+<span id="cb67-2"><a href="environment-configuration-security.html#cb67-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb67-3"><a href="environment-configuration-security.html#cb67-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> ConfigMap</span></span>
+<span id="cb67-4"><a href="environment-configuration-security.html#cb67-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb67-5"><a href="environment-configuration-security.html#cb67-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
+<span id="cb67-6"><a href="environment-configuration-security.html#cb67-6"></a><span class="fu">data</span><span class="kw">:</span></span>
+<span id="cb67-7"><a href="environment-configuration-security.html#cb67-7"></a><span class="at">  </span><span class="fu">app-name</span><span class="kw">:</span><span class="at"> kitty</span></span>
+<span id="cb67-8"><a href="environment-configuration-security.html#cb67-8"></a><span class="at">  </span><span class="fu">app-version</span><span class="kw">:</span><span class="at"> </span><span class="fl">1.0.0</span></span>
+<span id="cb67-9"><a href="environment-configuration-security.html#cb67-9"></a><span class="at">  </span><span class="fu">team</span><span class="kw">:</span><span class="at"> engineering</span></span>
+<span id="cb67-10"><a href="environment-configuration-security.html#cb67-10"></a><span class="pp">---</span></span>
+<span id="cb67-11"><a href="environment-configuration-security.html#cb67-11"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb67-12"><a href="environment-configuration-security.html#cb67-12"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> ConfigMap</span></span>
+<span id="cb67-13"><a href="environment-configuration-security.html#cb67-13"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb67-14"><a href="environment-configuration-security.html#cb67-14"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx-conf</span></span>
+<span id="cb67-15"><a href="environment-configuration-security.html#cb67-15"></a><span class="fu">data</span><span class="kw">:</span></span>
+<span id="cb67-16"><a href="environment-configuration-security.html#cb67-16"></a><span class="co">  # configuration in .conf</span></span>
+<span id="cb67-17"><a href="environment-configuration-security.html#cb67-17"></a><span class="fu">  nginx.conf</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb67-18"><a href="environment-configuration-security.html#cb67-18"></a>    server {</span>
+<span id="cb67-19"><a href="environment-configuration-security.html#cb67-19"></a>        listen       80;</span>
+<span id="cb67-20"><a href="environment-configuration-security.html#cb67-20"></a>        server_name  localhost;</span>
+<span id="cb67-21"><a href="environment-configuration-security.html#cb67-21"></a></span>
+<span id="cb67-22"><a href="environment-configuration-security.html#cb67-22"></a>        location / {</span>
+<span id="cb67-23"><a href="environment-configuration-security.html#cb67-23"></a>            root   /usr/share/nginx/html;</span>
+<span id="cb67-24"><a href="environment-configuration-security.html#cb67-24"></a>            index  index.html index.htm;</span>
+<span id="cb67-25"><a href="environment-configuration-security.html#cb67-25"></a>        }</span>
+<span id="cb67-26"><a href="environment-configuration-security.html#cb67-26"></a></span>
+<span id="cb67-27"><a href="environment-configuration-security.html#cb67-27"></a>        # redirect server error pages to the static page /50x.html</span>
+<span id="cb67-28"><a href="environment-configuration-security.html#cb67-28"></a>        #</span>
+<span id="cb67-29"><a href="environment-configuration-security.html#cb67-29"></a>        error_page   500 502 503 504  /50x.html;</span>
+<span id="cb67-30"><a href="environment-configuration-security.html#cb67-30"></a>        location = /50x.html {</span>
+<span id="cb67-31"><a href="environment-configuration-security.html#cb67-31"></a>            root   /usr/share/nginx/html;</span>
+<span id="cb67-32"><a href="environment-configuration-security.html#cb67-32"></a>        }</span>
+<span id="cb67-33"><a href="environment-configuration-security.html#cb67-33"></a></span>
+<span id="cb67-34"><a href="environment-configuration-security.html#cb67-34"></a>        location /health {</span>
+<span id="cb67-35"><a href="environment-configuration-security.html#cb67-35"></a>            access_log off;</span>
+<span id="cb67-36"><a href="environment-configuration-security.html#cb67-36"></a>            return 200 &quot;healthy\n&quot;;</span>
+<span id="cb67-37"><a href="environment-configuration-security.html#cb67-37"></a>        }</span>
+<span id="cb67-38"><a href="environment-configuration-security.html#cb67-38"></a>    }</span></code></pre></div>
 <p>Additionally, a Deployment is created which uses both ConfigMaps. A ConfigMap is declared under <code>spec.volumes</code> as well. It is also possible to state a reference to both ConfigMaps simultaneously. The Deployment creates two containers. The first container mounts each ConfigMap as a Volume. Container two uses environment variables to access and configure the key-value pairs of the ConfigMaps and store them on the container.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb53-1"><a href="environment-configuration-security.html#cb53-1"></a><span class="co"># configmaps_deployment.yaml</span></span>
-<span id="cb53-2"><a href="environment-configuration-security.html#cb53-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
-<span id="cb53-3"><a href="environment-configuration-security.html#cb53-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
-<span id="cb53-4"><a href="environment-configuration-security.html#cb53-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb53-5"><a href="environment-configuration-security.html#cb53-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> config-map</span></span>
-<span id="cb53-6"><a href="environment-configuration-security.html#cb53-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb53-7"><a href="environment-configuration-security.html#cb53-7"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb53-8"><a href="environment-configuration-security.html#cb53-8"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
-<span id="cb53-9"><a href="environment-configuration-security.html#cb53-9"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> config-map</span></span>
-<span id="cb53-10"><a href="environment-configuration-security.html#cb53-10"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
-<span id="cb53-11"><a href="environment-configuration-security.html#cb53-11"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb53-12"><a href="environment-configuration-security.html#cb53-12"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
-<span id="cb53-13"><a href="environment-configuration-security.html#cb53-13"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> config-map</span></span>
-<span id="cb53-14"><a href="environment-configuration-security.html#cb53-14"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb53-15"><a href="environment-configuration-security.html#cb53-15"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
-<span id="cb53-16"><a href="environment-configuration-security.html#cb53-16"></a><span class="co">        # specify ConfigMap nginx-conf</span></span>
-<span id="cb53-17"><a href="environment-configuration-security.html#cb53-17"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx-conf</span></span>
-<span id="cb53-18"><a href="environment-configuration-security.html#cb53-18"></a><span class="at">          </span><span class="fu">configMap</span><span class="kw">:</span></span>
-<span id="cb53-19"><a href="environment-configuration-security.html#cb53-19"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx-conf</span></span>
-<span id="cb53-20"><a href="environment-configuration-security.html#cb53-20"></a><span class="co">        # specify ConfigMap app-properties</span></span>
-<span id="cb53-21"><a href="environment-configuration-security.html#cb53-21"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
-<span id="cb53-22"><a href="environment-configuration-security.html#cb53-22"></a><span class="at">          </span><span class="fu">configMap</span><span class="kw">:</span></span>
-<span id="cb53-23"><a href="environment-configuration-security.html#cb53-23"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
-<span id="cb53-24"><a href="environment-configuration-security.html#cb53-24"></a><span class="co">        # if both configmaps shall be mounted under one directory,</span></span>
-<span id="cb53-25"><a href="environment-configuration-security.html#cb53-25"></a><span class="co">        # we need to use projected</span></span>
-<span id="cb53-26"><a href="environment-configuration-security.html#cb53-26"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> config</span></span>
-<span id="cb53-27"><a href="environment-configuration-security.html#cb53-27"></a><span class="at">          </span><span class="fu">projected</span><span class="kw">:</span></span>
-<span id="cb53-28"><a href="environment-configuration-security.html#cb53-28"></a><span class="at">            </span><span class="fu">sources</span><span class="kw">:</span></span>
-<span id="cb53-29"><a href="environment-configuration-security.html#cb53-29"></a><span class="at">              </span><span class="kw">-</span><span class="at"> </span><span class="fu">configMap</span><span class="kw">:</span></span>
-<span id="cb53-30"><a href="environment-configuration-security.html#cb53-30"></a><span class="at">                  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx-conf</span></span>
-<span id="cb53-31"><a href="environment-configuration-security.html#cb53-31"></a><span class="at">              </span><span class="kw">-</span><span class="at"> </span><span class="fu">configMap</span><span class="kw">:</span></span>
-<span id="cb53-32"><a href="environment-configuration-security.html#cb53-32"></a><span class="at">                  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
-<span id="cb53-33"><a href="environment-configuration-security.html#cb53-33"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
-<span id="cb53-34"><a href="environment-configuration-security.html#cb53-34"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> config-map-volume</span></span>
-<span id="cb53-35"><a href="environment-configuration-security.html#cb53-35"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox</span></span>
-<span id="cb53-36"><a href="environment-configuration-security.html#cb53-36"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
-<span id="cb53-37"><a href="environment-configuration-security.html#cb53-37"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /etc/cfmp/ngnix</span></span>
-<span id="cb53-38"><a href="environment-configuration-security.html#cb53-38"></a><span class="co">          # is defined here in the nginx-volume to mount</span></span>
-<span id="cb53-39"><a href="environment-configuration-security.html#cb53-39"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx-conf</span></span>
-<span id="cb53-40"><a href="environment-configuration-security.html#cb53-40"></a><span class="co">          # everything from that configMap is mounted as a file</span></span>
-<span id="cb53-41"><a href="environment-configuration-security.html#cb53-41"></a><span class="co">          # the file content is the value themselves</span></span>
-<span id="cb53-42"><a href="environment-configuration-security.html#cb53-42"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /etc/cfmp/properties</span></span>
-<span id="cb53-43"><a href="environment-configuration-security.html#cb53-43"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
-<span id="cb53-44"><a href="environment-configuration-security.html#cb53-44"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> etc/cfmp/config</span></span>
-<span id="cb53-45"><a href="environment-configuration-security.html#cb53-45"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> config</span></span>
-<span id="cb53-46"><a href="environment-configuration-security.html#cb53-46"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span></span>
-<span id="cb53-47"><a href="environment-configuration-security.html#cb53-47"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;/bin/sh&quot;</span></span>
-<span id="cb53-48"><a href="environment-configuration-security.html#cb53-48"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;-c&quot;</span></span>
-<span id="cb53-49"><a href="environment-configuration-security.html#cb53-49"></a><span class="at">        </span><span class="fu">args</span><span class="kw">:</span></span>
-<span id="cb53-50"><a href="environment-configuration-security.html#cb53-50"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;sleep 3600&quot;</span></span>
-<span id="cb53-51"><a href="environment-configuration-security.html#cb53-51"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb53-52"><a href="environment-configuration-security.html#cb53-52"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
-<span id="cb53-53"><a href="environment-configuration-security.html#cb53-53"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
-<span id="cb53-54"><a href="environment-configuration-security.html#cb53-54"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
-<span id="cb53-55"><a href="environment-configuration-security.html#cb53-55"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> config-map-env</span></span>
-<span id="cb53-56"><a href="environment-configuration-security.html#cb53-56"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox</span></span>
-<span id="cb53-57"><a href="environment-configuration-security.html#cb53-57"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb53-58"><a href="environment-configuration-security.html#cb53-58"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
-<span id="cb53-59"><a href="environment-configuration-security.html#cb53-59"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
-<span id="cb53-60"><a href="environment-configuration-security.html#cb53-60"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
-<span id="cb53-61"><a href="environment-configuration-security.html#cb53-61"></a><span class="co">        # as previously, keep the busybox container alive</span></span>
-<span id="cb53-62"><a href="environment-configuration-security.html#cb53-62"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span></span>
-<span id="cb53-63"><a href="environment-configuration-security.html#cb53-63"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;/bin/sh&quot;</span></span>
-<span id="cb53-64"><a href="environment-configuration-security.html#cb53-64"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;-c&quot;</span></span>
-<span id="cb53-65"><a href="environment-configuration-security.html#cb53-65"></a><span class="at">        </span><span class="fu">args</span><span class="kw">:</span></span>
-<span id="cb53-66"><a href="environment-configuration-security.html#cb53-66"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;env &amp;&amp; sleep 3600&quot;</span></span>
-<span id="cb53-67"><a href="environment-configuration-security.html#cb53-67"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
-<span id="cb53-68"><a href="environment-configuration-security.html#cb53-68"></a><span class="co">          # environment variables to read in from config map</span></span>
-<span id="cb53-69"><a href="environment-configuration-security.html#cb53-69"></a><span class="co">          # for every data key-value pair in config Map, an own</span></span>
-<span id="cb53-70"><a href="environment-configuration-security.html#cb53-70"></a><span class="co">          # environment variable is created, which gets </span></span>
-<span id="cb53-71"><a href="environment-configuration-security.html#cb53-71"></a><span class="co">          # the value from the corresponding key</span></span>
-<span id="cb53-72"><a href="environment-configuration-security.html#cb53-72"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> APP_VERSION</span></span>
-<span id="cb53-73"><a href="environment-configuration-security.html#cb53-73"></a><span class="at">            </span><span class="fu">valueFrom</span><span class="kw">:</span></span>
-<span id="cb53-74"><a href="environment-configuration-security.html#cb53-74"></a><span class="at">              </span><span class="fu">configMapKeyRef</span><span class="kw">:</span></span>
-<span id="cb53-75"><a href="environment-configuration-security.html#cb53-75"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
-<span id="cb53-76"><a href="environment-configuration-security.html#cb53-76"></a><span class="at">                </span><span class="fu">key</span><span class="kw">:</span><span class="at"> app-version</span></span>
-<span id="cb53-77"><a href="environment-configuration-security.html#cb53-77"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> APP_NAME</span></span>
-<span id="cb53-78"><a href="environment-configuration-security.html#cb53-78"></a><span class="at">            </span><span class="fu">valueFrom</span><span class="kw">:</span></span>
-<span id="cb53-79"><a href="environment-configuration-security.html#cb53-79"></a><span class="at">              </span><span class="fu">configMapKeyRef</span><span class="kw">:</span></span>
-<span id="cb53-80"><a href="environment-configuration-security.html#cb53-80"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
-<span id="cb53-81"><a href="environment-configuration-security.html#cb53-81"></a><span class="at">                </span><span class="fu">key</span><span class="kw">:</span><span class="at"> app-name</span></span>
-<span id="cb53-82"><a href="environment-configuration-security.html#cb53-82"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> TEAM</span></span>
-<span id="cb53-83"><a href="environment-configuration-security.html#cb53-83"></a><span class="at">            </span><span class="fu">valueFrom</span><span class="kw">:</span></span>
-<span id="cb53-84"><a href="environment-configuration-security.html#cb53-84"></a><span class="at">              </span><span class="fu">configMapKeyRef</span><span class="kw">:</span></span>
-<span id="cb53-85"><a href="environment-configuration-security.html#cb53-85"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
-<span id="cb53-86"><a href="environment-configuration-security.html#cb53-86"></a><span class="at">                </span><span class="fu">key</span><span class="kw">:</span><span class="at"> team</span></span>
-<span id="cb53-87"><a href="environment-configuration-security.html#cb53-87"></a><span class="co">          # reads from second config map</span></span>
-<span id="cb53-88"><a href="environment-configuration-security.html#cb53-88"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> NGINX_CONF</span></span>
-<span id="cb53-89"><a href="environment-configuration-security.html#cb53-89"></a><span class="at">            </span><span class="fu">valueFrom</span><span class="kw">:</span></span>
-<span id="cb53-90"><a href="environment-configuration-security.html#cb53-90"></a><span class="at">              </span><span class="fu">configMapKeyRef</span><span class="kw">:</span></span>
-<span id="cb53-91"><a href="environment-configuration-security.html#cb53-91"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx-conf</span></span>
-<span id="cb53-92"><a href="environment-configuration-security.html#cb53-92"></a><span class="at">                </span><span class="fu">key</span><span class="kw">:</span><span class="at"> nginx.conf  </span></span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb68-1"><a href="environment-configuration-security.html#cb68-1"></a><span class="co"># configmaps_deployment.yaml</span></span>
+<span id="cb68-2"><a href="environment-configuration-security.html#cb68-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb68-3"><a href="environment-configuration-security.html#cb68-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb68-4"><a href="environment-configuration-security.html#cb68-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb68-5"><a href="environment-configuration-security.html#cb68-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> config-map</span></span>
+<span id="cb68-6"><a href="environment-configuration-security.html#cb68-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb68-7"><a href="environment-configuration-security.html#cb68-7"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb68-8"><a href="environment-configuration-security.html#cb68-8"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb68-9"><a href="environment-configuration-security.html#cb68-9"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> config-map</span></span>
+<span id="cb68-10"><a href="environment-configuration-security.html#cb68-10"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb68-11"><a href="environment-configuration-security.html#cb68-11"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb68-12"><a href="environment-configuration-security.html#cb68-12"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb68-13"><a href="environment-configuration-security.html#cb68-13"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> config-map</span></span>
+<span id="cb68-14"><a href="environment-configuration-security.html#cb68-14"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb68-15"><a href="environment-configuration-security.html#cb68-15"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb68-16"><a href="environment-configuration-security.html#cb68-16"></a><span class="co">        # specify ConfigMap nginx-conf</span></span>
+<span id="cb68-17"><a href="environment-configuration-security.html#cb68-17"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx-conf</span></span>
+<span id="cb68-18"><a href="environment-configuration-security.html#cb68-18"></a><span class="at">          </span><span class="fu">configMap</span><span class="kw">:</span></span>
+<span id="cb68-19"><a href="environment-configuration-security.html#cb68-19"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx-conf</span></span>
+<span id="cb68-20"><a href="environment-configuration-security.html#cb68-20"></a><span class="co">        # specify ConfigMap app-properties</span></span>
+<span id="cb68-21"><a href="environment-configuration-security.html#cb68-21"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
+<span id="cb68-22"><a href="environment-configuration-security.html#cb68-22"></a><span class="at">          </span><span class="fu">configMap</span><span class="kw">:</span></span>
+<span id="cb68-23"><a href="environment-configuration-security.html#cb68-23"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
+<span id="cb68-24"><a href="environment-configuration-security.html#cb68-24"></a><span class="co">        # if both configmaps shall be mounted under one directory,</span></span>
+<span id="cb68-25"><a href="environment-configuration-security.html#cb68-25"></a><span class="co">        # we need to use projected</span></span>
+<span id="cb68-26"><a href="environment-configuration-security.html#cb68-26"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> config</span></span>
+<span id="cb68-27"><a href="environment-configuration-security.html#cb68-27"></a><span class="at">          </span><span class="fu">projected</span><span class="kw">:</span></span>
+<span id="cb68-28"><a href="environment-configuration-security.html#cb68-28"></a><span class="at">            </span><span class="fu">sources</span><span class="kw">:</span></span>
+<span id="cb68-29"><a href="environment-configuration-security.html#cb68-29"></a><span class="at">              </span><span class="kw">-</span><span class="at"> </span><span class="fu">configMap</span><span class="kw">:</span></span>
+<span id="cb68-30"><a href="environment-configuration-security.html#cb68-30"></a><span class="at">                  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx-conf</span></span>
+<span id="cb68-31"><a href="environment-configuration-security.html#cb68-31"></a><span class="at">              </span><span class="kw">-</span><span class="at"> </span><span class="fu">configMap</span><span class="kw">:</span></span>
+<span id="cb68-32"><a href="environment-configuration-security.html#cb68-32"></a><span class="at">                  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
+<span id="cb68-33"><a href="environment-configuration-security.html#cb68-33"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb68-34"><a href="environment-configuration-security.html#cb68-34"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> config-map-volume</span></span>
+<span id="cb68-35"><a href="environment-configuration-security.html#cb68-35"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox</span></span>
+<span id="cb68-36"><a href="environment-configuration-security.html#cb68-36"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb68-37"><a href="environment-configuration-security.html#cb68-37"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /etc/cfmp/ngnix</span></span>
+<span id="cb68-38"><a href="environment-configuration-security.html#cb68-38"></a><span class="co">          # is defined here in the nginx-volume to mount</span></span>
+<span id="cb68-39"><a href="environment-configuration-security.html#cb68-39"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx-conf</span></span>
+<span id="cb68-40"><a href="environment-configuration-security.html#cb68-40"></a><span class="co">          # everything from that configMap is mounted as a file</span></span>
+<span id="cb68-41"><a href="environment-configuration-security.html#cb68-41"></a><span class="co">          # the file content is the value themselves</span></span>
+<span id="cb68-42"><a href="environment-configuration-security.html#cb68-42"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /etc/cfmp/properties</span></span>
+<span id="cb68-43"><a href="environment-configuration-security.html#cb68-43"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
+<span id="cb68-44"><a href="environment-configuration-security.html#cb68-44"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> etc/cfmp/config</span></span>
+<span id="cb68-45"><a href="environment-configuration-security.html#cb68-45"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> config</span></span>
+<span id="cb68-46"><a href="environment-configuration-security.html#cb68-46"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb68-47"><a href="environment-configuration-security.html#cb68-47"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;/bin/sh&quot;</span></span>
+<span id="cb68-48"><a href="environment-configuration-security.html#cb68-48"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;-c&quot;</span></span>
+<span id="cb68-49"><a href="environment-configuration-security.html#cb68-49"></a><span class="at">        </span><span class="fu">args</span><span class="kw">:</span></span>
+<span id="cb68-50"><a href="environment-configuration-security.html#cb68-50"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;sleep 3600&quot;</span></span>
+<span id="cb68-51"><a href="environment-configuration-security.html#cb68-51"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb68-52"><a href="environment-configuration-security.html#cb68-52"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb68-53"><a href="environment-configuration-security.html#cb68-53"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb68-54"><a href="environment-configuration-security.html#cb68-54"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb68-55"><a href="environment-configuration-security.html#cb68-55"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> config-map-env</span></span>
+<span id="cb68-56"><a href="environment-configuration-security.html#cb68-56"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox</span></span>
+<span id="cb68-57"><a href="environment-configuration-security.html#cb68-57"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb68-58"><a href="environment-configuration-security.html#cb68-58"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb68-59"><a href="environment-configuration-security.html#cb68-59"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb68-60"><a href="environment-configuration-security.html#cb68-60"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb68-61"><a href="environment-configuration-security.html#cb68-61"></a><span class="co">        # as previously, keep the busybox container alive</span></span>
+<span id="cb68-62"><a href="environment-configuration-security.html#cb68-62"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb68-63"><a href="environment-configuration-security.html#cb68-63"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;/bin/sh&quot;</span></span>
+<span id="cb68-64"><a href="environment-configuration-security.html#cb68-64"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;-c&quot;</span></span>
+<span id="cb68-65"><a href="environment-configuration-security.html#cb68-65"></a><span class="at">        </span><span class="fu">args</span><span class="kw">:</span></span>
+<span id="cb68-66"><a href="environment-configuration-security.html#cb68-66"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;env &amp;&amp; sleep 3600&quot;</span></span>
+<span id="cb68-67"><a href="environment-configuration-security.html#cb68-67"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb68-68"><a href="environment-configuration-security.html#cb68-68"></a><span class="co">          # environment variables to read in from config map</span></span>
+<span id="cb68-69"><a href="environment-configuration-security.html#cb68-69"></a><span class="co">          # for every data key-value pair in config Map, an own</span></span>
+<span id="cb68-70"><a href="environment-configuration-security.html#cb68-70"></a><span class="co">          # environment variable is created, which gets </span></span>
+<span id="cb68-71"><a href="environment-configuration-security.html#cb68-71"></a><span class="co">          # the value from the corresponding key</span></span>
+<span id="cb68-72"><a href="environment-configuration-security.html#cb68-72"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> APP_VERSION</span></span>
+<span id="cb68-73"><a href="environment-configuration-security.html#cb68-73"></a><span class="at">            </span><span class="fu">valueFrom</span><span class="kw">:</span></span>
+<span id="cb68-74"><a href="environment-configuration-security.html#cb68-74"></a><span class="at">              </span><span class="fu">configMapKeyRef</span><span class="kw">:</span></span>
+<span id="cb68-75"><a href="environment-configuration-security.html#cb68-75"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
+<span id="cb68-76"><a href="environment-configuration-security.html#cb68-76"></a><span class="at">                </span><span class="fu">key</span><span class="kw">:</span><span class="at"> app-version</span></span>
+<span id="cb68-77"><a href="environment-configuration-security.html#cb68-77"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> APP_NAME</span></span>
+<span id="cb68-78"><a href="environment-configuration-security.html#cb68-78"></a><span class="at">            </span><span class="fu">valueFrom</span><span class="kw">:</span></span>
+<span id="cb68-79"><a href="environment-configuration-security.html#cb68-79"></a><span class="at">              </span><span class="fu">configMapKeyRef</span><span class="kw">:</span></span>
+<span id="cb68-80"><a href="environment-configuration-security.html#cb68-80"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
+<span id="cb68-81"><a href="environment-configuration-security.html#cb68-81"></a><span class="at">                </span><span class="fu">key</span><span class="kw">:</span><span class="at"> app-name</span></span>
+<span id="cb68-82"><a href="environment-configuration-security.html#cb68-82"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> TEAM</span></span>
+<span id="cb68-83"><a href="environment-configuration-security.html#cb68-83"></a><span class="at">            </span><span class="fu">valueFrom</span><span class="kw">:</span></span>
+<span id="cb68-84"><a href="environment-configuration-security.html#cb68-84"></a><span class="at">              </span><span class="fu">configMapKeyRef</span><span class="kw">:</span></span>
+<span id="cb68-85"><a href="environment-configuration-security.html#cb68-85"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> app-properties</span></span>
+<span id="cb68-86"><a href="environment-configuration-security.html#cb68-86"></a><span class="at">                </span><span class="fu">key</span><span class="kw">:</span><span class="at"> team</span></span>
+<span id="cb68-87"><a href="environment-configuration-security.html#cb68-87"></a><span class="co">          # reads from second config map</span></span>
+<span id="cb68-88"><a href="environment-configuration-security.html#cb68-88"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> NGINX_CONF</span></span>
+<span id="cb68-89"><a href="environment-configuration-security.html#cb68-89"></a><span class="at">            </span><span class="fu">valueFrom</span><span class="kw">:</span></span>
+<span id="cb68-90"><a href="environment-configuration-security.html#cb68-90"></a><span class="at">              </span><span class="fu">configMapKeyRef</span><span class="kw">:</span></span>
+<span id="cb68-91"><a href="environment-configuration-security.html#cb68-91"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx-conf</span></span>
+<span id="cb68-92"><a href="environment-configuration-security.html#cb68-92"></a><span class="at">                </span><span class="fu">key</span><span class="kw">:</span><span class="at"> nginx.conf  </span></span></code></pre></div>
 <p>We can check for the attached configs by accessing the containers via the shell, similar to what we did in the section about Volumes. In the container <em>config-map-volume</em>, the configs are saved under the respective <code>mountPath</code> of the volume. In the <em>config-map-env</em>, the configs are stored as environment variables.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb54-1"><a href="environment-configuration-security.html#cb54-1"></a><span class="co"># get in container -volume or -env</span></span>
-<span id="cb54-2"><a href="environment-configuration-security.html#cb54-2"></a><span class="ex">kubectl</span> exec -it <span class="op">&lt;</span>config-map-name<span class="op">&gt;</span> -c <span class="op">&gt;</span>container-name<span class="op">&lt;</span> -- sh</span>
-<span id="cb54-3"><a href="environment-configuration-security.html#cb54-3"></a><span class="co"># check subdirectories</span></span>
-<span id="cb54-4"><a href="environment-configuration-security.html#cb54-4"></a><span class="fu">ls</span></span>
-<span id="cb54-5"><a href="environment-configuration-security.html#cb54-5"></a></span>
-<span id="cb54-6"><a href="environment-configuration-security.html#cb54-6"></a><span class="co"># print environment variables</span></span>
-<span id="cb54-7"><a href="environment-configuration-security.html#cb54-7"></a><span class="ex">printenv</span></span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb69-1"><a href="environment-configuration-security.html#cb69-1"></a><span class="co"># get in container -volume or -env</span></span>
+<span id="cb69-2"><a href="environment-configuration-security.html#cb69-2"></a><span class="ex">kubectl</span> exec -it <span class="op">&lt;</span>config-map-name<span class="op">&gt;</span> -c <span class="op">&gt;</span>container-name<span class="op">&lt;</span> -- sh</span>
+<span id="cb69-3"><a href="environment-configuration-security.html#cb69-3"></a><span class="co"># check subdirectories</span></span>
+<span id="cb69-4"><a href="environment-configuration-security.html#cb69-4"></a><span class="fu">ls</span></span>
+<span id="cb69-5"><a href="environment-configuration-security.html#cb69-5"></a></span>
+<span id="cb69-6"><a href="environment-configuration-security.html#cb69-6"></a><span class="co"># print environment variables</span></span>
+<span id="cb69-7"><a href="environment-configuration-security.html#cb69-7"></a><span class="ex">printenv</span></span></code></pre></div>
 </div>
 <div id="secrets" class="section level3 hasAnchor">
-<h3><span class="header-section-number">2.5.4</span> Secrets<a href="environment-configuration-security.html#secrets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">4.5.4</span> Secrets<a href="environment-configuration-security.html#secrets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Secrets, as the name suggests, store and manage sensitive information. However, secrets are actually not secrets in K8s. They can quite easily decoded using <code>kubectl describe</code> on a secret and decode it using the shell command <code>echo &lt;password&gt; | base64 -d</code>. Thus, sensitive information like database password should never be stored in secrets. There are much better ressources to store such data, for example a Vault on the cloud provider itself. However, secret can be used so that you don’t need to include confidential data in your application code. Since they are stored and created independently of the Pods that use them, there is less risk of being exposed during the workflow of creating, viewing, and editing Pods.</p>
 <p>It is possible to create secrets using imperative approach as shown below.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb55-1"><a href="environment-configuration-security.html#cb55-1"></a><span class="co"># create the two secrets db-password and api-token</span></span>
-<span id="cb55-2"><a href="environment-configuration-security.html#cb55-2"></a><span class="ex">kubectl</span> create secret generic mysecret-from-cli --from-literal=db-password=123 --from-literal=api-token=token</span>
-<span id="cb55-3"><a href="environment-configuration-security.html#cb55-3"></a></span>
-<span id="cb55-4"><a href="environment-configuration-security.html#cb55-4"></a><span class="co"># output the new secret as yaml</span></span>
-<span id="cb55-5"><a href="environment-configuration-security.html#cb55-5"></a><span class="ex">kubectl</span> get secret mysecret -o yaml</span>
-<span id="cb55-6"><a href="environment-configuration-security.html#cb55-6"></a></span>
-<span id="cb55-7"><a href="environment-configuration-security.html#cb55-7"></a><span class="co"># create a file called secret with a file-password in it</span></span>
-<span id="cb55-8"><a href="environment-configuration-security.html#cb55-8"></a><span class="bu">echo</span> <span class="st">&quot;super-save-password&quot;</span> <span class="op">&gt;</span> secret </span>
-<span id="cb55-9"><a href="environment-configuration-security.html#cb55-9"></a></span>
-<span id="cb55-10"><a href="environment-configuration-security.html#cb55-10"></a><span class="co"># create a secret from file</span></span>
-<span id="cb55-11"><a href="environment-configuration-security.html#cb55-11"></a><span class="ex">kubectl</span> create secret generic mysecret-from-file --from-file=secret</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb70-1"><a href="environment-configuration-security.html#cb70-1"></a><span class="co"># create the two secrets db-password and api-token</span></span>
+<span id="cb70-2"><a href="environment-configuration-security.html#cb70-2"></a><span class="ex">kubectl</span> create secret generic mysecret-from-cli --from-literal=db-password=123 --from-literal=api-token=token</span>
+<span id="cb70-3"><a href="environment-configuration-security.html#cb70-3"></a></span>
+<span id="cb70-4"><a href="environment-configuration-security.html#cb70-4"></a><span class="co"># output the new secret as yaml</span></span>
+<span id="cb70-5"><a href="environment-configuration-security.html#cb70-5"></a><span class="ex">kubectl</span> get secret mysecret -o yaml</span>
+<span id="cb70-6"><a href="environment-configuration-security.html#cb70-6"></a></span>
+<span id="cb70-7"><a href="environment-configuration-security.html#cb70-7"></a><span class="co"># create a file called secret with a file-password in it</span></span>
+<span id="cb70-8"><a href="environment-configuration-security.html#cb70-8"></a><span class="bu">echo</span> <span class="st">&quot;super-save-password&quot;</span> <span class="op">&gt;</span> secret </span>
+<span id="cb70-9"><a href="environment-configuration-security.html#cb70-9"></a></span>
+<span id="cb70-10"><a href="environment-configuration-security.html#cb70-10"></a><span class="co"># create a secret from file</span></span>
+<span id="cb70-11"><a href="environment-configuration-security.html#cb70-11"></a><span class="ex">kubectl</span> create secret generic mysecret-from-file --from-file=secret</span></code></pre></div>
 <p>Similar to ConfigMaps, secrets are accessed via an environment variable or a volume.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb56-1"><a href="environment-configuration-security.html#cb56-1"></a><span class="co"># secrets.yaml</span></span>
-<span id="cb56-2"><a href="environment-configuration-security.html#cb56-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
-<span id="cb56-3"><a href="environment-configuration-security.html#cb56-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
-<span id="cb56-4"><a href="environment-configuration-security.html#cb56-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb56-5"><a href="environment-configuration-security.html#cb56-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> secrets</span></span>
-<span id="cb56-6"><a href="environment-configuration-security.html#cb56-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb56-7"><a href="environment-configuration-security.html#cb56-7"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb56-8"><a href="environment-configuration-security.html#cb56-8"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
-<span id="cb56-9"><a href="environment-configuration-security.html#cb56-9"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> secrets</span></span>
-<span id="cb56-10"><a href="environment-configuration-security.html#cb56-10"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
-<span id="cb56-11"><a href="environment-configuration-security.html#cb56-11"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb56-12"><a href="environment-configuration-security.html#cb56-12"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
-<span id="cb56-13"><a href="environment-configuration-security.html#cb56-13"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> secrets</span></span>
-<span id="cb56-14"><a href="environment-configuration-security.html#cb56-14"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb56-15"><a href="environment-configuration-security.html#cb56-15"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
-<span id="cb56-16"><a href="environment-configuration-security.html#cb56-16"></a><span class="co">        # get the secret from a volume</span></span>
-<span id="cb56-17"><a href="environment-configuration-security.html#cb56-17"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> secret-vol</span></span>
-<span id="cb56-18"><a href="environment-configuration-security.html#cb56-18"></a><span class="at">          </span><span class="fu">secret</span><span class="kw">:</span></span>
-<span id="cb56-19"><a href="environment-configuration-security.html#cb56-19"></a><span class="co">            # the name of the secret we created earlier</span></span>
-<span id="cb56-20"><a href="environment-configuration-security.html#cb56-20"></a><span class="at">            </span><span class="fu">secretName</span><span class="kw">:</span><span class="at"> mysecret-from-cli</span></span>
-<span id="cb56-21"><a href="environment-configuration-security.html#cb56-21"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
-<span id="cb56-22"><a href="environment-configuration-security.html#cb56-22"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> secrets</span></span>
-<span id="cb56-23"><a href="environment-configuration-security.html#cb56-23"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox</span></span>
-<span id="cb56-24"><a href="environment-configuration-security.html#cb56-24"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
-<span id="cb56-25"><a href="environment-configuration-security.html#cb56-25"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /etc/secrets</span></span>
-<span id="cb56-26"><a href="environment-configuration-security.html#cb56-26"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> secret-vol</span></span>
-<span id="cb56-27"><a href="environment-configuration-security.html#cb56-27"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
-<span id="cb56-28"><a href="environment-configuration-security.html#cb56-28"></a><span class="co">          # nane of the secret in the container</span></span>
-<span id="cb56-29"><a href="environment-configuration-security.html#cb56-29"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> CUSTOM_SECRET</span></span>
-<span id="cb56-30"><a href="environment-configuration-security.html#cb56-30"></a><span class="co">            # get the secret from an environment variable</span></span>
-<span id="cb56-31"><a href="environment-configuration-security.html#cb56-31"></a><span class="at">            </span><span class="fu">valueFrom</span><span class="kw">:</span></span>
-<span id="cb56-32"><a href="environment-configuration-security.html#cb56-32"></a><span class="at">              </span><span class="fu">secretKeyRef</span><span class="kw">:</span></span>
-<span id="cb56-33"><a href="environment-configuration-security.html#cb56-33"></a><span class="co">                # name and key of the secret we created earlier</span></span>
-<span id="cb56-34"><a href="environment-configuration-security.html#cb56-34"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> mysecret-from-file</span></span>
-<span id="cb56-35"><a href="environment-configuration-security.html#cb56-35"></a><span class="at">                </span><span class="fu">key</span><span class="kw">:</span><span class="at"> secret</span></span>
-<span id="cb56-36"><a href="environment-configuration-security.html#cb56-36"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span></span>
-<span id="cb56-37"><a href="environment-configuration-security.html#cb56-37"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;sleep&quot;</span></span>
-<span id="cb56-38"><a href="environment-configuration-security.html#cb56-38"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;3600&quot;</span></span>
-<span id="cb56-39"><a href="environment-configuration-security.html#cb56-39"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb56-40"><a href="environment-configuration-security.html#cb56-40"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
-<span id="cb56-41"><a href="environment-configuration-security.html#cb56-41"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
-<span id="cb56-42"><a href="environment-configuration-security.html#cb56-42"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb71-1"><a href="environment-configuration-security.html#cb71-1"></a><span class="co"># secrets.yaml</span></span>
+<span id="cb71-2"><a href="environment-configuration-security.html#cb71-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb71-3"><a href="environment-configuration-security.html#cb71-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb71-4"><a href="environment-configuration-security.html#cb71-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb71-5"><a href="environment-configuration-security.html#cb71-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> secrets</span></span>
+<span id="cb71-6"><a href="environment-configuration-security.html#cb71-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb71-7"><a href="environment-configuration-security.html#cb71-7"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb71-8"><a href="environment-configuration-security.html#cb71-8"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb71-9"><a href="environment-configuration-security.html#cb71-9"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> secrets</span></span>
+<span id="cb71-10"><a href="environment-configuration-security.html#cb71-10"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb71-11"><a href="environment-configuration-security.html#cb71-11"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb71-12"><a href="environment-configuration-security.html#cb71-12"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb71-13"><a href="environment-configuration-security.html#cb71-13"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> secrets</span></span>
+<span id="cb71-14"><a href="environment-configuration-security.html#cb71-14"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb71-15"><a href="environment-configuration-security.html#cb71-15"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb71-16"><a href="environment-configuration-security.html#cb71-16"></a><span class="co">        # get the secret from a volume</span></span>
+<span id="cb71-17"><a href="environment-configuration-security.html#cb71-17"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> secret-vol</span></span>
+<span id="cb71-18"><a href="environment-configuration-security.html#cb71-18"></a><span class="at">          </span><span class="fu">secret</span><span class="kw">:</span></span>
+<span id="cb71-19"><a href="environment-configuration-security.html#cb71-19"></a><span class="co">            # the name of the secret we created earlier</span></span>
+<span id="cb71-20"><a href="environment-configuration-security.html#cb71-20"></a><span class="at">            </span><span class="fu">secretName</span><span class="kw">:</span><span class="at"> mysecret-from-cli</span></span>
+<span id="cb71-21"><a href="environment-configuration-security.html#cb71-21"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb71-22"><a href="environment-configuration-security.html#cb71-22"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> secrets</span></span>
+<span id="cb71-23"><a href="environment-configuration-security.html#cb71-23"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox</span></span>
+<span id="cb71-24"><a href="environment-configuration-security.html#cb71-24"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb71-25"><a href="environment-configuration-security.html#cb71-25"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /etc/secrets</span></span>
+<span id="cb71-26"><a href="environment-configuration-security.html#cb71-26"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> secret-vol</span></span>
+<span id="cb71-27"><a href="environment-configuration-security.html#cb71-27"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb71-28"><a href="environment-configuration-security.html#cb71-28"></a><span class="co">          # nane of the secret in the container</span></span>
+<span id="cb71-29"><a href="environment-configuration-security.html#cb71-29"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> CUSTOM_SECRET</span></span>
+<span id="cb71-30"><a href="environment-configuration-security.html#cb71-30"></a><span class="co">            # get the secret from an environment variable</span></span>
+<span id="cb71-31"><a href="environment-configuration-security.html#cb71-31"></a><span class="at">            </span><span class="fu">valueFrom</span><span class="kw">:</span></span>
+<span id="cb71-32"><a href="environment-configuration-security.html#cb71-32"></a><span class="at">              </span><span class="fu">secretKeyRef</span><span class="kw">:</span></span>
+<span id="cb71-33"><a href="environment-configuration-security.html#cb71-33"></a><span class="co">                # name and key of the secret we created earlier</span></span>
+<span id="cb71-34"><a href="environment-configuration-security.html#cb71-34"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> mysecret-from-file</span></span>
+<span id="cb71-35"><a href="environment-configuration-security.html#cb71-35"></a><span class="at">                </span><span class="fu">key</span><span class="kw">:</span><span class="at"> secret</span></span>
+<span id="cb71-36"><a href="environment-configuration-security.html#cb71-36"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb71-37"><a href="environment-configuration-security.html#cb71-37"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;sleep&quot;</span></span>
+<span id="cb71-38"><a href="environment-configuration-security.html#cb71-38"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;3600&quot;</span></span>
+<span id="cb71-39"><a href="environment-configuration-security.html#cb71-39"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb71-40"><a href="environment-configuration-security.html#cb71-40"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb71-41"><a href="environment-configuration-security.html#cb71-41"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb71-42"><a href="environment-configuration-security.html#cb71-42"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span></code></pre></div>
 <div id="exemplary-use-case-of-secrets" class="section level4 hasAnchor">
-<h4><span class="header-section-number">2.5.4.1</span> Exemplary use case of secrets<a href="environment-configuration-security.html#exemplary-use-case-of-secrets" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<h4><span class="header-section-number">4.5.4.1</span> Exemplary use case of secrets<a href="environment-configuration-security.html#exemplary-use-case-of-secrets" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>When pulling from a private dockerhub repository, applying the deployment will throw an error since there are no username and password specified. As they should not be coded into the deployment yaml itself, they can be accessed via a secret. In fact, a specific secret can be specified for docker registry. The secret can be specified using the imperative approach.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb57-1"><a href="environment-configuration-security.html#cb57-1"></a><span class="ex">kubectl</span> create secret docker-registry docker-hub-private \</span>
-<span id="cb57-2"><a href="environment-configuration-security.html#cb57-2"></a>--docker-username=YOUR_USERNAME \</span>
-<span id="cb57-3"><a href="environment-configuration-security.html#cb57-3"></a>--docker-password=YOUR_PASSWORD \</span>
-<span id="cb57-4"><a href="environment-configuration-security.html#cb57-4"></a>--docker-email=YOUR_EMAIL</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb72-1"><a href="environment-configuration-security.html#cb72-1"></a><span class="ex">kubectl</span> create secret docker-registry docker-hub-private \</span>
+<span id="cb72-2"><a href="environment-configuration-security.html#cb72-2"></a>--docker-username=YOUR_USERNAME \</span>
+<span id="cb72-3"><a href="environment-configuration-security.html#cb72-3"></a>--docker-password=YOUR_PASSWORD \</span>
+<span id="cb72-4"><a href="environment-configuration-security.html#cb72-4"></a>--docker-email=YOUR_EMAIL</span></code></pre></div>
 <p>Finally, the secret is specified in the deployment configuration where it can be accessed during application.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb58-1"><a href="environment-configuration-security.html#cb58-1"></a><span class="co"># secret_dockerhub.yaml</span></span>
-<span id="cb58-2"><a href="environment-configuration-security.html#cb58-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
-<span id="cb58-3"><a href="environment-configuration-security.html#cb58-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
-<span id="cb58-4"><a href="environment-configuration-security.html#cb58-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb58-5"><a href="environment-configuration-security.html#cb58-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> secret-app</span></span>
-<span id="cb58-6"><a href="environment-configuration-security.html#cb58-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb58-7"><a href="environment-configuration-security.html#cb58-7"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb58-8"><a href="environment-configuration-security.html#cb58-8"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
-<span id="cb58-9"><a href="environment-configuration-security.html#cb58-9"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> secret-app</span></span>
-<span id="cb58-10"><a href="environment-configuration-security.html#cb58-10"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
-<span id="cb58-11"><a href="environment-configuration-security.html#cb58-11"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb58-12"><a href="environment-configuration-security.html#cb58-12"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
-<span id="cb58-13"><a href="environment-configuration-security.html#cb58-13"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> secret-app</span></span>
-<span id="cb58-14"><a href="environment-configuration-security.html#cb58-14"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb58-15"><a href="environment-configuration-security.html#cb58-15"></a><span class="co">      # specifiy the docker-registry secret to be accessed</span></span>
-<span id="cb58-16"><a href="environment-configuration-security.html#cb58-16"></a><span class="at">      </span><span class="fu">imagePullSecrets</span><span class="kw">:</span></span>
-<span id="cb58-17"><a href="environment-configuration-security.html#cb58-17"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> docker-hub-private</span></span>
-<span id="cb58-18"><a href="environment-configuration-security.html#cb58-18"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
-<span id="cb58-19"><a href="environment-configuration-security.html#cb58-19"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> secret-app</span></span>
-<span id="cb58-20"><a href="environment-configuration-security.html#cb58-20"></a><span class="co">        # of course you need an own private repository</span></span>
-<span id="cb58-21"><a href="environment-configuration-security.html#cb58-21"></a><span class="co">        # to pull and change the name accordingly</span></span>
-<span id="cb58-22"><a href="environment-configuration-security.html#cb58-22"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> seblum/private:cat-v1</span></span>
-<span id="cb58-23"><a href="environment-configuration-security.html#cb58-23"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb58-24"><a href="environment-configuration-security.html#cb58-24"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
-<span id="cb58-25"><a href="environment-configuration-security.html#cb58-25"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
-<span id="cb58-26"><a href="environment-configuration-security.html#cb58-26"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
-<span id="cb58-27"><a href="environment-configuration-security.html#cb58-27"></a><span class="at">        </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb58-28"><a href="environment-configuration-security.html#cb58-28"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb73-1"><a href="environment-configuration-security.html#cb73-1"></a><span class="co"># secret_dockerhub.yaml</span></span>
+<span id="cb73-2"><a href="environment-configuration-security.html#cb73-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb73-3"><a href="environment-configuration-security.html#cb73-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb73-4"><a href="environment-configuration-security.html#cb73-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb73-5"><a href="environment-configuration-security.html#cb73-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> secret-app</span></span>
+<span id="cb73-6"><a href="environment-configuration-security.html#cb73-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb73-7"><a href="environment-configuration-security.html#cb73-7"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb73-8"><a href="environment-configuration-security.html#cb73-8"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb73-9"><a href="environment-configuration-security.html#cb73-9"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> secret-app</span></span>
+<span id="cb73-10"><a href="environment-configuration-security.html#cb73-10"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb73-11"><a href="environment-configuration-security.html#cb73-11"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb73-12"><a href="environment-configuration-security.html#cb73-12"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb73-13"><a href="environment-configuration-security.html#cb73-13"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> secret-app</span></span>
+<span id="cb73-14"><a href="environment-configuration-security.html#cb73-14"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb73-15"><a href="environment-configuration-security.html#cb73-15"></a><span class="co">      # specifiy the docker-registry secret to be accessed</span></span>
+<span id="cb73-16"><a href="environment-configuration-security.html#cb73-16"></a><span class="at">      </span><span class="fu">imagePullSecrets</span><span class="kw">:</span></span>
+<span id="cb73-17"><a href="environment-configuration-security.html#cb73-17"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> docker-hub-private</span></span>
+<span id="cb73-18"><a href="environment-configuration-security.html#cb73-18"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb73-19"><a href="environment-configuration-security.html#cb73-19"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> secret-app</span></span>
+<span id="cb73-20"><a href="environment-configuration-security.html#cb73-20"></a><span class="co">        # of course you need an own private repository</span></span>
+<span id="cb73-21"><a href="environment-configuration-security.html#cb73-21"></a><span class="co">        # to pull and change the name accordingly</span></span>
+<span id="cb73-22"><a href="environment-configuration-security.html#cb73-22"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> seblum/private:cat-v1</span></span>
+<span id="cb73-23"><a href="environment-configuration-security.html#cb73-23"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb73-24"><a href="environment-configuration-security.html#cb73-24"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb73-25"><a href="environment-configuration-security.html#cb73-25"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb73-26"><a href="environment-configuration-security.html#cb73-26"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb73-27"><a href="environment-configuration-security.html#cb73-27"></a><span class="at">        </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb73-28"><a href="environment-configuration-security.html#cb73-28"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span></code></pre></div>
 
 </div>
 </div>
@@ -656,7 +674,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/04.5-Kubernetes-Environment_Configuration_and_Security.md",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/05.5-Kubernetes-Environment_Configuration_and_Security.md",
 "text": "Edit"
 },
 "history": {

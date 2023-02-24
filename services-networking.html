@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.3 Services &amp; Networking | MLOps Engineering</title>
+  <title>4.3 Services &amp; Networking | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.3 Services &amp; Networking | MLOps Engineering" />
+  <meta property="og:title" content="4.3 Services &amp; Networking | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.3 Services &amp; Networking | MLOps Engineering" />
+  <meta name="twitter:title" content="4.3 Services &amp; Networking | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-02-21" />
+<meta name="date" content="2023-02-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -134,112 +134,130 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">A Minimal Book Example</a></li>
+<li><a href="./">MLOps Engineering</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#a-work-in-progress"><i class="fa fa-check"></i>A work in progress</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>1</b> Terraform</a><ul>
-<li class="chapter" data-level="" data-path="terraform.html"><a href="terraform.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="1.1" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>1.1</b> Basic usage</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="basic-usage.html"><a href="basic-usage.html#terraform-init"><i class="fa fa-check"></i><b>1.1.1</b> terraform init</a></li>
-<li class="chapter" data-level="1.1.2" data-path="basic-usage.html"><a href="basic-usage.html#terraform-validate"><i class="fa fa-check"></i><b>1.1.2</b> terraform validate</a></li>
-<li class="chapter" data-level="1.1.3" data-path="basic-usage.html"><a href="basic-usage.html#terraform-plan"><i class="fa fa-check"></i><b>1.1.3</b> terraform plan</a></li>
-<li class="chapter" data-level="1.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>1.1.4</b> terraform apply</a></li>
-<li class="chapter" data-level="1.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>1.1.5</b> terraform destroy</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html"><i class="fa fa-check"></i><b>1.1</b> Machine Learning Workflow</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html#ml-worflow-tools"><i class="fa fa-check"></i><b>1.1.1</b> ML Worflow Tools</a></li>
+<li class="chapter" data-level="1.1.2" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html#developing-machine-learning-models"><i class="fa fa-check"></i><b>1.1.2</b> Developing Machine Learning Models</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="core-concepts.html"><a href="core-concepts.html"><i class="fa fa-check"></i><b>1.2</b> Core Concepts</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="core-concepts.html"><a href="core-concepts.html#providers"><i class="fa fa-check"></i><b>1.2.1</b> Providers</a></li>
-<li class="chapter" data-level="1.2.2" data-path="core-concepts.html"><a href="core-concepts.html#resources"><i class="fa fa-check"></i><b>1.2.2</b> Resources</a></li>
-<li class="chapter" data-level="1.2.3" data-path="core-concepts.html"><a href="core-concepts.html#data-sources"><i class="fa fa-check"></i><b>1.2.3</b> Data Sources</a></li>
-<li class="chapter" data-level="1.2.4" data-path="core-concepts.html"><a href="core-concepts.html#state"><i class="fa fa-check"></i><b>1.2.4</b> State</a></li>
+<li class="chapter" data-level="1.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html"><i class="fa fa-check"></i><b>1.2</b> Machine Learning Operations (MLOps)</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#ml-dev-ops"><i class="fa fa-check"></i><b>1.2.1</b> ML + (Dev)-Ops</a></li>
+<li class="chapter" data-level="1.2.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#mlops-lifecycle"><i class="fa fa-check"></i><b>1.2.2</b> MLOps Lifecycle</a></li>
+<li class="chapter" data-level="1.2.3" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#mlops-engineering"><i class="fa fa-check"></i><b>1.2.3</b> MLOps Engineering</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>1.3</b> Modules</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>1.3.1</b> Input Variables</a></li>
-<li class="chapter" data-level="1.3.2" data-path="modules.html"><a href="modules.html#output-variables"><i class="fa fa-check"></i><b>1.3.2</b> Output Variables</a></li>
-<li class="chapter" data-level="1.3.3" data-path="modules.html"><a href="modules.html#local-variables"><i class="fa fa-check"></i><b>1.3.3</b> Local Variables</a></li>
+<li class="chapter" data-level="1.3" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html"><i class="fa fa-check"></i><b>1.3</b> Roles and Tasks in MLOps</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#data-engineer"><i class="fa fa-check"></i><b>1.3.1</b> Data Engineer</a></li>
+<li class="chapter" data-level="1.3.2" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#data-scientist"><i class="fa fa-check"></i><b>1.3.2</b> Data Scientist</a></li>
+<li class="chapter" data-level="1.3.3" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#ml-engineer"><i class="fa fa-check"></i><b>1.3.3</b> ML Engineer</a></li>
+<li class="chapter" data-level="1.3.4" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#mlops-engineer"><i class="fa fa-check"></i><b>1.3.4</b> MLOps Engineer</a></li>
+<li class="chapter" data-level="1.3.5" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#devops-engineer"><i class="fa fa-check"></i><b>1.3.5</b> DevOps Engineer</a></li>
+<li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html"><i class="fa fa-check"></i><b>1.4</b> Additional tips &amp; tricks</a><ul>
-<li class="chapter" data-level="1.4.1" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#count"><i class="fa fa-check"></i><b>1.4.1</b> count</a></li>
-<li class="chapter" data-level="1.4.2" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for-each"><i class="fa fa-check"></i><b>1.4.2</b> for-each</a></li>
-<li class="chapter" data-level="1.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>1.4.3</b> for</a></li>
-<li class="chapter" data-level="1.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>1.4.4</b> Workspaces</a></li>
+<li class="chapter" data-level="1.4" data-path="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><a href="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><i class="fa fa-check"></i><b>1.4</b> MLOps Engineering with Airflow and MLflow on Kubernetes</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>1.5</b> Exemplary Deployment</a></li>
+<li class="chapter" data-level="2" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>2</b> Airflow</a><ul>
+<li class="chapter" data-level="" data-path="airflow.html"><a href="airflow.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="2.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html"><i class="fa fa-check"></i><b>2.1</b> Fundamental concepts</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#dags"><i class="fa fa-check"></i><b>2.1.1</b> DAGs</a></li>
+<li class="chapter" data-level="2.1.2" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#operators"><i class="fa fa-check"></i><b>2.1.2</b> Operators</a></li>
+<li class="chapter" data-level="2.1.3" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#tasks"><i class="fa fa-check"></i><b>2.1.3</b> Tasks</a></li>
+<li class="chapter" data-level="2.1.4" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#xcom"><i class="fa fa-check"></i><b>2.1.4</b> XCom</a></li>
+<li class="chapter" data-level="2.1.5" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#scheduling"><i class="fa fa-check"></i><b>2.1.5</b> Scheduling</a></li>
+<li class="chapter" data-level="2.1.6" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#taskflow"><i class="fa fa-check"></i><b>2.1.6</b> Taskflow</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>2</b> Kubernetes</a><ul>
-<li class="chapter" data-level="" data-path="kubernetes.html"><a href="kubernetes.html#prerequisites-1"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="2.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html"><i class="fa fa-check"></i><b>2.1</b> Core Concepts</a><ul>
-<li class="chapter" data-level="2.1.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html#nodes"><i class="fa fa-check"></i><b>2.1.1</b> Nodes</a></li>
-<li class="chapter" data-level="2.1.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html#pods"><i class="fa fa-check"></i><b>2.1.2</b> Pods</a></li>
-<li class="chapter" data-level="2.1.3" data-path="core-concepts-1.html"><a href="core-concepts-1.html#imperative-declarative-management"><i class="fa fa-check"></i><b>2.1.3</b> Imperative &amp; Declarative Management</a></li>
-</ul></li>
-<li class="chapter" data-level="2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>2.2</b> Application Deployment &amp; Design</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>2.2.1</b> Deployments</a></li>
-<li class="chapter" data-level="2.2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html#resource-management"><i class="fa fa-check"></i><b>2.2.2</b> Resource Management</a></li>
-<li class="chapter" data-level="2.2.3" data-path="application-deployment-design.html"><a href="application-deployment-design.html#daemonsets"><i class="fa fa-check"></i><b>2.2.3</b> DaemonSets</a></li>
-<li class="chapter" data-level="2.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>2.2.4</b> StatefulSets</a></li>
-<li class="chapter" data-level="2.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>2.2.5</b> Jobs &amp; Cron Jobs</a></li>
-</ul></li>
-<li class="chapter" data-level="2.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>2.3</b> Services &amp; Networking</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>2.3.1</b> Services</a></li>
-<li class="chapter" data-level="2.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>2.3.2</b> Service Discovery</a></li>
-</ul></li>
-<li class="chapter" data-level="2.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>2.4</b> Volume &amp; Storage</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>2.4.1</b> EmptyDir Volume</a></li>
-<li class="chapter" data-level="2.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>2.4.2</b> HostPath Volume</a></li>
-<li class="chapter" data-level="2.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>2.4.3</b> Persistent Volumes</a></li>
-</ul></li>
-<li class="chapter" data-level="2.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>2.5</b> Environment, Configuration &amp; Security</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#namespaces"><i class="fa fa-check"></i><b>2.5.1</b> Namespaces</a></li>
-<li class="chapter" data-level="2.5.2" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>2.5.2</b> Labels, Selectors and Annotations</a></li>
-<li class="chapter" data-level="2.5.3" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#configmaps"><i class="fa fa-check"></i><b>2.5.3</b> ConfigMaps</a></li>
-<li class="chapter" data-level="2.5.4" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#secrets"><i class="fa fa-check"></i><b>2.5.4</b> Secrets</a></li>
-</ul></li>
-<li class="chapter" data-level="2.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>2.6</b> Observability &amp; Maintenance</a><ul>
-<li class="chapter" data-level="2.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>2.6.1</b> Health Checks</a></li>
-<li class="chapter" data-level="2.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>2.6.2</b> Debugging</a></li>
-</ul></li>
-<li class="chapter" data-level="2.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>2.7</b> Helm</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a><ul>
-<li class="chapter" data-level="" data-path="airflow.html"><a href="airflow.html#prerequisites-2"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="3.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html"><i class="fa fa-check"></i><b>3.1</b> Fundamental concepts</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#dags"><i class="fa fa-check"></i><b>3.1.1</b> DAGs</a></li>
-<li class="chapter" data-level="3.1.2" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#operators"><i class="fa fa-check"></i><b>3.1.2</b> Operators</a></li>
-<li class="chapter" data-level="3.1.3" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#tasks"><i class="fa fa-check"></i><b>3.1.3</b> Tasks</a></li>
-<li class="chapter" data-level="3.1.4" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#xcom"><i class="fa fa-check"></i><b>3.1.4</b> XCom</a></li>
-<li class="chapter" data-level="3.1.5" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#scheduling"><i class="fa fa-check"></i><b>3.1.5</b> Scheduling</a></li>
-<li class="chapter" data-level="3.1.6" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#taskflow"><i class="fa fa-check"></i><b>3.1.6</b> Taskflow</a></li>
-</ul></li>
-<li class="chapter" data-level="3.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>3.2</b> Exemplary ML workflow</a></li>
-<li class="chapter" data-level="3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>3.3</b> Airflow infrastructure</a><ul>
-<li class="chapter" data-level="3.3.1" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#airflow-as-a-distributed-system"><i class="fa fa-check"></i><b>3.3.1</b> Airflow as a distributed system</a></li>
-<li class="chapter" data-level="3.3.2" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#scheduler-1"><i class="fa fa-check"></i><b>3.3.2</b> Scheduler</a></li>
-<li class="chapter" data-level="3.3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#webserver"><i class="fa fa-check"></i><b>3.3.3</b> Webserver</a></li>
-<li class="chapter" data-level="3.3.4" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#executor"><i class="fa fa-check"></i><b>3.3.4</b> Executor</a></li>
-<li class="chapter" data-level="3.3.5" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#dag-directory"><i class="fa fa-check"></i><b>3.3.5</b> DAG Directory</a></li>
-<li class="chapter" data-level="3.3.6" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#metadata-database"><i class="fa fa-check"></i><b>3.3.6</b> Metadata Database</a></li>
+<li class="chapter" data-level="2.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>2.2</b> Exemplary ML workflow</a></li>
+<li class="chapter" data-level="2.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>2.3</b> Airflow infrastructure</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#airflow-as-a-distributed-system"><i class="fa fa-check"></i><b>2.3.1</b> Airflow as a distributed system</a></li>
+<li class="chapter" data-level="2.3.2" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#scheduler"><i class="fa fa-check"></i><b>2.3.2</b> Scheduler</a></li>
+<li class="chapter" data-level="2.3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#webserver"><i class="fa fa-check"></i><b>2.3.3</b> Webserver</a></li>
+<li class="chapter" data-level="2.3.4" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#executor"><i class="fa fa-check"></i><b>2.3.4</b> Executor</a></li>
+<li class="chapter" data-level="2.3.5" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#dag-directory"><i class="fa fa-check"></i><b>2.3.5</b> DAG Directory</a></li>
+<li class="chapter" data-level="2.3.6" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#metadata-database"><i class="fa fa-check"></i><b>2.3.6</b> Metadata Database</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>4</b> MLflow</a><ul>
-<li class="chapter" data-level="" data-path="mlflow.html"><a href="mlflow.html#prerequisites-3"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="4.1" data-path="fundamental-components.html"><a href="fundamental-components.html"><i class="fa fa-check"></i><b>4.1</b> Fundamental Components</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-tracking"><i class="fa fa-check"></i><b>4.1.1</b> MLflow Tracking</a></li>
-<li class="chapter" data-level="4.1.2" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-models"><i class="fa fa-check"></i><b>4.1.2</b> MLflow Models</a></li>
-<li class="chapter" data-level="4.1.3" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-model-registry"><i class="fa fa-check"></i><b>4.1.3</b> MLflow Model Registry</a></li>
-<li class="chapter" data-level="4.1.4" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-projects"><i class="fa fa-check"></i><b>4.1.4</b> MLflow Projects</a></li>
+<li class="chapter" data-level="3" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>3</b> MLflow</a><ul>
+<li class="chapter" data-level="" data-path="mlflow.html"><a href="mlflow.html#prerequisites-1"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="3.1" data-path="fundamental-components.html"><a href="fundamental-components.html"><i class="fa fa-check"></i><b>3.1</b> Fundamental Components</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-tracking"><i class="fa fa-check"></i><b>3.1.1</b> MLflow Tracking</a></li>
+<li class="chapter" data-level="3.1.2" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-models"><i class="fa fa-check"></i><b>3.1.2</b> MLflow Models</a></li>
+<li class="chapter" data-level="3.1.3" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-model-registry"><i class="fa fa-check"></i><b>3.1.3</b> MLflow Model Registry</a></li>
+<li class="chapter" data-level="3.1.4" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-projects"><i class="fa fa-check"></i><b>3.1.4</b> MLflow Projects</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html"><i class="fa fa-check"></i><b>4.2</b> MLFflow Architecture</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>4.2.1</b> MLflow Tracking Server</a></li>
-<li class="chapter" data-level="4.2.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-backend-store"><i class="fa fa-check"></i><b>4.2.2</b> MLflow Backend Store</a></li>
-<li class="chapter" data-level="4.2.3" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-artifact-store"><i class="fa fa-check"></i><b>4.2.3</b> MLflow Artifact Store</a></li>
+<li class="chapter" data-level="3.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html"><i class="fa fa-check"></i><b>3.2</b> MLFflow Architecture</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>3.2.1</b> MLflow Tracking Server</a></li>
+<li class="chapter" data-level="3.2.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-backend-store"><i class="fa fa-check"></i><b>3.2.2</b> MLflow Backend Store</a></li>
+<li class="chapter" data-level="3.2.3" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-artifact-store"><i class="fa fa-check"></i><b>3.2.3</b> MLflow Artifact Store</a></li>
 </ul></li>
 </ul></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
+<li class="chapter" data-level="4" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>4</b> Kubernetes</a><ul>
+<li class="chapter" data-level="" data-path="kubernetes.html"><a href="kubernetes.html#prerequisites-2"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="4.1" data-path="core-concepts.html"><a href="core-concepts.html"><i class="fa fa-check"></i><b>4.1</b> Core Concepts</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="core-concepts.html"><a href="core-concepts.html#nodes"><i class="fa fa-check"></i><b>4.1.1</b> Nodes</a></li>
+<li class="chapter" data-level="4.1.2" data-path="core-concepts.html"><a href="core-concepts.html#pods"><i class="fa fa-check"></i><b>4.1.2</b> Pods</a></li>
+<li class="chapter" data-level="4.1.3" data-path="core-concepts.html"><a href="core-concepts.html#imperative-declarative-management"><i class="fa fa-check"></i><b>4.1.3</b> Imperative &amp; Declarative Management</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>4.2</b> Application Deployment &amp; Design</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>4.2.1</b> Deployments</a></li>
+<li class="chapter" data-level="4.2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html#resource-management"><i class="fa fa-check"></i><b>4.2.2</b> Resource Management</a></li>
+<li class="chapter" data-level="4.2.3" data-path="application-deployment-design.html"><a href="application-deployment-design.html#daemonsets"><i class="fa fa-check"></i><b>4.2.3</b> DaemonSets</a></li>
+<li class="chapter" data-level="4.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>4.2.4</b> StatefulSets</a></li>
+<li class="chapter" data-level="4.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>4.2.5</b> Jobs &amp; Cron Jobs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>4.3</b> Services &amp; Networking</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>4.3.1</b> Services</a></li>
+<li class="chapter" data-level="4.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>4.3.2</b> Service Discovery</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>4.4</b> Volume &amp; Storage</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>4.4.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="4.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>4.4.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="4.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>4.4.3</b> Persistent Volumes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>4.5</b> Environment, Configuration &amp; Security</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#namespaces"><i class="fa fa-check"></i><b>4.5.1</b> Namespaces</a></li>
+<li class="chapter" data-level="4.5.2" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>4.5.2</b> Labels, Selectors and Annotations</a></li>
+<li class="chapter" data-level="4.5.3" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#configmaps"><i class="fa fa-check"></i><b>4.5.3</b> ConfigMaps</a></li>
+<li class="chapter" data-level="4.5.4" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#secrets"><i class="fa fa-check"></i><b>4.5.4</b> Secrets</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>4.6</b> Observability &amp; Maintenance</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>4.6.1</b> Health Checks</a></li>
+<li class="chapter" data-level="4.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>4.6.2</b> Debugging</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>4.7</b> Helm</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>5</b> Terraform</a><ul>
+<li class="chapter" data-level="" data-path="terraform.html"><a href="terraform.html#prerequisites-3"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="5.1" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>5.1</b> Basic usage</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="basic-usage.html"><a href="basic-usage.html#terraform-init"><i class="fa fa-check"></i><b>5.1.1</b> terraform init</a></li>
+<li class="chapter" data-level="5.1.2" data-path="basic-usage.html"><a href="basic-usage.html#terraform-validate"><i class="fa fa-check"></i><b>5.1.2</b> terraform validate</a></li>
+<li class="chapter" data-level="5.1.3" data-path="basic-usage.html"><a href="basic-usage.html#terraform-plan"><i class="fa fa-check"></i><b>5.1.3</b> terraform plan</a></li>
+<li class="chapter" data-level="5.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>5.1.4</b> terraform apply</a></li>
+<li class="chapter" data-level="5.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>5.1.5</b> terraform destroy</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html"><i class="fa fa-check"></i><b>5.2</b> Core Concepts</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html#providers"><i class="fa fa-check"></i><b>5.2.1</b> Providers</a></li>
+<li class="chapter" data-level="5.2.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html#resources"><i class="fa fa-check"></i><b>5.2.2</b> Resources</a></li>
+<li class="chapter" data-level="5.2.3" data-path="core-concepts-1.html"><a href="core-concepts-1.html#data-sources"><i class="fa fa-check"></i><b>5.2.3</b> Data Sources</a></li>
+<li class="chapter" data-level="5.2.4" data-path="core-concepts-1.html"><a href="core-concepts-1.html#state"><i class="fa fa-check"></i><b>5.2.4</b> State</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>5.3</b> Modules</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>5.3.1</b> Input Variables</a></li>
+<li class="chapter" data-level="5.3.2" data-path="modules.html"><a href="modules.html#output-variables"><i class="fa fa-check"></i><b>5.3.2</b> Output Variables</a></li>
+<li class="chapter" data-level="5.3.3" data-path="modules.html"><a href="modules.html#local-variables"><i class="fa fa-check"></i><b>5.3.3</b> Local Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html"><i class="fa fa-check"></i><b>5.4</b> Additional tips &amp; tricks</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#count"><i class="fa fa-check"></i><b>5.4.1</b> count</a></li>
+<li class="chapter" data-level="5.4.2" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for-each"><i class="fa fa-check"></i><b>5.4.2</b> for-each</a></li>
+<li class="chapter" data-level="5.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>5.4.3</b> for</a></li>
+<li class="chapter" data-level="5.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>5.4.4</b> Workspaces</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>5.5</b> Exemplary Deployment</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -258,9 +276,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="services-networking" class="section level2 hasAnchor">
-<h2><span class="header-section-number">2.3</span> Services &amp; Networking<a href="services-networking.html#services-networking" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">4.3</span> Services &amp; Networking<a href="services-networking.html#services-networking" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="services" class="section level3 hasAnchor">
-<h3><span class="header-section-number">2.3.1</span> Services<a href="services-networking.html#services" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">4.3.1</span> Services<a href="services-networking.html#services" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To overall question when deploying an application is how we can access it. Each individual Pod has its own IP address. Thereby, the client can access this Pod via its IP address. Previously, we have made the app available via <code>kubectl port-forward</code> by forwarding the Pods’ IP to localhost. However, should only be done for testing purposes and is not a reliable and stable way to enable access. Since Pods are ephemeral, the client cannot rely on the ip address alone. For example, if an application is scaled up or down, there will be new IPs associated with each new Pod.</p>
 <div class="figure">
 <img src="images/04-Kubernetes/services.png" alt="" />
@@ -274,150 +292,150 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>LoadBalancer</li>
 </ul>
 <div id="clusterip" class="section level4 hasAnchor">
-<h4><span class="header-section-number">2.3.1.1</span> ClusterIP<a href="services-networking.html#clusterip" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<h4><span class="header-section-number">4.3.1.1</span> ClusterIP<a href="services-networking.html#clusterip" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The ClusterIP is the default K8s service. This service type will be chosen if no specific type is selected. The ClusterIP is used for cluster internal access and does not allow for external communication. If one Pod wants to talk to another Pod inside the cluster, it will use ClusterIP to do so. The service will allow and send traffic to any pod that is healthy.</p>
 </div>
 <div id="nodeport" class="section level4 hasAnchor">
-<h4><span class="header-section-number">2.3.1.2</span> NodePort<a href="services-networking.html#nodeport" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<h4><span class="header-section-number">4.3.1.2</span> NodePort<a href="services-networking.html#nodeport" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The NodePort service allows to open a static port simultaneously on all nodes. Its range lies between between 30.000/32.767. If a client wants to communicate with a node of the cluster, the client directly communicates with the node via its IP address. When the request reaches the port of the node, the NodePort service handles the request and forwards it to the specifically marked pod. This way, an application running on a pod can be exposed directly on a nodes’ IP under a specific port. You’ll be able to contact the NodePort Service from outside the cluster by requesting <code>&lt;NodeIP&gt;:&lt;NodePort&gt;</code>.</p>
 <p>Using a NodePort is beneficial for example when a request is sent to a node without a pod. The NodePort service will forward the request to a node which has a healthy associated pod running. However, only having one service specified per port is also a disadvantage. Having one ingress and multiple services is more desireable. The point of running K8s in the cloud is to scale up and down and if the NodeIP address changes, then we have a problem. So we should not aim to access a Node IP directly in the first place</p>
 <p>If applying below example using the frontend-deployment and the backend-deployment, we can access the frontend using the nodeport. Since using minikube, we can access the service by using <code>minikube service frontend-node --url</code>. Using the given IP adress it is possible to access the frontend using the NodePort service. We can also test the NodePort service when inside of a node. When accessing a node e.g. via <code>minikube ssh</code>, we can run <code>curl localhost:PORT/</code> inside the node to derive the to derive the website data from the frontend.</p>
 </div>
 <div id="loadbalancer" class="section level4 hasAnchor">
-<h4><span class="header-section-number">2.3.1.3</span> LoadBalancer<a href="services-networking.html#loadbalancer" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<h4><span class="header-section-number">4.3.1.3</span> LoadBalancer<a href="services-networking.html#loadbalancer" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Loadbalancers are a standard way of exposing applications to the extern, for example the internet. Loadbalancers automatically distribute incoming traffic across multiple targets to balance the load in an equal level. If K8s is running on the cloud, e.g. AWS or GCP, a Network Load Balancer (NLB) is created. The Cloud Controller Manager (remember the Controller Manager of a Node) is resposible to talk to the underlying cloud provier. In Minikube, the external IP to access the application via the LoadBalancer can be exposed using the command <code>minikube tunnel</code>.</p>
 </div>
 <div id="default-kubernetes-services" class="section level4 hasAnchor">
-<h4><span class="header-section-number">2.3.1.4</span> default kubernetes services<a href="services-networking.html#default-kubernetes-services" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<h4><span class="header-section-number">4.3.1.4</span> default kubernetes services<a href="services-networking.html#default-kubernetes-services" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>There are also default K8s services created automatically to access K8s with the K8s API. Check the endpoints of the <em>kubernetes</em> service and the endpoints of the <em>api-service</em> pod within kube-system namespace. They should be the same.</p>
 <p>It is also possible to show all endpoints of the cluster using</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="services-networking.html#cb39-1"></a><span class="ex">kubectl</span> get endpoints</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb54-1"><a href="services-networking.html#cb54-1"></a><span class="ex">kubectl</span> get endpoints</span></code></pre></div>
 </div>
 <div id="exemplary-setup-of-database-and-frontend-microservices" class="section level4 hasAnchor">
-<h4><span class="header-section-number">2.3.1.5</span> Exemplary setup of database and frontend microservices<a href="services-networking.html#exemplary-setup-of-database-and-frontend-microservices" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<h4><span class="header-section-number">4.3.1.5</span> Exemplary setup of database and frontend microservices<a href="services-networking.html#exemplary-setup-of-database-and-frontend-microservices" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The following example show the deployment and linking of two different deployments. A <em>frontend-deployment.yaml</em> that pulls a container running a <a href="https://streamlit.io/">Streamlit App</a>, and a <em>database-deployment.yaml</em> that runs a flask application exposing a dictionary as an exemplary and very basic database. The frontend accesses the flask database using a ClusterIP Service linked to the database-deployment. It also exposes an external IP via a Loadbalancer Service, so the streamlit app can be accesses via the browser and without the use of <code>kubectl port-forward</code>. Since minikube is a closed network, use <code>minikube tunnel</code> to allow access to it using the LoadBalancer.</p>
 <p>When looking at the ClusterIP service with <code>kubectl describe service backendflask</code> the IP address of the service to exposes, as well as the listed endpoints that connect to the database-deployments are shown. One can compare them to the IPs of the actual deployments - they are the same.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb40-1"><a href="services-networking.html#cb40-1"></a><span class="co"># services_frontend-deployment.yaml</span></span>
-<span id="cb40-2"><a href="services-networking.html#cb40-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
-<span id="cb40-3"><a href="services-networking.html#cb40-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
-<span id="cb40-4"><a href="services-networking.html#cb40-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb40-5"><a href="services-networking.html#cb40-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> frontend</span></span>
-<span id="cb40-6"><a href="services-networking.html#cb40-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb40-7"><a href="services-networking.html#cb40-7"></a><span class="at">  </span><span class="fu">replicas</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
-<span id="cb40-8"><a href="services-networking.html#cb40-8"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb40-9"><a href="services-networking.html#cb40-9"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
-<span id="cb40-10"><a href="services-networking.html#cb40-10"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> frontend</span></span>
-<span id="cb40-11"><a href="services-networking.html#cb40-11"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
-<span id="cb40-12"><a href="services-networking.html#cb40-12"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb40-13"><a href="services-networking.html#cb40-13"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
-<span id="cb40-14"><a href="services-networking.html#cb40-14"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> frontend</span></span>
-<span id="cb40-15"><a href="services-networking.html#cb40-15"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb40-16"><a href="services-networking.html#cb40-16"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
-<span id="cb40-17"><a href="services-networking.html#cb40-17"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> frontend</span></span>
-<span id="cb40-18"><a href="services-networking.html#cb40-18"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> seblum/mlops-public:frontend-streamlit</span></span>
-<span id="cb40-19"><a href="services-networking.html#cb40-19"></a><span class="at">        </span><span class="fu">imagePullPolicy</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Always&quot;</span></span>
-<span id="cb40-20"><a href="services-networking.html#cb40-20"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb40-21"><a href="services-networking.html#cb40-21"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
-<span id="cb40-22"><a href="services-networking.html#cb40-22"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
-<span id="cb40-23"><a href="services-networking.html#cb40-23"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
-<span id="cb40-24"><a href="services-networking.html#cb40-24"></a><span class="co">        # enviroment variable defined in the application and dockerfile</span></span>
-<span id="cb40-25"><a href="services-networking.html#cb40-25"></a><span class="co">        # value is ip adress of the order</span></span>
-<span id="cb40-26"><a href="services-networking.html#cb40-26"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
-<span id="cb40-27"><a href="services-networking.html#cb40-27"></a><span class="co">            # using the ip adress would be a bad idea.</span></span>
-<span id="cb40-28"><a href="services-networking.html#cb40-28"></a><span class="co">            # use the service ip adress.</span></span>
-<span id="cb40-29"><a href="services-networking.html#cb40-29"></a><span class="co">            # value: &quot;&lt;order-service-ip-adress&gt;:8081&quot;</span></span>
-<span id="cb40-30"><a href="services-networking.html#cb40-30"></a><span class="co">            # how to do it should be this.</span></span>
-<span id="cb40-31"><a href="services-networking.html#cb40-31"></a><span class="co">            # we reference to the order service</span></span>
-<span id="cb40-32"><a href="services-networking.html#cb40-32"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> DB_SERVICE</span></span>
-<span id="cb40-33"><a href="services-networking.html#cb40-33"></a><span class="at">            </span><span class="fu">value</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;backendflask:5001&quot;</span></span>
-<span id="cb40-34"><a href="services-networking.html#cb40-34"></a><span class="at">        </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb40-35"><a href="services-networking.html#cb40-35"></a><span class="co">          # we can actually use the actual ip of the service or</span></span>
-<span id="cb40-36"><a href="services-networking.html#cb40-36"></a><span class="co">          # use the dns, as done in the example above.</span></span>
-<span id="cb40-37"><a href="services-networking.html#cb40-37"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">8501</span></span>
-<span id="cb40-38"><a href="services-networking.html#cb40-38"></a><span class="pp">---</span></span>
-<span id="cb40-39"><a href="services-networking.html#cb40-39"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb40-40"><a href="services-networking.html#cb40-40"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
-<span id="cb40-41"><a href="services-networking.html#cb40-41"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb40-42"><a href="services-networking.html#cb40-42"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> frontend-lb</span></span>
-<span id="cb40-43"><a href="services-networking.html#cb40-43"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb40-44"><a href="services-networking.html#cb40-44"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> LoadBalancer</span></span>
-<span id="cb40-45"><a href="services-networking.html#cb40-45"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb40-46"><a href="services-networking.html#cb40-46"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> frontend</span></span>
-<span id="cb40-47"><a href="services-networking.html#cb40-47"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb40-48"><a href="services-networking.html#cb40-48"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
-<span id="cb40-49"><a href="services-networking.html#cb40-49"></a><span class="at">    </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">8501</span></span>
-<span id="cb40-50"><a href="services-networking.html#cb40-50"></a><span class="pp">---</span></span>
-<span id="cb40-51"><a href="services-networking.html#cb40-51"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb40-52"><a href="services-networking.html#cb40-52"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
-<span id="cb40-53"><a href="services-networking.html#cb40-53"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb40-54"><a href="services-networking.html#cb40-54"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> frontend-node</span></span>
-<span id="cb40-55"><a href="services-networking.html#cb40-55"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb40-56"><a href="services-networking.html#cb40-56"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> NodePort</span></span>
-<span id="cb40-57"><a href="services-networking.html#cb40-57"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb40-58"><a href="services-networking.html#cb40-58"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> frontend</span></span>
-<span id="cb40-59"><a href="services-networking.html#cb40-59"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb40-60"><a href="services-networking.html#cb40-60"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
-<span id="cb40-61"><a href="services-networking.html#cb40-61"></a><span class="at">    </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">8501</span></span>
-<span id="cb40-62"><a href="services-networking.html#cb40-62"></a><span class="at">    </span><span class="fu">nodePort</span><span class="kw">:</span><span class="at"> </span><span class="dv">30000</span></span></code></pre></div>
-<div class="sourceCode" id="cb41"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb41-1"><a href="services-networking.html#cb41-1"></a><span class="co"># services_backend-deployment.yaml</span></span>
-<span id="cb41-2"><a href="services-networking.html#cb41-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
-<span id="cb41-3"><a href="services-networking.html#cb41-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
-<span id="cb41-4"><a href="services-networking.html#cb41-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb41-5"><a href="services-networking.html#cb41-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask</span></span>
-<span id="cb41-6"><a href="services-networking.html#cb41-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb41-7"><a href="services-networking.html#cb41-7"></a><span class="at">  </span><span class="fu">replicas</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
-<span id="cb41-8"><a href="services-networking.html#cb41-8"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb41-9"><a href="services-networking.html#cb41-9"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
-<span id="cb41-10"><a href="services-networking.html#cb41-10"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask</span></span>
-<span id="cb41-11"><a href="services-networking.html#cb41-11"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
-<span id="cb41-12"><a href="services-networking.html#cb41-12"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb41-13"><a href="services-networking.html#cb41-13"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
-<span id="cb41-14"><a href="services-networking.html#cb41-14"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask</span></span>
-<span id="cb41-15"><a href="services-networking.html#cb41-15"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb41-16"><a href="services-networking.html#cb41-16"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
-<span id="cb41-17"><a href="services-networking.html#cb41-17"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask</span></span>
-<span id="cb41-18"><a href="services-networking.html#cb41-18"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> seblum/mlops-public:backend-flask</span></span>
-<span id="cb41-19"><a href="services-networking.html#cb41-19"></a><span class="at">        </span><span class="fu">imagePullPolicy</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Always&quot;</span></span>
-<span id="cb41-20"><a href="services-networking.html#cb41-20"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb41-21"><a href="services-networking.html#cb41-21"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
-<span id="cb41-22"><a href="services-networking.html#cb41-22"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
-<span id="cb41-23"><a href="services-networking.html#cb41-23"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
-<span id="cb41-24"><a href="services-networking.html#cb41-24"></a><span class="at">        </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb41-25"><a href="services-networking.html#cb41-25"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
-<span id="cb41-26"><a href="services-networking.html#cb41-26"></a><span class="pp">---</span></span>
-<span id="cb41-27"><a href="services-networking.html#cb41-27"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb41-28"><a href="services-networking.html#cb41-28"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
-<span id="cb41-29"><a href="services-networking.html#cb41-29"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb41-30"><a href="services-networking.html#cb41-30"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask</span></span>
-<span id="cb41-31"><a href="services-networking.html#cb41-31"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb41-32"><a href="services-networking.html#cb41-32"></a><span class="co">  # send traffic to any pod that matches the label</span></span>
-<span id="cb41-33"><a href="services-networking.html#cb41-33"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> ClusterIP</span><span class="co"> # does not need to be specified</span></span>
-<span id="cb41-34"><a href="services-networking.html#cb41-34"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb41-35"><a href="services-networking.html#cb41-35"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask</span></span>
-<span id="cb41-36"><a href="services-networking.html#cb41-36"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb41-37"><a href="services-networking.html#cb41-37"></a><span class="co">    # port the service is associated with</span></span>
-<span id="cb41-38"><a href="services-networking.html#cb41-38"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">5001</span></span>
-<span id="cb41-39"><a href="services-networking.html#cb41-39"></a><span class="co">    # port to access targeted by the access</span></span>
-<span id="cb41-40"><a href="services-networking.html#cb41-40"></a><span class="co">    # in our case has to be the same as in backendflask.</span></span>
-<span id="cb41-41"><a href="services-networking.html#cb41-41"></a><span class="at">    </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb55-1"><a href="services-networking.html#cb55-1"></a><span class="co"># services_frontend-deployment.yaml</span></span>
+<span id="cb55-2"><a href="services-networking.html#cb55-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb55-3"><a href="services-networking.html#cb55-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb55-4"><a href="services-networking.html#cb55-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb55-5"><a href="services-networking.html#cb55-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> frontend</span></span>
+<span id="cb55-6"><a href="services-networking.html#cb55-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb55-7"><a href="services-networking.html#cb55-7"></a><span class="at">  </span><span class="fu">replicas</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="cb55-8"><a href="services-networking.html#cb55-8"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb55-9"><a href="services-networking.html#cb55-9"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb55-10"><a href="services-networking.html#cb55-10"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> frontend</span></span>
+<span id="cb55-11"><a href="services-networking.html#cb55-11"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb55-12"><a href="services-networking.html#cb55-12"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb55-13"><a href="services-networking.html#cb55-13"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb55-14"><a href="services-networking.html#cb55-14"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> frontend</span></span>
+<span id="cb55-15"><a href="services-networking.html#cb55-15"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb55-16"><a href="services-networking.html#cb55-16"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb55-17"><a href="services-networking.html#cb55-17"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> frontend</span></span>
+<span id="cb55-18"><a href="services-networking.html#cb55-18"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> seblum/mlops-public:frontend-streamlit</span></span>
+<span id="cb55-19"><a href="services-networking.html#cb55-19"></a><span class="at">        </span><span class="fu">imagePullPolicy</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Always&quot;</span></span>
+<span id="cb55-20"><a href="services-networking.html#cb55-20"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb55-21"><a href="services-networking.html#cb55-21"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb55-22"><a href="services-networking.html#cb55-22"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb55-23"><a href="services-networking.html#cb55-23"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb55-24"><a href="services-networking.html#cb55-24"></a><span class="co">        # enviroment variable defined in the application and dockerfile</span></span>
+<span id="cb55-25"><a href="services-networking.html#cb55-25"></a><span class="co">        # value is ip adress of the order</span></span>
+<span id="cb55-26"><a href="services-networking.html#cb55-26"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb55-27"><a href="services-networking.html#cb55-27"></a><span class="co">            # using the ip adress would be a bad idea.</span></span>
+<span id="cb55-28"><a href="services-networking.html#cb55-28"></a><span class="co">            # use the service ip adress.</span></span>
+<span id="cb55-29"><a href="services-networking.html#cb55-29"></a><span class="co">            # value: &quot;&lt;order-service-ip-adress&gt;:8081&quot;</span></span>
+<span id="cb55-30"><a href="services-networking.html#cb55-30"></a><span class="co">            # how to do it should be this.</span></span>
+<span id="cb55-31"><a href="services-networking.html#cb55-31"></a><span class="co">            # we reference to the order service</span></span>
+<span id="cb55-32"><a href="services-networking.html#cb55-32"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> DB_SERVICE</span></span>
+<span id="cb55-33"><a href="services-networking.html#cb55-33"></a><span class="at">            </span><span class="fu">value</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;backendflask:5001&quot;</span></span>
+<span id="cb55-34"><a href="services-networking.html#cb55-34"></a><span class="at">        </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb55-35"><a href="services-networking.html#cb55-35"></a><span class="co">          # we can actually use the actual ip of the service or</span></span>
+<span id="cb55-36"><a href="services-networking.html#cb55-36"></a><span class="co">          # use the dns, as done in the example above.</span></span>
+<span id="cb55-37"><a href="services-networking.html#cb55-37"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">8501</span></span>
+<span id="cb55-38"><a href="services-networking.html#cb55-38"></a><span class="pp">---</span></span>
+<span id="cb55-39"><a href="services-networking.html#cb55-39"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb55-40"><a href="services-networking.html#cb55-40"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb55-41"><a href="services-networking.html#cb55-41"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb55-42"><a href="services-networking.html#cb55-42"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> frontend-lb</span></span>
+<span id="cb55-43"><a href="services-networking.html#cb55-43"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb55-44"><a href="services-networking.html#cb55-44"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> LoadBalancer</span></span>
+<span id="cb55-45"><a href="services-networking.html#cb55-45"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb55-46"><a href="services-networking.html#cb55-46"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> frontend</span></span>
+<span id="cb55-47"><a href="services-networking.html#cb55-47"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb55-48"><a href="services-networking.html#cb55-48"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb55-49"><a href="services-networking.html#cb55-49"></a><span class="at">    </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">8501</span></span>
+<span id="cb55-50"><a href="services-networking.html#cb55-50"></a><span class="pp">---</span></span>
+<span id="cb55-51"><a href="services-networking.html#cb55-51"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb55-52"><a href="services-networking.html#cb55-52"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb55-53"><a href="services-networking.html#cb55-53"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb55-54"><a href="services-networking.html#cb55-54"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> frontend-node</span></span>
+<span id="cb55-55"><a href="services-networking.html#cb55-55"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb55-56"><a href="services-networking.html#cb55-56"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> NodePort</span></span>
+<span id="cb55-57"><a href="services-networking.html#cb55-57"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb55-58"><a href="services-networking.html#cb55-58"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> frontend</span></span>
+<span id="cb55-59"><a href="services-networking.html#cb55-59"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb55-60"><a href="services-networking.html#cb55-60"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb55-61"><a href="services-networking.html#cb55-61"></a><span class="at">    </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">8501</span></span>
+<span id="cb55-62"><a href="services-networking.html#cb55-62"></a><span class="at">    </span><span class="fu">nodePort</span><span class="kw">:</span><span class="at"> </span><span class="dv">30000</span></span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb56-1"><a href="services-networking.html#cb56-1"></a><span class="co"># services_backend-deployment.yaml</span></span>
+<span id="cb56-2"><a href="services-networking.html#cb56-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb56-3"><a href="services-networking.html#cb56-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb56-4"><a href="services-networking.html#cb56-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb56-5"><a href="services-networking.html#cb56-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask</span></span>
+<span id="cb56-6"><a href="services-networking.html#cb56-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb56-7"><a href="services-networking.html#cb56-7"></a><span class="at">  </span><span class="fu">replicas</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="cb56-8"><a href="services-networking.html#cb56-8"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb56-9"><a href="services-networking.html#cb56-9"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb56-10"><a href="services-networking.html#cb56-10"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask</span></span>
+<span id="cb56-11"><a href="services-networking.html#cb56-11"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb56-12"><a href="services-networking.html#cb56-12"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb56-13"><a href="services-networking.html#cb56-13"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb56-14"><a href="services-networking.html#cb56-14"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask</span></span>
+<span id="cb56-15"><a href="services-networking.html#cb56-15"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb56-16"><a href="services-networking.html#cb56-16"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb56-17"><a href="services-networking.html#cb56-17"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask</span></span>
+<span id="cb56-18"><a href="services-networking.html#cb56-18"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> seblum/mlops-public:backend-flask</span></span>
+<span id="cb56-19"><a href="services-networking.html#cb56-19"></a><span class="at">        </span><span class="fu">imagePullPolicy</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Always&quot;</span></span>
+<span id="cb56-20"><a href="services-networking.html#cb56-20"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb56-21"><a href="services-networking.html#cb56-21"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb56-22"><a href="services-networking.html#cb56-22"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb56-23"><a href="services-networking.html#cb56-23"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb56-24"><a href="services-networking.html#cb56-24"></a><span class="at">        </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb56-25"><a href="services-networking.html#cb56-25"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
+<span id="cb56-26"><a href="services-networking.html#cb56-26"></a><span class="pp">---</span></span>
+<span id="cb56-27"><a href="services-networking.html#cb56-27"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb56-28"><a href="services-networking.html#cb56-28"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb56-29"><a href="services-networking.html#cb56-29"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb56-30"><a href="services-networking.html#cb56-30"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> backendflask</span></span>
+<span id="cb56-31"><a href="services-networking.html#cb56-31"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb56-32"><a href="services-networking.html#cb56-32"></a><span class="co">  # send traffic to any pod that matches the label</span></span>
+<span id="cb56-33"><a href="services-networking.html#cb56-33"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> ClusterIP</span><span class="co"> # does not need to be specified</span></span>
+<span id="cb56-34"><a href="services-networking.html#cb56-34"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb56-35"><a href="services-networking.html#cb56-35"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> backendflask</span></span>
+<span id="cb56-36"><a href="services-networking.html#cb56-36"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb56-37"><a href="services-networking.html#cb56-37"></a><span class="co">    # port the service is associated with</span></span>
+<span id="cb56-38"><a href="services-networking.html#cb56-38"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">5001</span></span>
+<span id="cb56-39"><a href="services-networking.html#cb56-39"></a><span class="co">    # port to access targeted by the access</span></span>
+<span id="cb56-40"><a href="services-networking.html#cb56-40"></a><span class="co">    # in our case has to be the same as in backendflask.</span></span>
+<span id="cb56-41"><a href="services-networking.html#cb56-41"></a><span class="at">    </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span></code></pre></div>
 </div>
 </div>
 <div id="service-discovery" class="section level3 hasAnchor">
-<h3><span class="header-section-number">2.3.2</span> Service Discovery<a href="services-networking.html#service-discovery" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">4.3.2</span> Service Discovery<a href="services-networking.html#service-discovery" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Service Discovery is a mechanism that lets applications and microservices locate each other on a network. In fact, we have aready used Service Discovery in the previous sections, they just haven’t been mentioned yet. If a client wants to communicate with the application, it should not use the IP of an individual Pod should not use the individual pod ip. Instead, we should rely on services as they have a stable IP address. We have already seen this in the section about Services. Yet, each pod has also an individual DNS (Domain Name System). A DNS translates a domain names to an IP address, just one lookes up a number in a telephone book, so it’s much easier to reference to a resource online. This is where service Discovery enters the game.</p>
 <div class="figure">
 <img src="images/04-Kubernetes/service-discovery.png" alt="" />
 <p class="caption">Service Discovery</p>
 </div>
 <p>Whenever a service is created, it is registered in the service registry with the service name and the service IP. Most clusters use CoreDNS as a service registry (this would be the telephone book itself). When having a look at the minikube cluster one should see are <em>core-dns</em> service running. Now you know what it is for. Having a closer look using <code>kubectl describe svc &lt;name&gt;</code>, the core-dns service has only one endpoint. If you want to have an even closer look, you can dive into a pod itself and check the file /etc/resolv.conf. There you find a nameserver <IP> where the IP is the one of the core-dns.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="services-networking.html#cb42-1"></a><span class="co"># when querying services, it necessary </span></span>
-<span id="cb42-2"><a href="services-networking.html#cb42-2"></a><span class="co"># to specify the corresponding namespace</span></span>
-<span id="cb42-3"><a href="services-networking.html#cb42-3"></a><span class="ex">kubectl</span> get service -n kube-system</span>
-<span id="cb42-4"><a href="services-networking.html#cb42-4"></a></span>
-<span id="cb42-5"><a href="services-networking.html#cb42-5"></a><span class="co"># command for queriying the dns  </span></span>
-<span id="cb42-6"><a href="services-networking.html#cb42-6"></a><span class="ex">nslookup</span> <span class="op">&lt;</span>podname<span class="op">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb57-1"><a href="services-networking.html#cb57-1"></a><span class="co"># when querying services, it necessary </span></span>
+<span id="cb57-2"><a href="services-networking.html#cb57-2"></a><span class="co"># to specify the corresponding namespace</span></span>
+<span id="cb57-3"><a href="services-networking.html#cb57-3"></a><span class="ex">kubectl</span> get service -n kube-system</span>
+<span id="cb57-4"><a href="services-networking.html#cb57-4"></a></span>
+<span id="cb57-5"><a href="services-networking.html#cb57-5"></a><span class="co"># command for queriying the dns  </span></span>
+<span id="cb57-6"><a href="services-networking.html#cb57-6"></a><span class="ex">nslookup</span> <span class="op">&lt;</span>podname<span class="op">&gt;</span></span></code></pre></div>
 <div id="kube-proxy-1" class="section level4 hasAnchor">
-<h4><span class="header-section-number">2.3.2.1</span> kube-proxy<a href="services-networking.html#kube-proxy-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<h4><span class="header-section-number">4.3.2.1</span> kube-proxy<a href="services-networking.html#kube-proxy-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>As mentioned earlier, each node has three main components: Kubelet, Container Runtime, and the Kube-Proxy. <em>Kube-Proxy</em> is a network proxy running on each node and is responsible for internal network communications as well as external.</p>
 <p>It also implements a controller that watches the API server for new services and endpoints. Whenever there is a new service or endpoint, the kube-proxy creates a local IPVS rule (IP Virtual Server) that tells the node to intercept traffic destined to the ClusterIP Service. IPVS is built on top of the network filter and implements a transport-layer load balancing. This gives the ability to load balance to real service as well as redirecting traffic to pods that match service label selectors.</p>
 <p>This means, kube-proxy is intercepting all the requests and makes sure that when a request to the ClusterIP service is sent using endpoints, the request is forwarded to the healthy pods behind the endpoint.</p>
@@ -462,7 +480,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/04.3-Kubernetes-Services_and_Networking.md",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/05.3-Kubernetes-Services_and_Networking.md",
 "text": "Edit"
 },
 "history": {

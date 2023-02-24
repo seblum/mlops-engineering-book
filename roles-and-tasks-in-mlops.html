@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.2 MLFflow Architecture | MLOps Engineering</title>
+  <title>1.3 Roles and Tasks in MLOps | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.2 MLFflow Architecture | MLOps Engineering" />
+  <meta property="og:title" content="1.3 Roles and Tasks in MLOps | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.2 MLFflow Architecture | MLOps Engineering" />
+  <meta name="twitter:title" content="1.3 Roles and Tasks in MLOps | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="fundamental-components.html"/>
-<link rel="next" href="kubernetes.html"/>
+<link rel="prev" href="machine-learning-operations-mlops.html"/>
+<link rel="next" href="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -275,41 +275,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="mlfflow-architecture" class="section level2 hasAnchor">
-<h2><span class="header-section-number">3.2</span> MLFflow Architecture<a href="mlfflow-architecture.html#mlfflow-architecture" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>While MLflow can be run locally for your personal model implementation, it is usually deployed on a distributed architecture for large organizations or teams. The MLflow backend consists of three different main components, <em>Tracking Server</em>, <em>Backend Store</em>, and <em>Artifact Store</em>, all of which can reside on remote hosts.</p>
-<p>The MLflow client can interface with a variety of backend and artifact storage configurations. The official <a href="https://mlflow.org/docs/latest/tracking.html#how-runs-and-artifacts-are-recorded">MLflow documentation</a> outlines several detailed configurations. The example below depicts the main interaction between the different architectural components of a remote MLflow Tracking Server, a Postgres database for backend storage, and an S3 bucket for artifact storage.</p>
+<div id="roles-and-tasks-in-mlops" class="section level2 hasAnchor">
+<h2><span class="header-section-number">1.3</span> Roles and Tasks in MLOps<a href="roles-and-tasks-in-mlops.html#roles-and-tasks-in-mlops" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The MLOps lifecycle typically involves several key roles and responsibilities, each with their own specific tasks and objectives.</p>
 <div class="figure">
-<img src="images/06-MLFlow/MLflow_architecture_diagram.png" alt="" />
-<p class="caption">MLflow Architecture Diagram</p>
+<img src="images/01-Introduction/mlops-roles-and-tasks.svg" alt="" />
+<p class="caption">Roles and their operating areas within the MLOps lifecycle</p>
 </div>
-<div id="mlflow-tracking-server" class="section level3 hasAnchor">
-<h3><span class="header-section-number">3.2.1</span> MLflow Tracking Server<a href="mlfflow-architecture.html#mlflow-tracking-server" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The MLflow <em>Tracking Server</em> is the main component that handles the communication between the REST API to log parameters, metrics, experiments and metadata to a storage solution. The server uses both, the backend store and the artifact store to store and read data from.
-Although it is possible to track parameters without running a server (e.g. locally), it is recommended to create a MLflow tracking server to log your data to. Some of the functionality of the API is also available via the web interface, for example to create an experiment. Further, the Tracking web user interface allows to view runs easily in the web browser.</p>
-<p>Running the CLI command <code>mlflow ui</code> starts a web server on your local machine serving the MLFlow UI. Alternatively, a remote <a href="https://mlflow.org/docs/latest/tracking.html#tracking-server">MLflow tracking server</a> serves the same UI which can be accessed using the server’s URL <code>http://&lt;TRACKING-SERVER-IP-ADDRESS&gt;:5000</code> from any machine that can connect to the tracking server.</p>
+<div id="data-engineer" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.3.1</span> Data Engineer<a href="roles-and-tasks-in-mlops.html#data-engineer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A Data Engineer designs, builds, maintains, and troubleshoots the infrastructure and systems that support the collection, storage, processing, and analysis of large and complex data sets. Tasks include designing and building data pipelines, managing data storage, optimizing data processing, ensuring data quality, and monitoring the necessary data pipelines and systems. They usually work closely with Data Scientists to understand their data needs and ensure the infrastructure supports their requirements.</p>
 </div>
-<div id="mlflow-backend-store" class="section level3 hasAnchor">
-<h3><span class="header-section-number">3.2.2</span> MLflow Backend Store<a href="mlfflow-architecture.html#mlflow-backend-store" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The MLflow <em>Backend Store</em> is where MLflow stores experiment and run data like parameters, and metrics. It is usually a relational database which means that all metadata will be stored, but no large data files.</p>
-<p>MLflow supports two types of backend stores: <em>file store</em> and <em>database-backed store</em>. By default, the backend store is set to the local file store backend at the <code>./mlruns</code> directory. A database-backed store must be configures using the <code>--backend-store-uri</code>. MLflow supports encoded Databases like <em>mysql</em>, <em>mssql</em>, <em>sqlite</em>, and <em>postgresql</em>, and it is possible to use a variety of externally hosted metadata stores like Azure MySQL, or AWS RDS. To be able to use the <em>MLflow Model Registry</em> the server must use a database-backed store.</p>
+<div id="data-scientist" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.3.2</span> Data Scientist<a href="roles-and-tasks-in-mlops.html#data-scientist" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Data Scientists are usually responsible for developing and testing machine learning models within the development stage. Their work typically involves investigating large amounts of data, the necessary preprocessing steps, and choosing a suitable machine learning algorithm that solves the business need. They also develop a functioning ML model respective to the data.</p>
 </div>
-<div id="mlflow-artifact-store" class="section level3 hasAnchor">
-<h3><span class="header-section-number">3.2.3</span> MLflow Artifact Store<a href="mlfflow-architecture.html#mlflow-artifact-store" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In addition to the Backend Store the <em>Artifact Store</em> is another storage place for the MLflow tracking server. It is the location to store large data of an ML run that are not suitable for the Backend Store or a relational database respectively. This is where MLflow users log their artifact outputs, or data and image files to. The user can access these artifacts via HTTP requests to the MLflow Tracking Server.</p>
-<p>The location to the server’s artifact store defaults to local <code>./mlruns</code> directory. It is possible to specify another artifact store server using <code>--default-artifact-root</code>. The MLflow client caches the artifact location information on a per-run basis. It is therefore not recommended to alter a run’s artifact location before it has terminated.</p>
-<p>The <em>Artifact Store</em> needs to be configured when running MLflow on a distributed system. In addition to local file paths, MLflow supports to configure the following cloud storage resources as an artifact stores: Amazon S3, Azure Blob Storage, Google Cloud Storage, SFTP server, and NFS.</p>
+<div id="ml-engineer" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.3.3</span> ML Engineer<a href="roles-and-tasks-in-mlops.html#ml-engineer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Machine Learning (ML) Engineers work closely with Data Scientists to develop and deploy machine learning models in a production environment. They are responsible for creating and maintaining the infrastructure and tools needed to run machine learning models at scale and in production. They are also responsible for the day-to-day management and monitoring of machine learning models in a production environment. They use tools and technologies to track model performance and make sure that models are running smoothly and produce accurate results. This also includes taking measures in case of data or model shifts<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+</div>
+<div id="mlops-engineer" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.3.4</span> MLOps Engineer<a href="roles-and-tasks-in-mlops.html#mlops-engineer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The MLOps Engineer is responsible to create and maintain the infrastructure and tooling needed to train and deploy models, to monitor the performance of deployed models. They also implement processes for collaboration and version control. Overall, this includes tasks such as setting up and configuring the necessary hardware and software environments, creating and maintaining documentation, and implementing automated testing and deployment processes. An MLOps Engineer must be able to navigate this complexity and ensure that the models are deployed and managed in a way that is both efficient and effective.</p>
+</div>
+<div id="devops-engineer" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.3.5</span> DevOps Engineer<a href="roles-and-tasks-in-mlops.html#devops-engineer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>DevOps Engineers are responsible for automating and streamlining the process of building, testing, and deploying software. They use best practices from software development and operations, such as version control, continuous integration and delivery (CI/CD), and monitoring and observability, to ensure that the software is performing as expected in production.</p>
+</div>
+<div id="additional-roles-function" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.3.6</span> Additional roles &amp; function<a href="roles-and-tasks-in-mlops.html#additional-roles-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The previous roles only show a small portion of all contributors within data projects. Additional roles within an industry context might also include <em>Model Governance</em>, which is responsible to ensure that models are accurate, reliable, and compliant with relevant regulations and standards, or <em>Business Stakeholders</em> who provide feedback and requirements for the models in a business context.</p>
+<p>It’s also worth noting that some of these roles may overlap and different organizations may have different ways of structuring their teams and responsibilities. The most important thing is to have clear communication and collaboration between all the different teams, roles, and stakeholders involved in the MLOps lifecycle.</p>
 
 </div>
 </div>
-<!-- </div> -->
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Model shift refers to the change of a deployed model compared to the model developed in a previous stage, while data shift refers to a change in the distribution of input data compared to the data used during development and testing.<a href="roles-and-tasks-in-mlops.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="fundamental-components.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="kubernetes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="machine-learning-operations-mlops.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -340,7 +352,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/04.2-MlFlow-Architecture.Rmd",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/01.3-Introduction-Roles_and_Tasks.Rmd",
 "text": "Edit"
 },
 "history": {

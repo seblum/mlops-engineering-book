@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.2 MLFflow Architecture | MLOps Engineering</title>
+  <title>1.1 Machine Learning Workflow | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.2 MLFflow Architecture | MLOps Engineering" />
+  <meta property="og:title" content="1.1 Machine Learning Workflow | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.2 MLFflow Architecture | MLOps Engineering" />
+  <meta name="twitter:title" content="1.1 Machine Learning Workflow | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="fundamental-components.html"/>
-<link rel="next" href="kubernetes.html"/>
+<link rel="prev" href="introduction.html"/>
+<link rel="next" href="machine-learning-operations-mlops.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -275,41 +275,67 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="mlfflow-architecture" class="section level2 hasAnchor">
-<h2><span class="header-section-number">3.2</span> MLFflow Architecture<a href="mlfflow-architecture.html#mlfflow-architecture" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>While MLflow can be run locally for your personal model implementation, it is usually deployed on a distributed architecture for large organizations or teams. The MLflow backend consists of three different main components, <em>Tracking Server</em>, <em>Backend Store</em>, and <em>Artifact Store</em>, all of which can reside on remote hosts.</p>
-<p>The MLflow client can interface with a variety of backend and artifact storage configurations. The official <a href="https://mlflow.org/docs/latest/tracking.html#how-runs-and-artifacts-are-recorded">MLflow documentation</a> outlines several detailed configurations. The example below depicts the main interaction between the different architectural components of a remote MLflow Tracking Server, a Postgres database for backend storage, and an S3 bucket for artifact storage.</p>
+<div id="machine-learning-workflow" class="section level2 hasAnchor">
+<h2><span class="header-section-number">1.1</span> Machine Learning Workflow<a href="machine-learning-workflow.html#machine-learning-workflow" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A machine learning workflow typically involves several stages. These stages are closely related and sometimes overlap as some stages may involve multiple iterations. In the following, the machine learning workflow is broken down to five different stages to make things easier, and give an overview.</p>
 <div class="figure">
-<img src="images/06-MLFlow/MLflow_architecture_diagram.png" alt="" />
-<p class="caption">MLflow Architecture Diagram</p>
+<img src="images/01-Introduction/ml-lifecycle.svg" alt="" />
+<p class="caption">Bild nicht gefunden: images/01-Introduction/machine-learning-workflow.png</p>
 </div>
-<div id="mlflow-tracking-server" class="section level3 hasAnchor">
-<h3><span class="header-section-number">3.2.1</span> MLflow Tracking Server<a href="mlfflow-architecture.html#mlflow-tracking-server" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The MLflow <em>Tracking Server</em> is the main component that handles the communication between the REST API to log parameters, metrics, experiments and metadata to a storage solution. The server uses both, the backend store and the artifact store to store and read data from.
-Although it is possible to track parameters without running a server (e.g. locally), it is recommended to create a MLflow tracking server to log your data to. Some of the functionality of the API is also available via the web interface, for example to create an experiment. Further, the Tracking web user interface allows to view runs easily in the web browser.</p>
-<p>Running the CLI command <code>mlflow ui</code> starts a web server on your local machine serving the MLFlow UI. Alternatively, a remote <a href="https://mlflow.org/docs/latest/tracking.html#tracking-server">MLflow tracking server</a> serves the same UI which can be accessed using the server’s URL <code>http://&lt;TRACKING-SERVER-IP-ADDRESS&gt;:5000</code> from any machine that can connect to the tracking server.</p>
+<p><strong>1. Data Preparation</strong>
+In the first stage, data used to train a machine learning model is collected, cleaned, and preprocessed. Preprocessing includes tasks to remove missing or duplicate data, normalize data, and split data into a training and testing set.</p>
+<p><strong>2. Model Building</strong>
+In the second stage, a machine learning model is selected and trained using the prepared data. This includes tasks such as selecting an appropriate algorithm as a machine learning model, training the model, and tuning the model’s parameters to improve its performance.</p>
+<p><strong>3. Model Evaluation</strong>
+Afterward, the performance of the trained model is evaluated using the test data set. This includes tasks such as measuring the accuracy and other performance metrics, comparing the performance of different models, and identifying potential issues with the model.</p>
+<p><strong>4. Model Deployment</strong>
+Finally, the selected and optimized model is deployed to a production environment where it can be used to make predictions on new data. This stage includes tasks like scaling the model to handle large amounts of data, and deploying the model to different environments to be used in different contexts</p>
+<p><strong>5. Model Monitoring and Maintenance</strong>
+It is important to monitor the model performance and update the model as needed, once the model is deployed. This includes tasks such as collecting feedback from the model, monitoring the model’s performance metrics, and updating the model as necessary.</p>
+<p>Each stage is often handled by the same tool or platform which makes a clear differentiation across stages and tools fairly difficult. Further, some machine learning workflows will not have all the steps, or they might have some variations. A machine learning workflow is thereby not a walk in the park and the actual model code is just a small piece of the work.</p>
+<div class="figure">
+<img src="images/01-Introduction/ml-sculley.svg" alt="" />
+<p class="caption">Only a small fraction of real-world ML systems is composed of the ML code, as shown by the small black box in the middle. The required surrounding infrastructure is vast and complex. (D. Sculley, et al., 2015)</p>
 </div>
-<div id="mlflow-backend-store" class="section level3 hasAnchor">
-<h3><span class="header-section-number">3.2.2</span> MLflow Backend Store<a href="mlfflow-architecture.html#mlflow-backend-store" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The MLflow <em>Backend Store</em> is where MLflow stores experiment and run data like parameters, and metrics. It is usually a relational database which means that all metadata will be stored, but no large data files.</p>
-<p>MLflow supports two types of backend stores: <em>file store</em> and <em>database-backed store</em>. By default, the backend store is set to the local file store backend at the <code>./mlruns</code> directory. A database-backed store must be configures using the <code>--backend-store-uri</code>. MLflow supports encoded Databases like <em>mysql</em>, <em>mssql</em>, <em>sqlite</em>, and <em>postgresql</em>, and it is possible to use a variety of externally hosted metadata stores like Azure MySQL, or AWS RDS. To be able to use the <em>MLflow Model Registry</em> the server must use a database-backed store.</p>
+<p>Working with and developing machine learning models, monitoring their performance, and continuously retraining it on new data with possible alternative models can be challenging and involves the right tools.</p>
+<div id="ml-worflow-tools" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.1.1</span> ML Worflow Tools<a href="machine-learning-workflow.html#ml-worflow-tools" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are several machine learning workflow tools that can help streamline the process of building and deploying machine learning models. By Integrating them into the machine learning workflow there can be three main processes and functionalities of tools derived: (1) <em>Workflow Management</em>, (2) <em>Model Tracking</em>, and (3) <em>Model Serving</em>. All three of these processes are closely related to each other and are often handled by the same tool or platform.</p>
+<div id="workflow-management" class="section level4 hasAnchor">
+<h4><span class="header-section-number">1.1.1.1</span> Workflow Management<a href="machine-learning-workflow.html#workflow-management" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Workflow Management is the process of automating and streamlining the stages involved in building, training, and deploying machine learning models. This includes tasks such as data preprocessing, model training, and model deployment. Workflow management tools allow for the coordination of all the necessary stages in the machine learning pipeline, and the tracking of the pipeline’s progress.</p>
+<p><em>Apache Airflow</em> is an open-source platform for workflow management and is widely used to handle ETL-processes of data, or automate the training and deployment of machine learning models.</p>
 </div>
-<div id="mlflow-artifact-store" class="section level3 hasAnchor">
-<h3><span class="header-section-number">3.2.3</span> MLflow Artifact Store<a href="mlfflow-architecture.html#mlflow-artifact-store" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In addition to the Backend Store the <em>Artifact Store</em> is another storage place for the MLflow tracking server. It is the location to store large data of an ML run that are not suitable for the Backend Store or a relational database respectively. This is where MLflow users log their artifact outputs, or data and image files to. The user can access these artifacts via HTTP requests to the MLflow Tracking Server.</p>
-<p>The location to the server’s artifact store defaults to local <code>./mlruns</code> directory. It is possible to specify another artifact store server using <code>--default-artifact-root</code>. The MLflow client caches the artifact location information on a per-run basis. It is therefore not recommended to alter a run’s artifact location before it has terminated.</p>
-<p>The <em>Artifact Store</em> needs to be configured when running MLflow on a distributed system. In addition to local file paths, MLflow supports to configure the following cloud storage resources as an artifact stores: Amazon S3, Azure Blob Storage, Google Cloud Storage, SFTP server, and NFS.</p>
+<div id="model-tracking" class="section level4 hasAnchor">
+<h4><span class="header-section-number">1.1.1.2</span> Model Tracking<a href="machine-learning-workflow.html#model-tracking" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Model Tracking is the process of keeping track of different versions of a machine learning model, including their performance, and the parameters and data used to train it.
+Model Tracking tools are often used at the development and testing stages of the machine learning workflow. During development, tracking allows to keep track of the different versions of a model, compare their performance and learning parameters, and finally help to select the best version of the model to deploy. Model tracking also allows to check the performance of a machine learning model during testing, and to assure it meets industry requirements.</p>
+<p><em>MLflow</em> is an open-source platform to manage the machine learning lifecycle, including experiment tracking, reproducibility, and deployment. Similarly, <em>DVC</em> (Data Version Control) is a tool that allows to version control, manage, and track not only models but also data.</p>
+</div>
+<div id="model-serving" class="section level4 hasAnchor">
+<h4><span class="header-section-number">1.1.1.3</span> Model Serving<a href="machine-learning-workflow.html#model-serving" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Model Serving refers to the process of deploying a machine learning model in a production environment, so it can be used to make predictions on new data. This includes tasks such as scaling the model to handle large amounts of data, deploying the model to different environments, and monitoring the performance of the deployed model. Model serving tools are specifically used at the deployment stage of the machine learning workflow and can handle the necessary tasks mentioned beforehand.</p>
+<p>There are multiple tools that integrate the funtionality of serving models, each different in its specific use cases, for example <em>TensorFlow</em>, <em>Kubernetes</em>, <em>DataRobot</em>, or also the already mentioned tools <em>MLflow</em> and <em>Airflow</em>.</p>
+</div>
+</div>
+<div id="developing-machine-learning-models" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.1.2</span> Developing Machine Learning Models<a href="machine-learning-workflow.html#developing-machine-learning-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In the development phase of a machine learning model, many stages of the machine learning workflow are carried out manually. For instance, testing machine learning code is often done in a notebook or script, rather than through an automated pipeline. Similarly, deploying the model is typically a manual process, and only involves serving the model for inference, rather than deploying an entire machine learning system.</p>
+<p>This manual deployment process can result in infrequent deployments and the management of only a few models that do not change frequently. Additionally, the deployment process is usually not handled by Data Scientists but is instead managed by an operations team. This can create a disconnection between the development and production stages, and once deployed, there is typically no monitoring of the model’s performance, meaning no feedback loop is established for retraining.</p>
+<p>Performing stages manually and managing models in production at scale can become exponentially more challenging. To overcome these issues, it is recommended to adopt a unifying framework for production, known as MLOps. This framework will shift the focus from managing existing models to developing new ones, making the process more efficient and effective.</p>
+<!---
+Relate to tools
+-->
 
 </div>
 </div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="fundamental-components.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="kubernetes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="machine-learning-operations-mlops.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -340,7 +366,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/04.2-MlFlow-Architecture.Rmd",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/01.1-Introduction-Machine_Learning_Workflow.Rmd",
 "text": "Edit"
 },
 "history": {
