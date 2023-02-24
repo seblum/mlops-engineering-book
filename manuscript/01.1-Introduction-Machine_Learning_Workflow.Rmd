@@ -2,6 +2,8 @@
 
 A machine learning workflow typically involves several stages. These stages are closely related and sometimes overlap as some stages may involve multiple iterations. In the following, the machine learning workflow is broken down to five different stages to make things easier, and give an overview.
 
+![Bild nicht gefunden: images/01-Introduction/machine-learning-workflow.png](images/01-Introduction/ml-lifecycle.svg)
+
 **1. Data Preparation**
 In the first stage, data used to train a machine learning model is collected, cleaned, and preprocessed. Preprocessing includes tasks to remove missing or duplicate data, normalize data, and split data into a training and testing set.
     
@@ -17,7 +19,11 @@ Finally, the selected and optimized model is deployed to a production environmen
 **5. Model Monitoring and Maintenance**
 It is important to monitor the model performance and update the model as needed, once the model is deployed. This includes tasks such as collecting feedback from the model, monitoring the model's performance metrics, and updating the model as necessary.
 
-Each stage is often handled by the same tool or platform which makes a clear differentiation across stages and tools fairly difficult. Further, some machine learning workflows will not have all the steps, or they might have some variations. A machine learning workflow is thereby not a walk in the park. Working and developing machine learning models, monitoring their performance, and continuously retraining it on new data with possible alternative models can be challenging and involves the right tools.
+Each stage is often handled by the same tool or platform which makes a clear differentiation across stages and tools fairly difficult. Further, some machine learning workflows will not have all the steps, or they might have some variations. A machine learning workflow is thereby not a walk in the park and the actual model code is just a small piece of the work. 
+
+![Only a small fraction of real-world ML systems is composed of the ML code, as shown by the small black box in the middle. The required surrounding infrastructure is vast and complex. (D. Sculley, et al., 2015)](images/01-Introduction/ml-sculley.svg)
+
+Working with and developing machine learning models, monitoring their performance, and continuously retraining it on new data with possible alternative models can be challenging and involves the right tools.
 
 
 ### ML Worflow Tools
@@ -41,4 +47,17 @@ Model Tracking tools are often used at the development and testing stages of the
 
 Model Serving refers to the process of deploying a machine learning model in a production environment, so it can be used to make predictions on new data. This includes tasks such as scaling the model to handle large amounts of data, deploying the model to different environments, and monitoring the performance of the deployed model. Model serving tools are specifically used at the deployment stage of the machine learning workflow and can handle the necessary tasks mentioned beforehand.
 
-There are multiple tools that integrate the funtionality of serving models, each different in its specific use cases, for example *TensorFlow*, *Kubernetes*, *DataRobot*, or also the already mentioned tools *MLflow* and *Airflow*
+There are multiple tools that integrate the funtionality of serving models, each different in its specific use cases, for example *TensorFlow*, *Kubernetes*, *DataRobot*, or also the already mentioned tools *MLflow* and *Airflow*.
+
+
+### Developing Machine Learning Models
+
+In the development phase of a machine learning model, many stages of the machine learning workflow are carried out manually. For instance, testing machine learning code is often done in a notebook or script, rather than through an automated pipeline. Similarly, deploying the model is typically a manual process, and only involves serving the model for inference, rather than deploying an entire machine learning system.
+
+This manual deployment process can result in infrequent deployments and the management of only a few models that do not change frequently. Additionally, the deployment process is usually not handled by Data Scientists but is instead managed by an operations team. This can create a disconnection between the development and production stages, and once deployed, there is typically no monitoring of the model's performance, meaning no feedback loop is established for retraining.
+
+Performing stages manually and managing models in production at scale can become exponentially more challenging. To overcome these issues, it is recommended to adopt a unifying framework for production, known as MLOps. This framework will shift the focus from managing existing models to developing new ones, making the process more efficient and effective.
+
+<!---
+Relate to tools
+-->

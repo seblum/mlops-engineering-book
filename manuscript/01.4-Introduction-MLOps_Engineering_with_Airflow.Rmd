@@ -1,9 +1,13 @@
 ## MLOps Engineering with Airflow and MLflow on Kubernetes
 
-This work shows an example of an MLOps plattform by using Airflow and MLflow for the managment during the machine learning lifecycle. Both tools will be deployed on a Kubernetes cluster using Terraform by using best practices like CI/CD and automation. The project will focus on the part of MLOps engineering since the full infrastructure will be set up from scratch. However, it will also introduce the work done by Data & Machine Learning Scientist since basic machine learning models will be implemented and run on the plattform.
+MLOps platforms can be set up in various ways to apply MLOps practices to the machine learning workflow.
+(1) SaaS tools provide an integrated development and management experience, with an aim to offer an end-to-end process. (2) Custom-made platforms offer high flexibility and can be tailored to specific needs. However, integrating multiple different services requires significant engineering effort. (3) Many cloud providers offer a mix of SaaS and custom-tailored platforms, providing a relatively well-integrated experience while remaining open enough to integrate other services.
+
+This work presents an example of an MLOps platform using Airflow and MLflow for management during the machine learning lifecycle. Both tools will be deployed on a Kubernetes cluster using Terraform, incorporating best practices such as CI/CD and automation. This project involves building a custom-tailored MLOps platform focused on MLOps engineering, as the entire infrastructure will be set up from scratch. However, it will also incorporate the work done by data and machine learning scientists since basic machine learning models will be implemented and run on the platform.
+
 Henceforth, the following chapters give an introductory tutorial on each of the previously introduced tools. A machine learning workflow using Airflow is set up on the deployed infrastructure, including data preprocessing, model training, and model deployment, as well as tracking the experiment and deploying the model into production using MLFlow. 
 
-![Architecture Overview](images/01-Introduction/architecture-overview.png)
+![Architecture Overview](images/01-Introduction/airflow-on-eks-basic.drawio.svg)
 
 The necessary AWS infrastructure is set up using Terraform. This includes creating an AWS EKS cluster and the associated ressources like a virtual private cloud (VPC), subnets, security groups, IAM roles, as well as further AWS ressources needed to deploy Airflow and MLflow.
 Once the EKS cluster is set up, Kubernetes can be used to deploy and manage applications on the cluster. Helm, a package manager for Kubernetes, is used to manage the deployment of Airflow and MLflow. The EKS cluster allows for easy scalability and management of the platforms. The code is made public on a Github repository and Github Actions is used for automating the deployment of the infrastructure using CI/CD principles. 

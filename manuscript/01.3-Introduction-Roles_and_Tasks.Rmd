@@ -2,6 +2,8 @@
 
 The MLOps lifecycle typically involves several key roles and responsibilities, each with their own specific tasks and objectives.
 
+![Roles and their operating areas within the MLOps lifecycle](images/01-Introduction/mlops-roles-and-tasks.svg)
+
 ### Data Engineer
 
 A Data Engineer designs, builds, maintains, and troubleshoots the infrastructure and systems that support the collection, storage, processing, and analysis of large and complex data sets. Tasks include designing and building data pipelines, managing data storage, optimizing data processing, ensuring data quality, and monitoring the necessary data pipelines and systems. They usually work closely with Data Scientists to understand their data needs and ensure the infrastructure supports their requirements.
