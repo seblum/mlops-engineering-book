@@ -1,0 +1,34 @@
+## Roles and Tasks in MLOps
+
+The MLOps lifecycle typically involves several key roles and responsibilities, each with their own specific tasks and objectives.
+
+![Roles and their operating areas within the MLOps lifecycle](images/01-Introduction/mlops-roles-and-tasks.svg)
+
+### Data Engineer
+
+A Data Engineer designs, builds, maintains, and troubleshoots the infrastructure and systems that support the collection, storage, processing, and analysis of large and complex data sets. Tasks include designing and building data pipelines, managing data storage, optimizing data processing, ensuring data quality, and monitoring the necessary data pipelines and systems. They usually work closely with Data Scientists to understand their data needs and ensure the infrastructure supports their requirements.
+
+### Data Scientist
+
+Data Scientists are usually responsible for developing and testing machine learning models within the development stage. Their work typically involves investigating large amounts of data, the necessary preprocessing steps, and choosing a suitable machine learning algorithm that solves the business need. They also develop a functioning ML model respective to the data.
+    
+### ML Engineer
+
+Machine Learning (ML) Engineers work closely with Data Scientists to develop and deploy machine learning models in a production environment. They are responsible for creating and maintaining the infrastructure and tools needed to run machine learning models at scale and in production. They are also responsible for the day-to-day management and monitoring of machine learning models in a production environment. They use tools and technologies to track model performance and make sure that models are running smoothly and produce accurate results. This also includes taking measures in case of data or model shifts[^1].
+
+[^1]: Model shift refers to the change of a deployed model compared to the model developed in a previous stage, while data shift refers to a change in the distribution of input data compared to the data used during development and testing.
+    
+### MLOps Engineer
+
+The MLOps Engineer is responsible to create and maintain the infrastructure and tooling needed to train and deploy models, to monitor the performance of deployed models. They also implement processes for collaboration and version control. Overall, this includes tasks such as setting up and configuring the necessary hardware and software environments, creating and maintaining documentation, and implementing automated testing and deployment processes. An MLOps Engineer must be able to navigate this complexity and ensure that the models are deployed and managed in a way that is both efficient and effective.
+  
+### DevOps Engineer
+
+DevOps Engineers are responsible for automating and streamlining the process of building, testing, and deploying software. They use best practices from software development and operations, such as version control, continuous integration and delivery (CI/CD), and monitoring and observability, to ensure that the software is performing as expected in production. 
+    
+### Additional roles & function
+
+The previous roles only show a small portion of all contributors within data projects. Additional roles within an industry context might also include *Model Governance*, which is responsible to ensure that models are accurate, reliable, and compliant with relevant regulations and standards, or *Business Stakeholders* who provide feedback and requirements for the models in a business context.
+
+It's also worth noting that some of these roles may overlap and different organizations may have different ways of structuring their teams and responsibilities. The most important thing is to have clear communication and collaboration between all the different teams, roles, and stakeholders involved in the MLOps lifecycle.
+
