@@ -1,7 +1,7 @@
 
-## Core Concepts
+## Core Components
 
-The following section will explain the core concepts and building blocks of Terraform. This will enable you to build your very first Terraform definition files.
+The following section will explain the core components and building blocks of Terraform. This will enable you to build your very first Terraform definition files.
 
 ### Providers
 

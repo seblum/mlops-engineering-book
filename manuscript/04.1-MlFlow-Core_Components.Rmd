@@ -1,4 +1,4 @@
-## Fundamental Components
+## Core Components
 
 The four primary components of MLflow are shown in more detail and with exemplary code in the following sections.
 
