@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.2 Core Concepts | MLOps Engineering</title>
+  <title>5.2 Core Components | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
-  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.2 Core Concepts | MLOps Engineering" />
+  <meta property="og:title" content="5.2 Core Components | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.2 Core Concepts | MLOps Engineering" />
+  <meta name="twitter:title" content="5.2 Core Components | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-02-24" />
+<meta name="date" content="2023-03-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -137,9 +137,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">MLOps Engineering</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#a-work-in-progress"><i class="fa fa-check"></i>A work in progress</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html"><i class="fa fa-check"></i>Preamble</a><ul>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html#a-work-in-progress"><i class="fa fa-check"></i>A work in progress</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html"><i class="fa fa-check"></i><b>1.1</b> Machine Learning Workflow</a><ul>
@@ -160,16 +161,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><a href="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><i class="fa fa-check"></i><b>1.4</b> MLOps Engineering with Airflow and MLflow on Kubernetes</a></li>
+<li class="chapter" data-level="1.5" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>1.5</b> Ops Tools &amp; Principles</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#containerization"><i class="fa fa-check"></i><b>1.5.1</b> Containerization</a></li>
+<li class="chapter" data-level="1.5.2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#version-control"><i class="fa fa-check"></i><b>1.5.2</b> Version Control</a></li>
+<li class="chapter" data-level="1.5.3" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#cicd"><i class="fa fa-check"></i><b>1.5.3</b> CI/CD</a></li>
+<li class="chapter" data-level="1.5.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#infrastructure-as-code"><i class="fa fa-check"></i><b>1.5.4</b> Infrastructure as code</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>2</b> Airflow</a><ul>
 <li class="chapter" data-level="" data-path="airflow.html"><a href="airflow.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="2.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html"><i class="fa fa-check"></i><b>2.1</b> Fundamental concepts</a><ul>
-<li class="chapter" data-level="2.1.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#dags"><i class="fa fa-check"></i><b>2.1.1</b> DAGs</a></li>
-<li class="chapter" data-level="2.1.2" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#operators"><i class="fa fa-check"></i><b>2.1.2</b> Operators</a></li>
-<li class="chapter" data-level="2.1.3" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#tasks"><i class="fa fa-check"></i><b>2.1.3</b> Tasks</a></li>
-<li class="chapter" data-level="2.1.4" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#xcom"><i class="fa fa-check"></i><b>2.1.4</b> XCom</a></li>
-<li class="chapter" data-level="2.1.5" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#scheduling"><i class="fa fa-check"></i><b>2.1.5</b> Scheduling</a></li>
-<li class="chapter" data-level="2.1.6" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#taskflow"><i class="fa fa-check"></i><b>2.1.6</b> Taskflow</a></li>
+<li class="chapter" data-level="2.1" data-path="core-components.html"><a href="core-components.html"><i class="fa fa-check"></i><b>2.1</b> Core Components</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="core-components.html"><a href="core-components.html#dags"><i class="fa fa-check"></i><b>2.1.1</b> DAGs</a></li>
+<li class="chapter" data-level="2.1.2" data-path="core-components.html"><a href="core-components.html#operators"><i class="fa fa-check"></i><b>2.1.2</b> Operators</a></li>
+<li class="chapter" data-level="2.1.3" data-path="core-components.html"><a href="core-components.html#tasks"><i class="fa fa-check"></i><b>2.1.3</b> Tasks</a></li>
+<li class="chapter" data-level="2.1.4" data-path="core-components.html"><a href="core-components.html#xcom"><i class="fa fa-check"></i><b>2.1.4</b> XCom</a></li>
+<li class="chapter" data-level="2.1.5" data-path="core-components.html"><a href="core-components.html#scheduling"><i class="fa fa-check"></i><b>2.1.5</b> Scheduling</a></li>
+<li class="chapter" data-level="2.1.6" data-path="core-components.html"><a href="core-components.html#taskflow"><i class="fa fa-check"></i><b>2.1.6</b> Taskflow</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>2.2</b> Exemplary ML workflow</a></li>
 <li class="chapter" data-level="2.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>2.3</b> Airflow infrastructure</a><ul>
@@ -183,11 +190,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>3</b> MLflow</a><ul>
 <li class="chapter" data-level="" data-path="mlflow.html"><a href="mlflow.html#prerequisites-1"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="3.1" data-path="fundamental-components.html"><a href="fundamental-components.html"><i class="fa fa-check"></i><b>3.1</b> Fundamental Components</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-tracking"><i class="fa fa-check"></i><b>3.1.1</b> MLflow Tracking</a></li>
-<li class="chapter" data-level="3.1.2" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-models"><i class="fa fa-check"></i><b>3.1.2</b> MLflow Models</a></li>
-<li class="chapter" data-level="3.1.3" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-model-registry"><i class="fa fa-check"></i><b>3.1.3</b> MLflow Model Registry</a></li>
-<li class="chapter" data-level="3.1.4" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-projects"><i class="fa fa-check"></i><b>3.1.4</b> MLflow Projects</a></li>
+<li class="chapter" data-level="3.1" data-path="core-components-1.html"><a href="core-components-1.html"><i class="fa fa-check"></i><b>3.1</b> Core Components</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-tracking"><i class="fa fa-check"></i><b>3.1.1</b> MLflow Tracking</a></li>
+<li class="chapter" data-level="3.1.2" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-models"><i class="fa fa-check"></i><b>3.1.2</b> MLflow Models</a></li>
+<li class="chapter" data-level="3.1.3" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-model-registry"><i class="fa fa-check"></i><b>3.1.3</b> MLflow Model Registry</a></li>
+<li class="chapter" data-level="3.1.4" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-projects"><i class="fa fa-check"></i><b>3.1.4</b> MLflow Projects</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html"><i class="fa fa-check"></i><b>3.2</b> MLFflow Architecture</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>3.2.1</b> MLflow Tracking Server</a></li>
@@ -197,10 +204,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>4</b> Kubernetes</a><ul>
 <li class="chapter" data-level="" data-path="kubernetes.html"><a href="kubernetes.html#prerequisites-2"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="4.1" data-path="core-concepts.html"><a href="core-concepts.html"><i class="fa fa-check"></i><b>4.1</b> Core Concepts</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="core-concepts.html"><a href="core-concepts.html#nodes"><i class="fa fa-check"></i><b>4.1.1</b> Nodes</a></li>
-<li class="chapter" data-level="4.1.2" data-path="core-concepts.html"><a href="core-concepts.html#pods"><i class="fa fa-check"></i><b>4.1.2</b> Pods</a></li>
-<li class="chapter" data-level="4.1.3" data-path="core-concepts.html"><a href="core-concepts.html#imperative-declarative-management"><i class="fa fa-check"></i><b>4.1.3</b> Imperative &amp; Declarative Management</a></li>
+<li class="chapter" data-level="4.1" data-path="core-components-2.html"><a href="core-components-2.html"><i class="fa fa-check"></i><b>4.1</b> Core Components</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="core-components-2.html"><a href="core-components-2.html#nodes"><i class="fa fa-check"></i><b>4.1.1</b> Nodes</a></li>
+<li class="chapter" data-level="4.1.2" data-path="core-components-2.html"><a href="core-components-2.html#pods"><i class="fa fa-check"></i><b>4.1.2</b> Pods</a></li>
+<li class="chapter" data-level="4.1.3" data-path="core-components-2.html"><a href="core-components-2.html#imperative-declarative-management"><i class="fa fa-check"></i><b>4.1.3</b> Imperative &amp; Declarative Management</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>4.2</b> Application Deployment &amp; Design</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>4.2.1</b> Deployments</a></li>
@@ -239,11 +246,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>5.1.4</b> terraform apply</a></li>
 <li class="chapter" data-level="5.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>5.1.5</b> terraform destroy</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html"><i class="fa fa-check"></i><b>5.2</b> Core Concepts</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html#providers"><i class="fa fa-check"></i><b>5.2.1</b> Providers</a></li>
-<li class="chapter" data-level="5.2.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html#resources"><i class="fa fa-check"></i><b>5.2.2</b> Resources</a></li>
-<li class="chapter" data-level="5.2.3" data-path="core-concepts-1.html"><a href="core-concepts-1.html#data-sources"><i class="fa fa-check"></i><b>5.2.3</b> Data Sources</a></li>
-<li class="chapter" data-level="5.2.4" data-path="core-concepts-1.html"><a href="core-concepts-1.html#state"><i class="fa fa-check"></i><b>5.2.4</b> State</a></li>
+<li class="chapter" data-level="5.2" data-path="core-components-3.html"><a href="core-components-3.html"><i class="fa fa-check"></i><b>5.2</b> Core Components</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="core-components-3.html"><a href="core-components-3.html#providers"><i class="fa fa-check"></i><b>5.2.1</b> Providers</a></li>
+<li class="chapter" data-level="5.2.2" data-path="core-components-3.html"><a href="core-components-3.html#resources"><i class="fa fa-check"></i><b>5.2.2</b> Resources</a></li>
+<li class="chapter" data-level="5.2.3" data-path="core-components-3.html"><a href="core-components-3.html#data-sources"><i class="fa fa-check"></i><b>5.2.3</b> Data Sources</a></li>
+<li class="chapter" data-level="5.2.4" data-path="core-components-3.html"><a href="core-components-3.html#state"><i class="fa fa-check"></i><b>5.2.4</b> State</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>5.3</b> Modules</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>5.3.1</b> Input Variables</a></li>
@@ -275,67 +282,67 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="core-concepts-1" class="section level2 hasAnchor">
-<h2><span class="header-section-number">5.2</span> Core Concepts<a href="core-concepts-1.html#core-concepts-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The following section will explain the core concepts and building blocks of Terraform. This will enable you to build your very first Terraform definition files.</p>
+<div id="core-components-3" class="section level2 hasAnchor">
+<h2><span class="header-section-number">5.2</span> Core Components<a href="core-components-3.html#core-components-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The following section will explain the core components and building blocks of Terraform. This will enable you to build your very first Terraform definition files.</p>
 <div id="providers" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.2.1</span> Providers<a href="core-concepts-1.html#providers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">5.2.1</span> Providers<a href="core-components-3.html#providers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Terraform relies on plugins called providers to interact with Cloud providers, SaaS providers, and other APIs. Each provider adds specific resource types and/or data sources that can be managed by Terraform. For example, the <code>aws</code> provider shown below allows to specify resources related to the AWS Cloud such as S3 Buckets or EC3 Instances.</p>
 <p>Depending on the provider it is necessary to supply it with specific parameters. The aws provier for example needs the <code>region</code> as well as username and password. If nothing is specified it will automatically pull these information from the <em>AWS CLI</em> and the credentials specified under the directory <code>.aws/config</code>. It is also a best practice to specify the version of the provider, as the providers are usually maintained and updated on a regular basis.</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb81-1"><a href="core-concepts-1.html#cb81-1"></a><span class="ex">provider</span> <span class="st">&quot;aws&quot;</span> {</span>
-<span id="cb81-2"><a href="core-concepts-1.html#cb81-2"></a>  <span class="ex">region</span> = <span class="st">&quot;us-east-1&quot;</span></span>
-<span id="cb81-3"><a href="core-concepts-1.html#cb81-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb82-1"><a href="core-components-3.html#cb82-1"></a><span class="ex">provider</span> <span class="st">&quot;aws&quot;</span> {</span>
+<span id="cb82-2"><a href="core-components-3.html#cb82-2"></a>  <span class="ex">region</span> = <span class="st">&quot;us-east-1&quot;</span></span>
+<span id="cb82-3"><a href="core-components-3.html#cb82-3"></a>}</span></code></pre></div>
 </div>
 <div id="resources" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.2.2</span> Resources<a href="core-concepts-1.html#resources" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">5.2.2</span> Resources<a href="core-components-3.html#resources" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A <em>resource</em> is the core building block when working with Terraform. It can be a <code>"local_file"</code> such as shown in the example above, or a cloud resource such as an <code>"aws_instance"</code> on aws. The resource type is followed by the custom name of the resource in Terraform. Resource definitions are usually specified in the <code>main.tf</code>file. Each customization and setting to a ressource is done within its resource specification. The style convention when writing Terraform code states that the resource name is named in lowercase as well as it should not repeat the resource type. An example can be seen below</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb82-1"><a href="core-concepts-1.html#cb82-1"></a><span class="co"># Ressource type: aws_instance</span></span>
-<span id="cb82-2"><a href="core-concepts-1.html#cb82-2"></a><span class="co"># Ressource name: my-instance</span></span>
-<span id="cb82-3"><a href="core-concepts-1.html#cb82-3"></a><span class="ex">resource</span> <span class="st">&quot;aws_instance&quot;</span> <span class="st">&quot;my-instance&quot;</span> {</span>
-<span id="cb82-4"><a href="core-concepts-1.html#cb82-4"></a>  <span class="co"># resource specification</span></span>
-<span id="cb82-5"><a href="core-concepts-1.html#cb82-5"></a>  <span class="ex">ami</span>           = <span class="st">&quot;ami-0ddbdea833a8d2f0d&quot;</span></span>
-<span id="cb82-6"><a href="core-concepts-1.html#cb82-6"></a>  <span class="ex">instance_type</span> = <span class="st">&quot;t2.micro&quot;</span></span>
-<span id="cb82-7"><a href="core-concepts-1.html#cb82-7"></a>  </span>
-<span id="cb82-8"><a href="core-concepts-1.html#cb82-8"></a>  <span class="ex">tags</span> = {</span>
-<span id="cb82-9"><a href="core-concepts-1.html#cb82-9"></a>    <span class="ex">Name</span> = <span class="st">&quot;my-instance&quot;</span></span>
-<span id="cb82-10"><a href="core-concepts-1.html#cb82-10"></a>    <span class="ex">ManagedBy</span> = <span class="st">&quot;Terraform&quot;</span></span>
-<span id="cb82-11"><a href="core-concepts-1.html#cb82-11"></a>  }</span>
-<span id="cb82-12"><a href="core-concepts-1.html#cb82-12"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb83-1"><a href="core-components-3.html#cb83-1"></a><span class="co"># Ressource type: aws_instance</span></span>
+<span id="cb83-2"><a href="core-components-3.html#cb83-2"></a><span class="co"># Ressource name: my-instance</span></span>
+<span id="cb83-3"><a href="core-components-3.html#cb83-3"></a><span class="ex">resource</span> <span class="st">&quot;aws_instance&quot;</span> <span class="st">&quot;my-instance&quot;</span> {</span>
+<span id="cb83-4"><a href="core-components-3.html#cb83-4"></a>  <span class="co"># resource specification</span></span>
+<span id="cb83-5"><a href="core-components-3.html#cb83-5"></a>  <span class="ex">ami</span>           = <span class="st">&quot;ami-0ddbdea833a8d2f0d&quot;</span></span>
+<span id="cb83-6"><a href="core-components-3.html#cb83-6"></a>  <span class="ex">instance_type</span> = <span class="st">&quot;t2.micro&quot;</span></span>
+<span id="cb83-7"><a href="core-components-3.html#cb83-7"></a>  </span>
+<span id="cb83-8"><a href="core-components-3.html#cb83-8"></a>  <span class="ex">tags</span> = {</span>
+<span id="cb83-9"><a href="core-components-3.html#cb83-9"></a>    <span class="ex">Name</span> = <span class="st">&quot;my-instance&quot;</span></span>
+<span id="cb83-10"><a href="core-components-3.html#cb83-10"></a>    <span class="ex">ManagedBy</span> = <span class="st">&quot;Terraform&quot;</span></span>
+<span id="cb83-11"><a href="core-components-3.html#cb83-11"></a>  }</span>
+<span id="cb83-12"><a href="core-components-3.html#cb83-12"></a>}</span></code></pre></div>
 </div>
 <div id="data-sources" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.2.3</span> Data Sources<a href="core-concepts-1.html#data-sources" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">5.2.3</span> Data Sources<a href="core-components-3.html#data-sources" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Data sources</em> in Terraform are “read-only” resources, meaning that it is possible to get information about existing data sources but not to create or change them. They are usually used to fetch parameters needed to create resources or generally for using parameters elsewhere in Terraform configuration.</p>
 <p>A typical example is shown below as the <code>"aws_ami"</code> data source available in the AWS provider. This data source is used to recover attributes from an existing AMI (Amazon Machine Image). The example creates a data source called <code>"ubuntu”</code> that queries the AMI registry and returns several attributes related to the located image.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb83-1"><a href="core-concepts-1.html#cb83-1"></a><span class="ex">data</span> <span class="st">&quot;aws_ami&quot;</span> <span class="st">&quot;ubuntu&quot;</span> {</span>
-<span id="cb83-2"><a href="core-concepts-1.html#cb83-2"></a>  <span class="ex">most_recent</span> = true</span>
-<span id="cb83-3"><a href="core-concepts-1.html#cb83-3"></a>  <span class="ex">filter</span> {</span>
-<span id="cb83-4"><a href="core-concepts-1.html#cb83-4"></a>    <span class="ex">name</span>   = <span class="st">&quot;name&quot;</span></span>
-<span id="cb83-5"><a href="core-concepts-1.html#cb83-5"></a>    <span class="ex">values</span> = [<span class="st">&quot;ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*&quot;</span>]</span>
-<span id="cb83-6"><a href="core-concepts-1.html#cb83-6"></a>  }</span>
-<span id="cb83-7"><a href="core-concepts-1.html#cb83-7"></a>  <span class="ex">filter</span> {</span>
-<span id="cb83-8"><a href="core-concepts-1.html#cb83-8"></a>    <span class="ex">name</span>   = <span class="st">&quot;virtualization-type&quot;</span></span>
-<span id="cb83-9"><a href="core-concepts-1.html#cb83-9"></a>    <span class="ex">values</span> = [<span class="st">&quot;hvm&quot;</span>]</span>
-<span id="cb83-10"><a href="core-concepts-1.html#cb83-10"></a>  }</span>
-<span id="cb83-11"><a href="core-concepts-1.html#cb83-11"></a>  <span class="ex">owners</span> = [<span class="st">&quot;099720109477&quot;</span>] <span class="co"># Canonical</span></span>
-<span id="cb83-12"><a href="core-concepts-1.html#cb83-12"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb84-1"><a href="core-components-3.html#cb84-1"></a><span class="ex">data</span> <span class="st">&quot;aws_ami&quot;</span> <span class="st">&quot;ubuntu&quot;</span> {</span>
+<span id="cb84-2"><a href="core-components-3.html#cb84-2"></a>  <span class="ex">most_recent</span> = true</span>
+<span id="cb84-3"><a href="core-components-3.html#cb84-3"></a>  <span class="ex">filter</span> {</span>
+<span id="cb84-4"><a href="core-components-3.html#cb84-4"></a>    <span class="ex">name</span>   = <span class="st">&quot;name&quot;</span></span>
+<span id="cb84-5"><a href="core-components-3.html#cb84-5"></a>    <span class="ex">values</span> = [<span class="st">&quot;ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*&quot;</span>]</span>
+<span id="cb84-6"><a href="core-components-3.html#cb84-6"></a>  }</span>
+<span id="cb84-7"><a href="core-components-3.html#cb84-7"></a>  <span class="ex">filter</span> {</span>
+<span id="cb84-8"><a href="core-components-3.html#cb84-8"></a>    <span class="ex">name</span>   = <span class="st">&quot;virtualization-type&quot;</span></span>
+<span id="cb84-9"><a href="core-components-3.html#cb84-9"></a>    <span class="ex">values</span> = [<span class="st">&quot;hvm&quot;</span>]</span>
+<span id="cb84-10"><a href="core-components-3.html#cb84-10"></a>  }</span>
+<span id="cb84-11"><a href="core-components-3.html#cb84-11"></a>  <span class="ex">owners</span> = [<span class="st">&quot;099720109477&quot;</span>] <span class="co"># Canonical</span></span>
+<span id="cb84-12"><a href="core-components-3.html#cb84-12"></a>}</span></code></pre></div>
 <p>Data sources and their attributes can be used in resource definitions by prepending the <code>data</code> prefix to the attribute name. The following example used the <code>"aws_ami"</code> data source within an <code>"aws_instace"</code> resource.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb84-1"><a href="core-concepts-1.html#cb84-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_instance&quot;</span> <span class="st">&quot;web&quot;</span> {</span>
-<span id="cb84-2"><a href="core-concepts-1.html#cb84-2"></a>  <span class="ex">ami</span> = data.aws_ami.ubuntu.id </span>
-<span id="cb84-3"><a href="core-concepts-1.html#cb84-3"></a>  <span class="ex">instance_type</span> = <span class="st">&quot;t2.micro&quot;</span></span>
-<span id="cb84-4"><a href="core-concepts-1.html#cb84-4"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb85-1"><a href="core-components-3.html#cb85-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_instance&quot;</span> <span class="st">&quot;web&quot;</span> {</span>
+<span id="cb85-2"><a href="core-components-3.html#cb85-2"></a>  <span class="ex">ami</span> = data.aws_ami.ubuntu.id </span>
+<span id="cb85-3"><a href="core-components-3.html#cb85-3"></a>  <span class="ex">instance_type</span> = <span class="st">&quot;t2.micro&quot;</span></span>
+<span id="cb85-4"><a href="core-components-3.html#cb85-4"></a>}</span></code></pre></div>
 </div>
 <div id="state" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.2.4</span> State<a href="core-concepts-1.html#state" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">5.2.4</span> State<a href="core-components-3.html#state" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A Terraform state stores all details about the resources and data created within a given context. Whenever a resource is create terrafrom stores its identifier in the statefile <code>terraform.tfstate</code>.
 Providing information about already existing resources is the primary purpose of the statefile. Whenever a Terraform script is applied or whenever the resource definitions are modified, Terraform knows what to create, change, or delete based on the existing entries within the statefile. Everything specified and provisioned within Terraform will be stored in the statefile. This should be kept in mind and detain to store sensitive information such as initial passwords.</p>
 <p>Terraform uses the concept of a backend to store and retrieve its statefile. The default backend is the local backend which means to store the statefile in the project’s root folder. However, we can also configure an alternative (remote) backend to store it elsewhere. The backend can be declared within a <code>terraform</code> block in the project files. The given example stores the statefile in an AWS S3 Bucket callen <code>some-bucket</code>. Keep in mind this needs access to an AWS account and also needs the AWS provider of terraform.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb85-1"><a href="core-concepts-1.html#cb85-1"></a><span class="ex">terraform</span> {</span>
-<span id="cb85-2"><a href="core-concepts-1.html#cb85-2"></a>  <span class="ex">backend</span> <span class="st">&quot;s3&quot;</span> {</span>
-<span id="cb85-3"><a href="core-concepts-1.html#cb85-3"></a>    <span class="ex">bucket</span> = <span class="st">&quot;some-bucket&quot;</span></span>
-<span id="cb85-4"><a href="core-concepts-1.html#cb85-4"></a>    <span class="ex">key</span> = <span class="st">&quot;some-storage-key&quot;</span></span>
-<span id="cb85-5"><a href="core-concepts-1.html#cb85-5"></a>    <span class="ex">region</span> = <span class="st">&quot;us-east-1&quot;</span></span>
-<span id="cb85-6"><a href="core-concepts-1.html#cb85-6"></a>  }</span>
-<span id="cb85-7"><a href="core-concepts-1.html#cb85-7"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb86-1"><a href="core-components-3.html#cb86-1"></a><span class="ex">terraform</span> {</span>
+<span id="cb86-2"><a href="core-components-3.html#cb86-2"></a>  <span class="ex">backend</span> <span class="st">&quot;s3&quot;</span> {</span>
+<span id="cb86-3"><a href="core-components-3.html#cb86-3"></a>    <span class="ex">bucket</span> = <span class="st">&quot;some-bucket&quot;</span></span>
+<span id="cb86-4"><a href="core-components-3.html#cb86-4"></a>    <span class="ex">key</span> = <span class="st">&quot;some-storage-key&quot;</span></span>
+<span id="cb86-5"><a href="core-components-3.html#cb86-5"></a>    <span class="ex">region</span> = <span class="st">&quot;us-east-1&quot;</span></span>
+<span id="cb86-6"><a href="core-components-3.html#cb86-6"></a>  }</span>
+<span id="cb86-7"><a href="core-components-3.html#cb86-7"></a>}</span></code></pre></div>
 
 </div>
 </div>
@@ -376,7 +383,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/06.2-Terraform-Core_Concepts.Rmd",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/06.2-Terraform-Core_Components.Rmd",
 "text": "Edit"
 },
 "history": {

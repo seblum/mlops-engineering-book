@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.5 Ops Tools &amp; Principles | MLOps Engineering</title>
+  <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.5 Ops Tools &amp; Principles | MLOps Engineering" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  <meta name="github-repo" content="seblum/mlops-engineering-book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.5 Ops Tools &amp; Principles | MLOps Engineering" />
+  
+  <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  
+
+<meta name="author" content="Sebastian Blum" />
+
+
+<meta name="date" content="2023-03-09" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"/>
+<link rel="next" href="airflow.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MLOps Engineering</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html"><i class="fa fa-check"></i>Preamble</a><ul>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html#a-work-in-progress"><i class="fa fa-check"></i>A work in progress</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html"><i class="fa fa-check"></i><b>1.1</b> Machine Learning Workflow</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html#ml-worflow-tools"><i class="fa fa-check"></i><b>1.1.1</b> ML Worflow Tools</a></li>
+<li class="chapter" data-level="1.1.2" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html#developing-machine-learning-models"><i class="fa fa-check"></i><b>1.1.2</b> Developing Machine Learning Models</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html"><i class="fa fa-check"></i><b>1.2</b> Machine Learning Operations (MLOps)</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#ml-dev-ops"><i class="fa fa-check"></i><b>1.2.1</b> ML + (Dev)-Ops</a></li>
+<li class="chapter" data-level="1.2.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#mlops-lifecycle"><i class="fa fa-check"></i><b>1.2.2</b> MLOps Lifecycle</a></li>
+<li class="chapter" data-level="1.2.3" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#mlops-engineering"><i class="fa fa-check"></i><b>1.2.3</b> MLOps Engineering</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html"><i class="fa fa-check"></i><b>1.3</b> Roles and Tasks in MLOps</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#data-engineer"><i class="fa fa-check"></i><b>1.3.1</b> Data Engineer</a></li>
+<li class="chapter" data-level="1.3.2" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#data-scientist"><i class="fa fa-check"></i><b>1.3.2</b> Data Scientist</a></li>
+<li class="chapter" data-level="1.3.3" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#ml-engineer"><i class="fa fa-check"></i><b>1.3.3</b> ML Engineer</a></li>
+<li class="chapter" data-level="1.3.4" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#mlops-engineer"><i class="fa fa-check"></i><b>1.3.4</b> MLOps Engineer</a></li>
+<li class="chapter" data-level="1.3.5" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#devops-engineer"><i class="fa fa-check"></i><b>1.3.5</b> DevOps Engineer</a></li>
+<li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><a href="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><i class="fa fa-check"></i><b>1.4</b> MLOps Engineering with Airflow and MLflow on Kubernetes</a></li>
+<li class="chapter" data-level="1.5" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>1.5</b> Ops Tools &amp; Principles</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#containerization"><i class="fa fa-check"></i><b>1.5.1</b> Containerization</a></li>
+<li class="chapter" data-level="1.5.2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#version-control"><i class="fa fa-check"></i><b>1.5.2</b> Version Control</a></li>
+<li class="chapter" data-level="1.5.3" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#cicd"><i class="fa fa-check"></i><b>1.5.3</b> CI/CD</a></li>
+<li class="chapter" data-level="1.5.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#infrastructure-as-code"><i class="fa fa-check"></i><b>1.5.4</b> Infrastructure as code</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>2</b> Airflow</a><ul>
+<li class="chapter" data-level="" data-path="airflow.html"><a href="airflow.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="2.1" data-path="core-components.html"><a href="core-components.html"><i class="fa fa-check"></i><b>2.1</b> Core Components</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="core-components.html"><a href="core-components.html#dags"><i class="fa fa-check"></i><b>2.1.1</b> DAGs</a></li>
+<li class="chapter" data-level="2.1.2" data-path="core-components.html"><a href="core-components.html#operators"><i class="fa fa-check"></i><b>2.1.2</b> Operators</a></li>
+<li class="chapter" data-level="2.1.3" data-path="core-components.html"><a href="core-components.html#tasks"><i class="fa fa-check"></i><b>2.1.3</b> Tasks</a></li>
+<li class="chapter" data-level="2.1.4" data-path="core-components.html"><a href="core-components.html#xcom"><i class="fa fa-check"></i><b>2.1.4</b> XCom</a></li>
+<li class="chapter" data-level="2.1.5" data-path="core-components.html"><a href="core-components.html#scheduling"><i class="fa fa-check"></i><b>2.1.5</b> Scheduling</a></li>
+<li class="chapter" data-level="2.1.6" data-path="core-components.html"><a href="core-components.html#taskflow"><i class="fa fa-check"></i><b>2.1.6</b> Taskflow</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>2.2</b> Exemplary ML workflow</a></li>
+<li class="chapter" data-level="2.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>2.3</b> Airflow infrastructure</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#airflow-as-a-distributed-system"><i class="fa fa-check"></i><b>2.3.1</b> Airflow as a distributed system</a></li>
+<li class="chapter" data-level="2.3.2" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#scheduler"><i class="fa fa-check"></i><b>2.3.2</b> Scheduler</a></li>
+<li class="chapter" data-level="2.3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#webserver"><i class="fa fa-check"></i><b>2.3.3</b> Webserver</a></li>
+<li class="chapter" data-level="2.3.4" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#executor"><i class="fa fa-check"></i><b>2.3.4</b> Executor</a></li>
+<li class="chapter" data-level="2.3.5" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#dag-directory"><i class="fa fa-check"></i><b>2.3.5</b> DAG Directory</a></li>
+<li class="chapter" data-level="2.3.6" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#metadata-database"><i class="fa fa-check"></i><b>2.3.6</b> Metadata Database</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>3</b> MLflow</a><ul>
+<li class="chapter" data-level="" data-path="mlflow.html"><a href="mlflow.html#prerequisites-1"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="3.1" data-path="core-components-1.html"><a href="core-components-1.html"><i class="fa fa-check"></i><b>3.1</b> Core Components</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-tracking"><i class="fa fa-check"></i><b>3.1.1</b> MLflow Tracking</a></li>
+<li class="chapter" data-level="3.1.2" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-models"><i class="fa fa-check"></i><b>3.1.2</b> MLflow Models</a></li>
+<li class="chapter" data-level="3.1.3" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-model-registry"><i class="fa fa-check"></i><b>3.1.3</b> MLflow Model Registry</a></li>
+<li class="chapter" data-level="3.1.4" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-projects"><i class="fa fa-check"></i><b>3.1.4</b> MLflow Projects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html"><i class="fa fa-check"></i><b>3.2</b> MLFflow Architecture</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>3.2.1</b> MLflow Tracking Server</a></li>
+<li class="chapter" data-level="3.2.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-backend-store"><i class="fa fa-check"></i><b>3.2.2</b> MLflow Backend Store</a></li>
+<li class="chapter" data-level="3.2.3" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-artifact-store"><i class="fa fa-check"></i><b>3.2.3</b> MLflow Artifact Store</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>4</b> Kubernetes</a><ul>
+<li class="chapter" data-level="" data-path="kubernetes.html"><a href="kubernetes.html#prerequisites-2"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="4.1" data-path="core-components-2.html"><a href="core-components-2.html"><i class="fa fa-check"></i><b>4.1</b> Core Components</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="core-components-2.html"><a href="core-components-2.html#nodes"><i class="fa fa-check"></i><b>4.1.1</b> Nodes</a></li>
+<li class="chapter" data-level="4.1.2" data-path="core-components-2.html"><a href="core-components-2.html#pods"><i class="fa fa-check"></i><b>4.1.2</b> Pods</a></li>
+<li class="chapter" data-level="4.1.3" data-path="core-components-2.html"><a href="core-components-2.html#imperative-declarative-management"><i class="fa fa-check"></i><b>4.1.3</b> Imperative &amp; Declarative Management</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>4.2</b> Application Deployment &amp; Design</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>4.2.1</b> Deployments</a></li>
+<li class="chapter" data-level="4.2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html#resource-management"><i class="fa fa-check"></i><b>4.2.2</b> Resource Management</a></li>
+<li class="chapter" data-level="4.2.3" data-path="application-deployment-design.html"><a href="application-deployment-design.html#daemonsets"><i class="fa fa-check"></i><b>4.2.3</b> DaemonSets</a></li>
+<li class="chapter" data-level="4.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>4.2.4</b> StatefulSets</a></li>
+<li class="chapter" data-level="4.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>4.2.5</b> Jobs &amp; Cron Jobs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>4.3</b> Services &amp; Networking</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>4.3.1</b> Services</a></li>
+<li class="chapter" data-level="4.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>4.3.2</b> Service Discovery</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>4.4</b> Volume &amp; Storage</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>4.4.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="4.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>4.4.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="4.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>4.4.3</b> Persistent Volumes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>4.5</b> Environment, Configuration &amp; Security</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#namespaces"><i class="fa fa-check"></i><b>4.5.1</b> Namespaces</a></li>
+<li class="chapter" data-level="4.5.2" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>4.5.2</b> Labels, Selectors and Annotations</a></li>
+<li class="chapter" data-level="4.5.3" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#configmaps"><i class="fa fa-check"></i><b>4.5.3</b> ConfigMaps</a></li>
+<li class="chapter" data-level="4.5.4" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#secrets"><i class="fa fa-check"></i><b>4.5.4</b> Secrets</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>4.6</b> Observability &amp; Maintenance</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>4.6.1</b> Health Checks</a></li>
+<li class="chapter" data-level="4.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>4.6.2</b> Debugging</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>4.7</b> Helm</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>5</b> Terraform</a><ul>
+<li class="chapter" data-level="" data-path="terraform.html"><a href="terraform.html#prerequisites-3"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="5.1" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>5.1</b> Basic usage</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="basic-usage.html"><a href="basic-usage.html#terraform-init"><i class="fa fa-check"></i><b>5.1.1</b> terraform init</a></li>
+<li class="chapter" data-level="5.1.2" data-path="basic-usage.html"><a href="basic-usage.html#terraform-validate"><i class="fa fa-check"></i><b>5.1.2</b> terraform validate</a></li>
+<li class="chapter" data-level="5.1.3" data-path="basic-usage.html"><a href="basic-usage.html#terraform-plan"><i class="fa fa-check"></i><b>5.1.3</b> terraform plan</a></li>
+<li class="chapter" data-level="5.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>5.1.4</b> terraform apply</a></li>
+<li class="chapter" data-level="5.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>5.1.5</b> terraform destroy</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="core-components-3.html"><a href="core-components-3.html"><i class="fa fa-check"></i><b>5.2</b> Core Components</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="core-components-3.html"><a href="core-components-3.html#providers"><i class="fa fa-check"></i><b>5.2.1</b> Providers</a></li>
+<li class="chapter" data-level="5.2.2" data-path="core-components-3.html"><a href="core-components-3.html#resources"><i class="fa fa-check"></i><b>5.2.2</b> Resources</a></li>
+<li class="chapter" data-level="5.2.3" data-path="core-components-3.html"><a href="core-components-3.html#data-sources"><i class="fa fa-check"></i><b>5.2.3</b> Data Sources</a></li>
+<li class="chapter" data-level="5.2.4" data-path="core-components-3.html"><a href="core-components-3.html#state"><i class="fa fa-check"></i><b>5.2.4</b> State</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>5.3</b> Modules</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>5.3.1</b> Input Variables</a></li>
+<li class="chapter" data-level="5.3.2" data-path="modules.html"><a href="modules.html#output-variables"><i class="fa fa-check"></i><b>5.3.2</b> Output Variables</a></li>
+<li class="chapter" data-level="5.3.3" data-path="modules.html"><a href="modules.html#local-variables"><i class="fa fa-check"></i><b>5.3.3</b> Local Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html"><i class="fa fa-check"></i><b>5.4</b> Additional tips &amp; tricks</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#count"><i class="fa fa-check"></i><b>5.4.1</b> count</a></li>
+<li class="chapter" data-level="5.4.2" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for-each"><i class="fa fa-check"></i><b>5.4.2</b> for-each</a></li>
+<li class="chapter" data-level="5.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>5.4.3</b> for</a></li>
+<li class="chapter" data-level="5.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>5.4.4</b> Workspaces</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>5.5</b> Exemplary Deployment</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MLOps Engineering</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ops-tools-principles" class="section level2 hasAnchor">
+<h2><span class="header-section-number">1.5</span> Ops Tools &amp; Principles<a href="ops-tools-principles.html#ops-tools-principles" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>MLOps integrates a range of DevOps techniques and tools to enhance the development and deployment of machine learning models. By promoting cooperation between development and operations teams, MLOps strives to improve communication, enhance efficiency, and reduce delays in the development process. Advanced version control systems can be employed to achieve these objectives.</p>
+<p>Automation plays a significant role in achieving these goals. For instance, CI/CD pipelines streamline repetitive tasks like building, testing, and deploying software. The management of infrastructure can also be automated, by using infrastructure as code to facilitate an automated provisioning, scaling, and management of infrastructure.</p>
+<p>To enhance flexibility and scalability in the operational process, containers and microservices are used to package and deploy software. Finally, monitoring and logging tools are used to track the performance of deployed and containerized software and address any issues that arise.</p>
+<div id="containerization" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.5.1</span> Containerization<a href="ops-tools-principles.html#containerization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Containerization is an essential component in operations as it enables deploying and running applications in a standardized, portable, and scalable way. This is achieved by packaging an application and its dependencies into a container image, which contains all the necessary code, runtime, system tools, libraries, and settings needed to run the application, isolated from the host operating system. Containers are lightweight, portable, and can run on any platform that supports containerization, such as Docker or Kubernetes.</p>
+<p>All of this makes them beneficial compared to deploying an application on a virtual machine or traditionally directly on a machine. Virtual machines would emulate an entire computer system and require a hypervisor to run, which introduces additional overhead. Similarly, a traditional deployment involves installing software directly onto a physical or virtual machine without the use of containers or virtualization. Not to mention the lack of portability of both.</p>
+<p><img src="images/01-Introduction/ops-containerization.drawio.svg" /></p>
+<p>The concept of container images is analogous to shipping containers in the physical world. Like shipping containers can be loaded with different types of cargo, a container image can be used to create different containers with various applications and configurations. Both the physical containers and container images are standardized, just like blueprints, enabling multiple operators to work with them. This allows for the deployment and management of applications in various environments and cloud platforms, making containerization a versatile solution.</p>
+<p>Containerization offers several benefits for MLOps teams. By packaging the machine learning application and its dependencies into a container image, reproducibility is achieved, ensuring consistent results across different environments and facilitating troubleshooting. Containers are portable which enables easy movement of machine learning applications between various environments, including development, testing, and production. Scalability is also a significant advantage of containerization, as scaling up or down compute resources in an easy fashion allows to handle large-scale machine learning workloads and adjust to changing demand quickly. Additionally, containerization enables version control of machine learning applications and their dependencies, making it easier to track changes, roll back to previous versions, and maintain consistency across different environments. To effectively manage model versions, simply saving the code into a version control system is insufficient. It’s crucial to include an accurate description of the environment, which encompasses Python libraries, their versions, system dependencies, and more. Virtual machines (VMs) can provide this description, but container images have become the preferred industry standard due to their lightweight nature.
+Finally, containerization facilitates integration with other DevOps tools and processes, such as CI/CD pipelines, enhancing the efficiency and effectiveness of MLOps operations.</p>
+<!---
+```docker
+FROM python:3.8.7-slim
+
+RUN pip install PyMySQL==1.0.2 && \
+    pip install psycopg2-binary==2.8.6 && \
+    pip install mlflow[extras]==1.13.1
+
+ENTRYPOINT ["mlflow", "server"]
+```
+-->
+</div>
+<div id="version-control" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.5.2</span> Version Control<a href="ops-tools-principles.html#version-control" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Version control is a system that records changes to a file or set of files over time, to be able to recall specific versions later. It is an essential tool for any software development project as it allows multiple developers to work together, track changes, and easily rollback in case of errors. There are two main types of version control systems: centralized and distributed.</p>
+<ol style="list-style-type: decimal">
+<li><p>Centralized Version Control Systems (CVCS) : In a centralized version control system, there is a single central repository that contains all the versions of the files, and developers must check out files from the repository in order to make changes. Examples of CVCS include Subversion and Perforce.</p></li>
+<li><p>Distributed Version Control Systems (DVCS) : In a distributed version control system, each developer has a local copy of the entire repository, including all the versions of the files. This allows developers to work offline, and it makes it easy to share changes with other developers. Examples of DVCS include Git, Mercurial and Bazaar</p></li>
+</ol>
+<p>Version control is a vital component of software development that offers several benefits. First, it keeps track of changes made to files, enabling developers to revert to a previous version in case something goes wrong. Collaboration is also made easier with version control, as it allows multiple developers to work on a project simultaneously and share changes with others. In addition, it provide backup capabilities by keeping a history of all changes, allowing you to retrieve lost files. Version control also allows auditing of changes, tracking who made a specific change, when, and why. Finally, it enables developers to create branches of a project, facilitating simultaneous work on different features without affecting the main project, with merging later.</p>
+<p>Versioning all components of a machine learning project, such as code, data, and models, is essential for reproducibility and managing models in production. While versioning code-based components is similar to typical software engineering projects, versioning machine learning models and data requires specific version control systems. There is no universal standard for versioning machine learning models, and the definition of “a model” can vary depending on the exact setup and tools used.</p>
+<p>Popular tools such as Azure ML, AWS Sagemaker, Kubeflow, and MLflow offer their own mechanisms for model versioning. For data versioning, there are tools like Data Version Control (DVC) and Git Large File Storage (LFS). The de-facto standard for code versioning is Git. The code-versioning system Github is used for this project, which will be depicted in more detail in the following.</p>
+<div id="github" class="section level4 hasAnchor">
+<h4><span class="header-section-number">1.5.2.1</span> Github<a href="ops-tools-principles.html#github" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>GitHub provides a variety of branching options to enable flexible collaboration workflows. Each branch serves a specific purpose in the development process, and using them effectively can help teams collaborate more efficiently and effectively.</p>
+<p><img src="images/01-Introduction/ops-version-control.drawio.svg" /></p>
+<p><em>Main Branch:</em> The main branch is the default branch in a repository. It represents the latest stable version and production-ready state of a codebase, and changes to the code are merged into the main branch as they are completed and tested.
+<em>Feature Branch:</em> A feature branch is used to develop a new feature or functionality. It is typically created off the main branch, and once the feature is completed, it can be merged back into the main branch.
+<em>Hotfix Branch:</em> A hotfix branch is used to quickly fix critical issues in the production code. It is typically created off the main branch, and once the hotfix is completed, it can be merged back into the main branch.
+<em>Release Branch:</em> A release branch is a separate branch that is created specifically for preparing a new version of the software for release. Once all the features and fixes for the new release have been added and tested, the release branch is merged back into the main branch, and a new version of the software is tagged and released.</p>
+</div>
+<div id="git-lifecycle" class="section level4 hasAnchor">
+<h4><span class="header-section-number">1.5.2.2</span> Git lifecycle<a href="ops-tools-principles.html#git-lifecycle" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>After a programmer has made changes to their code, they would typically use Git to manage those changes through a series of steps. First, they would use the command <code>git status</code> to see which files have been changed and are ready to be committed. They would then stage the changes they want to include in the commit using the command <code>git add &lt;FILE-OR-DIRECTORY&gt;</code>, followed by creating a new commit with a message describing the changes using <code>git commit -m "MESSAGE"</code>.</p>
+<p>After committing changes locally, the programmer may want to share those changes with others. They would do this by pushing their local commits to a remote repository using the command <code>git push</code>. Once the changes are pushed, others can pull those changes down to their local machines and continue working on the project by using the command <code>git pull</code>.</p>
+<p><img src="images/01-Introduction/ops-git-commands.png" /></p>
+<p>If the programmer is collaborating with others, they may need to merge their changes with changes made by others. This can be done using the <code>git merge &lt;BRANCH-NAME&gt;</code> command, which combines two branches of development history. The programmer may need to resolve any conflicts that arise during the merge.</p>
+<p>If the programmer encounters any issues or bugs after pushing their changes, they can use Git to revert to a previous version of the code by checking out an older commit using the command git checkout. Git’s ability to track changes and revert to previous versions makes it an essential tool for managing code in collaborative projects.</p>
+<p>While automating the code review process is generally viewed as advantageous, it is still typical to have a manual code review as the final step before approving a pull or merge request to be merged into the main branch. It is considered a best practice to mandate a manual approval from one or more reviewers who are not the authors of the code changes.</p>
+</div>
+</div>
+<div id="cicd" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.5.3</span> CI/CD<a href="ops-tools-principles.html#cicd" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Continuous Integration (CI) and Continuous Delivery / Continuous Delivery (CD) are related software development practices that work together to automate and streamline the software development and deployment process of code changes to production. Deploying new software and models without CI/CD often requires a lot of implicit knowledge and manual steps.</p>
+<p><img src="images/01-Introduction/ops-ci-cd.drawio.svg" /></p>
+<ol style="list-style-type: decimal">
+<li><p><em>Continuous Integration (CI)</em>: is a software development practice that involves frequently integrating code changes into a shared central repository. The goal of CI is to catch and fix integration errors as soon as they are introduced, rather than waiting for them to accumulate over time. This is typically done by running automated tests and builds, to catch any errors that might have been introduced with new code changes, for example when merging a Git feature branch into the main branch.</p></li>
+<li><p><em>Continuous Delivery (CD)</em>: is the practice that involves automating the process of building, testing, and deploying software to a production-like environment. The goal is to ensure that code changes can be safely and quickly deployed to production. This is typically done by automating the deployment process and by testing the software in a staging environment before deploying it to production.</p></li>
+<li><p><em>Continuous Deployment (CD):</em> is the practice of automatically deploying code changes to production once they pass automated tests and checks. The goal is to minimize the time it takes to get new features and bug fixes into the hands of end-users. In this process, the software is delivered directly to the end-user without manual testing and verification.</p></li>
+</ol>
+<p>The terms <em>Continuous Delivery</em> and <em>Continuous Deployment</em> are often used interchangeably, but they have distinct meanings. Continuous delivery refers to the process of building, testing, and running software on a production-like environment, while continuous deployment refers specifically to the process of running the new version on the production environment itself. However, fully automated deployments may not always be desirable or feasible, depending on the organization’s business needs and the complexity of the software being deployed. While continuous deployment builds on continuous delivery, the latter can offer significant value on its own.</p>
+<p>CI/CD integrates the principles of continuous integration and continuous delivery in a seamless workflow, allowing teams to catch and fix issues early and quickly deliver new features to users. The pipeline is often triggered by a code commit. Ideally, a Data Scientist would push the changes made to the code at each incremental step of development to a share repository, including metadata and documentation. This code commit would trigger the CI/CD pipeline to build, test, package, and deploy the model software. In contrast to the local development, the CI/CD steps will test the model changes on the full dataset and aiming to deploy for production.</p>
+<p>CI and CD practices help to increase the speed and quality of software development, by automating repetitive tasks and catching errors early, reducing the time and effort required to release new features, and increasing the stability of the deployed software. Examples for CI/CD Tools that enable automated testing with already existing build servers are for example GitHub Actions, Gitlab CI/CD, AWS Code Build, or Azure DevOps</p>
+<p>The following code snippet shows an exemplary GitHub Actions pipeline to test, build and push a Docker image to the DockerHub registry. The code is structured in three parts.
+At first, the environment variables are defined under <code>env</code>. Two variables are defined here which are later called with by the command <code>env.VARIABLE</code>.
+The second part defines when the pipeline is or should be triggered. The exampele shows three possibilites to trigger a pipelines, when pushing on the master branch <code>push</code>, when a pull request to the master branch is granted <code>pull_request</code>, or when the pipeline is triggered manually via the Github interface <code>workflow_dispatch</code>.
+The third part of the code example introduces the actual jobs and steps performed by the pipeline. The pipeline consists of two jobs <code>pytest</code> and <code>docker</code>. The first represents the CI part of the pipeline. The run environment of the job is set up and the necessary requirements are installed. Afterward unit tests are run using the pytest library. If the <code>pytest</code> job was successful, the <code>docker</code> job will be triggered. The job builds the Dockerfile and pushes it automatically to the specified Dockerhub repository specified in <code>tags</code>. The step introduces another variable just like the <code>env.Variable</code> before, the <code>secrets.</code>. Secrets are a way by Github to safely store classified information like username and passwords. They can be set up using the Github Interface and used in the Github Actions CI using <code>secrets.SECRET-NAME</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="ops-tools-principles.html#cb1-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Docker CI base</span></span>
+<span id="cb1-2"><a href="ops-tools-principles.html#cb1-2"></a></span>
+<span id="cb1-3"><a href="ops-tools-principles.html#cb1-3"></a><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb1-4"><a href="ops-tools-principles.html#cb1-4"></a><span class="at">  </span><span class="fu">DIRECTORY</span><span class="kw">:</span><span class="at"> base</span></span>
+<span id="cb1-5"><a href="ops-tools-principles.html#cb1-5"></a><span class="at">  </span><span class="fu">DOCKERREPO</span><span class="kw">:</span><span class="at"> seblum/mlops-public</span></span>
+<span id="cb1-6"><a href="ops-tools-principles.html#cb1-6"></a></span>
+<span id="cb1-7"><a href="ops-tools-principles.html#cb1-7"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb1-8"><a href="ops-tools-principles.html#cb1-8"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb1-9"><a href="ops-tools-principles.html#cb1-9"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> master</span></span>
+<span id="cb1-10"><a href="ops-tools-principles.html#cb1-10"></a><span class="at">    </span><span class="fu">paths</span><span class="kw">:</span><span class="at"> $DIRECTORY/**</span></span>
+<span id="cb1-11"><a href="ops-tools-principles.html#cb1-11"></a><span class="at">  </span><span class="fu">pull_request</span><span class="kw">:</span></span>
+<span id="cb1-12"><a href="ops-tools-principles.html#cb1-12"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at"> master </span><span class="kw">]</span></span>
+<span id="cb1-13"><a href="ops-tools-principles.html#cb1-13"></a><span class="at">  </span><span class="fu">workflow_dispatch</span><span class="kw">:</span></span>
+<span id="cb1-14"><a href="ops-tools-principles.html#cb1-14"></a></span>
+<span id="cb1-15"><a href="ops-tools-principles.html#cb1-15"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb1-16"><a href="ops-tools-principles.html#cb1-16"></a><span class="at">  </span><span class="fu">pytest</span><span class="kw">:</span></span>
+<span id="cb1-17"><a href="ops-tools-principles.html#cb1-17"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb1-18"><a href="ops-tools-principles.html#cb1-18"></a><span class="at">    </span><span class="fu">defaults</span><span class="kw">:</span></span>
+<span id="cb1-19"><a href="ops-tools-principles.html#cb1-19"></a><span class="at">      </span><span class="fu">run</span><span class="kw">:</span></span>
+<span id="cb1-20"><a href="ops-tools-principles.html#cb1-20"></a><span class="at">        </span><span class="fu">working-directory</span><span class="kw">:</span><span class="at"> ./${{ env.DIRECTORY }}</span></span>
+<span id="cb1-21"><a href="ops-tools-principles.html#cb1-21"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb1-22"><a href="ops-tools-principles.html#cb1-22"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v3</span></span>
+<span id="cb1-23"><a href="ops-tools-principles.html#cb1-23"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Python</span></span>
+<span id="cb1-24"><a href="ops-tools-principles.html#cb1-24"></a><span class="at">      </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-python@v4</span></span>
+<span id="cb1-25"><a href="ops-tools-principles.html#cb1-25"></a><span class="at">      </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-26"><a href="ops-tools-principles.html#cb1-26"></a><span class="at">        </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;3.x&#39;</span></span>
+<span id="cb1-27"><a href="ops-tools-principles.html#cb1-27"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install dependencies</span></span>
+<span id="cb1-28"><a href="ops-tools-principles.html#cb1-28"></a><span class="fu">      run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb1-29"><a href="ops-tools-principles.html#cb1-29"></a>        python -m pip install --upgrade pip</span>
+<span id="cb1-30"><a href="ops-tools-principles.html#cb1-30"></a>        pip install -r requirements.txt</span>
+<span id="cb1-31"><a href="ops-tools-principles.html#cb1-31"></a>        pip install pytest</span>
+<span id="cb1-32"><a href="ops-tools-principles.html#cb1-32"></a>        pip install pytest-cov</span>
+<span id="cb1-33"><a href="ops-tools-principles.html#cb1-33"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Test with pytest</span></span>
+<span id="cb1-34"><a href="ops-tools-principles.html#cb1-34"></a><span class="fu">      run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb1-35"><a href="ops-tools-principles.html#cb1-35"></a>        pytest test_app.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html</span>
+<span id="cb1-36"><a href="ops-tools-principles.html#cb1-36"></a><span class="at">  </span><span class="fu">docker</span><span class="kw">:</span></span>
+<span id="cb1-37"><a href="ops-tools-principles.html#cb1-37"></a><span class="at">    </span><span class="fu">needs</span><span class="kw">:</span><span class="at"> pytest</span></span>
+<span id="cb1-38"><a href="ops-tools-principles.html#cb1-38"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb1-39"><a href="ops-tools-principles.html#cb1-39"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb1-40"><a href="ops-tools-principles.html#cb1-40"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up QEMU</span></span>
+<span id="cb1-41"><a href="ops-tools-principles.html#cb1-41"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> docker/setup-qemu-action@v2</span></span>
+<span id="cb1-42"><a href="ops-tools-principles.html#cb1-42"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Docker Buildx</span></span>
+<span id="cb1-43"><a href="ops-tools-principles.html#cb1-43"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> docker/setup-buildx-action@v2</span></span>
+<span id="cb1-44"><a href="ops-tools-principles.html#cb1-44"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Login to DockerHub</span></span>
+<span id="cb1-45"><a href="ops-tools-principles.html#cb1-45"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> docker/login-action@v2</span></span>
+<span id="cb1-46"><a href="ops-tools-principles.html#cb1-46"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-47"><a href="ops-tools-principles.html#cb1-47"></a><span class="at">          </span><span class="fu">username</span><span class="kw">:</span><span class="at"> ${{ secrets.DOCKERHUB_USERNAME }}</span></span>
+<span id="cb1-48"><a href="ops-tools-principles.html#cb1-48"></a><span class="at">          </span><span class="fu">password</span><span class="kw">:</span><span class="at"> ${{ secrets.DOCKERHUB_TOKEN }}</span></span>
+<span id="cb1-49"><a href="ops-tools-principles.html#cb1-49"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Build and push</span></span>
+<span id="cb1-50"><a href="ops-tools-principles.html#cb1-50"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> docker/build-push-action@v3</span></span>
+<span id="cb1-51"><a href="ops-tools-principles.html#cb1-51"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-52"><a href="ops-tools-principles.html#cb1-52"></a><span class="at">          </span><span class="fu">file</span><span class="kw">:</span><span class="at"> ./${{ env.DIRECTORY }}/Dockerfile</span></span>
+<span id="cb1-53"><a href="ops-tools-principles.html#cb1-53"></a><span class="at">          </span><span class="fu">push</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-54"><a href="ops-tools-principles.html#cb1-54"></a><span class="at">          </span><span class="fu">tags</span><span class="kw">:</span><span class="at"> ${{ env.DOCKERREPO }}:${{ env.DIRECTORY }}</span></span></code></pre></div>
+</div>
+<div id="infrastructure-as-code" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.5.4</span> Infrastructure as code<a href="ops-tools-principles.html#infrastructure-as-code" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Infrastructure as Code (IaC) is a software engineering approach that enables the automation of infrastructure provisioning and management using machine-readable configuration files rather than manual processes or interactive interfaces.</p>
+<p>This means that the infrastructure is defined using code, instead of manually setting up servers, networks, and other infrastructure components. This code can be version controlled, tested, and deployed just like any other software code. It also allows to automate the process of building and deploying infrastructure resources, enabling faster and more reliable delivery of services, as well as ensuring to provide the same environment every time. It also comes with the benefit of an increased scalability, improved security, and better visibility into infrastructure changes.</p>
+<p>It is recommended to utilize infrastructure-as-code to deploy an MLOps platform. Popular tools for implementing IaC are for example Terraform, CloudFormation, and Ansible. Chapter 6 gives a more detailed description and a tutorial on how to use Infrastructure as code using <em>Terraform</em>.</p>
+
+</div>
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="airflow.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": true,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/seblum/kubernetes-training/edit/master/01.5-Ops-Ops_practices.md",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

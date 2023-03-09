@@ -17,8 +17,15 @@ mlops-engineer
 devops-engineer
 additional-roles-function
 mlops-engineering-with-airflow-and-mlflow-on-kubernetes
+ops-tools-principles
+containerization
+version-control
+github
+git-lifecycle
+cicd
+infrastructure-as-code
 airflow
-fundamental-concepts
+core-components
 dags
 operators
 action-operators
@@ -38,7 +45,7 @@ executor
 dag-directory
 metadata-database
 mlflow
-fundamental-components
+core-components-1
 mlflow-tracking
 mlflow-experiment
 mlflow-run
@@ -54,7 +61,7 @@ mlflow-tracking-server
 mlflow-backend-store
 mlflow-artifact-store
 kubernetes
-core-concepts
+core-components-2
 nodes
 master-control-plane
 api-server
@@ -110,7 +117,7 @@ terraform-validate
 terraform-plan
 terraform-apply
 terraform-destroy
-core-concepts-1
+core-components-3
 providers
 resources
 data-sources

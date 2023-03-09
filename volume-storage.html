@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4.4 Volume &amp; Storage | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
-  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4.4 Volume &amp; Storage | MLOps Engineering" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-02-24" />
+<meta name="date" content="2023-03-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -137,9 +137,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">MLOps Engineering</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preamble</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#topics"><i class="fa fa-check"></i>Topics</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#a-work-in-progress"><i class="fa fa-check"></i>A work in progress</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html"><i class="fa fa-check"></i>Preamble</a><ul>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html#topics"><i class="fa fa-check"></i>Topics</a></li>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html#a-work-in-progress"><i class="fa fa-check"></i>A work in progress</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html"><i class="fa fa-check"></i><b>1.1</b> Machine Learning Workflow</a><ul>
@@ -160,16 +161,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><a href="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><i class="fa fa-check"></i><b>1.4</b> MLOps Engineering with Airflow and MLflow on Kubernetes</a></li>
+<li class="chapter" data-level="1.5" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>1.5</b> Ops Tools &amp; Principles</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#containerization"><i class="fa fa-check"></i><b>1.5.1</b> Containerization</a></li>
+<li class="chapter" data-level="1.5.2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#version-control"><i class="fa fa-check"></i><b>1.5.2</b> Version Control</a></li>
+<li class="chapter" data-level="1.5.3" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#cicd"><i class="fa fa-check"></i><b>1.5.3</b> CI/CD</a></li>
+<li class="chapter" data-level="1.5.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#infrastructure-as-code"><i class="fa fa-check"></i><b>1.5.4</b> Infrastructure as code</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>2</b> Airflow</a><ul>
 <li class="chapter" data-level="" data-path="airflow.html"><a href="airflow.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="2.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html"><i class="fa fa-check"></i><b>2.1</b> Fundamental concepts</a><ul>
-<li class="chapter" data-level="2.1.1" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#dags"><i class="fa fa-check"></i><b>2.1.1</b> DAGs</a></li>
-<li class="chapter" data-level="2.1.2" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#operators"><i class="fa fa-check"></i><b>2.1.2</b> Operators</a></li>
-<li class="chapter" data-level="2.1.3" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#tasks"><i class="fa fa-check"></i><b>2.1.3</b> Tasks</a></li>
-<li class="chapter" data-level="2.1.4" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#xcom"><i class="fa fa-check"></i><b>2.1.4</b> XCom</a></li>
-<li class="chapter" data-level="2.1.5" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#scheduling"><i class="fa fa-check"></i><b>2.1.5</b> Scheduling</a></li>
-<li class="chapter" data-level="2.1.6" data-path="fundamental-concepts.html"><a href="fundamental-concepts.html#taskflow"><i class="fa fa-check"></i><b>2.1.6</b> Taskflow</a></li>
+<li class="chapter" data-level="2.1" data-path="core-components.html"><a href="core-components.html"><i class="fa fa-check"></i><b>2.1</b> Core Components</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="core-components.html"><a href="core-components.html#dags"><i class="fa fa-check"></i><b>2.1.1</b> DAGs</a></li>
+<li class="chapter" data-level="2.1.2" data-path="core-components.html"><a href="core-components.html#operators"><i class="fa fa-check"></i><b>2.1.2</b> Operators</a></li>
+<li class="chapter" data-level="2.1.3" data-path="core-components.html"><a href="core-components.html#tasks"><i class="fa fa-check"></i><b>2.1.3</b> Tasks</a></li>
+<li class="chapter" data-level="2.1.4" data-path="core-components.html"><a href="core-components.html#xcom"><i class="fa fa-check"></i><b>2.1.4</b> XCom</a></li>
+<li class="chapter" data-level="2.1.5" data-path="core-components.html"><a href="core-components.html#scheduling"><i class="fa fa-check"></i><b>2.1.5</b> Scheduling</a></li>
+<li class="chapter" data-level="2.1.6" data-path="core-components.html"><a href="core-components.html#taskflow"><i class="fa fa-check"></i><b>2.1.6</b> Taskflow</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>2.2</b> Exemplary ML workflow</a></li>
 <li class="chapter" data-level="2.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>2.3</b> Airflow infrastructure</a><ul>
@@ -183,11 +190,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>3</b> MLflow</a><ul>
 <li class="chapter" data-level="" data-path="mlflow.html"><a href="mlflow.html#prerequisites-1"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="3.1" data-path="fundamental-components.html"><a href="fundamental-components.html"><i class="fa fa-check"></i><b>3.1</b> Fundamental Components</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-tracking"><i class="fa fa-check"></i><b>3.1.1</b> MLflow Tracking</a></li>
-<li class="chapter" data-level="3.1.2" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-models"><i class="fa fa-check"></i><b>3.1.2</b> MLflow Models</a></li>
-<li class="chapter" data-level="3.1.3" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-model-registry"><i class="fa fa-check"></i><b>3.1.3</b> MLflow Model Registry</a></li>
-<li class="chapter" data-level="3.1.4" data-path="fundamental-components.html"><a href="fundamental-components.html#mlflow-projects"><i class="fa fa-check"></i><b>3.1.4</b> MLflow Projects</a></li>
+<li class="chapter" data-level="3.1" data-path="core-components-1.html"><a href="core-components-1.html"><i class="fa fa-check"></i><b>3.1</b> Core Components</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-tracking"><i class="fa fa-check"></i><b>3.1.1</b> MLflow Tracking</a></li>
+<li class="chapter" data-level="3.1.2" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-models"><i class="fa fa-check"></i><b>3.1.2</b> MLflow Models</a></li>
+<li class="chapter" data-level="3.1.3" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-model-registry"><i class="fa fa-check"></i><b>3.1.3</b> MLflow Model Registry</a></li>
+<li class="chapter" data-level="3.1.4" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-projects"><i class="fa fa-check"></i><b>3.1.4</b> MLflow Projects</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html"><i class="fa fa-check"></i><b>3.2</b> MLFflow Architecture</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>3.2.1</b> MLflow Tracking Server</a></li>
@@ -197,10 +204,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>4</b> Kubernetes</a><ul>
 <li class="chapter" data-level="" data-path="kubernetes.html"><a href="kubernetes.html#prerequisites-2"><i class="fa fa-check"></i>Prerequisites</a></li>
-<li class="chapter" data-level="4.1" data-path="core-concepts.html"><a href="core-concepts.html"><i class="fa fa-check"></i><b>4.1</b> Core Concepts</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="core-concepts.html"><a href="core-concepts.html#nodes"><i class="fa fa-check"></i><b>4.1.1</b> Nodes</a></li>
-<li class="chapter" data-level="4.1.2" data-path="core-concepts.html"><a href="core-concepts.html#pods"><i class="fa fa-check"></i><b>4.1.2</b> Pods</a></li>
-<li class="chapter" data-level="4.1.3" data-path="core-concepts.html"><a href="core-concepts.html#imperative-declarative-management"><i class="fa fa-check"></i><b>4.1.3</b> Imperative &amp; Declarative Management</a></li>
+<li class="chapter" data-level="4.1" data-path="core-components-2.html"><a href="core-components-2.html"><i class="fa fa-check"></i><b>4.1</b> Core Components</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="core-components-2.html"><a href="core-components-2.html#nodes"><i class="fa fa-check"></i><b>4.1.1</b> Nodes</a></li>
+<li class="chapter" data-level="4.1.2" data-path="core-components-2.html"><a href="core-components-2.html#pods"><i class="fa fa-check"></i><b>4.1.2</b> Pods</a></li>
+<li class="chapter" data-level="4.1.3" data-path="core-components-2.html"><a href="core-components-2.html#imperative-declarative-management"><i class="fa fa-check"></i><b>4.1.3</b> Imperative &amp; Declarative Management</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>4.2</b> Application Deployment &amp; Design</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>4.2.1</b> Deployments</a></li>
@@ -239,11 +246,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>5.1.4</b> terraform apply</a></li>
 <li class="chapter" data-level="5.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>5.1.5</b> terraform destroy</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html"><i class="fa fa-check"></i><b>5.2</b> Core Concepts</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="core-concepts-1.html"><a href="core-concepts-1.html#providers"><i class="fa fa-check"></i><b>5.2.1</b> Providers</a></li>
-<li class="chapter" data-level="5.2.2" data-path="core-concepts-1.html"><a href="core-concepts-1.html#resources"><i class="fa fa-check"></i><b>5.2.2</b> Resources</a></li>
-<li class="chapter" data-level="5.2.3" data-path="core-concepts-1.html"><a href="core-concepts-1.html#data-sources"><i class="fa fa-check"></i><b>5.2.3</b> Data Sources</a></li>
-<li class="chapter" data-level="5.2.4" data-path="core-concepts-1.html"><a href="core-concepts-1.html#state"><i class="fa fa-check"></i><b>5.2.4</b> State</a></li>
+<li class="chapter" data-level="5.2" data-path="core-components-3.html"><a href="core-components-3.html"><i class="fa fa-check"></i><b>5.2</b> Core Components</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="core-components-3.html"><a href="core-components-3.html#providers"><i class="fa fa-check"></i><b>5.2.1</b> Providers</a></li>
+<li class="chapter" data-level="5.2.2" data-path="core-components-3.html"><a href="core-components-3.html#resources"><i class="fa fa-check"></i><b>5.2.2</b> Resources</a></li>
+<li class="chapter" data-level="5.2.3" data-path="core-components-3.html"><a href="core-components-3.html#data-sources"><i class="fa fa-check"></i><b>5.2.3</b> Data Sources</a></li>
+<li class="chapter" data-level="5.2.4" data-path="core-components-3.html"><a href="core-components-3.html#state"><i class="fa fa-check"></i><b>5.2.4</b> State</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>5.3</b> Modules</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>5.3.1</b> Input Variables</a></li>
@@ -288,114 +295,114 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="emptydir-volume" class="section level3 hasAnchor">
 <h3><span class="header-section-number">4.4.1</span> EmptyDir Volume<a href="volume-storage.html#emptydir-volume" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>An EmptyDir Volume is initially empty (as the name suggests). The volume is a temporary directory that shares the pods lifetime. If the pod dies, the contents of the emptyDir are lost as well. The EmptyDir is also used to share data between containers inside a Pod during runtime.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb58-1"><a href="volume-storage.html#cb58-1"></a><span class="co"># volume_empty-dir.yaml</span></span>
-<span id="cb58-2"><a href="volume-storage.html#cb58-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
-<span id="cb58-3"><a href="volume-storage.html#cb58-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
-<span id="cb58-4"><a href="volume-storage.html#cb58-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb58-5"><a href="volume-storage.html#cb58-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> emptydir-volume</span></span>
-<span id="cb58-6"><a href="volume-storage.html#cb58-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb58-7"><a href="volume-storage.html#cb58-7"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb58-8"><a href="volume-storage.html#cb58-8"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
-<span id="cb58-9"><a href="volume-storage.html#cb58-9"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> emptydir-volume</span></span>
-<span id="cb58-10"><a href="volume-storage.html#cb58-10"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
-<span id="cb58-11"><a href="volume-storage.html#cb58-11"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb58-12"><a href="volume-storage.html#cb58-12"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
-<span id="cb58-13"><a href="volume-storage.html#cb58-13"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> emptydir-volume</span></span>
-<span id="cb58-14"><a href="volume-storage.html#cb58-14"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb58-15"><a href="volume-storage.html#cb58-15"></a><span class="co">      # add a volume to the deployment</span></span>
-<span id="cb58-16"><a href="volume-storage.html#cb58-16"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
-<span id="cb58-17"><a href="volume-storage.html#cb58-17"></a><span class="co">        # mimics a caching memory type</span></span>
-<span id="cb58-18"><a href="volume-storage.html#cb58-18"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cache</span></span>
-<span id="cb58-19"><a href="volume-storage.html#cb58-19"></a><span class="co">          # specify the volume type and the temp directory</span></span>
-<span id="cb58-20"><a href="volume-storage.html#cb58-20"></a><span class="at">          </span><span class="fu">emptyDir</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span><span class="at">    </span></span>
-<span id="cb58-21"><a href="volume-storage.html#cb58-21"></a><span class="co">        # of course there could also be a second volume added</span></span>
-<span id="cb58-22"><a href="volume-storage.html#cb58-22"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
-<span id="cb58-23"><a href="volume-storage.html#cb58-23"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> container-one</span></span>
-<span id="cb58-24"><a href="volume-storage.html#cb58-24"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox </span></span>
-<span id="cb58-25"><a href="volume-storage.html#cb58-25"></a><span class="co">        # image used for testing purposes</span></span>
-<span id="cb58-26"><a href="volume-storage.html#cb58-26"></a><span class="co">        # since the testing image immediately dies, we want to</span></span>
-<span id="cb58-27"><a href="volume-storage.html#cb58-27"></a><span class="co">        # execute an own sh command to interact with the volume</span></span>
-<span id="cb58-28"><a href="volume-storage.html#cb58-28"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
-<span id="cb58-29"><a href="volume-storage.html#cb58-29"></a><span class="co">          # The name must match the name of the volume</span></span>
-<span id="cb58-30"><a href="volume-storage.html#cb58-30"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cache</span></span>
-<span id="cb58-31"><a href="volume-storage.html#cb58-31"></a><span class="co">            # interal reference of the pod </span></span>
-<span id="cb58-32"><a href="volume-storage.html#cb58-32"></a><span class="at">            </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /foo</span></span>
-<span id="cb58-33"><a href="volume-storage.html#cb58-33"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb58-34"><a href="volume-storage.html#cb58-34"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;/bin/sh&quot;</span></span>
-<span id="cb58-35"><a href="volume-storage.html#cb58-35"></a><span class="at">        </span><span class="fu">args</span><span class="kw">:</span></span>
-<span id="cb58-36"><a href="volume-storage.html#cb58-36"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;-c&quot;</span></span>
-<span id="cb58-37"><a href="volume-storage.html#cb58-37"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;touch /foo/bar.txt &amp;&amp; sleep 3600&quot;</span></span>
-<span id="cb58-38"><a href="volume-storage.html#cb58-38"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb58-39"><a href="volume-storage.html#cb58-39"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
-<span id="cb58-40"><a href="volume-storage.html#cb58-40"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
-<span id="cb58-41"><a href="volume-storage.html#cb58-41"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
-<span id="cb58-42"><a href="volume-storage.html#cb58-42"></a><span class="co">        # create a second container with a different internal mountPath</span></span>
-<span id="cb58-43"><a href="volume-storage.html#cb58-43"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> container-two</span></span>
-<span id="cb58-44"><a href="volume-storage.html#cb58-44"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox</span></span>
-<span id="cb58-45"><a href="volume-storage.html#cb58-45"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
-<span id="cb58-46"><a href="volume-storage.html#cb58-46"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cache</span></span>
-<span id="cb58-47"><a href="volume-storage.html#cb58-47"></a><span class="at">            </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /footwo</span></span>
-<span id="cb58-48"><a href="volume-storage.html#cb58-48"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span></span>
-<span id="cb58-49"><a href="volume-storage.html#cb58-49"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;sleep&quot;</span></span>
-<span id="cb58-50"><a href="volume-storage.html#cb58-50"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;3600&quot;</span></span>
-<span id="cb58-51"><a href="volume-storage.html#cb58-51"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb58-52"><a href="volume-storage.html#cb58-52"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
-<span id="cb58-53"><a href="volume-storage.html#cb58-53"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
-<span id="cb58-54"><a href="volume-storage.html#cb58-54"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb59-1"><a href="volume-storage.html#cb59-1"></a><span class="co"># volume_empty-dir.yaml</span></span>
+<span id="cb59-2"><a href="volume-storage.html#cb59-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb59-3"><a href="volume-storage.html#cb59-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb59-4"><a href="volume-storage.html#cb59-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb59-5"><a href="volume-storage.html#cb59-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> emptydir-volume</span></span>
+<span id="cb59-6"><a href="volume-storage.html#cb59-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb59-7"><a href="volume-storage.html#cb59-7"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb59-8"><a href="volume-storage.html#cb59-8"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb59-9"><a href="volume-storage.html#cb59-9"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> emptydir-volume</span></span>
+<span id="cb59-10"><a href="volume-storage.html#cb59-10"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb59-11"><a href="volume-storage.html#cb59-11"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb59-12"><a href="volume-storage.html#cb59-12"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb59-13"><a href="volume-storage.html#cb59-13"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> emptydir-volume</span></span>
+<span id="cb59-14"><a href="volume-storage.html#cb59-14"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb59-15"><a href="volume-storage.html#cb59-15"></a><span class="co">      # add a volume to the deployment</span></span>
+<span id="cb59-16"><a href="volume-storage.html#cb59-16"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb59-17"><a href="volume-storage.html#cb59-17"></a><span class="co">        # mimics a caching memory type</span></span>
+<span id="cb59-18"><a href="volume-storage.html#cb59-18"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cache</span></span>
+<span id="cb59-19"><a href="volume-storage.html#cb59-19"></a><span class="co">          # specify the volume type and the temp directory</span></span>
+<span id="cb59-20"><a href="volume-storage.html#cb59-20"></a><span class="at">          </span><span class="fu">emptyDir</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span><span class="at">    </span></span>
+<span id="cb59-21"><a href="volume-storage.html#cb59-21"></a><span class="co">        # of course there could also be a second volume added</span></span>
+<span id="cb59-22"><a href="volume-storage.html#cb59-22"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb59-23"><a href="volume-storage.html#cb59-23"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> container-one</span></span>
+<span id="cb59-24"><a href="volume-storage.html#cb59-24"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox </span></span>
+<span id="cb59-25"><a href="volume-storage.html#cb59-25"></a><span class="co">        # image used for testing purposes</span></span>
+<span id="cb59-26"><a href="volume-storage.html#cb59-26"></a><span class="co">        # since the testing image immediately dies, we want to</span></span>
+<span id="cb59-27"><a href="volume-storage.html#cb59-27"></a><span class="co">        # execute an own sh command to interact with the volume</span></span>
+<span id="cb59-28"><a href="volume-storage.html#cb59-28"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb59-29"><a href="volume-storage.html#cb59-29"></a><span class="co">          # The name must match the name of the volume</span></span>
+<span id="cb59-30"><a href="volume-storage.html#cb59-30"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cache</span></span>
+<span id="cb59-31"><a href="volume-storage.html#cb59-31"></a><span class="co">            # interal reference of the pod </span></span>
+<span id="cb59-32"><a href="volume-storage.html#cb59-32"></a><span class="at">            </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /foo</span></span>
+<span id="cb59-33"><a href="volume-storage.html#cb59-33"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb59-34"><a href="volume-storage.html#cb59-34"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;/bin/sh&quot;</span></span>
+<span id="cb59-35"><a href="volume-storage.html#cb59-35"></a><span class="at">        </span><span class="fu">args</span><span class="kw">:</span></span>
+<span id="cb59-36"><a href="volume-storage.html#cb59-36"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;-c&quot;</span></span>
+<span id="cb59-37"><a href="volume-storage.html#cb59-37"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;touch /foo/bar.txt &amp;&amp; sleep 3600&quot;</span></span>
+<span id="cb59-38"><a href="volume-storage.html#cb59-38"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb59-39"><a href="volume-storage.html#cb59-39"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb59-40"><a href="volume-storage.html#cb59-40"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb59-41"><a href="volume-storage.html#cb59-41"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb59-42"><a href="volume-storage.html#cb59-42"></a><span class="co">        # create a second container with a different internal mountPath</span></span>
+<span id="cb59-43"><a href="volume-storage.html#cb59-43"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> container-two</span></span>
+<span id="cb59-44"><a href="volume-storage.html#cb59-44"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox</span></span>
+<span id="cb59-45"><a href="volume-storage.html#cb59-45"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb59-46"><a href="volume-storage.html#cb59-46"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> cache</span></span>
+<span id="cb59-47"><a href="volume-storage.html#cb59-47"></a><span class="at">            </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /footwo</span></span>
+<span id="cb59-48"><a href="volume-storage.html#cb59-48"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb59-49"><a href="volume-storage.html#cb59-49"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;sleep&quot;</span></span>
+<span id="cb59-50"><a href="volume-storage.html#cb59-50"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;3600&quot;</span></span>
+<span id="cb59-51"><a href="volume-storage.html#cb59-51"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb59-52"><a href="volume-storage.html#cb59-52"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb59-53"><a href="volume-storage.html#cb59-53"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb59-54"><a href="volume-storage.html#cb59-54"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span></code></pre></div>
 <p>As stated in the yaml, the busybox image immediately dies. If the Containers where created without the shell commands, the pod would be in a crashloopbackoff-state. To prevent the Pod to do so it is caught with the <code>sleep</code>commands until it scales down. Accessing a container using <code>kubectl exec</code>, it can be checked whether the foo/bar.txt has been created in <em>container-one</em>.</p>
 <p>When checking the second container <em>container-two</em>, the same file should be visible as well. This is because both containers refer to the same volume. Keep in mind though that the mountPath of the <em>container-two</em> is different.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb59-1"><a href="volume-storage.html#cb59-1"></a><span class="co"># get in container</span></span>
-<span id="cb59-2"><a href="volume-storage.html#cb59-2"></a><span class="ex">kubectl</span> exec -it <span class="op">&lt;</span>emptydir-volume-name<span class="op">&gt;</span> -c container-one -- sh</span>
-<span id="cb59-3"><a href="volume-storage.html#cb59-3"></a><span class="co"># check whether bar.txt is present</span></span>
-<span id="cb59-4"><a href="volume-storage.html#cb59-4"></a><span class="fu">ls</span></span>
-<span id="cb59-5"><a href="volume-storage.html#cb59-5"></a></span>
-<span id="cb59-6"><a href="volume-storage.html#cb59-6"></a><span class="co"># accessing the second container, there is also a file foo/bar.txt</span></span>
-<span id="cb59-7"><a href="volume-storage.html#cb59-7"></a><span class="co"># remember, both containers share the same volume</span></span>
-<span id="cb59-8"><a href="volume-storage.html#cb59-8"></a><span class="ex">kubectl</span> exec -it <span class="op">&lt;</span>emptydir-volume-name<span class="op">&gt;</span> -c container-two -- sh</span>
-<span id="cb59-9"><a href="volume-storage.html#cb59-9"></a><span class="fu">ls</span></span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb60-1"><a href="volume-storage.html#cb60-1"></a><span class="co"># get in container</span></span>
+<span id="cb60-2"><a href="volume-storage.html#cb60-2"></a><span class="ex">kubectl</span> exec -it <span class="op">&lt;</span>emptydir-volume-name<span class="op">&gt;</span> -c container-one -- sh</span>
+<span id="cb60-3"><a href="volume-storage.html#cb60-3"></a><span class="co"># check whether bar.txt is present</span></span>
+<span id="cb60-4"><a href="volume-storage.html#cb60-4"></a><span class="fu">ls</span></span>
+<span id="cb60-5"><a href="volume-storage.html#cb60-5"></a></span>
+<span id="cb60-6"><a href="volume-storage.html#cb60-6"></a><span class="co"># accessing the second container, there is also a file foo/bar.txt</span></span>
+<span id="cb60-7"><a href="volume-storage.html#cb60-7"></a><span class="co"># remember, both containers share the same volume</span></span>
+<span id="cb60-8"><a href="volume-storage.html#cb60-8"></a><span class="ex">kubectl</span> exec -it <span class="op">&lt;</span>emptydir-volume-name<span class="op">&gt;</span> -c container-two -- sh</span>
+<span id="cb60-9"><a href="volume-storage.html#cb60-9"></a><span class="fu">ls</span></span></code></pre></div>
 </div>
 <div id="hostpath-volume" class="section level3 hasAnchor">
 <h3><span class="header-section-number">4.4.2</span> HostPath Volume<a href="volume-storage.html#hostpath-volume" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>THe HostPath Volume type is used when an application needs to access the underlying host file system, meaning the file system of the node. HostPath represents a pre-existing file or directory on the host machine. However, this can be quite dangerous and should be used with caution. If having the right access, the application can interfere and basically mess up the host. It is therefore recommended to set the rights to read only to prevent this from happening.</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb60-1"><a href="volume-storage.html#cb60-1"></a><span class="co"># volume_hostpath.yaml</span></span>
-<span id="cb60-2"><a href="volume-storage.html#cb60-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
-<span id="cb60-3"><a href="volume-storage.html#cb60-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
-<span id="cb60-4"><a href="volume-storage.html#cb60-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb60-5"><a href="volume-storage.html#cb60-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> hostpath-volume</span></span>
-<span id="cb60-6"><a href="volume-storage.html#cb60-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb60-7"><a href="volume-storage.html#cb60-7"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb60-8"><a href="volume-storage.html#cb60-8"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
-<span id="cb60-9"><a href="volume-storage.html#cb60-9"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> hostpath-volume</span></span>
-<span id="cb60-10"><a href="volume-storage.html#cb60-10"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
-<span id="cb60-11"><a href="volume-storage.html#cb60-11"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb60-12"><a href="volume-storage.html#cb60-12"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
-<span id="cb60-13"><a href="volume-storage.html#cb60-13"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> hostpath-volume</span></span>
-<span id="cb60-14"><a href="volume-storage.html#cb60-14"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb60-15"><a href="volume-storage.html#cb60-15"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
-<span id="cb60-16"><a href="volume-storage.html#cb60-16"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> var-log</span></span>
-<span id="cb60-17"><a href="volume-storage.html#cb60-17"></a><span class="co">          # specify the HostPath volume type</span></span>
-<span id="cb60-18"><a href="volume-storage.html#cb60-18"></a><span class="at">          </span><span class="fu">hostPath</span><span class="kw">:</span></span>
-<span id="cb60-19"><a href="volume-storage.html#cb60-19"></a><span class="at">            </span><span class="fu">path</span><span class="kw">:</span><span class="at"> /var/log</span></span>
-<span id="cb60-20"><a href="volume-storage.html#cb60-20"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
-<span id="cb60-21"><a href="volume-storage.html#cb60-21"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> container-one</span></span>
-<span id="cb60-22"><a href="volume-storage.html#cb60-22"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox </span></span>
-<span id="cb60-23"><a href="volume-storage.html#cb60-23"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
-<span id="cb60-24"><a href="volume-storage.html#cb60-24"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /var/log</span></span>
-<span id="cb60-25"><a href="volume-storage.html#cb60-25"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> var-log</span></span>
-<span id="cb60-26"><a href="volume-storage.html#cb60-26"></a><span class="at">            </span><span class="fu">readOnly</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb60-27"><a href="volume-storage.html#cb60-27"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb60-28"><a href="volume-storage.html#cb60-28"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;sleep&quot;</span></span>
-<span id="cb60-29"><a href="volume-storage.html#cb60-29"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;3600&quot;</span></span>
-<span id="cb60-30"><a href="volume-storage.html#cb60-30"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb60-31"><a href="volume-storage.html#cb60-31"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
-<span id="cb60-32"><a href="volume-storage.html#cb60-32"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
-<span id="cb60-33"><a href="volume-storage.html#cb60-33"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb61-1"><a href="volume-storage.html#cb61-1"></a><span class="co"># volume_hostpath.yaml</span></span>
+<span id="cb61-2"><a href="volume-storage.html#cb61-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb61-3"><a href="volume-storage.html#cb61-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb61-4"><a href="volume-storage.html#cb61-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb61-5"><a href="volume-storage.html#cb61-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> hostpath-volume</span></span>
+<span id="cb61-6"><a href="volume-storage.html#cb61-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb61-7"><a href="volume-storage.html#cb61-7"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb61-8"><a href="volume-storage.html#cb61-8"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb61-9"><a href="volume-storage.html#cb61-9"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> hostpath-volume</span></span>
+<span id="cb61-10"><a href="volume-storage.html#cb61-10"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb61-11"><a href="volume-storage.html#cb61-11"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb61-12"><a href="volume-storage.html#cb61-12"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb61-13"><a href="volume-storage.html#cb61-13"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> hostpath-volume</span></span>
+<span id="cb61-14"><a href="volume-storage.html#cb61-14"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb61-15"><a href="volume-storage.html#cb61-15"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb61-16"><a href="volume-storage.html#cb61-16"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> var-log</span></span>
+<span id="cb61-17"><a href="volume-storage.html#cb61-17"></a><span class="co">          # specify the HostPath volume type</span></span>
+<span id="cb61-18"><a href="volume-storage.html#cb61-18"></a><span class="at">          </span><span class="fu">hostPath</span><span class="kw">:</span></span>
+<span id="cb61-19"><a href="volume-storage.html#cb61-19"></a><span class="at">            </span><span class="fu">path</span><span class="kw">:</span><span class="at"> /var/log</span></span>
+<span id="cb61-20"><a href="volume-storage.html#cb61-20"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb61-21"><a href="volume-storage.html#cb61-21"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> container-one</span></span>
+<span id="cb61-22"><a href="volume-storage.html#cb61-22"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> busybox </span></span>
+<span id="cb61-23"><a href="volume-storage.html#cb61-23"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb61-24"><a href="volume-storage.html#cb61-24"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /var/log</span></span>
+<span id="cb61-25"><a href="volume-storage.html#cb61-25"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> var-log</span></span>
+<span id="cb61-26"><a href="volume-storage.html#cb61-26"></a><span class="at">            </span><span class="fu">readOnly</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb61-27"><a href="volume-storage.html#cb61-27"></a><span class="at">        </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb61-28"><a href="volume-storage.html#cb61-28"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;sleep&quot;</span></span>
+<span id="cb61-29"><a href="volume-storage.html#cb61-29"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;3600&quot;</span></span>
+<span id="cb61-30"><a href="volume-storage.html#cb61-30"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb61-31"><a href="volume-storage.html#cb61-31"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb61-32"><a href="volume-storage.html#cb61-32"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb61-33"><a href="volume-storage.html#cb61-33"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span></code></pre></div>
 <p>Similar to the EmptyDir Volume example, you can check the implementation of the HostPath Volume by accessing the volume. When comparing the file structures of the <em>hostpath-volume</em> deployment and the directory <code>path: /var/log</code> on the node the deployment is running, they should be the same. All the changes made to either on of them will make the changes available on the other. By making changes via the pod we can directly influence the Node. Again, this is why it is important to keep it read-only.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb61-1"><a href="volume-storage.html#cb61-1"></a><span class="co"># access the </span></span>
-<span id="cb61-2"><a href="volume-storage.html#cb61-2"></a><span class="ex">kubectl</span> exec -it <span class="op">&lt;</span>hostpath-volume-name<span class="op">&gt;</span> -- sh</span>
-<span id="cb61-3"><a href="volume-storage.html#cb61-3"></a></span>
-<span id="cb61-4"><a href="volume-storage.html#cb61-4"></a><span class="co"># ssh into node</span></span>
-<span id="cb61-5"><a href="volume-storage.html#cb61-5"></a><span class="ex">minikube</span> ssh <span class="op">&lt;</span>node<span class="op">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb62-1"><a href="volume-storage.html#cb62-1"></a><span class="co"># access the </span></span>
+<span id="cb62-2"><a href="volume-storage.html#cb62-2"></a><span class="ex">kubectl</span> exec -it <span class="op">&lt;</span>hostpath-volume-name<span class="op">&gt;</span> -- sh</span>
+<span id="cb62-3"><a href="volume-storage.html#cb62-3"></a></span>
+<span id="cb62-4"><a href="volume-storage.html#cb62-4"></a><span class="co"># ssh into node</span></span>
+<span id="cb62-5"><a href="volume-storage.html#cb62-5"></a><span class="ex">minikube</span> ssh <span class="op">&lt;</span>node<span class="op">&gt;</span></span></code></pre></div>
 </div>
 <div id="persistent-volumes" class="section level3 hasAnchor">
 <h3><span class="header-section-number">4.4.3</span> Persistent Volumes<a href="volume-storage.html#persistent-volumes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -410,7 +417,7 @@ K8s is running on an AWS EKS Cluster and AWS EBS Volumes attached to it. The Con
 <p>If a Pods or Deployments want to consume storage of the PV, they need to get access to the PV. This is done via a so called persistent volume claim (PVC).</p>
 <p>All of this is part of a Persistent Volume Subsystem. The Persistent Volume Subsystem provides an API for users and administrators. The API abstracts details of how storage is provided from how it is consumed. Again, the provisioning of storage is done via a PV and the consumption via a PCV.</p>
 <div class="figure">
-<img src="images/04-Kubernetes/persistent-volume-subsystem.png" alt="" />
+<img src="images/05-Kubernetes/persistent-volume-subsystem.png" alt="" />
 <p class="caption">Persistent Volume Subsystem</p>
 </div>
 <p>Listed below are again the three main components when dealing with Persistent Volumes in K8s</p>
@@ -421,94 +428,94 @@ K8s is running on an AWS EKS Cluster and AWS EBS Volumes attached to it. The Con
 </ul>
 <p>So how are Persistent Volumes specified in our deployments yamls? As there are <code>kind:Pod</code> ressources, there can similarly <code>kind:PersistentVolume</code> and <code>kind:PersistentVolumeClaim</code> be specified. At first, a PV is created. As we run on minikube and not on the cloud, a local storage in the node is allocated. Second, a PVC is created requesting a certain amount of that storage. This PVC is then linked in the specifications of a Deployment to allow its containers to utilized the storage.</p>
 <p>Before applying the yaml-files we need to allocate the local storage by claiming storage on the node and set the paths specified in the yamls. To do this, we ssh into the node using <code>minikube ssh</code>. We can then create a specific path on the node such as <code>/mnt/data/</code>. We might also create a file in it to test accessing it when creating a PVC to a Pod. Since we do not know yet on what node the Pod is scheduled, we should create the directory on both nodes. Below are all steps listed again.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb62-1"><a href="volume-storage.html#cb62-1"></a><span class="co"># ssh into node</span></span>
-<span id="cb62-2"><a href="volume-storage.html#cb62-2"></a><span class="ex">minikube</span> ssh</span>
-<span id="cb62-3"><a href="volume-storage.html#cb62-3"></a><span class="co"># create path</span></span>
-<span id="cb62-4"><a href="volume-storage.html#cb62-4"></a><span class="fu">sudo</span> mkdir /mnt/data</span>
-<span id="cb62-5"><a href="volume-storage.html#cb62-5"></a><span class="co"># create a file with text</span></span>
-<span id="cb62-6"><a href="volume-storage.html#cb62-6"></a><span class="fu">sudo</span> sh -c <span class="st">&quot;echo &#39;this is a pvc test&#39; &gt; /mnt/data/index.html&quot;</span></span>
-<span id="cb62-7"><a href="volume-storage.html#cb62-7"></a><span class="co"># do this on both nodes as pod can land on either one of them</span></span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb63-1"><a href="volume-storage.html#cb63-1"></a><span class="co"># ssh into node</span></span>
+<span id="cb63-2"><a href="volume-storage.html#cb63-2"></a><span class="ex">minikube</span> ssh</span>
+<span id="cb63-3"><a href="volume-storage.html#cb63-3"></a><span class="co"># create path</span></span>
+<span id="cb63-4"><a href="volume-storage.html#cb63-4"></a><span class="fu">sudo</span> mkdir /mnt/data</span>
+<span id="cb63-5"><a href="volume-storage.html#cb63-5"></a><span class="co"># create a file with text</span></span>
+<span id="cb63-6"><a href="volume-storage.html#cb63-6"></a><span class="fu">sudo</span> sh -c <span class="st">&quot;echo &#39;this is a pvc test&#39; &gt; /mnt/data/index.html&quot;</span></span>
+<span id="cb63-7"><a href="volume-storage.html#cb63-7"></a><span class="co"># do this on both nodes as pod can land on either one of them</span></span></code></pre></div>
 <p>Afterward we can apply the yaml files and create a PV, PVC, and the corresponding Deployment utilizing the PVC. The yaml code below shows this process.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb63-1"><a href="volume-storage.html#cb63-1"></a><span class="co"># volume_persistent-volume.yaml</span></span>
-<span id="cb63-2"><a href="volume-storage.html#cb63-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb63-3"><a href="volume-storage.html#cb63-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> PersistentVolume</span></span>
-<span id="cb63-4"><a href="volume-storage.html#cb63-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb63-5"><a href="volume-storage.html#cb63-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> mypv</span></span>
-<span id="cb63-6"><a href="volume-storage.html#cb63-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb63-7"><a href="volume-storage.html#cb63-7"></a><span class="co">  # specifiy the capacity of the PersistentVolume</span></span>
-<span id="cb63-8"><a href="volume-storage.html#cb63-8"></a><span class="at">  </span><span class="fu">capacity</span><span class="kw">:</span></span>
-<span id="cb63-9"><a href="volume-storage.html#cb63-9"></a><span class="at">    </span><span class="fu">storage</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;100Mi&quot;</span></span>
-<span id="cb63-10"><a href="volume-storage.html#cb63-10"></a><span class="at">  </span><span class="fu">volumeMode</span><span class="kw">:</span><span class="at"> Filesystem</span></span>
-<span id="cb63-11"><a href="volume-storage.html#cb63-11"></a><span class="at">  </span><span class="fu">accessModes</span><span class="kw">:</span></span>
-<span id="cb63-12"><a href="volume-storage.html#cb63-12"></a><span class="at">    </span><span class="kw">-</span><span class="at"> ReadWriteOnce</span></span>
-<span id="cb63-13"><a href="volume-storage.html#cb63-13"></a><span class="at">  </span><span class="fu">persistentVolumeReclaimPolicy</span><span class="kw">:</span><span class="at"> Recycle</span></span>
-<span id="cb63-14"><a href="volume-storage.html#cb63-14"></a><span class="at">  </span><span class="fu">storageClassName</span><span class="kw">:</span><span class="at"> manual</span></span>
-<span id="cb63-15"><a href="volume-storage.html#cb63-15"></a><span class="at">  </span><span class="fu">hostPath</span><span class="kw">:</span></span>
-<span id="cb63-16"><a href="volume-storage.html#cb63-16"></a><span class="at">    </span><span class="fu">path</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;/mnt/data&quot;</span></span>
-<span id="cb63-17"><a href="volume-storage.html#cb63-17"></a><span class="co">    # specify the hostPath on the node</span></span>
-<span id="cb63-18"><a href="volume-storage.html#cb63-18"></a><span class="co">    # that&#39;s the path we specified on our node</span></span>
-<span id="cb63-19"><a href="volume-storage.html#cb63-19"></a><span class="pp">---</span></span>
-<span id="cb63-20"><a href="volume-storage.html#cb63-20"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb63-21"><a href="volume-storage.html#cb63-21"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> PersistentVolumeClaim</span></span>
-<span id="cb63-22"><a href="volume-storage.html#cb63-22"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb63-23"><a href="volume-storage.html#cb63-23"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> mypvc</span></span>
-<span id="cb63-24"><a href="volume-storage.html#cb63-24"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb63-25"><a href="volume-storage.html#cb63-25"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb63-26"><a href="volume-storage.html#cb63-26"></a><span class="at">    </span><span class="fu">requests</span><span class="kw">:</span></span>
-<span id="cb63-27"><a href="volume-storage.html#cb63-27"></a><span class="co">      # we request the same as the PV is specified</span></span>
-<span id="cb63-28"><a href="volume-storage.html#cb63-28"></a><span class="co">      # so we basically request everything</span></span>
-<span id="cb63-29"><a href="volume-storage.html#cb63-29"></a><span class="at">      </span><span class="fu">storage</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;100Mi&quot;</span></span>
-<span id="cb63-30"><a href="volume-storage.html#cb63-30"></a><span class="at">  </span><span class="fu">volumeMode</span><span class="kw">:</span><span class="at"> Filesystem</span></span>
-<span id="cb63-31"><a href="volume-storage.html#cb63-31"></a><span class="at">  </span><span class="fu">storageClassName</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;manual&quot;</span></span>
-<span id="cb63-32"><a href="volume-storage.html#cb63-32"></a><span class="at">  </span><span class="fu">accessModes</span><span class="kw">:</span></span>
-<span id="cb63-33"><a href="volume-storage.html#cb63-33"></a><span class="at">    </span><span class="kw">-</span><span class="at"> ReadWriteOnce</span></span>
-<span id="cb63-34"><a href="volume-storage.html#cb63-34"></a><span class="pp">---</span></span>
-<span id="cb63-35"><a href="volume-storage.html#cb63-35"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
-<span id="cb63-36"><a href="volume-storage.html#cb63-36"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
-<span id="cb63-37"><a href="volume-storage.html#cb63-37"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb63-38"><a href="volume-storage.html#cb63-38"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> pv-pvc-deployment</span></span>
-<span id="cb63-39"><a href="volume-storage.html#cb63-39"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb63-40"><a href="volume-storage.html#cb63-40"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb63-41"><a href="volume-storage.html#cb63-41"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
-<span id="cb63-42"><a href="volume-storage.html#cb63-42"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
-<span id="cb63-43"><a href="volume-storage.html#cb63-43"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
-<span id="cb63-44"><a href="volume-storage.html#cb63-44"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb63-45"><a href="volume-storage.html#cb63-45"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
-<span id="cb63-46"><a href="volume-storage.html#cb63-46"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
-<span id="cb63-47"><a href="volume-storage.html#cb63-47"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb63-48"><a href="volume-storage.html#cb63-48"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
-<span id="cb63-49"><a href="volume-storage.html#cb63-49"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> data</span></span>
-<span id="cb63-50"><a href="volume-storage.html#cb63-50"></a><span class="co">          # define the use of the PVC by specifying the name</span></span>
-<span id="cb63-51"><a href="volume-storage.html#cb63-51"></a><span class="co">          # specify the pod/deployment can use the PVC</span></span>
-<span id="cb63-52"><a href="volume-storage.html#cb63-52"></a><span class="at">          </span><span class="fu">persistentVolumeClaim</span><span class="kw">:</span></span>
-<span id="cb63-53"><a href="volume-storage.html#cb63-53"></a><span class="at">            </span><span class="fu">claimName</span><span class="kw">:</span><span class="at"> mypvc</span></span>
-<span id="cb63-54"><a href="volume-storage.html#cb63-54"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
-<span id="cb63-55"><a href="volume-storage.html#cb63-55"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
-<span id="cb63-56"><a href="volume-storage.html#cb63-56"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> nginx:latest</span></span>
-<span id="cb63-57"><a href="volume-storage.html#cb63-57"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
-<span id="cb63-58"><a href="volume-storage.html#cb63-58"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;/usr/share/nginx/html&quot;</span></span>
-<span id="cb63-59"><a href="volume-storage.html#cb63-59"></a><span class="co">            # since the PVC is stated, the container needs to </span></span>
-<span id="cb63-60"><a href="volume-storage.html#cb63-60"></a><span class="co">            # mount inside it</span></span>
-<span id="cb63-61"><a href="volume-storage.html#cb63-61"></a><span class="co">            # name is equal to the pvc name specified</span></span>
-<span id="cb63-62"><a href="volume-storage.html#cb63-62"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> data</span></span>
-<span id="cb63-63"><a href="volume-storage.html#cb63-63"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb63-64"><a href="volume-storage.html#cb63-64"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
-<span id="cb63-65"><a href="volume-storage.html#cb63-65"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
-<span id="cb63-66"><a href="volume-storage.html#cb63-66"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
-<span id="cb63-67"><a href="volume-storage.html#cb63-67"></a><span class="at">        </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb63-68"><a href="volume-storage.html#cb63-68"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
-<span id="cb63-69"><a href="volume-storage.html#cb63-69"></a><span class="pp">---</span></span>
-<span id="cb63-70"><a href="volume-storage.html#cb63-70"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
-<span id="cb63-71"><a href="volume-storage.html#cb63-71"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
-<span id="cb63-72"><a href="volume-storage.html#cb63-72"></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb63-73"><a href="volume-storage.html#cb63-73"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
-<span id="cb63-74"><a href="volume-storage.html#cb63-74"></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb63-75"><a href="volume-storage.html#cb63-75"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> LoadBalancer</span></span>
-<span id="cb63-76"><a href="volume-storage.html#cb63-76"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
-<span id="cb63-77"><a href="volume-storage.html#cb63-77"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
-<span id="cb63-78"><a href="volume-storage.html#cb63-78"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
-<span id="cb63-79"><a href="volume-storage.html#cb63-79"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
-<span id="cb63-80"><a href="volume-storage.html#cb63-80"></a><span class="at">    </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb64-1"><a href="volume-storage.html#cb64-1"></a><span class="co"># volume_persistent-volume.yaml</span></span>
+<span id="cb64-2"><a href="volume-storage.html#cb64-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb64-3"><a href="volume-storage.html#cb64-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> PersistentVolume</span></span>
+<span id="cb64-4"><a href="volume-storage.html#cb64-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb64-5"><a href="volume-storage.html#cb64-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> mypv</span></span>
+<span id="cb64-6"><a href="volume-storage.html#cb64-6"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb64-7"><a href="volume-storage.html#cb64-7"></a><span class="co">  # specifiy the capacity of the PersistentVolume</span></span>
+<span id="cb64-8"><a href="volume-storage.html#cb64-8"></a><span class="at">  </span><span class="fu">capacity</span><span class="kw">:</span></span>
+<span id="cb64-9"><a href="volume-storage.html#cb64-9"></a><span class="at">    </span><span class="fu">storage</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;100Mi&quot;</span></span>
+<span id="cb64-10"><a href="volume-storage.html#cb64-10"></a><span class="at">  </span><span class="fu">volumeMode</span><span class="kw">:</span><span class="at"> Filesystem</span></span>
+<span id="cb64-11"><a href="volume-storage.html#cb64-11"></a><span class="at">  </span><span class="fu">accessModes</span><span class="kw">:</span></span>
+<span id="cb64-12"><a href="volume-storage.html#cb64-12"></a><span class="at">    </span><span class="kw">-</span><span class="at"> ReadWriteOnce</span></span>
+<span id="cb64-13"><a href="volume-storage.html#cb64-13"></a><span class="at">  </span><span class="fu">persistentVolumeReclaimPolicy</span><span class="kw">:</span><span class="at"> Recycle</span></span>
+<span id="cb64-14"><a href="volume-storage.html#cb64-14"></a><span class="at">  </span><span class="fu">storageClassName</span><span class="kw">:</span><span class="at"> manual</span></span>
+<span id="cb64-15"><a href="volume-storage.html#cb64-15"></a><span class="at">  </span><span class="fu">hostPath</span><span class="kw">:</span></span>
+<span id="cb64-16"><a href="volume-storage.html#cb64-16"></a><span class="at">    </span><span class="fu">path</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;/mnt/data&quot;</span></span>
+<span id="cb64-17"><a href="volume-storage.html#cb64-17"></a><span class="co">    # specify the hostPath on the node</span></span>
+<span id="cb64-18"><a href="volume-storage.html#cb64-18"></a><span class="co">    # that&#39;s the path we specified on our node</span></span>
+<span id="cb64-19"><a href="volume-storage.html#cb64-19"></a><span class="pp">---</span></span>
+<span id="cb64-20"><a href="volume-storage.html#cb64-20"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb64-21"><a href="volume-storage.html#cb64-21"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> PersistentVolumeClaim</span></span>
+<span id="cb64-22"><a href="volume-storage.html#cb64-22"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb64-23"><a href="volume-storage.html#cb64-23"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> mypvc</span></span>
+<span id="cb64-24"><a href="volume-storage.html#cb64-24"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb64-25"><a href="volume-storage.html#cb64-25"></a><span class="at">  </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb64-26"><a href="volume-storage.html#cb64-26"></a><span class="at">    </span><span class="fu">requests</span><span class="kw">:</span></span>
+<span id="cb64-27"><a href="volume-storage.html#cb64-27"></a><span class="co">      # we request the same as the PV is specified</span></span>
+<span id="cb64-28"><a href="volume-storage.html#cb64-28"></a><span class="co">      # so we basically request everything</span></span>
+<span id="cb64-29"><a href="volume-storage.html#cb64-29"></a><span class="at">      </span><span class="fu">storage</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;100Mi&quot;</span></span>
+<span id="cb64-30"><a href="volume-storage.html#cb64-30"></a><span class="at">  </span><span class="fu">volumeMode</span><span class="kw">:</span><span class="at"> Filesystem</span></span>
+<span id="cb64-31"><a href="volume-storage.html#cb64-31"></a><span class="at">  </span><span class="fu">storageClassName</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;manual&quot;</span></span>
+<span id="cb64-32"><a href="volume-storage.html#cb64-32"></a><span class="at">  </span><span class="fu">accessModes</span><span class="kw">:</span></span>
+<span id="cb64-33"><a href="volume-storage.html#cb64-33"></a><span class="at">    </span><span class="kw">-</span><span class="at"> ReadWriteOnce</span></span>
+<span id="cb64-34"><a href="volume-storage.html#cb64-34"></a><span class="pp">---</span></span>
+<span id="cb64-35"><a href="volume-storage.html#cb64-35"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb64-36"><a href="volume-storage.html#cb64-36"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb64-37"><a href="volume-storage.html#cb64-37"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb64-38"><a href="volume-storage.html#cb64-38"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> pv-pvc-deployment</span></span>
+<span id="cb64-39"><a href="volume-storage.html#cb64-39"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb64-40"><a href="volume-storage.html#cb64-40"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb64-41"><a href="volume-storage.html#cb64-41"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb64-42"><a href="volume-storage.html#cb64-42"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
+<span id="cb64-43"><a href="volume-storage.html#cb64-43"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb64-44"><a href="volume-storage.html#cb64-44"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb64-45"><a href="volume-storage.html#cb64-45"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb64-46"><a href="volume-storage.html#cb64-46"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
+<span id="cb64-47"><a href="volume-storage.html#cb64-47"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb64-48"><a href="volume-storage.html#cb64-48"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb64-49"><a href="volume-storage.html#cb64-49"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> data</span></span>
+<span id="cb64-50"><a href="volume-storage.html#cb64-50"></a><span class="co">          # define the use of the PVC by specifying the name</span></span>
+<span id="cb64-51"><a href="volume-storage.html#cb64-51"></a><span class="co">          # specify the pod/deployment can use the PVC</span></span>
+<span id="cb64-52"><a href="volume-storage.html#cb64-52"></a><span class="at">          </span><span class="fu">persistentVolumeClaim</span><span class="kw">:</span></span>
+<span id="cb64-53"><a href="volume-storage.html#cb64-53"></a><span class="at">            </span><span class="fu">claimName</span><span class="kw">:</span><span class="at"> mypvc</span></span>
+<span id="cb64-54"><a href="volume-storage.html#cb64-54"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb64-55"><a href="volume-storage.html#cb64-55"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
+<span id="cb64-56"><a href="volume-storage.html#cb64-56"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> nginx:latest</span></span>
+<span id="cb64-57"><a href="volume-storage.html#cb64-57"></a><span class="at">        </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb64-58"><a href="volume-storage.html#cb64-58"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;/usr/share/nginx/html&quot;</span></span>
+<span id="cb64-59"><a href="volume-storage.html#cb64-59"></a><span class="co">            # since the PVC is stated, the container needs to </span></span>
+<span id="cb64-60"><a href="volume-storage.html#cb64-60"></a><span class="co">            # mount inside it</span></span>
+<span id="cb64-61"><a href="volume-storage.html#cb64-61"></a><span class="co">            # name is equal to the pvc name specified</span></span>
+<span id="cb64-62"><a href="volume-storage.html#cb64-62"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> data</span></span>
+<span id="cb64-63"><a href="volume-storage.html#cb64-63"></a><span class="at">        </span><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb64-64"><a href="volume-storage.html#cb64-64"></a><span class="at">          </span><span class="fu">limits</span><span class="kw">:</span></span>
+<span id="cb64-65"><a href="volume-storage.html#cb64-65"></a><span class="at">            </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;128Mi&quot;</span></span>
+<span id="cb64-66"><a href="volume-storage.html#cb64-66"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
+<span id="cb64-67"><a href="volume-storage.html#cb64-67"></a><span class="at">        </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb64-68"><a href="volume-storage.html#cb64-68"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb64-69"><a href="volume-storage.html#cb64-69"></a><span class="pp">---</span></span>
+<span id="cb64-70"><a href="volume-storage.html#cb64-70"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb64-71"><a href="volume-storage.html#cb64-71"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb64-72"><a href="volume-storage.html#cb64-72"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb64-73"><a href="volume-storage.html#cb64-73"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
+<span id="cb64-74"><a href="volume-storage.html#cb64-74"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb64-75"><a href="volume-storage.html#cb64-75"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> LoadBalancer</span></span>
+<span id="cb64-76"><a href="volume-storage.html#cb64-76"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb64-77"><a href="volume-storage.html#cb64-77"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> pv-pvc</span></span>
+<span id="cb64-78"><a href="volume-storage.html#cb64-78"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb64-79"><a href="volume-storage.html#cb64-79"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb64-80"><a href="volume-storage.html#cb64-80"></a><span class="at">    </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span></code></pre></div>
 <p>By accessing a pod using <code>kubectl exec -it &lt;persistent-volume-name&gt; -- sh</code> we can check whether the path is linked using the PVC. Now, the end result may seem the same as what we did with the HostPath Volume. But it actually is not, it just looks like it since both, the PersistentVolume and the HostPath connect to the Host. Yet, the locally mounted path would be somewhere else when running in the cloud. The PV configuration would point to another storage source instead of a local file system, for example an attached EBS of EFS storage. Since we also created a LoadBalancer service, we can run <code>minikube tunnel</code> to expose the application deplyment under localhost:80. It should show the input of the index.html file we created on the storage.</p>
 
 </div>
