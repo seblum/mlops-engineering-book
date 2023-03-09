@@ -9,7 +9,10 @@ To enhance flexibility and scalability in the operational process, containers an
 
 ## TODO
 
-- [ ] insert code
-- [ ] insert images
+- [x] insert code
+- [x] insert images
 - [ ] proof-read
+- [ ] comment images
+- [ ] comment code
+- [ ] 
 
