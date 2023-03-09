@@ -77,7 +77,7 @@ output "instance_address" {
     }
 ```
 
-![outputs](images/02-Terraform/outputs.png "outputs") 
+![outputs](images/06-Terraform/outputs.png "outputs") 
 
 ### Local Variables
 

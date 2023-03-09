@@ -17,7 +17,7 @@ An Airflow deployment generally consists of five different compontens:
 
 The following graphs shows how the components build up the Airflow architecture.
 
-![airflow_architecture](./images/05-Airflow/airflow_architecture.png)
+![Architecture of Airflow as a distributed system](./images/03-Airflow/architecture_airflow.drawio.svg)
 
 ### Scheduler 
 

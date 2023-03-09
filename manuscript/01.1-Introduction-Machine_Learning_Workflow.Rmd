@@ -60,4 +60,5 @@ Performing stages manually and managing models in production at scale can become
 
 <!---
 Relate to tools
+Jupyterhub for experimentation
 -->

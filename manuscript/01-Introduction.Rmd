@@ -1,6 +1,6 @@
 # Introduction
 
-*"MLOps Engineering with Airflow and MLflow on Kubernetes: Building, Deploying, and Managing Machine Learning Workflows"* is a comprehensive guide to building and deploying machine learning models using Airflow and MLflow on an Kubernetes cluster running in a cloud environment. The book is designed for Data Scientists, Data Engineers and DevOps practitioners who are looking to dive into the realm of machine learning operations (MLOps) and automate the deployment of their models in a production environment.
+*"MLOps Engineering: Building, Deploying, and Managing Machine Learning Workflows with Airflow and MLflow on Kubernetes"* is a comprehensive guide to building and deploying machine learning models using Airflow and MLflow on an Kubernetes cluster running in a cloud environment. The book is designed for Data Scientists, Data Engineers and DevOps practitioners who are looking to dive into the realm of machine learning operations (MLOps) and automate the deployment of their models in a production environment.
 
 The book begins by introducing the concepts of MLOps and the challenges associated with building, deploying, and managing machine learning models in production. It then covers the basics of *Airflow*, a powerful tool for building and managing machine learning workflows, and *MLflow*, a platform for managing the machine learning lifecycle.
 
