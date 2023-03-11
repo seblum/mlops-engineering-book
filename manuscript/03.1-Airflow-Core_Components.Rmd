@@ -34,9 +34,9 @@ example_dag = DAG(
 The state of a workflow can accessed via the web user inteface, such as shown in below images. The first image shows Airflows overview of all DAGs currently "Active" and further information about them such as their "Owner", how many "Runs" have been performaned and whether they were successful, and much more. 
 The second image depicts a detailed overview of the DAG "xcom_fundamentals". Besudes looking into the *Audit Logs* of the DAG and the *Task Duration*, it is also possible to check the *Code* of the DAG.
 
-![web-interface_dags](./images/03-Airflow/web-interface_dags.png)
+![](./images/03-Airflow/web-interface_dags.png)
 
-![web-interface_dag-grid](./images/03-Airflow/web-interface_dag-grid.png)
+![](./images/03-Airflow/web-interface_dag-grid.png)
 
 The Airflow command line interface also allows to interact with the DAGs. Below command shows its exemplary usage and how to list all active DAGs. Further examples of using the CLI in a specific context are show in the subsection about Tasks.
 
@@ -257,7 +257,7 @@ An exemplary code and chaining examples of tasks would look like this:
 # Simply chained dependencies
 task_1 >> task_2 >> task_3
 ```
-![task-dependencies](./images/03-Airflow/task-dependencies.png "task-dependencies")
+![](./images/03-Airflow/task-dependencies.png "task-dependencies")
 
 ```python
 # Mixed dependencies
@@ -271,21 +271,21 @@ task_2 >> task_3
 [task_1, task_2] >> task_3
 
 ```
-![task-dependencies_mixed](./images/03-Airflow/task-dependencies_mixed.png "task-dependencies_mixed")
+![](./images/03-Airflow/task-dependencies_mixed.png "task-dependencies_mixed")
 
 ```python
 # It is also possible to define dependencies with
 task_1.set_downstream(task_2)
 task_3.set_upstream(task_1)
 ```
-![task-dependencies_upstream](./images/03-Airflow/task-dependencies_upstream.png "task-dependencies_upstream")
+![](./images/03-Airflow/task-dependencies_upstream.png "task-dependencies_upstream")
 
 ```python
 # It is also possible to mix it completely wild
 task_1 >> task_3 << task_2
 task_1.set_downstream(task_2)
 ```
-![task-dependencies_wild](./images/03-Airflow/task-dependencies_wild.png "task-dependencies_wild")
+![](./images/03-Airflow/task-dependencies_wild.png "task-dependencies_wild")
 
 It is possible to list all tasks within a DAG using the CLI. Below commands show two approaches.
 

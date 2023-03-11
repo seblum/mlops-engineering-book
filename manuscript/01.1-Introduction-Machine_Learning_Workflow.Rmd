@@ -2,7 +2,7 @@
 
 A machine learning workflow typically involves several stages. These stages are closely related and sometimes overlap as some stages may involve multiple iterations. In the following, the machine learning workflow is broken down to five different stages to make things easier, and give an overview.
 
-![Bild nicht gefunden: images/01-Introduction/machine-learning-workflow.png](images/01-Introduction/ml-lifecycle.svg)
+![](images/01-Introduction/ml-lifecycle.svg)
 
 **1. Data Preparation**
 In the first stage, data used to train a machine learning model is collected, cleaned, and preprocessed. Preprocessing includes tasks to remove missing or duplicate data, normalize data, and split data into a training and testing set.

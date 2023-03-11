@@ -16,7 +16,7 @@ resource "aws_iam_user" "example" {
 }
 ```
 
-![count](images/06-Terraform/additionals_count.png) 
+![](images/06-Terraform/additionals_count.png) 
 
 
 ```bash
@@ -32,7 +32,7 @@ resource "aws_iam_user" "example" {
 }
 ```
 
-![count list](images/06-Terraform/additionals_count_list.png) 
+![](images/06-Terraform/additionals_count_list.png) 
 
 After using count on a resource it becomes an array of resources rather than one single resource. The same hold when using count on modules. When adding count to a module it turns it into an array of modules.
 
@@ -52,7 +52,7 @@ resource "aws_iam_user" "example" {
 }
 ```
 
-![count index deletion](images/06-Terraform/additionals_count_index_deletion.png)
+![](images/06-Terraform/additionals_count_index_deletion.png)
 
 **Count as conditional**
 Count can also be used as a form of a conditional if statement. This is possible as Terraform  supports *conditional expressions*. If `count` is set to one 1, one copy of that resource is created; if set to 0, the resource is not created at all. Writing this as a conditional expression could look something like the follow, where var.enable_autoscaling is a boolean variable either set to `True` or `False`.
@@ -130,5 +130,5 @@ output "for_directive" {
 
 Terraform workspaces allow us to keep multiple state files for the same project. When we run Terraform for the first time in a project, the generated state file will go into the *default* workspace. Later, we can create a new workspace with the `terraform workspace new` command, optionally supplying an existing state file as a parameter.
 
-![workspaces](images/06-Terraform/additionals_workspaces.png)
+![](images/06-Terraform/additionals_workspaces.png)
 

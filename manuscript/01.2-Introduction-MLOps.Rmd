@@ -22,7 +22,7 @@ The goal of DevOps is to automate and streamline the process of building, testin
 
 DevOps focuses on the deployment and management of software in general (or *traditional* sofware), while MLOps focuses specifically on the deployment and management of machine learning models in a production environment. The goal is basically the same as in DevOps, yet deploying a machine learning model. While this is achieved by the same tools and best practices used in DevOps, deploying machine learning models (compared to software) adds a lot of complexity to the process.
 
-![Traditional vs ML software](images/01-Introduction/mlops-vs-devops.svg "Traditional vs ML software")
+![Traditional vs ML software](images/01-Introduction/mlops-vs-devops.svg)
 
 Machine learning models are not just lines of code, but also require large amounts of data, and specialized hardware, to function properly. Further, machine learning models and their complex algorithms might need to change when there is a shift in new data. This process of ensuring that machine learning models are accurate and reliable with new data leads to additional challenges. 
 Another key difference is that MLOps places a great emphasis on model governance, which ensures that machine learning models are compliant with relevant regulations and standards. The above list of tools within DevOps can be extended to the following for MLOps.
