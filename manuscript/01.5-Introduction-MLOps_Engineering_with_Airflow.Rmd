@@ -20,3 +20,10 @@ Monitoring and logging would be achieved using CloudWatch to monitor the health 
 -->
 
 Whereas the deployment of the infrastructure would be taken care of by MLOps-, DevOps-, and Data Engineers, the development of the Airflow workflows including MLFlow would be taken care of by Data Scientist and ML Engineers.
+
+- [ ] https://aicurious.io/blog/2022-03-26-airflow-mlflow-or-kubeflow-for-mlops
+- [ ] https://www.datarevenue.com/de-blog/airflow-vs-luigi-vs-argo-vs-kubeflow-vs-mlflow
+- [ ] https://www.shreya-shankar.com/phd-year-one/
+- [ ] https://www.kdnuggets.com/2022/03/mlops-engineer.html
+- [ ] https://growingdata.com.au/mlops-ci-cd-for-machine-learning-pipelines-model-deployment-with-kubeflow/
+- [ ] https://ml-ops.org/content/mlops-principles#iterative-incremental-process-in-mlops
