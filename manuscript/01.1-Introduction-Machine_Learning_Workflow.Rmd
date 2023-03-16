@@ -25,6 +25,14 @@ Each stage is often handled by the same tool or platform which makes a clear dif
 
 Working with and developing machine learning models, monitoring their performance, and continuously retraining it on new data with possible alternative models can be challenging and involves the right tools.
 
+<!---
+Machine Learning systems generally have two key phases: Training & Inference (Prediction).
+
+The <ins>Training Phase</ins> seeks to manipulate source data into features which are used to train a model and to evaluate the trained model.
+
+The <ins>Inference Phase</ins> generally loads the pre-trained model and uses it to serve up predictions. In many cases the Inference Phase will serve the model via a REST API, or via a service for batch predictions.
+-->
+
 
 ### ML Worflow Tools
 

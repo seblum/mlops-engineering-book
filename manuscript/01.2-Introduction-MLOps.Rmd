@@ -7,6 +7,9 @@ There are several cloud-based platforms that provide pre-built infrastructure to
 
 Overall, the key concepts and best practices of MLOps, and the use of tools and technologies to support the MLOps process are closely related to *regular* DevOps principles which are a standard for the operation of software in the industry.
 
+<!---
+The models built as a result of these initiatives performed impeccably in a test environment, but failed when rendered to an end-user. This was an outcome that nobody could have predicted, and ended up costing organizations millions of dollars.
+-->
 
 ### ML + (Dev)-Ops
 
