@@ -49,3 +49,5 @@ Custom modules and tools we deploy on the AWS EKS environment
 
 consists of helm Charts and values.yaml files
 will be described and referenced in modules sections
+
+All files are also available and can also be accessed on [github]()
