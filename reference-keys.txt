@@ -16,7 +16,6 @@ ml-engineer
 mlops-engineer
 devops-engineer
 additional-roles-function
-mlops-engineering-with-airflow-and-mlflow-on-kubernetes
 ops-tools-principles
 containerization
 version-control
@@ -24,6 +23,7 @@ github
 git-lifecycle
 cicd
 infrastructure-as-code
+mlops-engineering-with-airflow-and-mlflow-on-kubernetes
 airflow
 core-components
 dags
@@ -110,6 +110,10 @@ liveness-probe
 readiness-probe
 debugging
 helm
+helm-chart-structure
+working-with-helm
+adding-a-helm-chart-to-the-local-setup.
+installing-a-helm-chart
 terraform
 basic-usage
 terraform-init
