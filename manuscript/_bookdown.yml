@@ -32,15 +32,16 @@ rmd_files: ["index.Rmd",
             "06.3-Terraform-Modules.Rmd",
             "06.4-Terraform-Tips_and_Tricks.Rmd",
             "06.5-Terraform-Exemplary_deployment.Rmd",
-            "08-Deployment-Infrastructure_Overview.md",
-            "08.1-Deployment_Infrastructure_Root.Rmd"
-            "08.2-Deployment-Infrastructure_Essentials.md",
-            "08.3-Deployment-Infrastructure_Modules.md",
-            "08.4-Deployment-Infrastructure_Applications.md",
+            #"08-Deployment-Infrastructure_Overview.md",
+            #"08.1-Deployment_Infrastructure_Root.Rmd"
+            #"08.2-Deployment-Infrastructure_Essentials.md",
+            #"08.3-Deployment-Infrastructure_Modules.md",
+            #"08.4-Deployment-Infrastructure_Applications.md",
             "09-Deployment-Usage_Overview.md",
             "09.1-Deployment-Usage_Jupyterhub.md",
-            "09.2-Deployment-Usage_Airflow.md",
-            "09.3-Deployment-Usage_MLflow.md",
+            "09.2-Deployment-Usage_Code.md",
+            "09.3-Deployment-Usage_Model-Pipeline",
+            "09.3-Deployment-Usage_Model-Serving.md",
             ]
 
 
