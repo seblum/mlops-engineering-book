@@ -136,3 +136,16 @@ for-each
 for
 workspaces
 exemplary-deployment
+infrastructure-deployment
+use-case-development
+jupyterhub
+github-repository
+pipeline-workflow
+airflow-workflow
+mlflow-1
+building-the-pipeline-steps
+data-preprocessing
+model-training
+model-serving-inferencing
+model-serving-1
+streamlit-app

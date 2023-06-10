@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Terraform | MLOps Engineering</title>
+  <title>7.1 Jupyterhub | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Terraform | MLOps Engineering" />
+  <meta property="og:title" content="7.1 Jupyterhub | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Terraform | MLOps Engineering" />
+  <meta name="twitter:title" content="7.1 Jupyterhub | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="helm.html"/>
-<link rel="next" href="basic-usage.html"/>
+<link rel="prev" href="use-case-development.html"/>
+<link rel="next" href="pipeline-workflow.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -327,19 +327,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="terraform" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">Chapter 5</span> Terraform<a href="terraform.html#terraform" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Terraform is an open-source, declarative programming language developed by HashiCorp and allows to create both on-prem and cloud resources in the form of writing code. This is also know as Infrastructure as Code (IAC). There are several IaC tools in the market today and Terraform is only one of them. Yet it is a well known and established tool and during the course of this project we only focus on this.</p>
-<a href="https://www.terraform.io/docs">HashiCorp</a> describes that:
-<blockquote>
-Terraform is an infrastructure as code (IaC) tool that allows you to build, change, and version infrastructure safely and efficiently. This includes both low-level components like compute instances, storage, and networking, as well as high-level components like DNS entries and SaaS features.
-</blockquote>
-<p>This means that users are able to manage and provision an entire IT infrastructure using machine-readable definition files and thus allowing faster execution when configuring infrastructure, as well as enableing full traceability of changes. Terraform comes with several hundred different providers that can be used to provision infrastructure, such as Amazon Web Services (AWS), Azure, Google Cloud Platform (GCP), Kubernetes, Helm, GitHub, Splunk, DataDog, etc.</p>
-<p>The given chapter introduces the concepts &amp; usage of Terraform which will be needed to create the introduced MLOps Airflow deployment in an automated and tracable way. We will learn how to use Terraform to provision ressources as well as to structure a Terraform Project.</p>
-<div id="prerequisites-3" class="section level3 unlisted unnumbered hasAnchor">
-<h3>Prerequisites<a href="terraform.html#prerequisites-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To be able to follow this tutorial, one needs to have the AWS CLI installed as well as the AWS credentials set up. Needles to say an AWS accounts needs to be present. It is also recommended to have basic knowledge of the AWS Cloud as this tutorials used the AWS infrastructure to provision cloud resources. The attached resource definitions are specified to the AWS region <code>eu-central-1</code>. It might be necessary to change accordingly if you are set in another region.
-Further, Terraform itself needs to be installed. Please refer to the corresponding sites. The scripts are run under Terraform version <code>v1.2.4</code>. Later releases might have breaking changes. One can check its installation via <code>terraform version</code>.</p>
+<div id="jupyterhub" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Jupyterhub<a href="jupyterhub.html#jupyterhub" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Jupyterhub serves as the integrated server environment within the ML platform, providing an Integrated Development Environment (IDE). However, it deviates from the traditional Jupyter Notebooks and instead utilizes VSCode as the IDE. Upon initialization, Jupyterhub clones the GitHub repository <em>mlops-airflow-DAGs</em> that contains the code for the use case. This is the same repository that is synchronized with Airflow to load the provided DAGs. The purpose of this approach is to offer a user-friendly and efficient development experience to platform users.</p>
+<p>In addition to synchronizing with Airflow, the use of GitHub provides additional tools to streamline development and incorporate DevOps practices effectively. One of these tools is Github Actions, which enables automation through CI/CD (Continuous Integration/Continuous Deployment) and supports the Git workflow. By configuring Github Actions through code, developers can seamlessly integrate these practices into their development processes. The configuration files for Github Actions are also cloned alongside the repository, ensuring that the integration and development processes remain smooth and efficient.</p>
+<div id="github-repository" class="section level3 hasAnchor" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Github Repository<a href="jupyterhub.html#github-repository" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The code for the model pipeline is located in the GitHub repository called <em>mlops-airflow-DAGs</em>. It encompasses the setup of an Airflow DAG and the utilization of MLflow. The code responsible for the pipeline functionality can be located in the <code>src</code> subdirectory of the repository. The Airflow DAG is written in the <code>airflow_DAG.py</code> file situated in the root directory of the repository. Additionally, the repository includes a GitHub Actions workflow file located in the <code>.github/workflows/</code> subdirectory. The <code>Docker</code> subdirectory contains the Dockerfiles for the various containers used in the ML pipeline. These include a container with the code for data preprocessing and model training, a Dockerfile for serving the model using fastAPI, and a file that runs a streamlit app for sending inferences to the served model.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb111-1"><a href="jupyterhub.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="ex">root</span></span>
+<span id="cb111-2"><a href="jupyterhub.html#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   Readme.md</span>
+<span id="cb111-3"><a href="jupyterhub.html#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb111-4"><a href="jupyterhub.html#cb111-4" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> .github/workflows/</span>
+<span id="cb111-5"><a href="jupyterhub.html#cb111-5" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb111-6"><a href="jupyterhub.html#cb111-6" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> airflow_docker_DAG.py</span>
+<span id="cb111-7"><a href="jupyterhub.html#cb111-7" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> airflow_kubernetes_DAG.py</span>
+<span id="cb111-8"><a href="jupyterhub.html#cb111-8" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb111-9"><a href="jupyterhub.html#cb111-9" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> src</span>
+<span id="cb111-10"><a href="jupyterhub.html#cb111-10" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── preprocessing.py</span>
+<span id="cb111-11"><a href="jupyterhub.html#cb111-11" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   train.py</span>
+<span id="cb111-12"><a href="jupyterhub.html#cb111-12" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   ...</span>
+<span id="cb111-13"><a href="jupyterhub.html#cb111-13" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── model</span>
+<span id="cb111-14"><a href="jupyterhub.html#cb111-14" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>       └── utils.py</span>
+<span id="cb111-15"><a href="jupyterhub.html#cb111-15" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>           ...</span>
+<span id="cb111-16"><a href="jupyterhub.html#cb111-16" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb111-17"><a href="jupyterhub.html#cb111-17" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> Docker</span>
+<span id="cb111-18"><a href="jupyterhub.html#cb111-18" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
+<span id="cb111-19"><a href="jupyterhub.html#cb111-19" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── fastapi-serve-app</span>
+<span id="cb111-20"><a href="jupyterhub.html#cb111-20" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   └── Dockerfile</span>
+<span id="cb111-21"><a href="jupyterhub.html#cb111-21" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │       ...</span>
+<span id="cb111-22"><a href="jupyterhub.html#cb111-22" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
+<span id="cb111-23"><a href="jupyterhub.html#cb111-23" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── python-base-cnn-model</span>
+<span id="cb111-24"><a href="jupyterhub.html#cb111-24" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>       └── Dockerfile</span>
+<span id="cb111-25"><a href="jupyterhub.html#cb111-25" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>           ...</span></code></pre></div>
 
 </div>
 </div>
@@ -348,8 +367,8 @@ Further, Terraform itself needs to be installed. Please refer to the correspondi
           </div>
         </div>
       </div>
-<a href="helm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="basic-usage.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="use-case-development.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pipeline-workflow.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -380,7 +399,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/06-Terraform.Rmd",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/09.1-Deployment-Usage_Jupyterhub.md",
 "text": "Edit"
 },
 "history": {

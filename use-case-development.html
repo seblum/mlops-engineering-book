@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Terraform | MLOps Engineering</title>
+  <title>Chapter 7 Use Case Development | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Terraform | MLOps Engineering" />
+  <meta property="og:title" content="Chapter 7 Use Case Development | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Terraform | MLOps Engineering" />
+  <meta name="twitter:title" content="Chapter 7 Use Case Development | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="helm.html"/>
-<link rel="next" href="basic-usage.html"/>
+<link rel="prev" href="infrastructure-deployment.html"/>
+<link rel="next" href="jupyterhub.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -327,20 +327,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="terraform" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">Chapter 5</span> Terraform<a href="terraform.html#terraform" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Terraform is an open-source, declarative programming language developed by HashiCorp and allows to create both on-prem and cloud resources in the form of writing code. This is also know as Infrastructure as Code (IAC). There are several IaC tools in the market today and Terraform is only one of them. Yet it is a well known and established tool and during the course of this project we only focus on this.</p>
-<a href="https://www.terraform.io/docs">HashiCorp</a> describes that:
-<blockquote>
-Terraform is an infrastructure as code (IaC) tool that allows you to build, change, and version infrastructure safely and efficiently. This includes both low-level components like compute instances, storage, and networking, as well as high-level components like DNS entries and SaaS features.
-</blockquote>
-<p>This means that users are able to manage and provision an entire IT infrastructure using machine-readable definition files and thus allowing faster execution when configuring infrastructure, as well as enableing full traceability of changes. Terraform comes with several hundred different providers that can be used to provision infrastructure, such as Amazon Web Services (AWS), Azure, Google Cloud Platform (GCP), Kubernetes, Helm, GitHub, Splunk, DataDog, etc.</p>
-<p>The given chapter introduces the concepts &amp; usage of Terraform which will be needed to create the introduced MLOps Airflow deployment in an automated and tracable way. We will learn how to use Terraform to provision ressources as well as to structure a Terraform Project.</p>
-<div id="prerequisites-3" class="section level3 unlisted unnumbered hasAnchor">
-<h3>Prerequisites<a href="terraform.html#prerequisites-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To be able to follow this tutorial, one needs to have the AWS CLI installed as well as the AWS credentials set up. Needles to say an AWS accounts needs to be present. It is also recommended to have basic knowledge of the AWS Cloud as this tutorials used the AWS infrastructure to provision cloud resources. The attached resource definitions are specified to the AWS region <code>eu-central-1</code>. It might be necessary to change accordingly if you are set in another region.
-Further, Terraform itself needs to be installed. Please refer to the corresponding sites. The scripts are run under Terraform version <code>v1.2.4</code>. Later releases might have breaking changes. One can check its installation via <code>terraform version</code>.</p>
+<div id="use-case-development" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Use Case Development<a href="use-case-development.html#use-case-development" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The ML platform aims to enable the full development cycle of ML algorithms within DevOps and MLOps principles. This includes to enable development within a sophisticated IDE such as VSCode, as well as incorporating best practices like Gitflow, automation by CI/CD, and the containerization of code. Whereas the previous chapter explained the ML platform itself and its deployment, this chapter illustrates the workflow of developing ML models on the platform. Thus, a use case has been selected and implemented such that it integrates each of the previous mentioned principles and best practices.</p>
+<div id="skin-cancer-detection" class="section level3 unlisted unnumbered hasAnchor">
+<h3><em>Skin Cancer Detection</em><a href="use-case-development.html#skin-cancer-detection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The exemplary use case <em>CNN for skin cancer detection</em> is based on a dataset from <a href="https://www.kaggle.com/code/fanconic/cnn-for-skin-cancer-detection">Kaggle</a> and has been chosen to implement a use case leveraging a Deep Learning model, as well as its data quality which requires little to no data exploration and preprocessing.</p>
+<div id="data" class="section level4 unlisted unnumbered hasAnchor">
+<h4>Data<a href="use-case-development.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The dataset from <a href="https://www.kaggle.com/code/fanconic/cnn-for-skin-cancer-detection">Kaggle</a> utilized in this project is obtained from the ISIC (International Skin Image Collaboration) Archive. It consists of 1800 images depicting benign moles and 1497 images representing malignant moles that have already been classified. The primary objective of this use case is to develop a model capable of visually classifying moles as either benign or malignant.</p>
+<p>All the images in the dataset have been uniformly resized to a lower resolution of 224x224x3 RGB. Additionally, the dataset has already been cleaned and divided into a train set and a test set. This allows for a straightforward implementation that focuses on the crucial aspects of this tutorial, which involve putting machine learning into production and leveraging workflow management and model tracking tools. The data is also conveniently sorted based on the two types, namely benign and malignant.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb110-1"><a href="use-case-development.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="ex">data</span></span>
+<span id="cb110-2"><a href="use-case-development.html#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb110-3"><a href="use-case-development.html#cb110-3" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> train</span>
+<span id="cb110-4"><a href="use-case-development.html#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
+<span id="cb110-5"><a href="use-case-development.html#cb110-5" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── benign</span>
+<span id="cb110-6"><a href="use-case-development.html#cb110-6" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   ...</span>
+<span id="cb110-7"><a href="use-case-development.html#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   </span>
+<span id="cb110-8"><a href="use-case-development.html#cb110-8" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── malignant</span>
+<span id="cb110-9"><a href="use-case-development.html#cb110-9" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>       ...</span>
+<span id="cb110-10"><a href="use-case-development.html#cb110-10" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb110-11"><a href="use-case-development.html#cb110-11" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> test</span>
+<span id="cb110-12"><a href="use-case-development.html#cb110-12" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
+<span id="cb110-13"><a href="use-case-development.html#cb110-13" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── benign</span></code></pre></div>
+<p>The dataset is kept in an AWS S3 Bucket, which was deployed on the pre-existing ML Platform. The deployment of the Bucket was accomplished using an Infrastructure-as-a-Code (IaaC) script, and the dataset was uploaded to the Bucket at the same time. To enable the ML pipeline to interact with AWS for data retrieval and storage, a custom utils script in the code base provides the necessary functionality.</p>
+<!-- Deep Learning -->
 
+</div>
 </div>
 </div>
             </section>
@@ -348,8 +361,8 @@ Further, Terraform itself needs to be installed. Please refer to the correspondi
           </div>
         </div>
       </div>
-<a href="helm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="basic-usage.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="infrastructure-deployment.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="jupyterhub.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -380,7 +393,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/06-Terraform.Rmd",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/09-Deployment-Usage_Overview.md",
 "text": "Edit"
 },
 "history": {
