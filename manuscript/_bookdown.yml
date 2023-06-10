@@ -39,9 +39,9 @@ rmd_files: ["index.Rmd",
             #"08.4-Deployment-Infrastructure_Applications.md",
             "09-Deployment-Usage_Overview.md",
             "09.1-Deployment-Usage_Jupyterhub.md",
-            "09.2-Deployment-Usage_Code.md",
-            "09.3-Deployment-Usage_Model-Pipeline",
-            "09.3-Deployment-Usage_Model-Serving.md",
+            "09.2-Deployment-Usage_Pipeline-Workflow.md",
+            "09.3-Deployment-Usage_Building-Model-Pipeline.md",
+            "09.4-Deployment-Usage_Model-Serving.md",
             ]
 
 
