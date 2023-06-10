@@ -8,6 +8,6 @@ The overall aim is to build and create a MLOps architecture based on Airflow run
 
 ### A work in progress {.unlisted .unnumbered}
 
-This project / book / tutorial / whatever this is or will be startet by explaining the concept of Kubernetes. The plan is to continuously update it by further sections. Since there is no deadline, there is no timeline, and I am also not sure whether there will exist something final to be honest.
+This project / book / tutorial / whatever this is or will be, startet by explaining the concept of Kubernetes. The plan is to continuously update it by further sections. Since there is no deadline, there is no timeline, and I am also not sure whether there will exist something final to be honest.
 
 This document is written during my journey in the realm of MLOps. It is therefore in a state of continuous development. 

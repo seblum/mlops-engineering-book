@@ -22,7 +22,7 @@ When a project is run for the first time the terraform project needs to be initi
 terraform init
 ```
 
-![Terraform init](images/06-Terraform/terraform-init.png) 
+![](images/06-Terraform/terraform-init.png) 
 
 
 ### terraform validate
@@ -33,7 +33,7 @@ The `terraform validate` command checks the code for syntax errors. This is opti
 # Validates the configuration files in a directory
 terraform validate
 ```
-![Terraform validate](images/06-Terraform/terraform-validate.png) 
+![](images/06-Terraform/terraform-validate.png) 
 
 ### terraform plan
 
@@ -44,7 +44,7 @@ The `terraform plan` command verifies what action Terraform will perform and wha
 terraform plan
 ```
 
-![Terraform plan](images/06-Terraform/terraform-plan.png) 
+![](images/06-Terraform/terraform-plan.png) 
 
 
 ### terraform apply
@@ -58,7 +58,7 @@ Modifications to previously deployed ressources can be implemented by using `ter
 terraform apply 
 ```
 
-![Terraform apply](images/06-Terraform/terraform-apply.png) 
+![](images/06-Terraform/terraform-apply.png) 
 
 
 ### terraform destroy
@@ -70,5 +70,5 @@ To destoy all created ressouces and to delete everything we did before, there is
 terraform destroy
 ```
 
-![Terraform destroy](images/06-Terraform/terraform-destroy.png) 
+![](images/06-Terraform/terraform-destroy.png) 
 
