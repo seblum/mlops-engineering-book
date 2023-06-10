@@ -1,5 +1,5 @@
 
-# Use Case development
+# Use Case Development
 
 The ML platform aims to enable the full development cycle of ML algorithms within DevOps and MLOps principles. This includes to enable development within a sophisticated IDE such as VSCode, as well as incorporating best practices like Gitflow, automation by CI/CD, and the containerization of code. Whereas the previous chapter explained the ML platform itself and its deployment, this chapter illustrates the workflow of developing ML models on the platform. Thus, a use case has been selected and implemented such that it integrates each of the previous mentioned principles and best practices.
 
