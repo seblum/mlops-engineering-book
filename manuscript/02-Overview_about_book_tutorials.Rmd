@@ -1,0 +1,5 @@
+# Overview about book tutorials
+
+Chapter 3-6 Tutorials to specific tools. Prerequisites for following chapters, chapter on airflow and mlflow more towards data scientists aimed. chapter towards kubernetes and terraform more towards engineers. 
+
+Chapter 7-9 about ML Platform. Extensive knowledge aabout engineering required. A lot of things cannot go into detail like oauth, networking details, etc. main tools described in previous chapter covered. also to mention its not production ready as there are major security concerns. it aims merely to be a informative example on ml platforms and mlops engineering 

@@ -1,5 +1,7 @@
 
-# Infrastructure Deployment
+# ML Platform Deployment
+
+> **_NOTE:_** The chapter discussing the deployment of an ML platform with Airflow and MLflow on AWS EKS, utilizing Terraform for deployment, is currently in the writing phase. The information provided in this disclaimer is based on the current state of knowledge up until July 2023. Thank you for your understanding and patience as I work on completing this chapter.
 
 The provided directory structure represents the Terraform project for managing the infrastructure of our ML platform. It follows a modular organization to promote reusability and maintainability of the codebase. The full codebase is also available and can be accessed on [github](https://github.com/seblum/mlops-airflow-on-eks)
 
@@ -59,5 +61,3 @@ The *modules* directory contains Terraform modules that are specific for setting
 * The `mlflow` module sets up MLflow to managing machine learning experiments and models. As MLflow does not natively provide a solution to deploy on Kubernetes, a custom Helm deployment is integrated that configures the necessary deployment, services, and ingress ressources.
 * `jupyterhub` deploys a JupyterHub environment via Helm that enables multi-user notebook environment, suitable for collaborative data science and machine learning work. The Helm chart is highly customized providing user management and authentication via Github, provisioning ingress resources, and cloning a custom Github repository that provides all our Data Science and Machine Learning code.
 
-
-> **_NOTE:_** The chapter discussing the deployment of an ML platform with Airflow and MLflow on AWS EKS, utilizing Terraform for deployment, is currently in the writing phase. The information provided in this disclaimer is based on the current state of knowledge up until July 2023. Thank you for your understanding and patience as I work on completing this chapter.
