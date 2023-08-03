@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>MLOps Engineering</title>
+  <title>8.1 Root directory module | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="MLOps Engineering" />
+  <meta property="og:title" content="8.1 Root directory module | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="MLOps Engineering" />
+  <meta name="twitter:title" content="8.1 Root directory module | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="preamble.html"/>
+<link rel="prev" href="ml-platform-deployment.html"/>
+<link rel="next" href="infrastructure-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -345,15 +345,131 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">MLOps Engineering</h1>
-<h2 class="subtitle"><em>Building, Deploying, and Managing Machine Learning Workflows with Airflow and MLflow on Kubernetes.</em></h2>
-<p class="author"><em>Sebastian Blum</em></p>
-<p class="date"><em>2023-08-03</em></p>
-</div>
-<div id="summary" class="section level1 unlisted unnumbered hasAnchor">
-<h1>Summary<a href="index.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><em>MLOps Engineering: Building, Deploying, and Managing Machine Learning Workflows with Airflow and MLflow on Kubernetes”</em> is a comprehensive guide to understanding the principles and roles of MLOps, as well as operational principles such as CI/CD and versioning. Through the use of an exemplary MLOps platform utilizing Airflow, MLflow, and JupyterHub on AWS EKS, readers will learn how to deploy this platform using infrastructure as code Terraform. The book is structured with chapters that introduce the various tools such as Airflow, MLflow, Kubernetes, and Terraform, and also includes a use case that demonstrates the utilization of the platform through Airflow workflows and MLflow tracking. Whether you are a data scientist, engineer, or developer, this book provides the necessary knowledge and skills to effectively implement MLOps practices and platforms in your organization.</p>
+<div id="root-directory-module" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Root directory module<a href="root-directory-module.html#root-directory-module" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The root directory of the Terraform infrastructure consists of the main module, calling other submodules that deploy specific infrastructure setting or tools.
+This enables to have an overview about the deployment in one place. At first, the necessary cluster infrastructure is deployed such as the <code>vpc</code> and the <code>eks</code> cluster itself. Afterward the custom tools to be run on EKS are deployed, such as <code>airflow</code>, <code>mlflow</code>, and <code>jupyterhub</code>.</p>
+<p>The following will look a bit more detailed into the call of the module <code>airflow</code>, yet a lot of it also applies for the other modules.
+The module imports are structure in three sections. At first the general information about the module are given, such as <code>name</code> of the module, or the <code>cluster_name</code>, as well as more specific variables needed for specific Terraform calls in the module, like <code>cluster_endpoint</code>.
+Terraform does not provide the functionality to <em>activate</em> or <em>deactivate</em> a module by itself. As this is a useful feature, a custom workaround is proposed by setting the count a module as such <code>count = var.deploy_airflow ? 1 : 0</code>. This will set the cound of the module to <code>0</code> or <code>1</code>, depending on the <code>var.deploy_airflow</code> variable. This functionality is proposed for all custom modules.</p>
+<p>Secondly, as Airflow needs access to and RDS Database, the RDS module is called. Therefore it is needed to pass the relevant information to create the the RDS under the correct settings, like <code>vpc_id</code>, <code>rds_engine</code>, or <code>storage_type</code>.</p>
+<p>Third, variable values for the Airflow Helm chart are passed to the module. Using Helm makes the deployment of Airflow very easy. Since there are customizations on the deployment, such as a connection to the Airflow DAG repository on Github, it is necessary to specify these information beforehand, and to integrate them into the deployment.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb111-1"><a href="root-directory-module.html#cb111-1" aria-hidden="true" tabindex="-1"></a>locals {</span>
+<span id="cb111-2"><a href="root-directory-module.html#cb111-2" aria-hidden="true" tabindex="-1"></a>  cluster_name            <span class="op">=</span> <span class="st">&quot;${var.name_prefix}-eks&quot;</span></span>
+<span id="cb111-3"><a href="root-directory-module.html#cb111-3" aria-hidden="true" tabindex="-1"></a>  vpc_name                <span class="op">=</span> <span class="st">&quot;${var.name_prefix}-vpc&quot;</span></span>
+<span id="cb111-4"><a href="root-directory-module.html#cb111-4" aria-hidden="true" tabindex="-1"></a>  port_airflow            <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">port_airflow</span></span>
+<span id="cb111-5"><a href="root-directory-module.html#cb111-5" aria-hidden="true" tabindex="-1"></a>  port_mlflow             <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">port_mlflow</span></span>
+<span id="cb111-6"><a href="root-directory-module.html#cb111-6" aria-hidden="true" tabindex="-1"></a>  mlflow_s3_bucket_name   <span class="op">=</span> <span class="st">&quot;${var.name_prefix}-mlflow-bucket&quot;</span></span>
+<span id="cb111-7"><a href="root-directory-module.html#cb111-7" aria-hidden="true" tabindex="-1"></a>  force_destroy_s3_bucket <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb111-8"><a href="root-directory-module.html#cb111-8" aria-hidden="true" tabindex="-1"></a>  storage_type            <span class="op">=</span> <span class="st">&quot;gp2&quot;</span></span>
+<span id="cb111-9"><a href="root-directory-module.html#cb111-9" aria-hidden="true" tabindex="-1"></a>  max_allocated_storage   <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">max_allocated_storage</span></span>
+<span id="cb111-10"><a href="root-directory-module.html#cb111-10" aria-hidden="true" tabindex="-1"></a>  airflow_github_ssh      <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">airflow_github_ssh</span></span>
+<span id="cb111-11"><a href="root-directory-module.html#cb111-11" aria-hidden="true" tabindex="-1"></a>  git_username            <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">git_username</span></span>
+<span id="cb111-12"><a href="root-directory-module.html#cb111-12" aria-hidden="true" tabindex="-1"></a>  git_token               <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">git_token</span></span>
+<span id="cb111-13"><a href="root-directory-module.html#cb111-13" aria-hidden="true" tabindex="-1"></a>  git_repository_url      <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">git_repository_url</span></span>
+<span id="cb111-14"><a href="root-directory-module.html#cb111-14" aria-hidden="true" tabindex="-1"></a>  git_branch              <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">git_branch</span></span>
+<span id="cb111-15"><a href="root-directory-module.html#cb111-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb111-16"><a href="root-directory-module.html#cb111-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-17"><a href="root-directory-module.html#cb111-17" aria-hidden="true" tabindex="-1"></a>data <span class="st">&quot;aws_caller_identity&quot;</span> <span class="st">&quot;current&quot;</span> {}</span>
+<span id="cb111-18"><a href="root-directory-module.html#cb111-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-19"><a href="root-directory-module.html#cb111-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-20"><a href="root-directory-module.html#cb111-20" aria-hidden="true" tabindex="-1"></a># INFRASTRUCTURE</span>
+<span id="cb111-21"><a href="root-directory-module.html#cb111-21" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;vpc&quot;</span> {</span>
+<span id="cb111-22"><a href="root-directory-module.html#cb111-22" aria-hidden="true" tabindex="-1"></a>  source       <span class="op">=</span> <span class="st">&quot;./infrastructure/vpc&quot;</span></span>
+<span id="cb111-23"><a href="root-directory-module.html#cb111-23" aria-hidden="true" tabindex="-1"></a>  cluster_name <span class="op">=</span> local<span class="op">.</span><span class="at">cluster_name</span></span>
+<span id="cb111-24"><a href="root-directory-module.html#cb111-24" aria-hidden="true" tabindex="-1"></a>  vpc_name     <span class="op">=</span> local<span class="op">.</span><span class="at">vpc_name</span></span>
+<span id="cb111-25"><a href="root-directory-module.html#cb111-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb111-26"><a href="root-directory-module.html#cb111-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-27"><a href="root-directory-module.html#cb111-27" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;eks&quot;</span> {</span>
+<span id="cb111-28"><a href="root-directory-module.html#cb111-28" aria-hidden="true" tabindex="-1"></a>  source                <span class="op">=</span> <span class="st">&quot;./infrastructure/eks&quot;</span></span>
+<span id="cb111-29"><a href="root-directory-module.html#cb111-29" aria-hidden="true" tabindex="-1"></a>  cluster_name          <span class="op">=</span> local<span class="op">.</span><span class="at">cluster_name</span></span>
+<span id="cb111-30"><a href="root-directory-module.html#cb111-30" aria-hidden="true" tabindex="-1"></a>  eks_cluster_version   <span class="op">=</span> <span class="st">&quot;1.23&quot;</span></span>
+<span id="cb111-31"><a href="root-directory-module.html#cb111-31" aria-hidden="true" tabindex="-1"></a>  vpc_id                <span class="op">=</span> module<span class="op">.</span><span class="at">vpc</span><span class="op">.</span><span class="at">vpc_id</span></span>
+<span id="cb111-32"><a href="root-directory-module.html#cb111-32" aria-hidden="true" tabindex="-1"></a>  private_subnets       <span class="op">=</span> module<span class="op">.</span><span class="at">vpc</span><span class="op">.</span><span class="at">private_subnets</span></span>
+<span id="cb111-33"><a href="root-directory-module.html#cb111-33" aria-hidden="true" tabindex="-1"></a>  security_group_id_one <span class="op">=</span> [module<span class="op">.</span><span class="at">vpc</span><span class="op">.</span><span class="at">worker_group_mgmt_one_id</span>]</span>
+<span id="cb111-34"><a href="root-directory-module.html#cb111-34" aria-hidden="true" tabindex="-1"></a>  security_group_id_two <span class="op">=</span> [module<span class="op">.</span><span class="at">vpc</span><span class="op">.</span><span class="at">worker_group_mgmt_two_id</span>]</span>
+<span id="cb111-35"><a href="root-directory-module.html#cb111-35" aria-hidden="true" tabindex="-1"></a>  depends_on <span class="op">=</span> [</span>
+<span id="cb111-36"><a href="root-directory-module.html#cb111-36" aria-hidden="true" tabindex="-1"></a>    module<span class="op">.</span><span class="at">vpc</span></span>
+<span id="cb111-37"><a href="root-directory-module.html#cb111-37" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb111-38"><a href="root-directory-module.html#cb111-38" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb111-39"><a href="root-directory-module.html#cb111-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-40"><a href="root-directory-module.html#cb111-40" aria-hidden="true" tabindex="-1"></a># CUSTOM TOOLS</span>
+<span id="cb111-41"><a href="root-directory-module.html#cb111-41" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;airflow&quot;</span> {</span>
+<span id="cb111-42"><a href="root-directory-module.html#cb111-42" aria-hidden="true" tabindex="-1"></a>  count            <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">deploy_airflow</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span></span>
+<span id="cb111-43"><a href="root-directory-module.html#cb111-43" aria-hidden="true" tabindex="-1"></a>  source           <span class="op">=</span> <span class="st">&quot;./modules/airflow&quot;</span></span>
+<span id="cb111-44"><a href="root-directory-module.html#cb111-44" aria-hidden="true" tabindex="-1"></a>  name             <span class="op">=</span> <span class="st">&quot;airflow&quot;</span></span>
+<span id="cb111-45"><a href="root-directory-module.html#cb111-45" aria-hidden="true" tabindex="-1"></a>  cluster_name     <span class="op">=</span> local<span class="op">.</span><span class="at">cluster_name</span></span>
+<span id="cb111-46"><a href="root-directory-module.html#cb111-46" aria-hidden="true" tabindex="-1"></a>  cluster_endpoint <span class="op">=</span> module<span class="op">.</span><span class="at">eks</span><span class="op">.</span><span class="at">cluster_endpoint</span></span>
+<span id="cb111-47"><a href="root-directory-module.html#cb111-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-48"><a href="root-directory-module.html#cb111-48" aria-hidden="true" tabindex="-1"></a>  # RDS</span>
+<span id="cb111-49"><a href="root-directory-module.html#cb111-49" aria-hidden="true" tabindex="-1"></a>  vpc_id                      <span class="op">=</span> module<span class="op">.</span><span class="at">vpc</span><span class="op">.</span><span class="at">vpc_id</span></span>
+<span id="cb111-50"><a href="root-directory-module.html#cb111-50" aria-hidden="true" tabindex="-1"></a>  private_subnets             <span class="op">=</span> module<span class="op">.</span><span class="at">vpc</span><span class="op">.</span><span class="at">private_subnets</span></span>
+<span id="cb111-51"><a href="root-directory-module.html#cb111-51" aria-hidden="true" tabindex="-1"></a>  private_subnets_cidr_blocks <span class="op">=</span> module<span class="op">.</span><span class="at">vpc</span><span class="op">.</span><span class="at">private_subnets_cidr_blocks</span></span>
+<span id="cb111-52"><a href="root-directory-module.html#cb111-52" aria-hidden="true" tabindex="-1"></a>  rds_port                    <span class="op">=</span> local<span class="op">.</span><span class="at">port_airflow</span></span>
+<span id="cb111-53"><a href="root-directory-module.html#cb111-53" aria-hidden="true" tabindex="-1"></a>  rds_name                    <span class="op">=</span> <span class="st">&quot;airflow&quot;</span></span>
+<span id="cb111-54"><a href="root-directory-module.html#cb111-54" aria-hidden="true" tabindex="-1"></a>  rds_engine                  <span class="op">=</span> <span class="st">&quot;postgres&quot;</span></span>
+<span id="cb111-55"><a href="root-directory-module.html#cb111-55" aria-hidden="true" tabindex="-1"></a>  rds_engine_version          <span class="op">=</span> <span class="st">&quot;13.3&quot;</span></span>
+<span id="cb111-56"><a href="root-directory-module.html#cb111-56" aria-hidden="true" tabindex="-1"></a>  rds_instance_class          <span class="op">=</span> <span class="st">&quot;db.t3.micro&quot;</span></span>
+<span id="cb111-57"><a href="root-directory-module.html#cb111-57" aria-hidden="true" tabindex="-1"></a>  storage_type                <span class="op">=</span> local<span class="op">.</span><span class="at">storage_type</span></span>
+<span id="cb111-58"><a href="root-directory-module.html#cb111-58" aria-hidden="true" tabindex="-1"></a>  max_allocated_storage       <span class="op">=</span> local<span class="op">.</span><span class="at">max_allocated_storage</span></span>
+<span id="cb111-59"><a href="root-directory-module.html#cb111-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-60"><a href="root-directory-module.html#cb111-60" aria-hidden="true" tabindex="-1"></a>  # HELM</span>
+<span id="cb111-61"><a href="root-directory-module.html#cb111-61" aria-hidden="true" tabindex="-1"></a>  helm_chart_repository <span class="op">=</span> <span class="st">&quot;https://airflow-helm.github.io/charts&quot;</span></span>
+<span id="cb111-62"><a href="root-directory-module.html#cb111-62" aria-hidden="true" tabindex="-1"></a>  helm_chart_name       <span class="op">=</span> <span class="st">&quot;airflow&quot;</span></span>
+<span id="cb111-63"><a href="root-directory-module.html#cb111-63" aria-hidden="true" tabindex="-1"></a>  helm_chart_version    <span class="op">=</span> <span class="st">&quot;8.6.1&quot;</span></span>
+<span id="cb111-64"><a href="root-directory-module.html#cb111-64" aria-hidden="true" tabindex="-1"></a>  git_username          <span class="op">=</span> local<span class="op">.</span><span class="at">git_username</span></span>
+<span id="cb111-65"><a href="root-directory-module.html#cb111-65" aria-hidden="true" tabindex="-1"></a>  git_token             <span class="op">=</span> local<span class="op">.</span><span class="at">git_token</span></span>
+<span id="cb111-66"><a href="root-directory-module.html#cb111-66" aria-hidden="true" tabindex="-1"></a>  git_repository_url    <span class="op">=</span> local<span class="op">.</span><span class="at">git_repository_url</span></span>
+<span id="cb111-67"><a href="root-directory-module.html#cb111-67" aria-hidden="true" tabindex="-1"></a>  git_branch            <span class="op">=</span> local<span class="op">.</span><span class="at">git_branch</span></span>
+<span id="cb111-68"><a href="root-directory-module.html#cb111-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-69"><a href="root-directory-module.html#cb111-69" aria-hidden="true" tabindex="-1"></a>  depends_on <span class="op">=</span> [</span>
+<span id="cb111-70"><a href="root-directory-module.html#cb111-70" aria-hidden="true" tabindex="-1"></a>    module<span class="op">.</span><span class="at">eks</span></span>
+<span id="cb111-71"><a href="root-directory-module.html#cb111-71" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb111-72"><a href="root-directory-module.html#cb111-72" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb111-73"><a href="root-directory-module.html#cb111-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-74"><a href="root-directory-module.html#cb111-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-75"><a href="root-directory-module.html#cb111-75" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;mlflow&quot;</span> {</span>
+<span id="cb111-76"><a href="root-directory-module.html#cb111-76" aria-hidden="true" tabindex="-1"></a>  count                 <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">deploy_mlflow</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span></span>
+<span id="cb111-77"><a href="root-directory-module.html#cb111-77" aria-hidden="true" tabindex="-1"></a>  source                <span class="op">=</span> <span class="st">&quot;./modules/mlflow&quot;</span></span>
+<span id="cb111-78"><a href="root-directory-module.html#cb111-78" aria-hidden="true" tabindex="-1"></a>  name                  <span class="op">=</span> <span class="st">&quot;mlflow&quot;</span></span>
+<span id="cb111-79"><a href="root-directory-module.html#cb111-79" aria-hidden="true" tabindex="-1"></a>  mlflow_s3_bucket_name <span class="op">=</span> local<span class="op">.</span><span class="at">mlflow_s3_bucket_name</span></span>
+<span id="cb111-80"><a href="root-directory-module.html#cb111-80" aria-hidden="true" tabindex="-1"></a>  s3_force_destroy      <span class="op">=</span> local<span class="op">.</span><span class="at">force_destroy_s3_bucket</span></span>
+<span id="cb111-81"><a href="root-directory-module.html#cb111-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-82"><a href="root-directory-module.html#cb111-82" aria-hidden="true" tabindex="-1"></a>  # RDS</span>
+<span id="cb111-83"><a href="root-directory-module.html#cb111-83" aria-hidden="true" tabindex="-1"></a>  vpc_id                      <span class="op">=</span> module<span class="op">.</span><span class="at">vpc</span><span class="op">.</span><span class="at">vpc_id</span></span>
+<span id="cb111-84"><a href="root-directory-module.html#cb111-84" aria-hidden="true" tabindex="-1"></a>  private_subnets             <span class="op">=</span> module<span class="op">.</span><span class="at">vpc</span><span class="op">.</span><span class="at">private_subnets</span></span>
+<span id="cb111-85"><a href="root-directory-module.html#cb111-85" aria-hidden="true" tabindex="-1"></a>  private_subnets_cidr_blocks <span class="op">=</span> module<span class="op">.</span><span class="at">vpc</span><span class="op">.</span><span class="at">private_subnets_cidr_blocks</span></span>
+<span id="cb111-86"><a href="root-directory-module.html#cb111-86" aria-hidden="true" tabindex="-1"></a>  rds_port                    <span class="op">=</span> local<span class="op">.</span><span class="at">port_mlflow</span></span>
+<span id="cb111-87"><a href="root-directory-module.html#cb111-87" aria-hidden="true" tabindex="-1"></a>  rds_name                    <span class="op">=</span> <span class="st">&quot;mlflow&quot;</span></span>
+<span id="cb111-88"><a href="root-directory-module.html#cb111-88" aria-hidden="true" tabindex="-1"></a>  rds_engine                  <span class="op">=</span> <span class="st">&quot;mysql&quot;</span></span>
+<span id="cb111-89"><a href="root-directory-module.html#cb111-89" aria-hidden="true" tabindex="-1"></a>  rds_engine_version          <span class="op">=</span> <span class="st">&quot;8.0.30&quot;</span></span>
+<span id="cb111-90"><a href="root-directory-module.html#cb111-90" aria-hidden="true" tabindex="-1"></a>  rds_instance_class          <span class="op">=</span> <span class="st">&quot;db.t3.micro&quot;</span></span>
+<span id="cb111-91"><a href="root-directory-module.html#cb111-91" aria-hidden="true" tabindex="-1"></a>  storage_type                <span class="op">=</span> local<span class="op">.</span><span class="at">storage_type</span></span>
+<span id="cb111-92"><a href="root-directory-module.html#cb111-92" aria-hidden="true" tabindex="-1"></a>  max_allocated_storage       <span class="op">=</span> local<span class="op">.</span><span class="at">max_allocated_storage</span></span>
+<span id="cb111-93"><a href="root-directory-module.html#cb111-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-94"><a href="root-directory-module.html#cb111-94" aria-hidden="true" tabindex="-1"></a>  depends_on <span class="op">=</span> [</span>
+<span id="cb111-95"><a href="root-directory-module.html#cb111-95" aria-hidden="true" tabindex="-1"></a>    module<span class="op">.</span><span class="at">eks</span></span>
+<span id="cb111-96"><a href="root-directory-module.html#cb111-96" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb111-97"><a href="root-directory-module.html#cb111-97" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb111-98"><a href="root-directory-module.html#cb111-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-99"><a href="root-directory-module.html#cb111-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-100"><a href="root-directory-module.html#cb111-100" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;jupyterhub&quot;</span> {</span>
+<span id="cb111-101"><a href="root-directory-module.html#cb111-101" aria-hidden="true" tabindex="-1"></a>  count            <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">deploy_jupyterhub</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span></span>
+<span id="cb111-102"><a href="root-directory-module.html#cb111-102" aria-hidden="true" tabindex="-1"></a>  source           <span class="op">=</span> <span class="st">&quot;./modules/jupyterhub&quot;</span></span>
+<span id="cb111-103"><a href="root-directory-module.html#cb111-103" aria-hidden="true" tabindex="-1"></a>  name             <span class="op">=</span> <span class="st">&quot;jupyterhub&quot;</span></span>
+<span id="cb111-104"><a href="root-directory-module.html#cb111-104" aria-hidden="true" tabindex="-1"></a>  cluster_name     <span class="op">=</span> local<span class="op">.</span><span class="at">cluster_name</span></span>
+<span id="cb111-105"><a href="root-directory-module.html#cb111-105" aria-hidden="true" tabindex="-1"></a>  cluster_endpoint <span class="op">=</span> module<span class="op">.</span><span class="at">eks</span><span class="op">.</span><span class="at">cluster_endpoint</span></span>
+<span id="cb111-106"><a href="root-directory-module.html#cb111-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-107"><a href="root-directory-module.html#cb111-107" aria-hidden="true" tabindex="-1"></a>  # HELM</span>
+<span id="cb111-108"><a href="root-directory-module.html#cb111-108" aria-hidden="true" tabindex="-1"></a>  helm_chart_repository <span class="op">=</span> <span class="st">&quot;https://jupyterhub.github.io/helm-chart/&quot;</span></span>
+<span id="cb111-109"><a href="root-directory-module.html#cb111-109" aria-hidden="true" tabindex="-1"></a>  helm_chart_name       <span class="op">=</span> <span class="st">&quot;jupyterhub&quot;</span></span>
+<span id="cb111-110"><a href="root-directory-module.html#cb111-110" aria-hidden="true" tabindex="-1"></a>  helm_chart_version    <span class="op">=</span> <span class="st">&quot;2.0.0&quot;</span></span>
+<span id="cb111-111"><a href="root-directory-module.html#cb111-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-112"><a href="root-directory-module.html#cb111-112" aria-hidden="true" tabindex="-1"></a>  depends_on <span class="op">=</span> [</span>
+<span id="cb111-113"><a href="root-directory-module.html#cb111-113" aria-hidden="true" tabindex="-1"></a>    module<span class="op">.</span><span class="at">eks</span></span>
+<span id="cb111-114"><a href="root-directory-module.html#cb111-114" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb111-115"><a href="root-directory-module.html#cb111-115" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb111-116"><a href="root-directory-module.html#cb111-116" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
 
 </div>
             </section>
@@ -361,8 +477,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-
-<a href="preamble.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ml-platform-deployment.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="infrastructure-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -393,7 +509,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/index.Rmd",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/08.1-Deployment_Infrastructure_Root.md",
 "text": "Edit"
 },
 "history": {

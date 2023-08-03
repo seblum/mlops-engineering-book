@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>MLOps Engineering</title>
+  <title>Chapter 8 ML Platform Deployment | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="MLOps Engineering" />
+  <meta property="og:title" content="Chapter 8 ML Platform Deployment | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="MLOps Engineering" />
+  <meta name="twitter:title" content="Chapter 8 ML Platform Deployment | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="preamble.html"/>
+<link rel="prev" href="ml-platform-design.html"/>
+<link rel="next" href="root-directory-module.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -345,24 +345,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">MLOps Engineering</h1>
-<h2 class="subtitle"><em>Building, Deploying, and Managing Machine Learning Workflows with Airflow and MLflow on Kubernetes.</em></h2>
-<p class="author"><em>Sebastian Blum</em></p>
-<p class="date"><em>2023-08-03</em></p>
+<div id="ml-platform-deployment" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> ML Platform Deployment<a href="ml-platform-deployment.html#ml-platform-deployment" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<blockquote>
+<p><strong><em>NOTE:</em></strong> The chapter discussing the deployment of an ML platform with Airflow and MLflow on AWS EKS, utilizing Terraform for deployment, is currently in the writing phase. The information provided in this disclaimer is based on the current state of knowledge up until July 2023. Thank you for your understanding and patience as I work on completing this chapter.</p>
+</blockquote>
+<p>The provided directory structure represents the Terraform project for managing the infrastructure of our ML platform. It follows a modular organization to promote reusability and maintainability of the codebase. The full codebase is also available and can be accessed on <a href="https://github.com/seblum/mlops-airflow-on-eks">github</a></p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb110-1"><a href="ml-platform-deployment.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="ex">root</span></span>
+<span id="cb110-2"><a href="ml-platform-deployment.html#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   main.tf</span>
+<span id="cb110-3"><a href="ml-platform-deployment.html#cb110-3" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   variables.tf</span>
+<span id="cb110-4"><a href="ml-platform-deployment.html#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   outputs.tf</span>
+<span id="cb110-5"><a href="ml-platform-deployment.html#cb110-5" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   providers.tf</span>
+<span id="cb110-6"><a href="ml-platform-deployment.html#cb110-6" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb110-7"><a href="ml-platform-deployment.html#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> infrastructure</span>
+<span id="cb110-8"><a href="ml-platform-deployment.html#cb110-8" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
+<span id="cb110-9"><a href="ml-platform-deployment.html#cb110-9" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── vpc</span>
+<span id="cb110-10"><a href="ml-platform-deployment.html#cb110-10" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
+<span id="cb110-11"><a href="ml-platform-deployment.html#cb110-11" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── eks</span>
+<span id="cb110-12"><a href="ml-platform-deployment.html#cb110-12" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
+<span id="cb110-13"><a href="ml-platform-deployment.html#cb110-13" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── networking</span>
+<span id="cb110-14"><a href="ml-platform-deployment.html#cb110-14" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
+<span id="cb110-15"><a href="ml-platform-deployment.html#cb110-15" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── rds</span>
+<span id="cb110-16"><a href="ml-platform-deployment.html#cb110-16" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb110-17"><a href="ml-platform-deployment.html#cb110-17" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> modules</span>
+<span id="cb110-18"><a href="ml-platform-deployment.html#cb110-18" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│</span></span>
+<span id="cb110-19"><a href="ml-platform-deployment.html#cb110-19" aria-hidden="true" tabindex="-1"></a>    <span class="ex">└──</span> airflow</span>
+<span id="cb110-20"><a href="ml-platform-deployment.html#cb110-20" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│</span></span>
+<span id="cb110-21"><a href="ml-platform-deployment.html#cb110-21" aria-hidden="true" tabindex="-1"></a>    <span class="ex">└──</span> mlflow</span>
+<span id="cb110-22"><a href="ml-platform-deployment.html#cb110-22" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│</span></span>
+<span id="cb110-23"><a href="ml-platform-deployment.html#cb110-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">└──</span> jupyterhub</span></code></pre></div>
+<p>By structuring the Terraform project this way it becomes easier to manage, scale, and maintain the infrastructure as the project grows. Each module can be independently developed, tested, and reused across different projects, promoting consistency and reducing duplication of code and effort.</p>
+<div id="root" class="section level3 unlisted unnumbered hasAnchor">
+<h3>Root<a href="ml-platform-deployment.html#root" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <em>root</em> directory of the Terraform project contains the general configuration files related to the overall infrastructure setup.</p>
+<ul>
+<li>The <code>main.tf</code> Terraform configuration file, where all major resources are defined and organized into modules.</li>
+<li>The <code>variables.tf</code> containing the definition of input variables used throughout the project, allowing users to customize the infrastructure setup.</li>
+<li>The <code>outputs.tf</code> defining the output variables that expose relevant information about the deployed infrastructure.</li>
+<li>The <code>providers.tf</code> that defining and configuring the providers used in the project, for example, AWS, Kubernetes, Helm.</li>
+</ul>
 </div>
-<div id="summary" class="section level1 unlisted unnumbered hasAnchor">
-<h1>Summary<a href="index.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><em>MLOps Engineering: Building, Deploying, and Managing Machine Learning Workflows with Airflow and MLflow on Kubernetes”</em> is a comprehensive guide to understanding the principles and roles of MLOps, as well as operational principles such as CI/CD and versioning. Through the use of an exemplary MLOps platform utilizing Airflow, MLflow, and JupyterHub on AWS EKS, readers will learn how to deploy this platform using infrastructure as code Terraform. The book is structured with chapters that introduce the various tools such as Airflow, MLflow, Kubernetes, and Terraform, and also includes a use case that demonstrates the utilization of the platform through Airflow workflows and MLflow tracking. Whether you are a data scientist, engineer, or developer, this book provides the necessary knowledge and skills to effectively implement MLOps practices and platforms in your organization.</p>
+<div id="infrastructure" class="section level3 unlisted unnumbered hasAnchor">
+<h3>Infrastructure<a href="ml-platform-deployment.html#infrastructure" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <em>infrastructure</em> directory holds the individual modules responsible for provisioning specific components of the AWS Cloud and EKS setup.</p>
+<ul>
+<li><code>vpc</code> defines a module that configures resources related to the Virtual Private Cloud (VPC), such as subnets, route tables, and internet gateways.</li>
+<li>The <code>eks</code> module is responsible for creating and configuring an Amazon Elastic Kubernetes Service (EKS) cluster, including worker nodes and other related resources like the Cluster Autoscaler, Elastic Block Storage, or Elastic File System.</li>
+<li><code>networking</code> contains networking components that provide access to the cluster using ingresses and DNS records, for example the AWS Application Load Balancer or an External DNS.</li>
+<li>The <code>rds</code> module provides resources to deploy and Amazon Relational Database Service (RDS), such as database instances, subnets, and security groups. This module is needed for the specific tools and components of our ML platform.</li>
+</ul>
+</div>
+<div id="modules-1" class="section level3 unlisted unnumbered hasAnchor">
+<h3>Modules<a href="ml-platform-deployment.html#modules-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <em>modules</em> directory contains Terraform modules that are specific for setting up out ML Platform and provides the components to integrate the MLOps Framework, such as tools for model tracking (MLflow), workflow management (Airflow), or a integrated development environment (JupyterHub).</p>
+<ul>
+<li><code>airflow</code> provides the Terraform module to deploy an Apache Airflow instance based on the Helm provider, which enables to orchestrate our ML workflows. The module is highly customized as it sets up necessary connections to other services, sets airflow variables that can be used by Data Scientists, creates an ingress ressource, and enables user management and authentication using Github.</li>
+<li>The <code>mlflow</code> module sets up MLflow to managing machine learning experiments and models. As MLflow does not natively provide a solution to deploy on Kubernetes, a custom Helm deployment is integrated that configures the necessary deployment, services, and ingress ressources.</li>
+<li><code>jupyterhub</code> deploys a JupyterHub environment via Helm that enables multi-user notebook environment, suitable for collaborative data science and machine learning work. The Helm chart is highly customized providing user management and authentication via Github, provisioning ingress resources, and cloning a custom Github repository that provides all our Data Science and Machine Learning code.</li>
+</ul>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="preamble.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ml-platform-design.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="root-directory-module.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -393,7 +443,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/index.Rmd",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/08-Deployment-Infrastructure_Overview.md",
 "text": "Edit"
 },
 "history": {

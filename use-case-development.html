@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Use Case Development | MLOps Engineering</title>
+  <title>Chapter 9 Use Case Development | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Use Case Development | MLOps Engineering" />
+  <meta property="og:title" content="Chapter 9 Use Case Development | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Use Case Development | MLOps Engineering" />
+  <meta name="twitter:title" content="Chapter 9 Use Case Development | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -23,15 +23,15 @@
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-06-11" />
+<meta name="date" content="2023-08-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="infrastructure-deployment.html"/>
-<link rel="next" href="jupyterhub.html"/>
+<link rel="prev" href="design-decisions.html"/>
+<link rel="next" href="integrated-development-environment.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -171,7 +171,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#infrastructure-as-code"><i class="fa fa-check"></i><b>1.4.4</b> Infrastructure as code</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><a href="mlops-engineering-with-airflow-and-mlflow-on-kubernetes.html"><i class="fa fa-check"></i><b>2</b> MLOps Engineering with Airflow and MLflow on Kubernetes</a></li>
+<li class="chapter" data-level="2" data-path="overview-about-book-tutorials.html"><a href="overview-about-book-tutorials.html"><i class="fa fa-check"></i><b>2</b> Overview about book tutorials</a></li>
 <li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="core-components.html"><a href="core-components.html"><i class="fa fa-check"></i><b>3.1</b> Core Components</a>
@@ -287,29 +287,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>6.5</b> Exemplary Deployment</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="infrastructure-deployment.html"><a href="infrastructure-deployment.html"><i class="fa fa-check"></i><b>7</b> Infrastructure Deployment</a></li>
-<li class="chapter" data-level="8" data-path="use-case-development.html"><a href="use-case-development.html"><i class="fa fa-check"></i><b>8</b> Use Case Development</a>
+<li class="chapter" data-level="7" data-path="ml-platform-design.html"><a href="ml-platform-design.html"><i class="fa fa-check"></i><b>7</b> ML Platform Design</a></li>
+<li class="chapter" data-level="8" data-path="ml-platform-deployment.html"><a href="ml-platform-deployment.html"><i class="fa fa-check"></i><b>8</b> ML Platform Deployment</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="jupyterhub.html"><a href="jupyterhub.html"><i class="fa fa-check"></i><b>8.1</b> Jupyterhub</a>
+<li class="chapter" data-level="8.1" data-path="root-directory-module.html"><a href="root-directory-module.html"><i class="fa fa-check"></i><b>8.1</b> Root directory module</a></li>
+<li class="chapter" data-level="8.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html"><i class="fa fa-check"></i><b>8.2</b> Infrastructure</a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="jupyterhub.html"><a href="jupyterhub.html#github-repository"><i class="fa fa-check"></i><b>8.1.1</b> Github Repository</a></li>
+<li class="chapter" data-level="8.2.1" data-path="infrastructure-1.html"><a href="infrastructure-1.html#virtual-private-cloud"><i class="fa fa-check"></i><b>8.2.1</b> Virtual Private Cloud</a></li>
+<li class="chapter" data-level="8.2.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html#elastic-kubernetes-service"><i class="fa fa-check"></i><b>8.2.2</b> Elastic Kubernetes Service</a></li>
+<li class="chapter" data-level="8.2.3" data-path="infrastructure-1.html"><a href="infrastructure-1.html#networking"><i class="fa fa-check"></i><b>8.2.3</b> Networking</a></li>
+<li class="chapter" data-level="8.2.4" data-path="infrastructure-1.html"><a href="infrastructure-1.html#relational-database-service"><i class="fa fa-check"></i><b>8.2.4</b> Relational Database Service</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html"><i class="fa fa-check"></i><b>8.2</b> Pipeline Workflow</a>
+<li class="chapter" data-level="8.3" data-path="modules-2.html"><a href="modules-2.html"><i class="fa fa-check"></i><b>8.3</b> Modules</a>
 <ul>
-<li class="chapter" data-level="8.2.1" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>8.2.1</b> Airflow Workflow</a></li>
-<li class="chapter" data-level="8.2.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>8.2.2</b> MLflow</a></li>
+<li class="chapter" data-level="8.3.1" data-path="modules-2.html"><a href="modules-2.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
+<li class="chapter" data-level="8.3.2" data-path="modules-2.html"><a href="modules-2.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html"><i class="fa fa-check"></i><b>8.3</b> Building the Pipeline Steps</a>
+<li class="chapter" data-level="8.4" data-path="design-decisions.html"><a href="design-decisions.html"><i class="fa fa-check"></i><b>8.4</b> Design Decisions</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="use-case-development.html"><a href="use-case-development.html"><i class="fa fa-check"></i><b>9</b> Use Case Development</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>8.3.1</b> Data Preprocessing</a></li>
-<li class="chapter" data-level="8.3.2" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>8.3.2</b> Model Training</a></li>
-</ul></li>
-<li class="chapter" data-level="8.4" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html"><i class="fa fa-check"></i><b>8.4</b> Model Serving &amp; Inferencing</a>
+<li class="chapter" data-level="9.1" data-path="integrated-development-environment.html"><a href="integrated-development-environment.html"><i class="fa fa-check"></i><b>9.1</b> Integrated Development Environment</a>
 <ul>
-<li class="chapter" data-level="8.4.1" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#model-serving-1"><i class="fa fa-check"></i><b>8.4.1</b> Model Serving</a></li>
-<li class="chapter" data-level="8.4.2" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>8.4.2</b> Streamlit App</a></li>
+<li class="chapter" data-level="9.1.1" data-path="integrated-development-environment.html"><a href="integrated-development-environment.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Pipeline Workflow</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
+<li class="chapter" data-level="9.2.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Building the Pipeline Steps</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="9.3.2" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html"><i class="fa fa-check"></i><b>9.4</b> Model Serving &amp; Inferencing</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#model-serving-1"><i class="fa fa-check"></i><b>9.4.1</b> Model Serving</a></li>
+<li class="chapter" data-level="9.4.2" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.4.2</b> Streamlit App</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="10" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>10</b> Acknowledgements</a></li>
 </ul>
 
       </nav>
@@ -327,8 +345,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="use-case-development" class="section level1 hasAnchor" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Use Case Development<a href="use-case-development.html#use-case-development" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="use-case-development" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Use Case Development<a href="use-case-development.html#use-case-development" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>The ML platform aims to enable the full development cycle of ML algorithms within DevOps and MLOps principles. This includes to enable development within a sophisticated IDE such as VSCode, as well as incorporating best practices like Gitflow, automation by CI/CD, and the containerization of code. Whereas the previous chapter explained the ML platform itself and its deployment, this chapter illustrates the workflow of developing ML models on the platform. Thus, a use case has been selected and implemented such that it integrates each of the previous mentioned principles and best practices.</p>
 <div id="skin-cancer-detection" class="section level3 unlisted unnumbered hasAnchor">
 <h3><em>Skin Cancer Detection</em><a href="use-case-development.html#skin-cancer-detection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -337,19 +355,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4>Data<a href="use-case-development.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The dataset from <a href="https://www.kaggle.com/code/fanconic/cnn-for-skin-cancer-detection">Kaggle</a> utilized in this project is obtained from the ISIC (International Skin Image Collaboration) Archive. It consists of 1800 images depicting benign moles and 1497 images representing malignant moles that have already been classified. The primary objective of this use case is to develop a model capable of visually classifying moles as either benign or malignant.</p>
 <p>All the images in the dataset have been uniformly resized to a lower resolution of 224x224x3 RGB. Additionally, the dataset has already been cleaned and divided into a train set and a test set. This allows for a straightforward implementation that focuses on the crucial aspects of this tutorial, which involve putting machine learning into production and leveraging workflow management and model tracking tools. The data is also conveniently sorted based on the two types, namely benign and malignant.</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb110-1"><a href="use-case-development.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="ex">data</span></span>
-<span id="cb110-2"><a href="use-case-development.html#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
-<span id="cb110-3"><a href="use-case-development.html#cb110-3" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> train</span>
-<span id="cb110-4"><a href="use-case-development.html#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
-<span id="cb110-5"><a href="use-case-development.html#cb110-5" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── benign</span>
-<span id="cb110-6"><a href="use-case-development.html#cb110-6" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   ...</span>
-<span id="cb110-7"><a href="use-case-development.html#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   </span>
-<span id="cb110-8"><a href="use-case-development.html#cb110-8" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── malignant</span>
-<span id="cb110-9"><a href="use-case-development.html#cb110-9" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>       ...</span>
-<span id="cb110-10"><a href="use-case-development.html#cb110-10" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
-<span id="cb110-11"><a href="use-case-development.html#cb110-11" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> test</span>
-<span id="cb110-12"><a href="use-case-development.html#cb110-12" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
-<span id="cb110-13"><a href="use-case-development.html#cb110-13" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── benign</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb128-1"><a href="use-case-development.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="ex">data</span></span>
+<span id="cb128-2"><a href="use-case-development.html#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb128-3"><a href="use-case-development.html#cb128-3" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> train</span>
+<span id="cb128-4"><a href="use-case-development.html#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
+<span id="cb128-5"><a href="use-case-development.html#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── benign</span>
+<span id="cb128-6"><a href="use-case-development.html#cb128-6" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   ...</span>
+<span id="cb128-7"><a href="use-case-development.html#cb128-7" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   </span>
+<span id="cb128-8"><a href="use-case-development.html#cb128-8" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── malignant</span>
+<span id="cb128-9"><a href="use-case-development.html#cb128-9" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>       ...</span>
+<span id="cb128-10"><a href="use-case-development.html#cb128-10" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb128-11"><a href="use-case-development.html#cb128-11" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> test</span>
+<span id="cb128-12"><a href="use-case-development.html#cb128-12" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
+<span id="cb128-13"><a href="use-case-development.html#cb128-13" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── benign</span></code></pre></div>
 <p>The dataset is kept in an AWS S3 Bucket, which was deployed on the pre-existing ML Platform. The deployment of the Bucket was accomplished using an Infrastructure-as-a-Code (IaaC) script, and the dataset was uploaded to the Bucket at the same time. To enable the ML pipeline to interact with AWS for data retrieval and storage, a custom utils script in the code base provides the necessary functionality.</p>
 <!-- Deep Learning -->
 
@@ -361,8 +379,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="infrastructure-deployment.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="jupyterhub.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="design-decisions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="integrated-development-environment.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

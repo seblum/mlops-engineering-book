@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>MLOps Engineering</title>
+  <title>Chapter 7 ML Platform Design | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="MLOps Engineering" />
+  <meta property="og:title" content="Chapter 7 ML Platform Design | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="MLOps Engineering" />
+  <meta name="twitter:title" content="Chapter 7 ML Platform Design | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="preamble.html"/>
+<link rel="prev" href="exemplary-deployment.html"/>
+<link rel="next" href="ml-platform-deployment.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -345,15 +345,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">MLOps Engineering</h1>
-<h2 class="subtitle"><em>Building, Deploying, and Managing Machine Learning Workflows with Airflow and MLflow on Kubernetes.</em></h2>
-<p class="author"><em>Sebastian Blum</em></p>
-<p class="date"><em>2023-08-03</em></p>
-</div>
-<div id="summary" class="section level1 unlisted unnumbered hasAnchor">
-<h1>Summary<a href="index.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><em>MLOps Engineering: Building, Deploying, and Managing Machine Learning Workflows with Airflow and MLflow on Kubernetes”</em> is a comprehensive guide to understanding the principles and roles of MLOps, as well as operational principles such as CI/CD and versioning. Through the use of an exemplary MLOps platform utilizing Airflow, MLflow, and JupyterHub on AWS EKS, readers will learn how to deploy this platform using infrastructure as code Terraform. The book is structured with chapters that introduce the various tools such as Airflow, MLflow, Kubernetes, and Terraform, and also includes a use case that demonstrates the utilization of the platform through Airflow workflows and MLflow tracking. Whether you are a data scientist, engineer, or developer, this book provides the necessary knowledge and skills to effectively implement MLOps practices and platforms in your organization.</p>
+<div id="ml-platform-design" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> ML Platform Design<a href="ml-platform-design.html#ml-platform-design" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>ML platforms can be set up in various ways to apply MLOps practices to the machine learning workflow.
+(1) SaaS tools provide an integrated development and management experience, with an aim to offer an end-to-end process. (2) Custom-made platforms offer high flexibility and can be tailored to specific needs. However, integrating multiple different services requires significant engineering effort. (3) Many cloud providers offer a mix of SaaS and custom-tailored platforms, providing a relatively well-integrated experience while remaining open enough to integrate other services.</p>
+<p>This project involves building a custom-tailored MLOps platform focused on MLOps engineering, as the entire infrastructure will be set up from scratch. An exemplary MLOps platform will be developed using Airflow and MLflow for management during the machine learning lifecycle and JupyterHub to provide a development environment.</p>
+<p>Even though there are workflow tools better designed for machine learning pipelines, for example Kubeflow Pipelines, Airflow and MLflow can leverage and an combine there functionalities to provide similar capabilites. Airflow provides the workflow management for the platform whilst MLflow is used for machine learning tracking. MLflow further allow to register each model effortlessly. As an MLOps plattform should also provide an environment to develop machine learning model code, JupyterHub will be deployed to be able to develop code in the cloud and without the need for a local setup. The coding environment will synchronize with Airflow’s DAG repository to seamlessly integrate the defined models within the workflow management.
+Airflow and MLflow are very flexible with their running environment and their stack would be very suitable for small scale systems, where there is no need for a setup maintaining a Kubernetes cluster. While it would be possible to run anything on a docker/docker-compose setup, this work will scale the mentioned tools to a Kubernetes cluster in the cloud to fully enable the concept of an MLOps plattform.
+The infrastructure will be maintained using the Infrastructure as Code tool <em>Terraform</em>, and incorporate best Ops practices such as CI/CD and automation. The project will also incorporate the work done by data and machine learning scientists since basic machine learning models will be implemented and run on the platform.</p>
+<p><img src="images/01-Introduction/airflow-on-eks-basic.drawio.svg" /></p>
+<p>The following chapters give an introductory tutorial on each of the previously introduced tools. A machine learning workflow using Airflow is set up on the deployed infrastructure, including data preprocessing, model training, and model deployment, as well as tracking the experiment and deploying the model into production using MLFlow.</p>
+<p>The necessary AWS infrastructure is set up using Terraform. This includes creating an AWS EKS cluster and the associated ressources like a virtual private cloud (VPC), subnets, security groups, IAM roles, as well as further AWS ressources needed to deploy Airflow and MLflow.
+Once the EKS cluster is set up, Kubernetes can be used to deploy and manage applications on the cluster. Helm, a package manager for Kubernetes, is used to manage the deployment of Airflow and MLflow. The EKS cluster allows for easy scalability and management of the platforms. The code is made public on a Github repository and Github Actions is used for automating the deployment of the infrastructure using CI/CD principles.</p>
+<p>Once the infrastructure is set up, machine learning models can be deployed to the EKS cluster as Kubernetes pods, using Airflows scheduling processes. Airflow’s ability to scan local directories or Git repositories will be used to import the relevant machine learning code from second Github repository.
+Similarly, to building Airflow workflows, the machine learning code will also include using the MLFlow API to allow for model tracking. Github Actions is used as a CI/CD pipeline to automatically build, test, and deploy machine learning models to this repository similarly as it is used in the repository for the infrastructure.</p>
+<!---
+Monitoring and logging would be achieved using CloudWatch to monitor the health and performance of the EKS cluster and its components, such as worker nodes, Kubernetes pods, etc and ELK stack or similar for logging of the system and applications. Networking would be handled by AWS Elastic Load Balancing service or Ingress controller to route traffic to the correct service/pod in the cluster.
+-->
+<p>Whereas the deployment of the infrastructure would be taken care of by MLOps-, DevOps-, and Data Engineers, the development of the Airflow workflows including MLFlow would be taken care of by Data Scientist and ML Engineers.</p>
 
 </div>
             </section>
@@ -361,8 +370,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-
-<a href="preamble.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="exemplary-deployment.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ml-platform-deployment.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -393,7 +402,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/index.Rmd",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/07-ML-Project_Design.Rmd",
 "text": "Edit"
 },
 "history": {

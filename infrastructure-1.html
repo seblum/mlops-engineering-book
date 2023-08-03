@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8.2 Infrastructure | MLOps Engineering</title>
+  <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8.2 Infrastructure | MLOps Engineering" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  <meta name="github-repo" content="seblum/mlops-engineering-book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8.2 Infrastructure | MLOps Engineering" />
+  
+  <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  
+
+<meta name="author" content="Sebastian Blum" />
+
+
+<meta name="date" content="2023-08-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="root-directory-module.html"/>
+<link rel="next" href="modules-2.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MLOps Engineering</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html"><i class="fa fa-check"></i>Preamble</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html"><i class="fa fa-check"></i><b>1.1</b> Machine Learning Workflow</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html#ml-worflow-tools"><i class="fa fa-check"></i><b>1.1.1</b> ML Worflow Tools</a></li>
+<li class="chapter" data-level="1.1.2" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html#developing-machine-learning-models"><i class="fa fa-check"></i><b>1.1.2</b> Developing Machine Learning Models</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html"><i class="fa fa-check"></i><b>1.2</b> Machine Learning Operations (MLOps)</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#ml-dev-ops"><i class="fa fa-check"></i><b>1.2.1</b> ML + (Dev)-Ops</a></li>
+<li class="chapter" data-level="1.2.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#mlops-lifecycle"><i class="fa fa-check"></i><b>1.2.2</b> MLOps Lifecycle</a></li>
+<li class="chapter" data-level="1.2.3" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#mlops-engineering"><i class="fa fa-check"></i><b>1.2.3</b> MLOps Engineering</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html"><i class="fa fa-check"></i><b>1.3</b> Roles and Tasks in MLOps</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#data-engineer"><i class="fa fa-check"></i><b>1.3.1</b> Data Engineer</a></li>
+<li class="chapter" data-level="1.3.2" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#data-scientist"><i class="fa fa-check"></i><b>1.3.2</b> Data Scientist</a></li>
+<li class="chapter" data-level="1.3.3" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#ml-engineer"><i class="fa fa-check"></i><b>1.3.3</b> ML Engineer</a></li>
+<li class="chapter" data-level="1.3.4" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#mlops-engineer"><i class="fa fa-check"></i><b>1.3.4</b> MLOps Engineer</a></li>
+<li class="chapter" data-level="1.3.5" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#devops-engineer"><i class="fa fa-check"></i><b>1.3.5</b> DevOps Engineer</a></li>
+<li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>1.4</b> Ops Tools &amp; Principles</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#containerization"><i class="fa fa-check"></i><b>1.4.1</b> Containerization</a></li>
+<li class="chapter" data-level="1.4.2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#version-control"><i class="fa fa-check"></i><b>1.4.2</b> Version Control</a></li>
+<li class="chapter" data-level="1.4.3" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#cicd"><i class="fa fa-check"></i><b>1.4.3</b> CI/CD</a></li>
+<li class="chapter" data-level="1.4.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#infrastructure-as-code"><i class="fa fa-check"></i><b>1.4.4</b> Infrastructure as code</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="overview-about-book-tutorials.html"><a href="overview-about-book-tutorials.html"><i class="fa fa-check"></i><b>2</b> Overview about book tutorials</a></li>
+<li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="core-components.html"><a href="core-components.html"><i class="fa fa-check"></i><b>3.1</b> Core Components</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="core-components.html"><a href="core-components.html#dags"><i class="fa fa-check"></i><b>3.1.1</b> DAGs</a></li>
+<li class="chapter" data-level="3.1.2" data-path="core-components.html"><a href="core-components.html#operators"><i class="fa fa-check"></i><b>3.1.2</b> Operators</a></li>
+<li class="chapter" data-level="3.1.3" data-path="core-components.html"><a href="core-components.html#tasks"><i class="fa fa-check"></i><b>3.1.3</b> Tasks</a></li>
+<li class="chapter" data-level="3.1.4" data-path="core-components.html"><a href="core-components.html#xcom"><i class="fa fa-check"></i><b>3.1.4</b> XCom</a></li>
+<li class="chapter" data-level="3.1.5" data-path="core-components.html"><a href="core-components.html#scheduling"><i class="fa fa-check"></i><b>3.1.5</b> Scheduling</a></li>
+<li class="chapter" data-level="3.1.6" data-path="core-components.html"><a href="core-components.html#taskflow"><i class="fa fa-check"></i><b>3.1.6</b> Taskflow</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>3.2</b> Exemplary ML workflow</a></li>
+<li class="chapter" data-level="3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>3.3</b> Airflow infrastructure</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#airflow-as-a-distributed-system"><i class="fa fa-check"></i><b>3.3.1</b> Airflow as a distributed system</a></li>
+<li class="chapter" data-level="3.3.2" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#scheduler"><i class="fa fa-check"></i><b>3.3.2</b> Scheduler</a></li>
+<li class="chapter" data-level="3.3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#webserver"><i class="fa fa-check"></i><b>3.3.3</b> Webserver</a></li>
+<li class="chapter" data-level="3.3.4" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#executor"><i class="fa fa-check"></i><b>3.3.4</b> Executor</a></li>
+<li class="chapter" data-level="3.3.5" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#dag-directory"><i class="fa fa-check"></i><b>3.3.5</b> DAG Directory</a></li>
+<li class="chapter" data-level="3.3.6" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#metadata-database"><i class="fa fa-check"></i><b>3.3.6</b> Metadata Database</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>4</b> MLflow</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="core-components-1.html"><a href="core-components-1.html"><i class="fa fa-check"></i><b>4.1</b> Core Components</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-tracking"><i class="fa fa-check"></i><b>4.1.1</b> MLflow Tracking</a></li>
+<li class="chapter" data-level="4.1.2" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-models"><i class="fa fa-check"></i><b>4.1.2</b> MLflow Models</a></li>
+<li class="chapter" data-level="4.1.3" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-model-registry"><i class="fa fa-check"></i><b>4.1.3</b> MLflow Model Registry</a></li>
+<li class="chapter" data-level="4.1.4" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-projects"><i class="fa fa-check"></i><b>4.1.4</b> MLflow Projects</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html"><i class="fa fa-check"></i><b>4.2</b> MLFflow Architecture</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>4.2.1</b> MLflow Tracking Server</a></li>
+<li class="chapter" data-level="4.2.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-backend-store"><i class="fa fa-check"></i><b>4.2.2</b> MLflow Backend Store</a></li>
+<li class="chapter" data-level="4.2.3" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-artifact-store"><i class="fa fa-check"></i><b>4.2.3</b> MLflow Artifact Store</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>5</b> Kubernetes</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="core-components-2.html"><a href="core-components-2.html"><i class="fa fa-check"></i><b>5.1</b> Core Components</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="core-components-2.html"><a href="core-components-2.html#nodes"><i class="fa fa-check"></i><b>5.1.1</b> Nodes</a></li>
+<li class="chapter" data-level="5.1.2" data-path="core-components-2.html"><a href="core-components-2.html#pods"><i class="fa fa-check"></i><b>5.1.2</b> Pods</a></li>
+<li class="chapter" data-level="5.1.3" data-path="core-components-2.html"><a href="core-components-2.html#imperative-declarative-management"><i class="fa fa-check"></i><b>5.1.3</b> Imperative &amp; Declarative Management</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>5.2</b> Application Deployment &amp; Design</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>5.2.1</b> Deployments</a></li>
+<li class="chapter" data-level="5.2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html#resource-management"><i class="fa fa-check"></i><b>5.2.2</b> Resource Management</a></li>
+<li class="chapter" data-level="5.2.3" data-path="application-deployment-design.html"><a href="application-deployment-design.html#daemonsets"><i class="fa fa-check"></i><b>5.2.3</b> DaemonSets</a></li>
+<li class="chapter" data-level="5.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>5.2.4</b> StatefulSets</a></li>
+<li class="chapter" data-level="5.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>5.2.5</b> Jobs &amp; Cron Jobs</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>5.3</b> Services &amp; Networking</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>5.3.1</b> Services</a></li>
+<li class="chapter" data-level="5.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>5.3.2</b> Service Discovery</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>5.4</b> Volume &amp; Storage</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>5.4.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="5.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>5.4.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="5.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>5.4.3</b> Persistent Volumes</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>5.5</b> Environment, Configuration &amp; Security</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#namespaces"><i class="fa fa-check"></i><b>5.5.1</b> Namespaces</a></li>
+<li class="chapter" data-level="5.5.2" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>5.5.2</b> Labels, Selectors and Annotations</a></li>
+<li class="chapter" data-level="5.5.3" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#configmaps"><i class="fa fa-check"></i><b>5.5.3</b> ConfigMaps</a></li>
+<li class="chapter" data-level="5.5.4" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#secrets"><i class="fa fa-check"></i><b>5.5.4</b> Secrets</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>5.6</b> Observability &amp; Maintenance</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>5.6.1</b> Health Checks</a></li>
+<li class="chapter" data-level="5.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>5.6.2</b> Debugging</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>5.7</b> Helm</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="helm.html"><a href="helm.html#helm-chart-structure"><i class="fa fa-check"></i><b>5.7.1</b> Helm Chart Structure</a></li>
+<li class="chapter" data-level="5.7.2" data-path="helm.html"><a href="helm.html#working-with-helm"><i class="fa fa-check"></i><b>5.7.2</b> Working with Helm</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>6</b> Terraform</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>6.1</b> Basic usage</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="basic-usage.html"><a href="basic-usage.html#terraform-init"><i class="fa fa-check"></i><b>6.1.1</b> terraform init</a></li>
+<li class="chapter" data-level="6.1.2" data-path="basic-usage.html"><a href="basic-usage.html#terraform-validate"><i class="fa fa-check"></i><b>6.1.2</b> terraform validate</a></li>
+<li class="chapter" data-level="6.1.3" data-path="basic-usage.html"><a href="basic-usage.html#terraform-plan"><i class="fa fa-check"></i><b>6.1.3</b> terraform plan</a></li>
+<li class="chapter" data-level="6.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>6.1.4</b> terraform apply</a></li>
+<li class="chapter" data-level="6.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>6.1.5</b> terraform destroy</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="core-components-3.html"><a href="core-components-3.html"><i class="fa fa-check"></i><b>6.2</b> Core Components</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="core-components-3.html"><a href="core-components-3.html#providers"><i class="fa fa-check"></i><b>6.2.1</b> Providers</a></li>
+<li class="chapter" data-level="6.2.2" data-path="core-components-3.html"><a href="core-components-3.html#resources"><i class="fa fa-check"></i><b>6.2.2</b> Resources</a></li>
+<li class="chapter" data-level="6.2.3" data-path="core-components-3.html"><a href="core-components-3.html#data-sources"><i class="fa fa-check"></i><b>6.2.3</b> Data Sources</a></li>
+<li class="chapter" data-level="6.2.4" data-path="core-components-3.html"><a href="core-components-3.html#state"><i class="fa fa-check"></i><b>6.2.4</b> State</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>6.3</b> Modules</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>6.3.1</b> Input Variables</a></li>
+<li class="chapter" data-level="6.3.2" data-path="modules.html"><a href="modules.html#output-variables"><i class="fa fa-check"></i><b>6.3.2</b> Output Variables</a></li>
+<li class="chapter" data-level="6.3.3" data-path="modules.html"><a href="modules.html#local-variables"><i class="fa fa-check"></i><b>6.3.3</b> Local Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html"><i class="fa fa-check"></i><b>6.4</b> Additional tips &amp; tricks</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#count"><i class="fa fa-check"></i><b>6.4.1</b> count</a></li>
+<li class="chapter" data-level="6.4.2" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for-each"><i class="fa fa-check"></i><b>6.4.2</b> for-each</a></li>
+<li class="chapter" data-level="6.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>6.4.3</b> for</a></li>
+<li class="chapter" data-level="6.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>6.4.4</b> Workspaces</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>6.5</b> Exemplary Deployment</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ml-platform-design.html"><a href="ml-platform-design.html"><i class="fa fa-check"></i><b>7</b> ML Platform Design</a></li>
+<li class="chapter" data-level="8" data-path="ml-platform-deployment.html"><a href="ml-platform-deployment.html"><i class="fa fa-check"></i><b>8</b> ML Platform Deployment</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="root-directory-module.html"><a href="root-directory-module.html"><i class="fa fa-check"></i><b>8.1</b> Root directory module</a></li>
+<li class="chapter" data-level="8.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html"><i class="fa fa-check"></i><b>8.2</b> Infrastructure</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="infrastructure-1.html"><a href="infrastructure-1.html#virtual-private-cloud"><i class="fa fa-check"></i><b>8.2.1</b> Virtual Private Cloud</a></li>
+<li class="chapter" data-level="8.2.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html#elastic-kubernetes-service"><i class="fa fa-check"></i><b>8.2.2</b> Elastic Kubernetes Service</a></li>
+<li class="chapter" data-level="8.2.3" data-path="infrastructure-1.html"><a href="infrastructure-1.html#networking"><i class="fa fa-check"></i><b>8.2.3</b> Networking</a></li>
+<li class="chapter" data-level="8.2.4" data-path="infrastructure-1.html"><a href="infrastructure-1.html#relational-database-service"><i class="fa fa-check"></i><b>8.2.4</b> Relational Database Service</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="modules-2.html"><a href="modules-2.html"><i class="fa fa-check"></i><b>8.3</b> Modules</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="modules-2.html"><a href="modules-2.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
+<li class="chapter" data-level="8.3.2" data-path="modules-2.html"><a href="modules-2.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="design-decisions.html"><a href="design-decisions.html"><i class="fa fa-check"></i><b>8.4</b> Design Decisions</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="use-case-development.html"><a href="use-case-development.html"><i class="fa fa-check"></i><b>9</b> Use Case Development</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="integrated-development-environment.html"><a href="integrated-development-environment.html"><i class="fa fa-check"></i><b>9.1</b> Integrated Development Environment</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="integrated-development-environment.html"><a href="integrated-development-environment.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Pipeline Workflow</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
+<li class="chapter" data-level="9.2.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Building the Pipeline Steps</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="9.3.2" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html"><i class="fa fa-check"></i><b>9.4</b> Model Serving &amp; Inferencing</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#model-serving-1"><i class="fa fa-check"></i><b>9.4.1</b> Model Serving</a></li>
+<li class="chapter" data-level="9.4.2" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.4.2</b> Streamlit App</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>10</b> Acknowledgements</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MLOps Engineering</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="infrastructure-1" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Infrastructure<a href="infrastructure-1.html#infrastructure-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The subdirectory <code>infrastructure</code> consists of four main modules, <code>vpc</code>, <code>eks</code>, <code>networking</code>, and <code>rds</code>. The former three are responsible to create the cluster itself, as well as the necessary tools to implement the platform functionalities. The <code>rds</code> module is merely an extension linked to the cluster which is needed to store data of tools like Airflow or Mlflow. The <code>rds</code> module is thereby called in the corresponding modules where an AWS RDS is needed, even though the module is placed in the Infrastructure directory.</p>
+<div id="virtual-private-cloud" class="section level3 hasAnchor" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> Virtual Private Cloud<a href="infrastructure-1.html#virtual-private-cloud" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The provided code in the <code>vpc</code> module establishes a Virtual Private Cloud (VPC) with associated subnets and security groups. It configures the required networking and security infrastructure to serve as the foundation to deploy an AWS EKS cluster.</p>
+<p>The VPC is created using the <code>terraform-aws-modules/vpc/aws</code> module version 5.0.0. The VPC is assigned the IPv4 CIDR block <code>"10.0.0.0/16"</code> and spans across all three available AWS availability zones within the specified region <code>eu-central-1</code>. It includes both public and private subnets, with private subnets associated with NAT gateways for internet access. DNS hostnames are enabled for the instances launched within the VPC.</p>
+<p>The VPC subnets are tagged with specific metadata relevant to Kubernetes cluster management. The public subnets are tagged with <code>"kubernetes.io/cluster/${local.cluster_name}"</code> set to <code>"shared"</code> and <code>"kubernetes.io/role/elb"</code> set to <code>1</code>. The private subnets are tagged with <code>"kubernetes.io/cluster/${local.cluster_name}"</code> set to <code>"shared"</code> and <code>"kubernetes.io/role/internal-elb"</code> set to <code>1</code>.</p>
+<p>Additionally, three security groups are defined to manage access to worker nodes. They are intended to provide secure management access to the worker nodes within the EKS cluster. Two of these security groups, <code>"worker_group_mgmt_one"</code> and <code>"worker_group_mgmt_two"</code>, allow SSH access from specific CIDR blocks. The third security group, <code>"all_worker_mgmt,"</code> allows SSH access from multiple CIDR blocks, including <code>"10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"</code></p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb112-1"><a href="infrastructure-1.html#cb112-1" aria-hidden="true" tabindex="-1"></a>locals {</span>
+<span id="cb112-2"><a href="infrastructure-1.html#cb112-2" aria-hidden="true" tabindex="-1"></a>  cluster_name <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">cluster_name</span></span>
+<span id="cb112-3"><a href="infrastructure-1.html#cb112-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb112-4"><a href="infrastructure-1.html#cb112-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-5"><a href="infrastructure-1.html#cb112-5" aria-hidden="true" tabindex="-1"></a>data <span class="st">&quot;aws_availability_zones&quot;</span> <span class="st">&quot;available&quot;</span> {}</span>
+<span id="cb112-6"><a href="infrastructure-1.html#cb112-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-7"><a href="infrastructure-1.html#cb112-7" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;vpc&quot;</span> {</span>
+<span id="cb112-8"><a href="infrastructure-1.html#cb112-8" aria-hidden="true" tabindex="-1"></a>  source  <span class="op">=</span> <span class="st">&quot;terraform-aws-modules/vpc/aws&quot;</span></span>
+<span id="cb112-9"><a href="infrastructure-1.html#cb112-9" aria-hidden="true" tabindex="-1"></a>  version <span class="op">=</span> <span class="st">&quot;5.0.0&quot;</span></span>
+<span id="cb112-10"><a href="infrastructure-1.html#cb112-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-11"><a href="infrastructure-1.html#cb112-11" aria-hidden="true" tabindex="-1"></a>  name <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">vpc_name</span></span>
+<span id="cb112-12"><a href="infrastructure-1.html#cb112-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-13"><a href="infrastructure-1.html#cb112-13" aria-hidden="true" tabindex="-1"></a>  cidr <span class="op">=</span> <span class="st">&quot;10.0.0.0/16&quot;</span></span>
+<span id="cb112-14"><a href="infrastructure-1.html#cb112-14" aria-hidden="true" tabindex="-1"></a>  azs  <span class="op">=</span> <span class="fu">slice</span>(data<span class="op">.</span><span class="at">aws_availability_zones</span><span class="op">.</span><span class="at">available</span><span class="op">.</span><span class="at">names</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">3</span>)</span>
+<span id="cb112-15"><a href="infrastructure-1.html#cb112-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-16"><a href="infrastructure-1.html#cb112-16" aria-hidden="true" tabindex="-1"></a>  private_subnets <span class="op">=</span> [<span class="st">&quot;10.0.1.0/24&quot;</span><span class="op">,</span> <span class="st">&quot;10.0.2.0/24&quot;</span><span class="op">,</span> <span class="st">&quot;10.0.3.0/24&quot;</span>]</span>
+<span id="cb112-17"><a href="infrastructure-1.html#cb112-17" aria-hidden="true" tabindex="-1"></a>  public_subnets  <span class="op">=</span> [<span class="st">&quot;10.0.4.0/24&quot;</span><span class="op">,</span> <span class="st">&quot;10.0.5.0/24&quot;</span><span class="op">,</span> <span class="st">&quot;10.0.6.0/24&quot;</span>]</span>
+<span id="cb112-18"><a href="infrastructure-1.html#cb112-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-19"><a href="infrastructure-1.html#cb112-19" aria-hidden="true" tabindex="-1"></a>  enable_nat_gateway   <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb112-20"><a href="infrastructure-1.html#cb112-20" aria-hidden="true" tabindex="-1"></a>  single_nat_gateway   <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb112-21"><a href="infrastructure-1.html#cb112-21" aria-hidden="true" tabindex="-1"></a>  enable_dns_hostnames <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb112-22"><a href="infrastructure-1.html#cb112-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-23"><a href="infrastructure-1.html#cb112-23" aria-hidden="true" tabindex="-1"></a>  public_subnet_tags <span class="op">=</span> {</span>
+<span id="cb112-24"><a href="infrastructure-1.html#cb112-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;kubernetes.io/cluster/${local.cluster_name}&quot;</span> <span class="op">=</span> <span class="st">&quot;shared&quot;</span></span>
+<span id="cb112-25"><a href="infrastructure-1.html#cb112-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;kubernetes.io/role/elb&quot;</span>                      <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb112-26"><a href="infrastructure-1.html#cb112-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb112-27"><a href="infrastructure-1.html#cb112-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-28"><a href="infrastructure-1.html#cb112-28" aria-hidden="true" tabindex="-1"></a>  private_subnet_tags <span class="op">=</span> {</span>
+<span id="cb112-29"><a href="infrastructure-1.html#cb112-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;kubernetes.io/cluster/${local.cluster_name}&quot;</span> <span class="op">=</span> <span class="st">&quot;shared&quot;</span></span>
+<span id="cb112-30"><a href="infrastructure-1.html#cb112-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;kubernetes.io/role/internal-elb&quot;</span>             <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb112-31"><a href="infrastructure-1.html#cb112-31" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb112-32"><a href="infrastructure-1.html#cb112-32" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb112-33"><a href="infrastructure-1.html#cb112-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-34"><a href="infrastructure-1.html#cb112-34" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_security_group&quot;</span> <span class="st">&quot;worker_group_mgmt_one&quot;</span> {</span>
+<span id="cb112-35"><a href="infrastructure-1.html#cb112-35" aria-hidden="true" tabindex="-1"></a>  name_prefix <span class="op">=</span> <span class="st">&quot;worker_group_mgmt_one&quot;</span></span>
+<span id="cb112-36"><a href="infrastructure-1.html#cb112-36" aria-hidden="true" tabindex="-1"></a>  vpc_id      <span class="op">=</span> module<span class="op">.</span><span class="at">vpc</span><span class="op">.</span><span class="at">vpc_id</span></span>
+<span id="cb112-37"><a href="infrastructure-1.html#cb112-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-38"><a href="infrastructure-1.html#cb112-38" aria-hidden="true" tabindex="-1"></a>  ingress {</span>
+<span id="cb112-39"><a href="infrastructure-1.html#cb112-39" aria-hidden="true" tabindex="-1"></a>    from_port <span class="op">=</span> <span class="dv">22</span></span>
+<span id="cb112-40"><a href="infrastructure-1.html#cb112-40" aria-hidden="true" tabindex="-1"></a>    to_port   <span class="op">=</span> <span class="dv">22</span></span>
+<span id="cb112-41"><a href="infrastructure-1.html#cb112-41" aria-hidden="true" tabindex="-1"></a>    protocol  <span class="op">=</span> <span class="st">&quot;tcp&quot;</span></span>
+<span id="cb112-42"><a href="infrastructure-1.html#cb112-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-43"><a href="infrastructure-1.html#cb112-43" aria-hidden="true" tabindex="-1"></a>    cidr_blocks <span class="op">=</span> [</span>
+<span id="cb112-44"><a href="infrastructure-1.html#cb112-44" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;10.0.0.0/8&quot;</span><span class="op">,</span></span>
+<span id="cb112-45"><a href="infrastructure-1.html#cb112-45" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb112-46"><a href="infrastructure-1.html#cb112-46" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb112-47"><a href="infrastructure-1.html#cb112-47" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb112-48"><a href="infrastructure-1.html#cb112-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-49"><a href="infrastructure-1.html#cb112-49" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_security_group&quot;</span> <span class="st">&quot;worker_group_mgmt_two&quot;</span> {</span>
+<span id="cb112-50"><a href="infrastructure-1.html#cb112-50" aria-hidden="true" tabindex="-1"></a>  name_prefix <span class="op">=</span> <span class="st">&quot;worker_group_mgmt_two&quot;</span></span>
+<span id="cb112-51"><a href="infrastructure-1.html#cb112-51" aria-hidden="true" tabindex="-1"></a>  vpc_id      <span class="op">=</span> module<span class="op">.</span><span class="at">vpc</span><span class="op">.</span><span class="at">vpc_id</span></span>
+<span id="cb112-52"><a href="infrastructure-1.html#cb112-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-53"><a href="infrastructure-1.html#cb112-53" aria-hidden="true" tabindex="-1"></a>  ingress {</span>
+<span id="cb112-54"><a href="infrastructure-1.html#cb112-54" aria-hidden="true" tabindex="-1"></a>    from_port <span class="op">=</span> <span class="dv">22</span></span>
+<span id="cb112-55"><a href="infrastructure-1.html#cb112-55" aria-hidden="true" tabindex="-1"></a>    to_port   <span class="op">=</span> <span class="dv">22</span></span>
+<span id="cb112-56"><a href="infrastructure-1.html#cb112-56" aria-hidden="true" tabindex="-1"></a>    protocol  <span class="op">=</span> <span class="st">&quot;tcp&quot;</span></span>
+<span id="cb112-57"><a href="infrastructure-1.html#cb112-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-58"><a href="infrastructure-1.html#cb112-58" aria-hidden="true" tabindex="-1"></a>    cidr_blocks <span class="op">=</span> [</span>
+<span id="cb112-59"><a href="infrastructure-1.html#cb112-59" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;192.168.0.0/16&quot;</span><span class="op">,</span></span>
+<span id="cb112-60"><a href="infrastructure-1.html#cb112-60" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb112-61"><a href="infrastructure-1.html#cb112-61" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb112-62"><a href="infrastructure-1.html#cb112-62" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb112-63"><a href="infrastructure-1.html#cb112-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-64"><a href="infrastructure-1.html#cb112-64" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_security_group&quot;</span> <span class="st">&quot;all_worker_mgmt&quot;</span> {</span>
+<span id="cb112-65"><a href="infrastructure-1.html#cb112-65" aria-hidden="true" tabindex="-1"></a>  name_prefix <span class="op">=</span> <span class="st">&quot;all_worker_management&quot;</span></span>
+<span id="cb112-66"><a href="infrastructure-1.html#cb112-66" aria-hidden="true" tabindex="-1"></a>  vpc_id      <span class="op">=</span> module<span class="op">.</span><span class="at">vpc</span><span class="op">.</span><span class="at">vpc_id</span></span>
+<span id="cb112-67"><a href="infrastructure-1.html#cb112-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-68"><a href="infrastructure-1.html#cb112-68" aria-hidden="true" tabindex="-1"></a>  ingress {</span>
+<span id="cb112-69"><a href="infrastructure-1.html#cb112-69" aria-hidden="true" tabindex="-1"></a>    from_port <span class="op">=</span> <span class="dv">22</span></span>
+<span id="cb112-70"><a href="infrastructure-1.html#cb112-70" aria-hidden="true" tabindex="-1"></a>    to_port   <span class="op">=</span> <span class="dv">22</span></span>
+<span id="cb112-71"><a href="infrastructure-1.html#cb112-71" aria-hidden="true" tabindex="-1"></a>    protocol  <span class="op">=</span> <span class="st">&quot;tcp&quot;</span></span>
+<span id="cb112-72"><a href="infrastructure-1.html#cb112-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-73"><a href="infrastructure-1.html#cb112-73" aria-hidden="true" tabindex="-1"></a>    cidr_blocks <span class="op">=</span> [</span>
+<span id="cb112-74"><a href="infrastructure-1.html#cb112-74" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;10.0.0.0/8&quot;</span><span class="op">,</span></span>
+<span id="cb112-75"><a href="infrastructure-1.html#cb112-75" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;172.16.0.0/12&quot;</span><span class="op">,</span></span>
+<span id="cb112-76"><a href="infrastructure-1.html#cb112-76" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;192.168.0.0/16&quot;</span><span class="op">,</span></span>
+<span id="cb112-77"><a href="infrastructure-1.html#cb112-77" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb112-78"><a href="infrastructure-1.html#cb112-78" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb112-79"><a href="infrastructure-1.html#cb112-79" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="elastic-kubernetes-service" class="section level3 hasAnchor" number="8.2.2">
+<h3><span class="header-section-number">8.2.2</span> Elastic Kubernetes Service<a href="infrastructure-1.html#elastic-kubernetes-service" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The provided Terraform code sets up an AWS EKS (Elastic Kubernetes Service) cluster with specific configurations and multiple node groups. The <code>"eks"</code> module is used to create the EKS cluster, specifying its name and version. The cluster has public and private access endpoints enabled, and a managed AWS authentication configuration. The creation of the <code>vpc</code> module is a prerequisite for the <code>"eks"</code> module, as the latter requires information like the <code>vpc_id</code>, or <code>subnet_ids</code> for a successful creation.</p>
+<p>The EKS cluster itself is composed of three managed node groups: <code>"group_t3_small"</code>, <code>"group_t3_medium"</code>, and <code>"group_t3_large"</code>. Each node group uses a different instance type (<code>t3.small</code>, <code>t3.medium</code>, and <code>t3.large</code>) and has specific scaling policies. All three node groups have auto-scaling enabled. The node group <code>"group_t3_medium"</code> has set the minimum and desired sizes of nodes to <code>4</code>, which ensures a base amount of nodes and thus resources to manage further deployments. The <code>"group_t3_large"</code> is tainted with a <code>NoSchedule</code>. This node group can be used for more resource intensive tasks by specifiyng a pod’s toleration.</p>
+<p>The <code>eks</code> module also deploys several Kubernetes add-ons, including <code>coredns</code>, <code>kube-proxy</code>, <code>aws-ebs-csi-driver</code>, and <code>vpc-cni</code>. The vpc-cni add-on is configured with specific environment settings, enabling prefix delegation for IP addresses.</p>
+<ul>
+<li><code>CoreDNS</code> provides DNS-based service discovery, allowing pods and services to communicate with each other using domain names, and thus enabling seamless communication within the cluster without the need for explicit IP addresses.</li>
+<li><code>kube-proxy</code>: is responsible for network proxying on Kubernetes nodes which ensures that network traffic is properly routed to the appropriate pods, services, and endpoints. It allows for an seamless communication between different parts of the cluster.</li>
+<li><code>aws-ebs-csi-driver</code>(Container Storage Interface) is an add-on that enables Kubernetes pods to use Amazon Elastic Block Store (EBS) volumes for persistent storage, allowing data to be retained across pod restarts and ensuring data durability for stateful applications. The EBS configuration and deployment are describen in the following subsection, but the respective <code>service_account_role_arn</code> is linked to the EKS cluster on creation.</li>
+<li><code>vpc-cni</code> (Container Network Interface) is essential for AWS EKS clusters, as it enables networking for pods using AWS VPC (Virtual Private Cloud) networking. It ensures that each pod gets an IP address from the VPC subnet and can communicate securely with other AWS resources within the VPC.</li>
+</ul>
+<div class="sourceCode" id="cb113"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb113-1"><a href="infrastructure-1.html#cb113-1" aria-hidden="true" tabindex="-1"></a>locals {</span>
+<span id="cb113-2"><a href="infrastructure-1.html#cb113-2" aria-hidden="true" tabindex="-1"></a>  cluster_name                         <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">cluster_name</span></span>
+<span id="cb113-3"><a href="infrastructure-1.html#cb113-3" aria-hidden="true" tabindex="-1"></a>  cluster_namespace                    <span class="op">=</span> <span class="st">&quot;kube-system&quot;</span></span>
+<span id="cb113-4"><a href="infrastructure-1.html#cb113-4" aria-hidden="true" tabindex="-1"></a>  ebs_csi_service_account_name         <span class="op">=</span> <span class="st">&quot;ebs-csi-controller-sa&quot;</span></span>
+<span id="cb113-5"><a href="infrastructure-1.html#cb113-5" aria-hidden="true" tabindex="-1"></a>  ebs_csi_service_account_role_name    <span class="op">=</span> <span class="st">&quot;${var.cluster_name}-ebs-csi-controller&quot;</span></span>
+<span id="cb113-6"><a href="infrastructure-1.html#cb113-6" aria-hidden="true" tabindex="-1"></a>  autoscaler_service_account_name      <span class="op">=</span> <span class="st">&quot;autoscaler-controller-sa&quot;</span></span>
+<span id="cb113-7"><a href="infrastructure-1.html#cb113-7" aria-hidden="true" tabindex="-1"></a>  autoscaler_service_account_role_name <span class="op">=</span> <span class="st">&quot;${var.cluster_name}-autoscaler-controller&quot;</span></span>
+<span id="cb113-8"><a href="infrastructure-1.html#cb113-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-9"><a href="infrastructure-1.html#cb113-9" aria-hidden="true" tabindex="-1"></a>  nodegroup_t3_small_label    <span class="op">=</span> <span class="st">&quot;t3_small&quot;</span></span>
+<span id="cb113-10"><a href="infrastructure-1.html#cb113-10" aria-hidden="true" tabindex="-1"></a>  nodegroup_t3_medium_label   <span class="op">=</span> <span class="st">&quot;t3_medium&quot;</span></span>
+<span id="cb113-11"><a href="infrastructure-1.html#cb113-11" aria-hidden="true" tabindex="-1"></a>  nodegroup_t3_large_label <span class="op">=</span> <span class="st">&quot;t3_large&quot;</span></span>
+<span id="cb113-12"><a href="infrastructure-1.html#cb113-12" aria-hidden="true" tabindex="-1"></a>  eks_asg_tag_list_nodegroup_t3_small_label <span class="op">=</span> {</span>
+<span id="cb113-13"><a href="infrastructure-1.html#cb113-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;k8s.io/cluster-autoscaler/enabled&quot;</span> <span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb113-14"><a href="infrastructure-1.html#cb113-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;k8s.io/cluster-autoscaler/${local.cluster_name}&quot;</span> <span class="op">:</span> <span class="st">&quot;owned&quot;</span></span>
+<span id="cb113-15"><a href="infrastructure-1.html#cb113-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;k8s.io/cluster-autoscaler/node-template/label/role&quot;</span> <span class="op">:</span> local<span class="op">.</span><span class="at">nodegroup_t3_small_label</span></span>
+<span id="cb113-16"><a href="infrastructure-1.html#cb113-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb113-17"><a href="infrastructure-1.html#cb113-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-18"><a href="infrastructure-1.html#cb113-18" aria-hidden="true" tabindex="-1"></a>  eks_asg_tag_list_nodegroup_t3_medium_label <span class="op">=</span> {</span>
+<span id="cb113-19"><a href="infrastructure-1.html#cb113-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;k8s.io/cluster-autoscaler/enabled&quot;</span> <span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb113-20"><a href="infrastructure-1.html#cb113-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;k8s.io/cluster-autoscaler/${local.cluster_name}&quot;</span> <span class="op">:</span> <span class="st">&quot;owned&quot;</span></span>
+<span id="cb113-21"><a href="infrastructure-1.html#cb113-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;k8s.io/cluster-autoscaler/node-template/label/role&quot;</span> <span class="op">:</span> local<span class="op">.</span><span class="at">nodegroup_t3_medium_label</span></span>
+<span id="cb113-22"><a href="infrastructure-1.html#cb113-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb113-23"><a href="infrastructure-1.html#cb113-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-24"><a href="infrastructure-1.html#cb113-24" aria-hidden="true" tabindex="-1"></a>  eks_asg_tag_list_nodegroup_t3_large_label <span class="op">=</span> {</span>
+<span id="cb113-25"><a href="infrastructure-1.html#cb113-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;k8s.io/cluster-autoscaler/enabled&quot;</span> <span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb113-26"><a href="infrastructure-1.html#cb113-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;k8s.io/cluster-autoscaler/${local.cluster_name}&quot;</span> <span class="op">:</span> <span class="st">&quot;owned&quot;</span></span>
+<span id="cb113-27"><a href="infrastructure-1.html#cb113-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;k8s.io/cluster-autoscaler/node-template/label/role&quot;</span> <span class="op">:</span> local<span class="op">.</span><span class="at">nodegroup_t3_large_label</span></span>
+<span id="cb113-28"><a href="infrastructure-1.html#cb113-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;k8s.io/cluster-autoscaler/node-template/taint/dedicated&quot;</span> <span class="op">:</span> <span class="st">&quot;${local.nodegroup_t3_large_label}:NoSchedule&quot;</span></span>
+<span id="cb113-29"><a href="infrastructure-1.html#cb113-29" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb113-30"><a href="infrastructure-1.html#cb113-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-31"><a href="infrastructure-1.html#cb113-31" aria-hidden="true" tabindex="-1"></a>  tags <span class="op">=</span> {</span>
+<span id="cb113-32"><a href="infrastructure-1.html#cb113-32" aria-hidden="true" tabindex="-1"></a>    Owner <span class="op">=</span> <span class="st">&quot;terraform&quot;</span></span>
+<span id="cb113-33"><a href="infrastructure-1.html#cb113-33" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb113-34"><a href="infrastructure-1.html#cb113-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb113-35"><a href="infrastructure-1.html#cb113-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-36"><a href="infrastructure-1.html#cb113-36" aria-hidden="true" tabindex="-1"></a>data <span class="st">&quot;aws_caller_identity&quot;</span> <span class="st">&quot;current&quot;</span> {}</span>
+<span id="cb113-37"><a href="infrastructure-1.html#cb113-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-38"><a href="infrastructure-1.html#cb113-38" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="cb113-39"><a href="infrastructure-1.html#cb113-39" aria-hidden="true" tabindex="-1"></a># EKS</span>
+<span id="cb113-40"><a href="infrastructure-1.html#cb113-40" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="cb113-41"><a href="infrastructure-1.html#cb113-41" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;eks&quot;</span> {</span>
+<span id="cb113-42"><a href="infrastructure-1.html#cb113-42" aria-hidden="true" tabindex="-1"></a>  source  <span class="op">=</span> <span class="st">&quot;terraform-aws-modules/eks/aws&quot;</span></span>
+<span id="cb113-43"><a href="infrastructure-1.html#cb113-43" aria-hidden="true" tabindex="-1"></a>  version <span class="op">=</span> <span class="st">&quot;19.5.1&quot;</span></span>
+<span id="cb113-44"><a href="infrastructure-1.html#cb113-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-45"><a href="infrastructure-1.html#cb113-45" aria-hidden="true" tabindex="-1"></a>  cluster_name              <span class="op">=</span> local<span class="op">.</span><span class="at">cluster_name</span></span>
+<span id="cb113-46"><a href="infrastructure-1.html#cb113-46" aria-hidden="true" tabindex="-1"></a>  cluster_version           <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">eks_cluster_version</span></span>
+<span id="cb113-47"><a href="infrastructure-1.html#cb113-47" aria-hidden="true" tabindex="-1"></a>  cluster_enabled_log_types <span class="op">=</span> [<span class="st">&quot;api&quot;</span><span class="op">,</span> <span class="st">&quot;controllerManager&quot;</span><span class="op">,</span> <span class="st">&quot;scheduler&quot;</span>]</span>
+<span id="cb113-48"><a href="infrastructure-1.html#cb113-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-49"><a href="infrastructure-1.html#cb113-49" aria-hidden="true" tabindex="-1"></a>  vpc_id     <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">vpc_id</span></span>
+<span id="cb113-50"><a href="infrastructure-1.html#cb113-50" aria-hidden="true" tabindex="-1"></a>  subnet_ids <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">private_subnets</span></span>
+<span id="cb113-51"><a href="infrastructure-1.html#cb113-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-52"><a href="infrastructure-1.html#cb113-52" aria-hidden="true" tabindex="-1"></a>  cluster_endpoint_private_access <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb113-53"><a href="infrastructure-1.html#cb113-53" aria-hidden="true" tabindex="-1"></a>  cluster_endpoint_public_access  <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb113-54"><a href="infrastructure-1.html#cb113-54" aria-hidden="true" tabindex="-1"></a>  manage_aws_auth_configmap       <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb113-55"><a href="infrastructure-1.html#cb113-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-56"><a href="infrastructure-1.html#cb113-56" aria-hidden="true" tabindex="-1"></a>  # aws_auth_users            <span class="op">=</span> local<span class="op">.</span><span class="at">cluster_users</span> # add users <span class="kw">in</span> later step</span>
+<span id="cb113-57"><a href="infrastructure-1.html#cb113-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-58"><a href="infrastructure-1.html#cb113-58" aria-hidden="true" tabindex="-1"></a>  cluster_addons <span class="op">=</span> {</span>
+<span id="cb113-59"><a href="infrastructure-1.html#cb113-59" aria-hidden="true" tabindex="-1"></a>    coredns <span class="op">=</span> {</span>
+<span id="cb113-60"><a href="infrastructure-1.html#cb113-60" aria-hidden="true" tabindex="-1"></a>      most_recent <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb113-61"><a href="infrastructure-1.html#cb113-61" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb113-62"><a href="infrastructure-1.html#cb113-62" aria-hidden="true" tabindex="-1"></a>    kube<span class="op">-</span>proxy <span class="op">=</span> {</span>
+<span id="cb113-63"><a href="infrastructure-1.html#cb113-63" aria-hidden="true" tabindex="-1"></a>      most_recent <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb113-64"><a href="infrastructure-1.html#cb113-64" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb113-65"><a href="infrastructure-1.html#cb113-65" aria-hidden="true" tabindex="-1"></a>    aws<span class="op">-</span>ebs<span class="op">-</span>csi<span class="op">-</span>driver <span class="op">=</span> {</span>
+<span id="cb113-66"><a href="infrastructure-1.html#cb113-66" aria-hidden="true" tabindex="-1"></a>      service_account_role_arn <span class="op">=</span> <span class="st">&quot;arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${local.ebs_csi_service_account_role_name}&quot;</span></span>
+<span id="cb113-67"><a href="infrastructure-1.html#cb113-67" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb113-68"><a href="infrastructure-1.html#cb113-68" aria-hidden="true" tabindex="-1"></a>    vpc<span class="op">-</span>cni <span class="op">=</span> {</span>
+<span id="cb113-69"><a href="infrastructure-1.html#cb113-69" aria-hidden="true" tabindex="-1"></a>      most_recent              <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb113-70"><a href="infrastructure-1.html#cb113-70" aria-hidden="true" tabindex="-1"></a>      before_compute           <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb113-71"><a href="infrastructure-1.html#cb113-71" aria-hidden="true" tabindex="-1"></a>      service_account_role_arn <span class="op">=</span> module<span class="op">.</span><span class="at">vpc_cni_irsa</span><span class="op">.</span><span class="at">iam_role_arn</span></span>
+<span id="cb113-72"><a href="infrastructure-1.html#cb113-72" aria-hidden="true" tabindex="-1"></a>      configuration_values <span class="op">=</span> <span class="fu">jsonencode</span>({</span>
+<span id="cb113-73"><a href="infrastructure-1.html#cb113-73" aria-hidden="true" tabindex="-1"></a>        env <span class="op">=</span> {</span>
+<span id="cb113-74"><a href="infrastructure-1.html#cb113-74" aria-hidden="true" tabindex="-1"></a>          # Reference docs <span class="dt">https</span><span class="op">:</span><span class="co">//docs.aws.amazon.com/eks/latest/userguide/cni-increase-ip-addresses.html</span></span>
+<span id="cb113-75"><a href="infrastructure-1.html#cb113-75" aria-hidden="true" tabindex="-1"></a>          ENABLE_PREFIX_DELEGATION <span class="op">=</span> <span class="st">&quot;true&quot;</span></span>
+<span id="cb113-76"><a href="infrastructure-1.html#cb113-76" aria-hidden="true" tabindex="-1"></a>          WARM_PREFIX_TARGET       <span class="op">=</span> <span class="st">&quot;1&quot;</span></span>
+<span id="cb113-77"><a href="infrastructure-1.html#cb113-77" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb113-78"><a href="infrastructure-1.html#cb113-78" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb113-79"><a href="infrastructure-1.html#cb113-79" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb113-80"><a href="infrastructure-1.html#cb113-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-81"><a href="infrastructure-1.html#cb113-81" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb113-82"><a href="infrastructure-1.html#cb113-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-83"><a href="infrastructure-1.html#cb113-83" aria-hidden="true" tabindex="-1"></a>  eks_managed_node_group_defaults <span class="op">=</span> {</span>
+<span id="cb113-84"><a href="infrastructure-1.html#cb113-84" aria-hidden="true" tabindex="-1"></a>    ami_type                   <span class="op">=</span> <span class="st">&quot;AL2_x86_64&quot;</span></span>
+<span id="cb113-85"><a href="infrastructure-1.html#cb113-85" aria-hidden="true" tabindex="-1"></a>    disk_size                  <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb113-86"><a href="infrastructure-1.html#cb113-86" aria-hidden="true" tabindex="-1"></a>    iam_role_attach_cni_policy <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb113-87"><a href="infrastructure-1.html#cb113-87" aria-hidden="true" tabindex="-1"></a>    enable_monitoring          <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb113-88"><a href="infrastructure-1.html#cb113-88" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb113-89"><a href="infrastructure-1.html#cb113-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-90"><a href="infrastructure-1.html#cb113-90" aria-hidden="true" tabindex="-1"></a>  eks_managed_node_groups <span class="op">=</span> {</span>
+<span id="cb113-91"><a href="infrastructure-1.html#cb113-91" aria-hidden="true" tabindex="-1"></a>    group_t3_small <span class="op">=</span> {</span>
+<span id="cb113-92"><a href="infrastructure-1.html#cb113-92" aria-hidden="true" tabindex="-1"></a>      name <span class="op">=</span> <span class="st">&quot;ng0_t3_small&quot;</span></span>
+<span id="cb113-93"><a href="infrastructure-1.html#cb113-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-94"><a href="infrastructure-1.html#cb113-94" aria-hidden="true" tabindex="-1"></a>      instance_types <span class="op">=</span> [<span class="st">&quot;t3.small&quot;</span>]</span>
+<span id="cb113-95"><a href="infrastructure-1.html#cb113-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-96"><a href="infrastructure-1.html#cb113-96" aria-hidden="true" tabindex="-1"></a>      min_size      <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb113-97"><a href="infrastructure-1.html#cb113-97" aria-hidden="true" tabindex="-1"></a>      max_size      <span class="op">=</span> <span class="dv">6</span></span>
+<span id="cb113-98"><a href="infrastructure-1.html#cb113-98" aria-hidden="true" tabindex="-1"></a>      desired_size  <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb113-99"><a href="infrastructure-1.html#cb113-99" aria-hidden="true" tabindex="-1"></a>      capacity_type <span class="op">=</span> <span class="st">&quot;ON_DEMAND&quot;</span></span>
+<span id="cb113-100"><a href="infrastructure-1.html#cb113-100" aria-hidden="true" tabindex="-1"></a>      labels <span class="op">=</span> {</span>
+<span id="cb113-101"><a href="infrastructure-1.html#cb113-101" aria-hidden="true" tabindex="-1"></a>        role <span class="op">=</span> local<span class="op">.</span><span class="at">nodegroup_t3_small_label</span></span>
+<span id="cb113-102"><a href="infrastructure-1.html#cb113-102" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb113-103"><a href="infrastructure-1.html#cb113-103" aria-hidden="true" tabindex="-1"></a>      tags <span class="op">=</span> {</span>
+<span id="cb113-104"><a href="infrastructure-1.html#cb113-104" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;k8s.io/cluster-autoscaler/enabled&quot;</span>                  <span class="op">=</span> <span class="st">&quot;true&quot;</span></span>
+<span id="cb113-105"><a href="infrastructure-1.html#cb113-105" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;k8s.io/cluster-autoscaler/${local.cluster_name}&quot;</span>    <span class="op">=</span> <span class="st">&quot;owned&quot;</span></span>
+<span id="cb113-106"><a href="infrastructure-1.html#cb113-106" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;k8s.io/cluster-autoscaler/node-template/label/role&quot;</span> <span class="op">=</span> <span class="st">&quot;${local.nodegroup_t3_small_label}&quot;</span></span>
+<span id="cb113-107"><a href="infrastructure-1.html#cb113-107" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb113-108"><a href="infrastructure-1.html#cb113-108" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb113-109"><a href="infrastructure-1.html#cb113-109" aria-hidden="true" tabindex="-1"></a>    group_t3_medium <span class="op">=</span> {</span>
+<span id="cb113-110"><a href="infrastructure-1.html#cb113-110" aria-hidden="true" tabindex="-1"></a>      name <span class="op">=</span> <span class="st">&quot;ng1_t3_medium&quot;</span></span>
+<span id="cb113-111"><a href="infrastructure-1.html#cb113-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-112"><a href="infrastructure-1.html#cb113-112" aria-hidden="true" tabindex="-1"></a>      instance_types <span class="op">=</span> [<span class="st">&quot;t3.medium&quot;</span>]</span>
+<span id="cb113-113"><a href="infrastructure-1.html#cb113-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-114"><a href="infrastructure-1.html#cb113-114" aria-hidden="true" tabindex="-1"></a>      min_size      <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb113-115"><a href="infrastructure-1.html#cb113-115" aria-hidden="true" tabindex="-1"></a>      max_size      <span class="op">=</span> <span class="dv">6</span></span>
+<span id="cb113-116"><a href="infrastructure-1.html#cb113-116" aria-hidden="true" tabindex="-1"></a>      desired_size  <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb113-117"><a href="infrastructure-1.html#cb113-117" aria-hidden="true" tabindex="-1"></a>      capacity_type <span class="op">=</span> <span class="st">&quot;ON_DEMAND&quot;</span></span>
+<span id="cb113-118"><a href="infrastructure-1.html#cb113-118" aria-hidden="true" tabindex="-1"></a>      labels <span class="op">=</span> {</span>
+<span id="cb113-119"><a href="infrastructure-1.html#cb113-119" aria-hidden="true" tabindex="-1"></a>        role <span class="op">=</span> local<span class="op">.</span><span class="at">nodegroup_t3_medium_label</span></span>
+<span id="cb113-120"><a href="infrastructure-1.html#cb113-120" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb113-121"><a href="infrastructure-1.html#cb113-121" aria-hidden="true" tabindex="-1"></a>      tags <span class="op">=</span> {</span>
+<span id="cb113-122"><a href="infrastructure-1.html#cb113-122" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;k8s.io/cluster-autoscaler/enabled&quot;</span>                       <span class="op">=</span> <span class="st">&quot;true&quot;</span></span>
+<span id="cb113-123"><a href="infrastructure-1.html#cb113-123" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;k8s.io/cluster-autoscaler/${local.cluster_name}&quot;</span>         <span class="op">=</span> <span class="st">&quot;owned&quot;</span></span>
+<span id="cb113-124"><a href="infrastructure-1.html#cb113-124" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;k8s.io/cluster-autoscaler/node-template/label/role&quot;</span>      <span class="op">=</span> <span class="st">&quot;${local.nodegroup_t3_medium_label}&quot;</span></span>
+<span id="cb113-125"><a href="infrastructure-1.html#cb113-125" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb113-126"><a href="infrastructure-1.html#cb113-126" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb113-127"><a href="infrastructure-1.html#cb113-127" aria-hidden="true" tabindex="-1"></a>    group_t3_large <span class="op">=</span> {</span>
+<span id="cb113-128"><a href="infrastructure-1.html#cb113-128" aria-hidden="true" tabindex="-1"></a>      name <span class="op">=</span> <span class="st">&quot;ng2_t3_large&quot;</span></span>
+<span id="cb113-129"><a href="infrastructure-1.html#cb113-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-130"><a href="infrastructure-1.html#cb113-130" aria-hidden="true" tabindex="-1"></a>      instance_types <span class="op">=</span> [<span class="st">&quot;t3.large&quot;</span>]</span>
+<span id="cb113-131"><a href="infrastructure-1.html#cb113-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-132"><a href="infrastructure-1.html#cb113-132" aria-hidden="true" tabindex="-1"></a>      min_size      <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb113-133"><a href="infrastructure-1.html#cb113-133" aria-hidden="true" tabindex="-1"></a>      max_size      <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb113-134"><a href="infrastructure-1.html#cb113-134" aria-hidden="true" tabindex="-1"></a>      desired_size  <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb113-135"><a href="infrastructure-1.html#cb113-135" aria-hidden="true" tabindex="-1"></a>      capacity_type <span class="op">=</span> <span class="st">&quot;ON_DEMAND&quot;</span></span>
+<span id="cb113-136"><a href="infrastructure-1.html#cb113-136" aria-hidden="true" tabindex="-1"></a>      labels <span class="op">=</span> {</span>
+<span id="cb113-137"><a href="infrastructure-1.html#cb113-137" aria-hidden="true" tabindex="-1"></a>        role <span class="op">=</span> local<span class="op">.</span><span class="at">nodegroup_t3_large_label</span></span>
+<span id="cb113-138"><a href="infrastructure-1.html#cb113-138" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb113-139"><a href="infrastructure-1.html#cb113-139" aria-hidden="true" tabindex="-1"></a>      taints <span class="op">=</span> [</span>
+<span id="cb113-140"><a href="infrastructure-1.html#cb113-140" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb113-141"><a href="infrastructure-1.html#cb113-141" aria-hidden="true" tabindex="-1"></a>          key    <span class="op">=</span> <span class="st">&quot;dedicated&quot;</span></span>
+<span id="cb113-142"><a href="infrastructure-1.html#cb113-142" aria-hidden="true" tabindex="-1"></a>          value  <span class="op">=</span> local<span class="op">.</span><span class="at">nodegroup_t3_large_label</span></span>
+<span id="cb113-143"><a href="infrastructure-1.html#cb113-143" aria-hidden="true" tabindex="-1"></a>          effect <span class="op">=</span> <span class="st">&quot;NO_SCHEDULE&quot;</span></span>
+<span id="cb113-144"><a href="infrastructure-1.html#cb113-144" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb113-145"><a href="infrastructure-1.html#cb113-145" aria-hidden="true" tabindex="-1"></a>      ]</span>
+<span id="cb113-146"><a href="infrastructure-1.html#cb113-146" aria-hidden="true" tabindex="-1"></a>      tags <span class="op">=</span> {</span>
+<span id="cb113-147"><a href="infrastructure-1.html#cb113-147" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;k8s.io/cluster-autoscaler/enabled&quot;</span>                       <span class="op">=</span> <span class="st">&quot;true&quot;</span></span>
+<span id="cb113-148"><a href="infrastructure-1.html#cb113-148" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;k8s.io/cluster-autoscaler/${local.cluster_name}&quot;</span>         <span class="op">=</span> <span class="st">&quot;owned&quot;</span></span>
+<span id="cb113-149"><a href="infrastructure-1.html#cb113-149" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;k8s.io/cluster-autoscaler/node-template/label/role&quot;</span>      <span class="op">=</span> <span class="st">&quot;${local.nodegroup_t3_large_label}&quot;</span></span>
+<span id="cb113-150"><a href="infrastructure-1.html#cb113-150" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;k8s.io/cluster-autoscaler/node-template/taint/dedicated&quot;</span> <span class="op">=</span> <span class="st">&quot;${local.nodegroup_t3_large_label}:NoSchedule&quot;</span></span>
+<span id="cb113-151"><a href="infrastructure-1.html#cb113-151" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb113-152"><a href="infrastructure-1.html#cb113-152" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb113-153"><a href="infrastructure-1.html#cb113-153" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb113-154"><a href="infrastructure-1.html#cb113-154" aria-hidden="true" tabindex="-1"></a>  tags <span class="op">=</span> local<span class="op">.</span><span class="at">tags</span></span>
+<span id="cb113-155"><a href="infrastructure-1.html#cb113-155" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb113-156"><a href="infrastructure-1.html#cb113-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-157"><a href="infrastructure-1.html#cb113-157" aria-hidden="true" tabindex="-1"></a>#  Role <span class="cf">for</span> Service Account</span>
+<span id="cb113-158"><a href="infrastructure-1.html#cb113-158" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;vpc_cni_irsa&quot;</span> {</span>
+<span id="cb113-159"><a href="infrastructure-1.html#cb113-159" aria-hidden="true" tabindex="-1"></a>  source  <span class="op">=</span> <span class="st">&quot;terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks&quot;</span></span>
+<span id="cb113-160"><a href="infrastructure-1.html#cb113-160" aria-hidden="true" tabindex="-1"></a>  version <span class="op">=</span> <span class="st">&quot;~&gt; 5.0&quot;</span></span>
+<span id="cb113-161"><a href="infrastructure-1.html#cb113-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-162"><a href="infrastructure-1.html#cb113-162" aria-hidden="true" tabindex="-1"></a>  role_name_prefix      <span class="op">=</span> <span class="st">&quot;VPC-CNI-IRSA&quot;</span></span>
+<span id="cb113-163"><a href="infrastructure-1.html#cb113-163" aria-hidden="true" tabindex="-1"></a>  attach_vpc_cni_policy <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb113-164"><a href="infrastructure-1.html#cb113-164" aria-hidden="true" tabindex="-1"></a>  vpc_cni_enable_ipv4   <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb113-165"><a href="infrastructure-1.html#cb113-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-166"><a href="infrastructure-1.html#cb113-166" aria-hidden="true" tabindex="-1"></a>  oidc_providers <span class="op">=</span> {</span>
+<span id="cb113-167"><a href="infrastructure-1.html#cb113-167" aria-hidden="true" tabindex="-1"></a>    main <span class="op">=</span> {</span>
+<span id="cb113-168"><a href="infrastructure-1.html#cb113-168" aria-hidden="true" tabindex="-1"></a>      provider_arn               <span class="op">=</span> module<span class="op">.</span><span class="at">eks</span><span class="op">.</span><span class="at">oidc_provider_arn</span></span>
+<span id="cb113-169"><a href="infrastructure-1.html#cb113-169" aria-hidden="true" tabindex="-1"></a>      namespace_service_accounts <span class="op">=</span> [<span class="st">&quot;kube-system:aws-node&quot;</span>]</span>
+<span id="cb113-170"><a href="infrastructure-1.html#cb113-170" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb113-171"><a href="infrastructure-1.html#cb113-171" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb113-172"><a href="infrastructure-1.html#cb113-172" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div id="elastic-block-store" class="section level4 hasAnchor" number="8.2.2.1">
+<h4><span class="header-section-number">8.2.2.1</span> Elastic Block Store<a href="infrastructure-1.html#elastic-block-store" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The EBS CSI controller (Elastic Block Store Container Storage Interface) is set up by defining an IAM (Identity and Access Management) role using the <code>"ebs_csi_controller_role"</code> module. The role allows the EBS CSI controller to assume a specific IAM role with OIDC (OpenID Connect) authentication, granting it the necessary permissions for EBS-related actions in the AWS environment by an IAM policy. The IAM policy associated with the role is created likewise and permits various EC2 actions, such as attaching and detaching volumes, creating and deleting snapshots, and describing instances and volumes.</p>
+<p>The code also configures the default Kubernetes StorageClass named <code>"gp2"</code> and annotates it as not the default storage class for the cluster, managing how storage volumes are provisioned and utilized in the cluster. Ensuring that the <code>"gp2"</code> StorageClass does not become the default storage class is needed as we additionally create an EFS Storage (Elastic File System), which is described in the next subsection.</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb114-1"><a href="infrastructure-1.html#cb114-1" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="cb114-2"><a href="infrastructure-1.html#cb114-2" aria-hidden="true" tabindex="-1"></a># EBS CSI controller</span>
+<span id="cb114-3"><a href="infrastructure-1.html#cb114-3" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="cb114-4"><a href="infrastructure-1.html#cb114-4" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;ebs_csi_controller_role&quot;</span> {</span>
+<span id="cb114-5"><a href="infrastructure-1.html#cb114-5" aria-hidden="true" tabindex="-1"></a>  source                        <span class="op">=</span> <span class="st">&quot;terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc&quot;</span></span>
+<span id="cb114-6"><a href="infrastructure-1.html#cb114-6" aria-hidden="true" tabindex="-1"></a>  version                       <span class="op">=</span> <span class="st">&quot;5.11.1&quot;</span></span>
+<span id="cb114-7"><a href="infrastructure-1.html#cb114-7" aria-hidden="true" tabindex="-1"></a>  create_role                   <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb114-8"><a href="infrastructure-1.html#cb114-8" aria-hidden="true" tabindex="-1"></a>  role_name                     <span class="op">=</span> local<span class="op">.</span><span class="at">ebs_csi_service_account_role_name</span></span>
+<span id="cb114-9"><a href="infrastructure-1.html#cb114-9" aria-hidden="true" tabindex="-1"></a>  provider_url                  <span class="op">=</span> <span class="fu">replace</span>(module<span class="op">.</span><span class="at">eks</span><span class="op">.</span><span class="at">cluster_oidc_issuer_url</span><span class="op">,</span> <span class="st">&quot;https://&quot;</span><span class="op">,</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb114-10"><a href="infrastructure-1.html#cb114-10" aria-hidden="true" tabindex="-1"></a>  role_policy_arns              <span class="op">=</span> [aws_iam_policy<span class="op">.</span><span class="at">ebs_csi_controller_sa</span><span class="op">.</span><span class="at">arn</span>]</span>
+<span id="cb114-11"><a href="infrastructure-1.html#cb114-11" aria-hidden="true" tabindex="-1"></a>  oidc_fully_qualified_subjects <span class="op">=</span> [<span class="st">&quot;system:serviceaccount:${local.cluster_namespace}:${local.ebs_csi_service_account_name}&quot;</span>]</span>
+<span id="cb114-12"><a href="infrastructure-1.html#cb114-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb114-13"><a href="infrastructure-1.html#cb114-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-14"><a href="infrastructure-1.html#cb114-14" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_iam_policy&quot;</span> <span class="st">&quot;ebs_csi_controller_sa&quot;</span> {</span>
+<span id="cb114-15"><a href="infrastructure-1.html#cb114-15" aria-hidden="true" tabindex="-1"></a>  name        <span class="op">=</span> local<span class="op">.</span><span class="at">ebs_csi_service_account_name</span></span>
+<span id="cb114-16"><a href="infrastructure-1.html#cb114-16" aria-hidden="true" tabindex="-1"></a>  description <span class="op">=</span> <span class="st">&quot;EKS ebs-csi-controller policy for cluster ${var.cluster_name}&quot;</span></span>
+<span id="cb114-17"><a href="infrastructure-1.html#cb114-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-18"><a href="infrastructure-1.html#cb114-18" aria-hidden="true" tabindex="-1"></a>  policy <span class="op">=</span> <span class="fu">jsonencode</span>({</span>
+<span id="cb114-19"><a href="infrastructure-1.html#cb114-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Version&quot;</span> <span class="op">:</span> <span class="st">&quot;2012-10-17&quot;</span><span class="op">,</span></span>
+<span id="cb114-20"><a href="infrastructure-1.html#cb114-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Statement&quot;</span> <span class="op">:</span> [</span>
+<span id="cb114-21"><a href="infrastructure-1.html#cb114-21" aria-hidden="true" tabindex="-1"></a>      {</span>
+<span id="cb114-22"><a href="infrastructure-1.html#cb114-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Action&quot;</span> <span class="op">:</span> [</span>
+<span id="cb114-23"><a href="infrastructure-1.html#cb114-23" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;ec2:AttachVolume&quot;</span><span class="op">,</span></span>
+<span id="cb114-24"><a href="infrastructure-1.html#cb114-24" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;ec2:CreateSnapshot&quot;</span><span class="op">,</span></span>
+<span id="cb114-25"><a href="infrastructure-1.html#cb114-25" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;ec2:CreateTags&quot;</span><span class="op">,</span></span>
+<span id="cb114-26"><a href="infrastructure-1.html#cb114-26" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;ec2:CreateVolume&quot;</span><span class="op">,</span></span>
+<span id="cb114-27"><a href="infrastructure-1.html#cb114-27" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;ec2:DeleteSnapshot&quot;</span><span class="op">,</span></span>
+<span id="cb114-28"><a href="infrastructure-1.html#cb114-28" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;ec2:DeleteTags&quot;</span><span class="op">,</span></span>
+<span id="cb114-29"><a href="infrastructure-1.html#cb114-29" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;ec2:DeleteVolume&quot;</span><span class="op">,</span></span>
+<span id="cb114-30"><a href="infrastructure-1.html#cb114-30" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;ec2:DescribeInstances&quot;</span><span class="op">,</span></span>
+<span id="cb114-31"><a href="infrastructure-1.html#cb114-31" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;ec2:DescribeSnapshots&quot;</span><span class="op">,</span></span>
+<span id="cb114-32"><a href="infrastructure-1.html#cb114-32" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;ec2:DescribeTags&quot;</span><span class="op">,</span></span>
+<span id="cb114-33"><a href="infrastructure-1.html#cb114-33" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;ec2:DescribeVolumes&quot;</span><span class="op">,</span></span>
+<span id="cb114-34"><a href="infrastructure-1.html#cb114-34" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;ec2:DetachVolume&quot;</span><span class="op">,</span></span>
+<span id="cb114-35"><a href="infrastructure-1.html#cb114-35" aria-hidden="true" tabindex="-1"></a>        ]<span class="op">,</span></span>
+<span id="cb114-36"><a href="infrastructure-1.html#cb114-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Effect&quot;</span> <span class="op">:</span> <span class="st">&quot;Allow&quot;</span><span class="op">,</span></span>
+<span id="cb114-37"><a href="infrastructure-1.html#cb114-37" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Resource&quot;</span> <span class="op">:</span> <span class="st">&quot;*&quot;</span></span>
+<span id="cb114-38"><a href="infrastructure-1.html#cb114-38" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb114-39"><a href="infrastructure-1.html#cb114-39" aria-hidden="true" tabindex="-1"></a>  ] })</span>
+<span id="cb114-40"><a href="infrastructure-1.html#cb114-40" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb114-41"><a href="infrastructure-1.html#cb114-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-42"><a href="infrastructure-1.html#cb114-42" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;kubernetes_annotations&quot;</span> <span class="st">&quot;ebs-no-default-storageclass&quot;</span> {</span>
+<span id="cb114-43"><a href="infrastructure-1.html#cb114-43" aria-hidden="true" tabindex="-1"></a>  api_version <span class="op">=</span> <span class="st">&quot;storage.k8s.io/v1&quot;</span></span>
+<span id="cb114-44"><a href="infrastructure-1.html#cb114-44" aria-hidden="true" tabindex="-1"></a>  kind        <span class="op">=</span> <span class="st">&quot;StorageClass&quot;</span></span>
+<span id="cb114-45"><a href="infrastructure-1.html#cb114-45" aria-hidden="true" tabindex="-1"></a>  force       <span class="op">=</span> <span class="st">&quot;true&quot;</span></span>
+<span id="cb114-46"><a href="infrastructure-1.html#cb114-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-47"><a href="infrastructure-1.html#cb114-47" aria-hidden="true" tabindex="-1"></a>  metadata {</span>
+<span id="cb114-48"><a href="infrastructure-1.html#cb114-48" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">&quot;gp2&quot;</span></span>
+<span id="cb114-49"><a href="infrastructure-1.html#cb114-49" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb114-50"><a href="infrastructure-1.html#cb114-50" aria-hidden="true" tabindex="-1"></a>  annotations <span class="op">=</span> {</span>
+<span id="cb114-51"><a href="infrastructure-1.html#cb114-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;storageclass.kubernetes.io/is-default-class&quot;</span> <span class="op">=</span> <span class="st">&quot;false&quot;</span></span>
+<span id="cb114-52"><a href="infrastructure-1.html#cb114-52" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb114-53"><a href="infrastructure-1.html#cb114-53" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="elastic-file-system" class="section level4 hasAnchor" number="8.2.2.2">
+<h4><span class="header-section-number">8.2.2.2</span> Elastic File System<a href="infrastructure-1.html#elastic-file-system" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The EFS CSI (Elastic File System Container Storage Interface) driver permits EKS pods to use EFS as a persistent volume for data storage, enabling pods to use EFS as a scalable and shared storage solution.. The driver itself is deployed using a Helm chart through the <code>"helm_release"</code> resource. Of course we also need to create an IAM role for the EFS CSI driver, which is done using the <code>"attach_efs_csi_role"</code> module, which allows the driver to assume a role with OIDC authentication, and grants the necessary permissions for working with EFS, similar to the EBS setup.</p>
+<p>For security, the code creates an AWS security group named <code>"allow_nfs"</code> that allows inbound NFS traffic on port 2049 from the private subnets of the VPC. This allows the EFS mount targets to communicate with the EFS file system securely. The EFS file system and access points are created manually for each private subnet mapping the <code>"aws_efs_mount_target"</code> to the <code>"aws_efs_file_system"</code> resource.</p>
+<p>Finally, the code defines a Kubernetes StorageClass named <code>"efs"</code> using the <code>"kubernetes_storage_class_v1"</code> resource. The StorageClass specifies the EFS CSI driver as the storage provisioner and the EFS file system created earlier as the backing storage. Additionally, the <code>"efs"</code> StorageClass is marked as the default storage class for the cluster using an annotation. This allows dynamic provisioning of EFS-backed persistent volumes for Kubernetes pods on default, simplifying the process of handling storage in the EKS cluster. This is done for example for the Airflow deployment in a later step.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb115-1"><a href="infrastructure-1.html#cb115-1" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="cb115-2"><a href="infrastructure-1.html#cb115-2" aria-hidden="true" tabindex="-1"></a># EFS</span>
+<span id="cb115-3"><a href="infrastructure-1.html#cb115-3" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="cb115-4"><a href="infrastructure-1.html#cb115-4" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;helm_release&quot;</span> <span class="st">&quot;aws_efs_csi_driver&quot;</span> {</span>
+<span id="cb115-5"><a href="infrastructure-1.html#cb115-5" aria-hidden="true" tabindex="-1"></a>  chart      <span class="op">=</span> <span class="st">&quot;aws-efs-csi-driver&quot;</span></span>
+<span id="cb115-6"><a href="infrastructure-1.html#cb115-6" aria-hidden="true" tabindex="-1"></a>  name       <span class="op">=</span> <span class="st">&quot;aws-efs-csi-driver&quot;</span></span>
+<span id="cb115-7"><a href="infrastructure-1.html#cb115-7" aria-hidden="true" tabindex="-1"></a>  namespace  <span class="op">=</span> <span class="st">&quot;kube-system&quot;</span></span>
+<span id="cb115-8"><a href="infrastructure-1.html#cb115-8" aria-hidden="true" tabindex="-1"></a>  repository <span class="op">=</span> <span class="st">&quot;https://kubernetes-sigs.github.io/aws-efs-csi-driver/&quot;</span></span>
+<span id="cb115-9"><a href="infrastructure-1.html#cb115-9" aria-hidden="true" tabindex="-1"></a>  set {</span>
+<span id="cb115-10"><a href="infrastructure-1.html#cb115-10" aria-hidden="true" tabindex="-1"></a>    name  <span class="op">=</span> <span class="st">&quot;controller.serviceAccount.create&quot;</span></span>
+<span id="cb115-11"><a href="infrastructure-1.html#cb115-11" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb115-12"><a href="infrastructure-1.html#cb115-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb115-13"><a href="infrastructure-1.html#cb115-13" aria-hidden="true" tabindex="-1"></a>  set {</span>
+<span id="cb115-14"><a href="infrastructure-1.html#cb115-14" aria-hidden="true" tabindex="-1"></a>    name  <span class="op">=</span> <span class="st">&quot;controller.serviceAccount.annotations.eks</span><span class="sc">\\</span><span class="st">.amazonaws</span><span class="sc">\\</span><span class="st">.com/role-arn&quot;</span></span>
+<span id="cb115-15"><a href="infrastructure-1.html#cb115-15" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> module<span class="op">.</span><span class="at">attach_efs_csi_role</span><span class="op">.</span><span class="at">iam_role_arn</span></span>
+<span id="cb115-16"><a href="infrastructure-1.html#cb115-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb115-17"><a href="infrastructure-1.html#cb115-17" aria-hidden="true" tabindex="-1"></a>  set {</span>
+<span id="cb115-18"><a href="infrastructure-1.html#cb115-18" aria-hidden="true" tabindex="-1"></a>    name  <span class="op">=</span> <span class="st">&quot;controller.serviceAccount.name&quot;</span></span>
+<span id="cb115-19"><a href="infrastructure-1.html#cb115-19" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> <span class="st">&quot;efs-csi-controller-sa&quot;</span></span>
+<span id="cb115-20"><a href="infrastructure-1.html#cb115-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb115-21"><a href="infrastructure-1.html#cb115-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb115-22"><a href="infrastructure-1.html#cb115-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-23"><a href="infrastructure-1.html#cb115-23" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;attach_efs_csi_role&quot;</span> {</span>
+<span id="cb115-24"><a href="infrastructure-1.html#cb115-24" aria-hidden="true" tabindex="-1"></a>  source <span class="op">=</span> <span class="st">&quot;terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks&quot;</span></span>
+<span id="cb115-25"><a href="infrastructure-1.html#cb115-25" aria-hidden="true" tabindex="-1"></a>  role_name             <span class="op">=</span> <span class="st">&quot;efs-csi&quot;</span></span>
+<span id="cb115-26"><a href="infrastructure-1.html#cb115-26" aria-hidden="true" tabindex="-1"></a>  attach_efs_csi_policy <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb115-27"><a href="infrastructure-1.html#cb115-27" aria-hidden="true" tabindex="-1"></a>  oidc_providers <span class="op">=</span> {</span>
+<span id="cb115-28"><a href="infrastructure-1.html#cb115-28" aria-hidden="true" tabindex="-1"></a>    ex <span class="op">=</span> {</span>
+<span id="cb115-29"><a href="infrastructure-1.html#cb115-29" aria-hidden="true" tabindex="-1"></a>      provider_arn               <span class="op">=</span> module<span class="op">.</span><span class="at">eks</span><span class="op">.</span><span class="at">oidc_provider_arn</span></span>
+<span id="cb115-30"><a href="infrastructure-1.html#cb115-30" aria-hidden="true" tabindex="-1"></a>      namespace_service_accounts <span class="op">=</span> [<span class="st">&quot;kube-system:efs-csi-controller-sa&quot;</span>]</span>
+<span id="cb115-31"><a href="infrastructure-1.html#cb115-31" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb115-32"><a href="infrastructure-1.html#cb115-32" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb115-33"><a href="infrastructure-1.html#cb115-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb115-34"><a href="infrastructure-1.html#cb115-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-35"><a href="infrastructure-1.html#cb115-35" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_security_group&quot;</span> <span class="st">&quot;allow_nfs&quot;</span> {</span>
+<span id="cb115-36"><a href="infrastructure-1.html#cb115-36" aria-hidden="true" tabindex="-1"></a>  name        <span class="op">=</span> <span class="st">&quot;allow nfs for efs&quot;</span></span>
+<span id="cb115-37"><a href="infrastructure-1.html#cb115-37" aria-hidden="true" tabindex="-1"></a>  description <span class="op">=</span> <span class="st">&quot;Allow NFS inbound traffic&quot;</span></span>
+<span id="cb115-38"><a href="infrastructure-1.html#cb115-38" aria-hidden="true" tabindex="-1"></a>  vpc_id      <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">vpc_id</span></span>
+<span id="cb115-39"><a href="infrastructure-1.html#cb115-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-40"><a href="infrastructure-1.html#cb115-40" aria-hidden="true" tabindex="-1"></a>  ingress {</span>
+<span id="cb115-41"><a href="infrastructure-1.html#cb115-41" aria-hidden="true" tabindex="-1"></a>    description <span class="op">=</span> <span class="st">&quot;NFS from VPC&quot;</span></span>
+<span id="cb115-42"><a href="infrastructure-1.html#cb115-42" aria-hidden="true" tabindex="-1"></a>    from_port   <span class="op">=</span> <span class="dv">2049</span></span>
+<span id="cb115-43"><a href="infrastructure-1.html#cb115-43" aria-hidden="true" tabindex="-1"></a>    to_port     <span class="op">=</span> <span class="dv">2049</span></span>
+<span id="cb115-44"><a href="infrastructure-1.html#cb115-44" aria-hidden="true" tabindex="-1"></a>    protocol    <span class="op">=</span> <span class="st">&quot;tcp&quot;</span></span>
+<span id="cb115-45"><a href="infrastructure-1.html#cb115-45" aria-hidden="true" tabindex="-1"></a>    cidr_blocks <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">private_subnets_cidr_blocks</span></span>
+<span id="cb115-46"><a href="infrastructure-1.html#cb115-46" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb115-47"><a href="infrastructure-1.html#cb115-47" aria-hidden="true" tabindex="-1"></a>  egress {</span>
+<span id="cb115-48"><a href="infrastructure-1.html#cb115-48" aria-hidden="true" tabindex="-1"></a>    from_port        <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb115-49"><a href="infrastructure-1.html#cb115-49" aria-hidden="true" tabindex="-1"></a>    to_port          <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb115-50"><a href="infrastructure-1.html#cb115-50" aria-hidden="true" tabindex="-1"></a>    protocol         <span class="op">=</span> <span class="st">&quot;-1&quot;</span></span>
+<span id="cb115-51"><a href="infrastructure-1.html#cb115-51" aria-hidden="true" tabindex="-1"></a>    cidr_blocks      <span class="op">=</span> [<span class="st">&quot;0.0.0.0/0&quot;</span>]</span>
+<span id="cb115-52"><a href="infrastructure-1.html#cb115-52" aria-hidden="true" tabindex="-1"></a>    ipv6_cidr_blocks <span class="op">=</span> [<span class="st">&quot;::/0&quot;</span>]</span>
+<span id="cb115-53"><a href="infrastructure-1.html#cb115-53" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb115-54"><a href="infrastructure-1.html#cb115-54" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb115-55"><a href="infrastructure-1.html#cb115-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-56"><a href="infrastructure-1.html#cb115-56" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_efs_file_system&quot;</span> <span class="st">&quot;stw_node_efs&quot;</span> {</span>
+<span id="cb115-57"><a href="infrastructure-1.html#cb115-57" aria-hidden="true" tabindex="-1"></a>  creation_token <span class="op">=</span> <span class="st">&quot;efs-for-stw-node&quot;</span></span>
+<span id="cb115-58"><a href="infrastructure-1.html#cb115-58" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb115-59"><a href="infrastructure-1.html#cb115-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-60"><a href="infrastructure-1.html#cb115-60" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_efs_mount_target&quot;</span> <span class="st">&quot;stw_node_efs_mt_0&quot;</span> {</span>
+<span id="cb115-61"><a href="infrastructure-1.html#cb115-61" aria-hidden="true" tabindex="-1"></a>  file_system_id  <span class="op">=</span> aws_efs_file_system<span class="op">.</span><span class="at">stw_node_efs</span><span class="op">.</span><span class="at">id</span></span>
+<span id="cb115-62"><a href="infrastructure-1.html#cb115-62" aria-hidden="true" tabindex="-1"></a>  subnet_id       <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">private_subnets</span>[<span class="dv">0</span>]</span>
+<span id="cb115-63"><a href="infrastructure-1.html#cb115-63" aria-hidden="true" tabindex="-1"></a>  security_groups <span class="op">=</span> [aws_security_group<span class="op">.</span><span class="at">allow_nfs</span><span class="op">.</span><span class="at">id</span>]</span>
+<span id="cb115-64"><a href="infrastructure-1.html#cb115-64" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb115-65"><a href="infrastructure-1.html#cb115-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-66"><a href="infrastructure-1.html#cb115-66" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_efs_mount_target&quot;</span> <span class="st">&quot;stw_node_efs_mt_1&quot;</span> {</span>
+<span id="cb115-67"><a href="infrastructure-1.html#cb115-67" aria-hidden="true" tabindex="-1"></a>  file_system_id  <span class="op">=</span> aws_efs_file_system<span class="op">.</span><span class="at">stw_node_efs</span><span class="op">.</span><span class="at">id</span></span>
+<span id="cb115-68"><a href="infrastructure-1.html#cb115-68" aria-hidden="true" tabindex="-1"></a>  subnet_id       <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">private_subnets</span>[<span class="dv">1</span>]</span>
+<span id="cb115-69"><a href="infrastructure-1.html#cb115-69" aria-hidden="true" tabindex="-1"></a>  security_groups <span class="op">=</span> [aws_security_group<span class="op">.</span><span class="at">allow_nfs</span><span class="op">.</span><span class="at">id</span>]</span>
+<span id="cb115-70"><a href="infrastructure-1.html#cb115-70" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb115-71"><a href="infrastructure-1.html#cb115-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-72"><a href="infrastructure-1.html#cb115-72" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_efs_mount_target&quot;</span> <span class="st">&quot;stw_node_efs_mt_2&quot;</span> {</span>
+<span id="cb115-73"><a href="infrastructure-1.html#cb115-73" aria-hidden="true" tabindex="-1"></a>  file_system_id  <span class="op">=</span> aws_efs_file_system<span class="op">.</span><span class="at">stw_node_efs</span><span class="op">.</span><span class="at">id</span></span>
+<span id="cb115-74"><a href="infrastructure-1.html#cb115-74" aria-hidden="true" tabindex="-1"></a>  subnet_id       <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">private_subnets</span>[<span class="dv">2</span>]</span>
+<span id="cb115-75"><a href="infrastructure-1.html#cb115-75" aria-hidden="true" tabindex="-1"></a>  security_groups <span class="op">=</span> [aws_security_group<span class="op">.</span><span class="at">allow_nfs</span><span class="op">.</span><span class="at">id</span>]</span>
+<span id="cb115-76"><a href="infrastructure-1.html#cb115-76" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb115-77"><a href="infrastructure-1.html#cb115-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-78"><a href="infrastructure-1.html#cb115-78" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;kubernetes_storage_class_v1&quot;</span> <span class="st">&quot;efs&quot;</span> {</span>
+<span id="cb115-79"><a href="infrastructure-1.html#cb115-79" aria-hidden="true" tabindex="-1"></a>  metadata {</span>
+<span id="cb115-80"><a href="infrastructure-1.html#cb115-80" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">&quot;efs&quot;</span></span>
+<span id="cb115-81"><a href="infrastructure-1.html#cb115-81" aria-hidden="true" tabindex="-1"></a>    annotations <span class="op">=</span> {</span>
+<span id="cb115-82"><a href="infrastructure-1.html#cb115-82" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;storageclass.kubernetes.io/is-default-class&quot;</span> <span class="op">=</span> <span class="st">&quot;true&quot;</span></span>
+<span id="cb115-83"><a href="infrastructure-1.html#cb115-83" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb115-84"><a href="infrastructure-1.html#cb115-84" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb115-85"><a href="infrastructure-1.html#cb115-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-86"><a href="infrastructure-1.html#cb115-86" aria-hidden="true" tabindex="-1"></a>  storage_provisioner <span class="op">=</span> <span class="st">&quot;efs.csi.aws.com&quot;</span></span>
+<span id="cb115-87"><a href="infrastructure-1.html#cb115-87" aria-hidden="true" tabindex="-1"></a>  parameters <span class="op">=</span> {</span>
+<span id="cb115-88"><a href="infrastructure-1.html#cb115-88" aria-hidden="true" tabindex="-1"></a>    provisioningMode <span class="op">=</span> <span class="st">&quot;efs-ap&quot;</span>                            # Dynamic provisioning</span>
+<span id="cb115-89"><a href="infrastructure-1.html#cb115-89" aria-hidden="true" tabindex="-1"></a>    fileSystemId     <span class="op">=</span> aws_efs_file_system<span class="op">.</span><span class="at">stw_node_efs</span><span class="op">.</span><span class="at">id</span> # module<span class="op">.</span><span class="at">efs</span><span class="op">.</span><span class="at">id</span></span>
+<span id="cb115-90"><a href="infrastructure-1.html#cb115-90" aria-hidden="true" tabindex="-1"></a>    directoryPerms   <span class="op">=</span> <span class="st">&quot;777&quot;</span></span>
+<span id="cb115-91"><a href="infrastructure-1.html#cb115-91" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb115-92"><a href="infrastructure-1.html#cb115-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-93"><a href="infrastructure-1.html#cb115-93" aria-hidden="true" tabindex="-1"></a>  mount_options <span class="op">=</span> [</span>
+<span id="cb115-94"><a href="infrastructure-1.html#cb115-94" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;iam&quot;</span></span>
+<span id="cb115-95"><a href="infrastructure-1.html#cb115-95" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb115-96"><a href="infrastructure-1.html#cb115-96" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="cluster-autoscaler" class="section level4 hasAnchor" number="8.2.2.3">
+<h4><span class="header-section-number">8.2.2.3</span> Cluster Autoscaler<a href="infrastructure-1.html#cluster-autoscaler" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The EKS Cluster Autoscaler ensures that the cluster can automatically scale its worker nodes based on the workload demands, ensuring optimal resource utilization and performance.</p>
+<p>The necessary IAM settings are set up prior to deploying the Autoscaler. First, an IAM policy named <code>"node_additional"</code> is created to grant permission to describe EC2 instances and related resources. This enables the Autoscaler to gather information about the current state of the worker nodes and make informed decisions regarding scaling. For each managed node group in the EKS cluster (defined by the <code>"eks_managed_node_groups"</code> module output), the IAM policy is attached to its corresponding IAM role. This ensures that all worker nodes have the required permissions to work with the Autoscaler. After setting up the IAM policies, tags are added to provide the necessary information for the EKS Cluster Autoscaler to identify and manage the Auto Scaling Groups effectively and to support cluster autoscaling from zero for each node group. The tags are created for each node group (<code>"nodegroup_t3_small"</code>, <code>"nodegroup_t3_medium"</code> ,and <code>"nodegroup_t3_large"</code>) and are based on the specified tag lists defined in the <code>"local.eks_asg_tag_list_*"</code> variables.</p>
+<p>The EKS Cluster Autoscaler itself is instantiated using the custom <code>"eks_autoscaler"</code> module on the bottom of the code snippet. The module is called to set up the Autoscaler for the EKS cluster and the required input variables are provided accordingly. Its components are described in detailed in the following.</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb116-1"><a href="infrastructure-1.html#cb116-1" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="cb116-2"><a href="infrastructure-1.html#cb116-2" aria-hidden="true" tabindex="-1"></a># EKS Cluster autoscaler</span>
+<span id="cb116-3"><a href="infrastructure-1.html#cb116-3" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="cb116-4"><a href="infrastructure-1.html#cb116-4" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_iam_policy&quot;</span> <span class="st">&quot;node_additional&quot;</span> {</span>
+<span id="cb116-5"><a href="infrastructure-1.html#cb116-5" aria-hidden="true" tabindex="-1"></a>  name        <span class="op">=</span> <span class="st">&quot;${local.cluster_name}-additional&quot;</span></span>
+<span id="cb116-6"><a href="infrastructure-1.html#cb116-6" aria-hidden="true" tabindex="-1"></a>  description <span class="op">=</span> <span class="st">&quot;${local.cluster_name} node additional policy&quot;</span></span>
+<span id="cb116-7"><a href="infrastructure-1.html#cb116-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-8"><a href="infrastructure-1.html#cb116-8" aria-hidden="true" tabindex="-1"></a>  policy <span class="op">=</span> <span class="fu">jsonencode</span>({</span>
+<span id="cb116-9"><a href="infrastructure-1.html#cb116-9" aria-hidden="true" tabindex="-1"></a>    Version <span class="op">=</span> <span class="st">&quot;2012-10-17&quot;</span></span>
+<span id="cb116-10"><a href="infrastructure-1.html#cb116-10" aria-hidden="true" tabindex="-1"></a>    Statement <span class="op">=</span> [</span>
+<span id="cb116-11"><a href="infrastructure-1.html#cb116-11" aria-hidden="true" tabindex="-1"></a>      {</span>
+<span id="cb116-12"><a href="infrastructure-1.html#cb116-12" aria-hidden="true" tabindex="-1"></a>        Action <span class="op">=</span> [</span>
+<span id="cb116-13"><a href="infrastructure-1.html#cb116-13" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;ec2:Describe*&quot;</span><span class="op">,</span></span>
+<span id="cb116-14"><a href="infrastructure-1.html#cb116-14" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb116-15"><a href="infrastructure-1.html#cb116-15" aria-hidden="true" tabindex="-1"></a>        Effect   <span class="op">=</span> <span class="st">&quot;Allow&quot;</span></span>
+<span id="cb116-16"><a href="infrastructure-1.html#cb116-16" aria-hidden="true" tabindex="-1"></a>        Resource <span class="op">=</span> <span class="st">&quot;*&quot;</span></span>
+<span id="cb116-17"><a href="infrastructure-1.html#cb116-17" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb116-18"><a href="infrastructure-1.html#cb116-18" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb116-19"><a href="infrastructure-1.html#cb116-19" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb116-20"><a href="infrastructure-1.html#cb116-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb116-21"><a href="infrastructure-1.html#cb116-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-22"><a href="infrastructure-1.html#cb116-22" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_iam_role_policy_attachment&quot;</span> <span class="st">&quot;additional&quot;</span> {</span>
+<span id="cb116-23"><a href="infrastructure-1.html#cb116-23" aria-hidden="true" tabindex="-1"></a>  for_each <span class="op">=</span> module<span class="op">.</span><span class="at">eks</span><span class="op">.</span><span class="at">eks_managed_node_groups</span></span>
+<span id="cb116-24"><a href="infrastructure-1.html#cb116-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-25"><a href="infrastructure-1.html#cb116-25" aria-hidden="true" tabindex="-1"></a>  policy_arn <span class="op">=</span> aws_iam_policy<span class="op">.</span><span class="at">node_additional</span><span class="op">.</span><span class="at">arn</span></span>
+<span id="cb116-26"><a href="infrastructure-1.html#cb116-26" aria-hidden="true" tabindex="-1"></a>  role       <span class="op">=</span> each<span class="op">.</span><span class="at">value</span><span class="op">.</span><span class="at">iam_role_name</span></span>
+<span id="cb116-27"><a href="infrastructure-1.html#cb116-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb116-28"><a href="infrastructure-1.html#cb116-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-29"><a href="infrastructure-1.html#cb116-29" aria-hidden="true" tabindex="-1"></a># Tags <span class="cf">for</span> the ASG to support cluster<span class="op">-</span>autoscaler scale up <span class="im">from</span> <span class="dv">0</span> <span class="cf">for</span> nodegroup2</span>
+<span id="cb116-30"><a href="infrastructure-1.html#cb116-30" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_autoscaling_group_tag&quot;</span> <span class="st">&quot;nodegroup_t3_small&quot;</span> {</span>
+<span id="cb116-31"><a href="infrastructure-1.html#cb116-31" aria-hidden="true" tabindex="-1"></a>  for_each               <span class="op">=</span> local<span class="op">.</span><span class="at">eks_asg_tag_list_nodegroup_t3_small_label</span></span>
+<span id="cb116-32"><a href="infrastructure-1.html#cb116-32" aria-hidden="true" tabindex="-1"></a>  autoscaling_group_name <span class="op">=</span> <span class="fu">element</span>(module<span class="op">.</span><span class="at">eks</span><span class="op">.</span><span class="at">eks_managed_node_groups_autoscaling_group_names</span><span class="op">,</span> <span class="dv">2</span>)</span>
+<span id="cb116-33"><a href="infrastructure-1.html#cb116-33" aria-hidden="true" tabindex="-1"></a>  tag {</span>
+<span id="cb116-34"><a href="infrastructure-1.html#cb116-34" aria-hidden="true" tabindex="-1"></a>    key                 <span class="op">=</span> each<span class="op">.</span><span class="at">key</span></span>
+<span id="cb116-35"><a href="infrastructure-1.html#cb116-35" aria-hidden="true" tabindex="-1"></a>    value               <span class="op">=</span> each<span class="op">.</span><span class="at">value</span></span>
+<span id="cb116-36"><a href="infrastructure-1.html#cb116-36" aria-hidden="true" tabindex="-1"></a>    propagate_at_launch <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb116-37"><a href="infrastructure-1.html#cb116-37" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb116-38"><a href="infrastructure-1.html#cb116-38" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb116-39"><a href="infrastructure-1.html#cb116-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-40"><a href="infrastructure-1.html#cb116-40" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_autoscaling_group_tag&quot;</span> <span class="st">&quot;nodegroup_t3_medium&quot;</span> {</span>
+<span id="cb116-41"><a href="infrastructure-1.html#cb116-41" aria-hidden="true" tabindex="-1"></a>  for_each               <span class="op">=</span> local<span class="op">.</span><span class="at">eks_asg_tag_list_nodegroup_t3_medium_label</span></span>
+<span id="cb116-42"><a href="infrastructure-1.html#cb116-42" aria-hidden="true" tabindex="-1"></a>  autoscaling_group_name <span class="op">=</span> <span class="fu">element</span>(module<span class="op">.</span><span class="at">eks</span><span class="op">.</span><span class="at">eks_managed_node_groups_autoscaling_group_names</span><span class="op">,</span> <span class="dv">1</span>)</span>
+<span id="cb116-43"><a href="infrastructure-1.html#cb116-43" aria-hidden="true" tabindex="-1"></a>  tag {</span>
+<span id="cb116-44"><a href="infrastructure-1.html#cb116-44" aria-hidden="true" tabindex="-1"></a>    key                 <span class="op">=</span> each<span class="op">.</span><span class="at">key</span></span>
+<span id="cb116-45"><a href="infrastructure-1.html#cb116-45" aria-hidden="true" tabindex="-1"></a>    value               <span class="op">=</span> each<span class="op">.</span><span class="at">value</span></span>
+<span id="cb116-46"><a href="infrastructure-1.html#cb116-46" aria-hidden="true" tabindex="-1"></a>    propagate_at_launch <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb116-47"><a href="infrastructure-1.html#cb116-47" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb116-48"><a href="infrastructure-1.html#cb116-48" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb116-49"><a href="infrastructure-1.html#cb116-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-50"><a href="infrastructure-1.html#cb116-50" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_autoscaling_group_tag&quot;</span> <span class="st">&quot;nodegroup_t3_large&quot;</span> {</span>
+<span id="cb116-51"><a href="infrastructure-1.html#cb116-51" aria-hidden="true" tabindex="-1"></a>  for_each               <span class="op">=</span> local<span class="op">.</span><span class="at">eks_asg_tag_list_nodegroup_t3_large_label</span></span>
+<span id="cb116-52"><a href="infrastructure-1.html#cb116-52" aria-hidden="true" tabindex="-1"></a>  autoscaling_group_name <span class="op">=</span> <span class="fu">element</span>(module<span class="op">.</span><span class="at">eks</span><span class="op">.</span><span class="at">eks_managed_node_groups_autoscaling_group_names</span><span class="op">,</span> <span class="dv">0</span>)</span>
+<span id="cb116-53"><a href="infrastructure-1.html#cb116-53" aria-hidden="true" tabindex="-1"></a>  tag {</span>
+<span id="cb116-54"><a href="infrastructure-1.html#cb116-54" aria-hidden="true" tabindex="-1"></a>    key                 <span class="op">=</span> each<span class="op">.</span><span class="at">key</span></span>
+<span id="cb116-55"><a href="infrastructure-1.html#cb116-55" aria-hidden="true" tabindex="-1"></a>    value               <span class="op">=</span> each<span class="op">.</span><span class="at">value</span></span>
+<span id="cb116-56"><a href="infrastructure-1.html#cb116-56" aria-hidden="true" tabindex="-1"></a>    propagate_at_launch <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb116-57"><a href="infrastructure-1.html#cb116-57" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb116-58"><a href="infrastructure-1.html#cb116-58" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb116-59"><a href="infrastructure-1.html#cb116-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-60"><a href="infrastructure-1.html#cb116-60" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;eks_autoscaler&quot;</span> {</span>
+<span id="cb116-61"><a href="infrastructure-1.html#cb116-61" aria-hidden="true" tabindex="-1"></a>  source                          <span class="op">=</span> <span class="st">&quot;./autoscaler&quot;</span></span>
+<span id="cb116-62"><a href="infrastructure-1.html#cb116-62" aria-hidden="true" tabindex="-1"></a>  cluster_name                    <span class="op">=</span> local<span class="op">.</span><span class="at">cluster_name</span></span>
+<span id="cb116-63"><a href="infrastructure-1.html#cb116-63" aria-hidden="true" tabindex="-1"></a>  cluster_namespace               <span class="op">=</span> local<span class="op">.</span><span class="at">cluster_namespace</span></span>
+<span id="cb116-64"><a href="infrastructure-1.html#cb116-64" aria-hidden="true" tabindex="-1"></a>  aws_region                      <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">aws_region</span></span>
+<span id="cb116-65"><a href="infrastructure-1.html#cb116-65" aria-hidden="true" tabindex="-1"></a>  cluster_oidc_issuer_url         <span class="op">=</span> module<span class="op">.</span><span class="at">eks</span><span class="op">.</span><span class="at">cluster_oidc_issuer_url</span></span>
+<span id="cb116-66"><a href="infrastructure-1.html#cb116-66" aria-hidden="true" tabindex="-1"></a>  autoscaler_service_account_name <span class="op">=</span> local<span class="op">.</span><span class="at">autoscaler_service_account_name</span></span>
+<span id="cb116-67"><a href="infrastructure-1.html#cb116-67" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The configurationof the Cluster Autoscaler begins with the creation of a Helm release named <code>"cluster-autoscaler"</code> using the <code>"helm_release"</code> resource. The Helm chart is sourced from the <code>"kubernetes.github.io/autoscaler"</code> repository with the chart version <code>"9.10.7"</code>. The settings inside the Helm release include the AWS region, RBAC (Role-Based Access Control) settings for the service account, cluster auto-discovery settings, and the creation of the service account with the required permissions.</p>
+<p>The necessary resources for the settings are created accordingly in the following. The service account is created using the <code>"iam_assumable_role_admin"</code> module with an assumable IAM role that allows the service account to access the necessary resources for scaling. It is associated with the OIDC (OpenID Connect) provider for the cluster to permit access.</p>
+<p>An IAM policy named <code>"cluster_autoscaler"</code> is created to permit the Cluster Autoscaler to interact with Auto Scaling Groups, EC2 instances, launch configurations, and tags. The policy includes two statements: <code>"clusterAutoscalerAll"</code> and <code>"clusterAutoscalerOwn"</code>. The first statement grants read access to Auto Scaling Group-related resources, while the second statement allows the Cluster Autoscaler to modify the desired capacity of the Auto Scaling Groups and terminate instances. The policy also includes conditions to ensure that the Cluster Autoscaler can only modify resources with specific tags. The conditions check that the Auto Scaling Group has a tag <code>"k8s.io/cluster-autoscaler/enabled"</code> set to <code>"true"</code> and a tag <code>"k8s.io/cluster-autoscaler/&lt;cluster_name&gt;"</code> set to <code>"owned"</code>. If you remember it, we have set these tags when setting up the managed node groups for the EKS Cluster in the previous step.</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb117-1"><a href="infrastructure-1.html#cb117-1" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;helm_release&quot;</span> <span class="st">&quot;cluster-autoscaler&quot;</span> {</span>
+<span id="cb117-2"><a href="infrastructure-1.html#cb117-2" aria-hidden="true" tabindex="-1"></a>  name             <span class="op">=</span> <span class="st">&quot;cluster-autoscaler&quot;</span></span>
+<span id="cb117-3"><a href="infrastructure-1.html#cb117-3" aria-hidden="true" tabindex="-1"></a>  namespace        <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">cluster_namespace</span></span>
+<span id="cb117-4"><a href="infrastructure-1.html#cb117-4" aria-hidden="true" tabindex="-1"></a>  repository       <span class="op">=</span> <span class="st">&quot;https://kubernetes.github.io/autoscaler&quot;</span></span>
+<span id="cb117-5"><a href="infrastructure-1.html#cb117-5" aria-hidden="true" tabindex="-1"></a>  chart            <span class="op">=</span> <span class="st">&quot;cluster-autoscaler&quot;</span></span>
+<span id="cb117-6"><a href="infrastructure-1.html#cb117-6" aria-hidden="true" tabindex="-1"></a>  version          <span class="op">=</span> <span class="st">&quot;9.10.7&quot;</span></span>
+<span id="cb117-7"><a href="infrastructure-1.html#cb117-7" aria-hidden="true" tabindex="-1"></a>  create_namespace <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb117-8"><a href="infrastructure-1.html#cb117-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-9"><a href="infrastructure-1.html#cb117-9" aria-hidden="true" tabindex="-1"></a>  set {</span>
+<span id="cb117-10"><a href="infrastructure-1.html#cb117-10" aria-hidden="true" tabindex="-1"></a>    name  <span class="op">=</span> <span class="st">&quot;awsRegion&quot;</span></span>
+<span id="cb117-11"><a href="infrastructure-1.html#cb117-11" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">aws_region</span></span>
+<span id="cb117-12"><a href="infrastructure-1.html#cb117-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb117-13"><a href="infrastructure-1.html#cb117-13" aria-hidden="true" tabindex="-1"></a>  set {</span>
+<span id="cb117-14"><a href="infrastructure-1.html#cb117-14" aria-hidden="true" tabindex="-1"></a>    name  <span class="op">=</span> <span class="st">&quot;rbac.serviceAccount.name&quot;</span></span>
+<span id="cb117-15"><a href="infrastructure-1.html#cb117-15" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">autoscaler_service_account_name</span></span>
+<span id="cb117-16"><a href="infrastructure-1.html#cb117-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb117-17"><a href="infrastructure-1.html#cb117-17" aria-hidden="true" tabindex="-1"></a>  set {</span>
+<span id="cb117-18"><a href="infrastructure-1.html#cb117-18" aria-hidden="true" tabindex="-1"></a>    name  <span class="op">=</span> <span class="st">&quot;rbac.serviceAccount.annotations.eks</span><span class="sc">\\</span><span class="st">.amazonaws</span><span class="sc">\\</span><span class="st">.com/role-arn&quot;</span></span>
+<span id="cb117-19"><a href="infrastructure-1.html#cb117-19" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> module<span class="op">.</span><span class="at">iam_assumable_role_admin</span><span class="op">.</span><span class="at">iam_role_arn</span></span>
+<span id="cb117-20"><a href="infrastructure-1.html#cb117-20" aria-hidden="true" tabindex="-1"></a>    type  <span class="op">=</span> <span class="st">&quot;string&quot;</span></span>
+<span id="cb117-21"><a href="infrastructure-1.html#cb117-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb117-22"><a href="infrastructure-1.html#cb117-22" aria-hidden="true" tabindex="-1"></a>  set {</span>
+<span id="cb117-23"><a href="infrastructure-1.html#cb117-23" aria-hidden="true" tabindex="-1"></a>    name  <span class="op">=</span> <span class="st">&quot;autoDiscovery.clusterName&quot;</span></span>
+<span id="cb117-24"><a href="infrastructure-1.html#cb117-24" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">cluster_name</span></span>
+<span id="cb117-25"><a href="infrastructure-1.html#cb117-25" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb117-26"><a href="infrastructure-1.html#cb117-26" aria-hidden="true" tabindex="-1"></a>  set {</span>
+<span id="cb117-27"><a href="infrastructure-1.html#cb117-27" aria-hidden="true" tabindex="-1"></a>    name  <span class="op">=</span> <span class="st">&quot;autoDiscovery.enabled&quot;</span></span>
+<span id="cb117-28"><a href="infrastructure-1.html#cb117-28" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> <span class="st">&quot;true&quot;</span></span>
+<span id="cb117-29"><a href="infrastructure-1.html#cb117-29" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb117-30"><a href="infrastructure-1.html#cb117-30" aria-hidden="true" tabindex="-1"></a>  set {</span>
+<span id="cb117-31"><a href="infrastructure-1.html#cb117-31" aria-hidden="true" tabindex="-1"></a>    name  <span class="op">=</span> <span class="st">&quot;rbac.create&quot;</span></span>
+<span id="cb117-32"><a href="infrastructure-1.html#cb117-32" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> <span class="st">&quot;true&quot;</span></span>
+<span id="cb117-33"><a href="infrastructure-1.html#cb117-33" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb117-34"><a href="infrastructure-1.html#cb117-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb117-35"><a href="infrastructure-1.html#cb117-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-36"><a href="infrastructure-1.html#cb117-36" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;iam_assumable_role_admin&quot;</span> {</span>
+<span id="cb117-37"><a href="infrastructure-1.html#cb117-37" aria-hidden="true" tabindex="-1"></a>  source                        <span class="op">=</span> <span class="st">&quot;terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc&quot;</span></span>
+<span id="cb117-38"><a href="infrastructure-1.html#cb117-38" aria-hidden="true" tabindex="-1"></a>  version                       <span class="op">=</span> <span class="st">&quot;~&gt; 4.0&quot;</span></span>
+<span id="cb117-39"><a href="infrastructure-1.html#cb117-39" aria-hidden="true" tabindex="-1"></a>  create_role                   <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb117-40"><a href="infrastructure-1.html#cb117-40" aria-hidden="true" tabindex="-1"></a>  role_name                     <span class="op">=</span> <span class="st">&quot;cluster-autoscaler&quot;</span></span>
+<span id="cb117-41"><a href="infrastructure-1.html#cb117-41" aria-hidden="true" tabindex="-1"></a>  provider_url                  <span class="op">=</span> <span class="fu">replace</span>(<span class="kw">var</span><span class="op">.</span><span class="at">cluster_oidc_issuer_url</span><span class="op">,</span> <span class="st">&quot;https://&quot;</span><span class="op">,</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb117-42"><a href="infrastructure-1.html#cb117-42" aria-hidden="true" tabindex="-1"></a>  role_policy_arns              <span class="op">=</span> [aws_iam_policy<span class="op">.</span><span class="at">cluster_autoscaler</span><span class="op">.</span><span class="at">arn</span>]</span>
+<span id="cb117-43"><a href="infrastructure-1.html#cb117-43" aria-hidden="true" tabindex="-1"></a>  oidc_fully_qualified_subjects <span class="op">=</span> [<span class="st">&quot;system:serviceaccount:${var.cluster_namespace}:${var.autoscaler_service_account_name}&quot;</span>]</span>
+<span id="cb117-44"><a href="infrastructure-1.html#cb117-44" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb117-45"><a href="infrastructure-1.html#cb117-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-46"><a href="infrastructure-1.html#cb117-46" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_iam_policy&quot;</span> <span class="st">&quot;cluster_autoscaler&quot;</span> {</span>
+<span id="cb117-47"><a href="infrastructure-1.html#cb117-47" aria-hidden="true" tabindex="-1"></a>  name_prefix <span class="op">=</span> <span class="st">&quot;cluster-autoscaler&quot;</span></span>
+<span id="cb117-48"><a href="infrastructure-1.html#cb117-48" aria-hidden="true" tabindex="-1"></a>  description <span class="op">=</span> <span class="st">&quot;EKS cluster-autoscaler policy for cluster ${var.cluster_name}&quot;</span></span>
+<span id="cb117-49"><a href="infrastructure-1.html#cb117-49" aria-hidden="true" tabindex="-1"></a>  policy      <span class="op">=</span> data<span class="op">.</span><span class="at">aws_iam_policy_document</span><span class="op">.</span><span class="at">cluster_autoscaler</span><span class="op">.</span><span class="at">json</span></span>
+<span id="cb117-50"><a href="infrastructure-1.html#cb117-50" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb117-51"><a href="infrastructure-1.html#cb117-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-52"><a href="infrastructure-1.html#cb117-52" aria-hidden="true" tabindex="-1"></a>data <span class="st">&quot;aws_iam_policy_document&quot;</span> <span class="st">&quot;cluster_autoscaler&quot;</span> {</span>
+<span id="cb117-53"><a href="infrastructure-1.html#cb117-53" aria-hidden="true" tabindex="-1"></a>  statement {</span>
+<span id="cb117-54"><a href="infrastructure-1.html#cb117-54" aria-hidden="true" tabindex="-1"></a>    sid    <span class="op">=</span> <span class="st">&quot;clusterAutoscalerAll&quot;</span></span>
+<span id="cb117-55"><a href="infrastructure-1.html#cb117-55" aria-hidden="true" tabindex="-1"></a>    effect <span class="op">=</span> <span class="st">&quot;Allow&quot;</span></span>
+<span id="cb117-56"><a href="infrastructure-1.html#cb117-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-57"><a href="infrastructure-1.html#cb117-57" aria-hidden="true" tabindex="-1"></a>    actions <span class="op">=</span> [</span>
+<span id="cb117-58"><a href="infrastructure-1.html#cb117-58" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;autoscaling:DescribeAutoScalingGroups&quot;</span><span class="op">,</span></span>
+<span id="cb117-59"><a href="infrastructure-1.html#cb117-59" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;autoscaling:DescribeAutoScalingInstances&quot;</span><span class="op">,</span></span>
+<span id="cb117-60"><a href="infrastructure-1.html#cb117-60" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;autoscaling:DescribeLaunchConfigurations&quot;</span><span class="op">,</span></span>
+<span id="cb117-61"><a href="infrastructure-1.html#cb117-61" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;autoscaling:DescribeTags&quot;</span><span class="op">,</span></span>
+<span id="cb117-62"><a href="infrastructure-1.html#cb117-62" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;ec2:DescribeLaunchTemplateVersions&quot;</span><span class="op">,</span></span>
+<span id="cb117-63"><a href="infrastructure-1.html#cb117-63" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb117-64"><a href="infrastructure-1.html#cb117-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-65"><a href="infrastructure-1.html#cb117-65" aria-hidden="true" tabindex="-1"></a>    resources <span class="op">=</span> [<span class="st">&quot;*&quot;</span>]</span>
+<span id="cb117-66"><a href="infrastructure-1.html#cb117-66" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb117-67"><a href="infrastructure-1.html#cb117-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-68"><a href="infrastructure-1.html#cb117-68" aria-hidden="true" tabindex="-1"></a>  statement {</span>
+<span id="cb117-69"><a href="infrastructure-1.html#cb117-69" aria-hidden="true" tabindex="-1"></a>    sid    <span class="op">=</span> <span class="st">&quot;clusterAutoscalerOwn&quot;</span></span>
+<span id="cb117-70"><a href="infrastructure-1.html#cb117-70" aria-hidden="true" tabindex="-1"></a>    effect <span class="op">=</span> <span class="st">&quot;Allow&quot;</span></span>
+<span id="cb117-71"><a href="infrastructure-1.html#cb117-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-72"><a href="infrastructure-1.html#cb117-72" aria-hidden="true" tabindex="-1"></a>    actions <span class="op">=</span> [</span>
+<span id="cb117-73"><a href="infrastructure-1.html#cb117-73" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;autoscaling:SetDesiredCapacity&quot;</span><span class="op">,</span></span>
+<span id="cb117-74"><a href="infrastructure-1.html#cb117-74" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;autoscaling:TerminateInstanceInAutoScalingGroup&quot;</span><span class="op">,</span></span>
+<span id="cb117-75"><a href="infrastructure-1.html#cb117-75" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;autoscaling:UpdateAutoScalingGroup&quot;</span><span class="op">,</span></span>
+<span id="cb117-76"><a href="infrastructure-1.html#cb117-76" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb117-77"><a href="infrastructure-1.html#cb117-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-78"><a href="infrastructure-1.html#cb117-78" aria-hidden="true" tabindex="-1"></a>    resources <span class="op">=</span> [<span class="st">&quot;*&quot;</span>]</span>
+<span id="cb117-79"><a href="infrastructure-1.html#cb117-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-80"><a href="infrastructure-1.html#cb117-80" aria-hidden="true" tabindex="-1"></a>    condition {</span>
+<span id="cb117-81"><a href="infrastructure-1.html#cb117-81" aria-hidden="true" tabindex="-1"></a>      test     <span class="op">=</span> <span class="st">&quot;StringEquals&quot;</span></span>
+<span id="cb117-82"><a href="infrastructure-1.html#cb117-82" aria-hidden="true" tabindex="-1"></a>      variable <span class="op">=</span> <span class="st">&quot;autoscaling:ResourceTag/k8s.io/cluster-autoscaler/${var.cluster_name}&quot;</span></span>
+<span id="cb117-83"><a href="infrastructure-1.html#cb117-83" aria-hidden="true" tabindex="-1"></a>      values   <span class="op">=</span> [<span class="st">&quot;owned&quot;</span>]</span>
+<span id="cb117-84"><a href="infrastructure-1.html#cb117-84" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb117-85"><a href="infrastructure-1.html#cb117-85" aria-hidden="true" tabindex="-1"></a>    condition {</span>
+<span id="cb117-86"><a href="infrastructure-1.html#cb117-86" aria-hidden="true" tabindex="-1"></a>      test     <span class="op">=</span> <span class="st">&quot;StringEquals&quot;</span></span>
+<span id="cb117-87"><a href="infrastructure-1.html#cb117-87" aria-hidden="true" tabindex="-1"></a>      variable <span class="op">=</span> <span class="st">&quot;autoscaling:ResourceTag/k8s.io/cluster-autoscaler/enabled&quot;</span></span>
+<span id="cb117-88"><a href="infrastructure-1.html#cb117-88" aria-hidden="true" tabindex="-1"></a>      values   <span class="op">=</span> [<span class="st">&quot;true&quot;</span>]</span>
+<span id="cb117-89"><a href="infrastructure-1.html#cb117-89" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb117-90"><a href="infrastructure-1.html#cb117-90" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb117-91"><a href="infrastructure-1.html#cb117-91" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+</div>
+<div id="networking" class="section level3 hasAnchor" number="8.2.3">
+<h3><span class="header-section-number">8.2.3</span> Networking<a href="infrastructure-1.html#networking" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>networking</code> module of the infrastructure directory integrates an <em>Application Load Balancer</em> (ALB) and <em>External DNS</em> in the cluster. Both play crucial roles in managing and exposing Kubernetes applications within the EKS cluster to the outside world. The ALB serves as an Ingress Controller to route external traffic to Kubernetes services, while External DNS automates the management of DNS records, making it easier to access services using user-friendly domain names. The root module of network just calls both submodules, which are described in detail in the following sections.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb118-1"><a href="infrastructure-1.html#cb118-1" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;external-dns&quot;</span> {</span>
+<span id="cb118-2"><a href="infrastructure-1.html#cb118-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span></span>
+<span id="cb118-3"><a href="infrastructure-1.html#cb118-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb118-4"><a href="infrastructure-1.html#cb118-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-5"><a href="infrastructure-1.html#cb118-5" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;application-load-balancer&quot;</span> {</span>
+<span id="cb118-6"><a href="infrastructure-1.html#cb118-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span></span>
+<span id="cb118-7"><a href="infrastructure-1.html#cb118-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div id="aws-application-load-balancer-alb" class="section level4 hasAnchor" number="8.2.3.1">
+<h4><span class="header-section-number">8.2.3.1</span> AWS Application Load Balancer (ALB)<a href="infrastructure-1.html#aws-application-load-balancer-alb" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The ALB is a managed load balancer service provided by AWS. In the context of an EKS cluster, the ALB serves as an Ingress Controller and thus is responsible for routing external traffic to the appropriate services and pods running inside your Kubernetes cluster. The ALB acts as the entry point to our applications and enables us to expose multiple services over a single public IP address or domain name, which simplifies access for users and clients.</p>
+<p>The code starts by defining some local variables, followed by creating an assumable IAM role for the AWS Load Balancer Controller service account by the module <code>aws_load_balancer_controller_controller_role</code>. The service account holds the necessary permissions and associates with the OIDC provider of the EKS cluster as it is the same module call we already used multiple times beforehand. The IAM policy for the role is defined in the <code>"aws_iam_policy.aws_load_balancer_controller_controller_sa"</code> resource.</p>
+<p>Since its policy document is quite extensive, it is loaded from a file named <code>"AWSLoadBalancerControllerPolicy.json.</code>“. In summary, the AWS IAM document allows the AWS Elastic Load Balancing (ELB) controller, specifically the Elastic Load Balancer V2 (ELBV2) API, to perform various actions related to managing load balancers, target groups, listeners, rules, and tags. The document includes several”Allow” statements that grant permissions for actions like describing and managing load balancers, target groups, listeners, and rules. It also allows the controller to create and delete load balancers, target groups, and listeners, as well as modify their attributes. Additionally, the document permits the addition and removal of tags for ELBV2 resources.</p>
+<p>After setting up the IAM role, the code proceeds to install the AWS Load Balancer Controller using Helm. The Helm chart is sourced from the <code>"aws.github.io/eks-charts"</code> repository, specifying version <code>"v2.4.2"</code>. The service account configuration is provided to the Helm release’s values, including the name of the service account and annotations to associate it with the IAM role created earlier. The <code>"eks.amazonaws.com/role-arn"</code> annotation points to the ARN of the IAM role associated with the service account, allowing the controller to assume that role and operate with the appropriate permissions.</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb119-1"><a href="infrastructure-1.html#cb119-1" aria-hidden="true" tabindex="-1"></a>locals {</span>
+<span id="cb119-2"><a href="infrastructure-1.html#cb119-2" aria-hidden="true" tabindex="-1"></a>  aws_load_balancer_controller_service_account_role_name <span class="op">=</span> <span class="st">&quot;aws-load-balancer-controller-role&quot;</span></span>
+<span id="cb119-3"><a href="infrastructure-1.html#cb119-3" aria-hidden="true" tabindex="-1"></a>  aws_load_balancer_controller_service_account_name      <span class="op">=</span> <span class="st">&quot;aws-load-balancer-controller-sa&quot;</span></span>
+<span id="cb119-4"><a href="infrastructure-1.html#cb119-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb119-5"><a href="infrastructure-1.html#cb119-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-6"><a href="infrastructure-1.html#cb119-6" aria-hidden="true" tabindex="-1"></a>data <span class="st">&quot;aws_caller_identity&quot;</span> <span class="st">&quot;current&quot;</span> {}</span>
+<span id="cb119-7"><a href="infrastructure-1.html#cb119-7" aria-hidden="true" tabindex="-1"></a>data <span class="st">&quot;aws_region&quot;</span> <span class="st">&quot;current&quot;</span> {} # </span>
+<span id="cb119-8"><a href="infrastructure-1.html#cb119-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-9"><a href="infrastructure-1.html#cb119-9" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;aws_load_balancer_controller_controller_role&quot;</span> {</span>
+<span id="cb119-10"><a href="infrastructure-1.html#cb119-10" aria-hidden="true" tabindex="-1"></a>  source                        <span class="op">=</span> <span class="st">&quot;terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc&quot;</span></span>
+<span id="cb119-11"><a href="infrastructure-1.html#cb119-11" aria-hidden="true" tabindex="-1"></a>  version                       <span class="op">=</span> <span class="st">&quot;5.11.1&quot;</span></span>
+<span id="cb119-12"><a href="infrastructure-1.html#cb119-12" aria-hidden="true" tabindex="-1"></a>  create_role                   <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb119-13"><a href="infrastructure-1.html#cb119-13" aria-hidden="true" tabindex="-1"></a>  role_name                     <span class="op">=</span> local<span class="op">.</span><span class="at">aws_load_balancer_controller_service_account_role_name</span></span>
+<span id="cb119-14"><a href="infrastructure-1.html#cb119-14" aria-hidden="true" tabindex="-1"></a>  provider_url                  <span class="op">=</span> <span class="fu">replace</span>(<span class="kw">var</span><span class="op">.</span><span class="at">cluster_oidc_issuer_url</span><span class="op">,</span> <span class="st">&quot;https://&quot;</span><span class="op">,</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb119-15"><a href="infrastructure-1.html#cb119-15" aria-hidden="true" tabindex="-1"></a>  role_policy_arns              <span class="op">=</span> [aws_iam_policy<span class="op">.</span><span class="at">aws_load_balancer_controller_controller_sa</span><span class="op">.</span><span class="at">arn</span>]</span>
+<span id="cb119-16"><a href="infrastructure-1.html#cb119-16" aria-hidden="true" tabindex="-1"></a>  oidc_fully_qualified_subjects <span class="op">=</span> [<span class="st">&quot;system:serviceaccount:kube-system:${local.aws_load_balancer_controller_service_account_name}&quot;</span>]</span>
+<span id="cb119-17"><a href="infrastructure-1.html#cb119-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb119-18"><a href="infrastructure-1.html#cb119-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-19"><a href="infrastructure-1.html#cb119-19" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_iam_policy&quot;</span> <span class="st">&quot;aws_load_balancer_controller_controller_sa&quot;</span> {</span>
+<span id="cb119-20"><a href="infrastructure-1.html#cb119-20" aria-hidden="true" tabindex="-1"></a>  name        <span class="op">=</span> local<span class="op">.</span><span class="at">aws_load_balancer_controller_service_account_name</span></span>
+<span id="cb119-21"><a href="infrastructure-1.html#cb119-21" aria-hidden="true" tabindex="-1"></a>  description <span class="op">=</span> <span class="st">&quot;EKS ebs-csi-controller policy for cluster ${var.cluster_name}&quot;</span></span>
+<span id="cb119-22"><a href="infrastructure-1.html#cb119-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-23"><a href="infrastructure-1.html#cb119-23" aria-hidden="true" tabindex="-1"></a>  policy <span class="op">=</span> <span class="fu">file</span>(<span class="st">&quot;${path.module}/AWSLoadBalancerControllerPolicy.json&quot;</span>)</span>
+<span id="cb119-24"><a href="infrastructure-1.html#cb119-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb119-25"><a href="infrastructure-1.html#cb119-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-26"><a href="infrastructure-1.html#cb119-26" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;helm_release&quot;</span> <span class="st">&quot;aws-load-balancer-controller&quot;</span> {</span>
+<span id="cb119-27"><a href="infrastructure-1.html#cb119-27" aria-hidden="true" tabindex="-1"></a>  name             <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">helm_chart_name</span></span>
+<span id="cb119-28"><a href="infrastructure-1.html#cb119-28" aria-hidden="true" tabindex="-1"></a>  namespace        <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">namespace</span></span>
+<span id="cb119-29"><a href="infrastructure-1.html#cb119-29" aria-hidden="true" tabindex="-1"></a>  chart            <span class="op">=</span> <span class="st">&quot;aws-load-balancer-controller&quot;</span></span>
+<span id="cb119-30"><a href="infrastructure-1.html#cb119-30" aria-hidden="true" tabindex="-1"></a>  create_namespace <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb119-31"><a href="infrastructure-1.html#cb119-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-32"><a href="infrastructure-1.html#cb119-32" aria-hidden="true" tabindex="-1"></a>  repository <span class="op">=</span> <span class="st">&quot;https://aws.github.io/eks-charts&quot;</span></span>
+<span id="cb119-33"><a href="infrastructure-1.html#cb119-33" aria-hidden="true" tabindex="-1"></a>  version    <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">helm_chart_version</span></span>
+<span id="cb119-34"><a href="infrastructure-1.html#cb119-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-35"><a href="infrastructure-1.html#cb119-35" aria-hidden="true" tabindex="-1"></a>  values <span class="op">=</span> [<span class="fu">yamlencode</span>({</span>
+<span id="cb119-36"><a href="infrastructure-1.html#cb119-36" aria-hidden="true" tabindex="-1"></a>    clusterName <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">cluster_name</span></span>
+<span id="cb119-37"><a href="infrastructure-1.html#cb119-37" aria-hidden="true" tabindex="-1"></a>    image <span class="op">=</span> {</span>
+<span id="cb119-38"><a href="infrastructure-1.html#cb119-38" aria-hidden="true" tabindex="-1"></a>      tag <span class="op">=</span> <span class="st">&quot;v2.4.2&quot;</span></span>
+<span id="cb119-39"><a href="infrastructure-1.html#cb119-39" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb119-40"><a href="infrastructure-1.html#cb119-40" aria-hidden="true" tabindex="-1"></a>    serviceAccount <span class="op">=</span> {</span>
+<span id="cb119-41"><a href="infrastructure-1.html#cb119-41" aria-hidden="true" tabindex="-1"></a>      name <span class="op">=</span> <span class="st">&quot;${local.aws_load_balancer_controller_service_account_name}&quot;</span></span>
+<span id="cb119-42"><a href="infrastructure-1.html#cb119-42" aria-hidden="true" tabindex="-1"></a>      annotations <span class="op">=</span> {</span>
+<span id="cb119-43"><a href="infrastructure-1.html#cb119-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;eks.amazonaws.com/role-arn&quot;</span> <span class="op">=</span> <span class="st">&quot;arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${local.aws_load_balancer_controller_service_account_role_name}&quot;</span></span>
+<span id="cb119-44"><a href="infrastructure-1.html#cb119-44" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb119-45"><a href="infrastructure-1.html#cb119-45" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb119-46"><a href="infrastructure-1.html#cb119-46" aria-hidden="true" tabindex="-1"></a>  })]</span>
+<span id="cb119-47"><a href="infrastructure-1.html#cb119-47" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="external-dns" class="section level4 hasAnchor" number="8.2.3.2">
+<h4><span class="header-section-number">8.2.3.2</span> External DNS<a href="infrastructure-1.html#external-dns" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>External DNS is a Kubernetes add-on that automates the creation and management of DNS records for Kubernetes services. It is particularly useful when services are exposed to the internet through the ALB or any other Ingress Controller. When an Ingress resource is created that defines how external traffic should be routed to services within the EKS cluster, External DNS automatically updates the DNS provider with the corresponding DNS records (in our case this is Route 53 in AWS). Automatically configuring DNS records ensures that the records are always up-to-date, which helps maintain consistency and reliability in the DNS configuration, and users can access the Kubernetes services using user-friendly domain names rather than relying on IP addresses.</p>
+<p>The code is structured similar to the ALB and defines local variables first, followed by creating a service account to interact with AWS resources. The service account, its role with OIDC and the policy with relevant permissions are created by the <code>external_dns_controller_role</code> module same to as we know it from previous implementations. The policy allows the external DNS controller to operate within the specified AWS Route 53 hosted zone, such as changing resource record sets, and listing hosted zones and resource record sets.</p>
+<p>Finally, the Helm is used to to deploy the external DNS controller as a Kubernetes resource. The Helm release configuration includes specifying the previously create service account, the IAM <code>role-arn</code> associated with it, the <code>aws.region</code> where the Route 53 hosted zone exists, and a <code>domainFilter</code> which filters to a specific domain provided by us.</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb120-1"><a href="infrastructure-1.html#cb120-1" aria-hidden="true" tabindex="-1"></a>locals {</span>
+<span id="cb120-2"><a href="infrastructure-1.html#cb120-2" aria-hidden="true" tabindex="-1"></a>  external_dns_service_account_role_name <span class="op">=</span> <span class="st">&quot;external-dns-role&quot;</span></span>
+<span id="cb120-3"><a href="infrastructure-1.html#cb120-3" aria-hidden="true" tabindex="-1"></a>  external_dns_service_account_name      <span class="op">=</span> <span class="st">&quot;external-dns-sa&quot;</span></span>
+<span id="cb120-4"><a href="infrastructure-1.html#cb120-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb120-5"><a href="infrastructure-1.html#cb120-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb120-6"><a href="infrastructure-1.html#cb120-6" aria-hidden="true" tabindex="-1"></a>data <span class="st">&quot;aws_caller_identity&quot;</span> <span class="st">&quot;current&quot;</span> {}</span>
+<span id="cb120-7"><a href="infrastructure-1.html#cb120-7" aria-hidden="true" tabindex="-1"></a>data <span class="st">&quot;aws_region&quot;</span> <span class="st">&quot;current&quot;</span> {} # </span>
+<span id="cb120-8"><a href="infrastructure-1.html#cb120-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb120-9"><a href="infrastructure-1.html#cb120-9" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;external_dns_controller_role&quot;</span> {</span>
+<span id="cb120-10"><a href="infrastructure-1.html#cb120-10" aria-hidden="true" tabindex="-1"></a>  source                        <span class="op">=</span> <span class="st">&quot;terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc&quot;</span></span>
+<span id="cb120-11"><a href="infrastructure-1.html#cb120-11" aria-hidden="true" tabindex="-1"></a>  version                       <span class="op">=</span> <span class="st">&quot;5.11.1&quot;</span></span>
+<span id="cb120-12"><a href="infrastructure-1.html#cb120-12" aria-hidden="true" tabindex="-1"></a>  create_role                   <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb120-13"><a href="infrastructure-1.html#cb120-13" aria-hidden="true" tabindex="-1"></a>  role_name                     <span class="op">=</span> local<span class="op">.</span><span class="at">external_dns_service_account_role_name</span></span>
+<span id="cb120-14"><a href="infrastructure-1.html#cb120-14" aria-hidden="true" tabindex="-1"></a>  provider_url                  <span class="op">=</span> <span class="fu">replace</span>(<span class="kw">var</span><span class="op">.</span><span class="at">cluster_oidc_issuer_url</span><span class="op">,</span> <span class="st">&quot;https://&quot;</span><span class="op">,</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb120-15"><a href="infrastructure-1.html#cb120-15" aria-hidden="true" tabindex="-1"></a>  role_policy_arns              <span class="op">=</span> [aws_iam_policy<span class="op">.</span><span class="at">external_dns_controller_sa</span><span class="op">.</span><span class="at">arn</span>]</span>
+<span id="cb120-16"><a href="infrastructure-1.html#cb120-16" aria-hidden="true" tabindex="-1"></a>  oidc_fully_qualified_subjects <span class="op">=</span> [<span class="st">&quot;system:serviceaccount:${var.namespace}:${local.external_dns_service_account_name}&quot;</span>]</span>
+<span id="cb120-17"><a href="infrastructure-1.html#cb120-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb120-18"><a href="infrastructure-1.html#cb120-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb120-19"><a href="infrastructure-1.html#cb120-19" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_iam_policy&quot;</span> <span class="st">&quot;external_dns_controller_sa&quot;</span> {</span>
+<span id="cb120-20"><a href="infrastructure-1.html#cb120-20" aria-hidden="true" tabindex="-1"></a>  name        <span class="op">=</span> local<span class="op">.</span><span class="at">external_dns_service_account_name</span></span>
+<span id="cb120-21"><a href="infrastructure-1.html#cb120-21" aria-hidden="true" tabindex="-1"></a>  description <span class="op">=</span> <span class="st">&quot;EKS ebs-csi-controller policy for cluster ${var.cluster_name}&quot;</span></span>
+<span id="cb120-22"><a href="infrastructure-1.html#cb120-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb120-23"><a href="infrastructure-1.html#cb120-23" aria-hidden="true" tabindex="-1"></a>  policy <span class="op">=</span> <span class="fu">jsonencode</span>({</span>
+<span id="cb120-24"><a href="infrastructure-1.html#cb120-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Version&quot;</span> <span class="op">:</span> <span class="st">&quot;2012-10-17&quot;</span><span class="op">,</span></span>
+<span id="cb120-25"><a href="infrastructure-1.html#cb120-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Statement&quot;</span> <span class="op">:</span> [</span>
+<span id="cb120-26"><a href="infrastructure-1.html#cb120-26" aria-hidden="true" tabindex="-1"></a>      {</span>
+<span id="cb120-27"><a href="infrastructure-1.html#cb120-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Effect&quot;</span> <span class="op">:</span> <span class="st">&quot;Allow&quot;</span><span class="op">,</span></span>
+<span id="cb120-28"><a href="infrastructure-1.html#cb120-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Action&quot;</span> <span class="op">:</span> [</span>
+<span id="cb120-29"><a href="infrastructure-1.html#cb120-29" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;route53:ChangeResourceRecordSets&quot;</span></span>
+<span id="cb120-30"><a href="infrastructure-1.html#cb120-30" aria-hidden="true" tabindex="-1"></a>        ]<span class="op">,</span></span>
+<span id="cb120-31"><a href="infrastructure-1.html#cb120-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Resource&quot;</span> <span class="op">:</span> [</span>
+<span id="cb120-32"><a href="infrastructure-1.html#cb120-32" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;arn:aws:route53:::hostedzone/*&quot;</span></span>
+<span id="cb120-33"><a href="infrastructure-1.html#cb120-33" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb120-34"><a href="infrastructure-1.html#cb120-34" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb120-35"><a href="infrastructure-1.html#cb120-35" aria-hidden="true" tabindex="-1"></a>      {</span>
+<span id="cb120-36"><a href="infrastructure-1.html#cb120-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Effect&quot;</span> <span class="op">:</span> <span class="st">&quot;Allow&quot;</span><span class="op">,</span></span>
+<span id="cb120-37"><a href="infrastructure-1.html#cb120-37" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Action&quot;</span> <span class="op">:</span> [</span>
+<span id="cb120-38"><a href="infrastructure-1.html#cb120-38" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;route53:ListHostedZones&quot;</span><span class="op">,</span></span>
+<span id="cb120-39"><a href="infrastructure-1.html#cb120-39" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;route53:ListResourceRecordSets&quot;</span></span>
+<span id="cb120-40"><a href="infrastructure-1.html#cb120-40" aria-hidden="true" tabindex="-1"></a>        ]<span class="op">,</span></span>
+<span id="cb120-41"><a href="infrastructure-1.html#cb120-41" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Resource&quot;</span> <span class="op">:</span> [</span>
+<span id="cb120-42"><a href="infrastructure-1.html#cb120-42" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;*&quot;</span></span>
+<span id="cb120-43"><a href="infrastructure-1.html#cb120-43" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb120-44"><a href="infrastructure-1.html#cb120-44" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb120-45"><a href="infrastructure-1.html#cb120-45" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb120-46"><a href="infrastructure-1.html#cb120-46" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb120-47"><a href="infrastructure-1.html#cb120-47" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb120-48"><a href="infrastructure-1.html#cb120-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb120-49"><a href="infrastructure-1.html#cb120-49" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;helm_release&quot;</span> <span class="st">&quot;external_dns&quot;</span> {</span>
+<span id="cb120-50"><a href="infrastructure-1.html#cb120-50" aria-hidden="true" tabindex="-1"></a>  name             <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">name</span></span>
+<span id="cb120-51"><a href="infrastructure-1.html#cb120-51" aria-hidden="true" tabindex="-1"></a>  namespace        <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">namespace</span></span>
+<span id="cb120-52"><a href="infrastructure-1.html#cb120-52" aria-hidden="true" tabindex="-1"></a>  chart            <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">helm_chart_name</span></span>
+<span id="cb120-53"><a href="infrastructure-1.html#cb120-53" aria-hidden="true" tabindex="-1"></a>  create_namespace <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb120-54"><a href="infrastructure-1.html#cb120-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb120-55"><a href="infrastructure-1.html#cb120-55" aria-hidden="true" tabindex="-1"></a>  repository <span class="op">=</span> <span class="st">&quot;https://charts.bitnami.com/bitnami&quot;</span></span>
+<span id="cb120-56"><a href="infrastructure-1.html#cb120-56" aria-hidden="true" tabindex="-1"></a>  version    <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">helm_chart_version</span></span>
+<span id="cb120-57"><a href="infrastructure-1.html#cb120-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb120-58"><a href="infrastructure-1.html#cb120-58" aria-hidden="true" tabindex="-1"></a>  values <span class="op">=</span> [<span class="fu">yamlencode</span>({</span>
+<span id="cb120-59"><a href="infrastructure-1.html#cb120-59" aria-hidden="true" tabindex="-1"></a>    serviceAccount <span class="op">=</span> {</span>
+<span id="cb120-60"><a href="infrastructure-1.html#cb120-60" aria-hidden="true" tabindex="-1"></a>      create <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb120-61"><a href="infrastructure-1.html#cb120-61" aria-hidden="true" tabindex="-1"></a>      name   <span class="op">=</span> <span class="st">&quot;${local.external_dns_service_account_name}&quot;</span></span>
+<span id="cb120-62"><a href="infrastructure-1.html#cb120-62" aria-hidden="true" tabindex="-1"></a>      annotations <span class="op">=</span> {</span>
+<span id="cb120-63"><a href="infrastructure-1.html#cb120-63" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;eks.amazonaws.com/role-arn&quot;</span> <span class="op">=</span> <span class="st">&quot;arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${local.external_dns_service_account_role_name}&quot;</span></span>
+<span id="cb120-64"><a href="infrastructure-1.html#cb120-64" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb120-65"><a href="infrastructure-1.html#cb120-65" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb120-66"><a href="infrastructure-1.html#cb120-66" aria-hidden="true" tabindex="-1"></a>    aws <span class="op">=</span> {</span>
+<span id="cb120-67"><a href="infrastructure-1.html#cb120-67" aria-hidden="true" tabindex="-1"></a>      zoneType <span class="op">=</span> <span class="st">&quot;public&quot;</span></span>
+<span id="cb120-68"><a href="infrastructure-1.html#cb120-68" aria-hidden="true" tabindex="-1"></a>      region   <span class="op">=</span> <span class="st">&quot;${data.aws_region.current.name}&quot;</span></span>
+<span id="cb120-69"><a href="infrastructure-1.html#cb120-69" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb120-70"><a href="infrastructure-1.html#cb120-70" aria-hidden="true" tabindex="-1"></a>    policy <span class="op">=</span> <span class="st">&quot;sync&quot;</span></span>
+<span id="cb120-71"><a href="infrastructure-1.html#cb120-71" aria-hidden="true" tabindex="-1"></a>    domainFilter <span class="op">=</span> [</span>
+<span id="cb120-72"><a href="infrastructure-1.html#cb120-72" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;${var.domain_name}&quot;</span></span>
+<span id="cb120-73"><a href="infrastructure-1.html#cb120-73" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb120-74"><a href="infrastructure-1.html#cb120-74" aria-hidden="true" tabindex="-1"></a>    provider   <span class="op">=</span> <span class="st">&quot;aws&quot;</span></span>
+<span id="cb120-75"><a href="infrastructure-1.html#cb120-75" aria-hidden="true" tabindex="-1"></a>    txtOwnerId <span class="op">=</span> <span class="st">&quot;${var.name}&quot;</span></span>
+<span id="cb120-76"><a href="infrastructure-1.html#cb120-76" aria-hidden="true" tabindex="-1"></a>  })]</span>
+<span id="cb120-77"><a href="infrastructure-1.html#cb120-77" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+</div>
+<div id="relational-database-service" class="section level3 hasAnchor" number="8.2.4">
+<h3><span class="header-section-number">8.2.4</span> Relational Database Service<a href="infrastructure-1.html#relational-database-service" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Amazon RDS (Relational Database Service) instance is provisioned by the <code>aws_db_instance</code> resource. It configures the instance with the specified settings, such as <code>allocated_storage</code>, <code>storage_type</code>, <code>engine</code>, <code>db_name</code>, <code>username</code>, and <code>password</code>, etc. All these parameters are provided whenever the module is invoked, e.g. in the Airflow or Mlflow modules.. The <code>skip_final_snapshot</code> set to true states that no final DB snapshot will be created when the instance is deleted.</p>
+<p>The resource <code>aws_db_subnet_group</code> creates an RDS subnet group with the name <code>"vpc-subnet-group-${local.rds_name}"</code>. It associates the RDS instance with the private subnets specified in the <code>VPC</code> module, and is used to define the subnets in which the RDS instance can be launched. Similar to the subnet group, the RDS instance uses an own security group. The security group <code>aws_security_group</code> is attached to the RDS instance. It specifies <code>ingress</code> (inbound)) and <code>egress</code> (outbound) rules to control network traffic. In this case, it allows inbound access on the specified port used by the RDS engine (5432 for PostgreSQL) from the CIDR blocks specified in the <code>private_subnets_cidr_blocks</code>, and allows all outbound traffic (<code>0.0.0.0/0</code>) from the RDS instance.</p>
+<p>The <code>rds</code> module is not necessarily needed to run a kubernetes cluster properly. It is merely an extension of the cluster and is needed to store relevant data of the tools used, such as airflow or mlflow. The module is thus called directly from the own airflow and mlflow modules.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb121-1"><a href="infrastructure-1.html#cb121-1" aria-hidden="true" tabindex="-1"></a>locals {</span>
+<span id="cb121-2"><a href="infrastructure-1.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  rds_name           <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">rds_name</span></span>
+<span id="cb121-3"><a href="infrastructure-1.html#cb121-3" aria-hidden="true" tabindex="-1"></a>  rds_engine         <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">rds_engine</span></span>
+<span id="cb121-4"><a href="infrastructure-1.html#cb121-4" aria-hidden="true" tabindex="-1"></a>  rds_engine_version <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">rds_engine_version</span></span>
+<span id="cb121-5"><a href="infrastructure-1.html#cb121-5" aria-hidden="true" tabindex="-1"></a>  rds_port           <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">rds_port</span></span>
+<span id="cb121-6"><a href="infrastructure-1.html#cb121-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb121-7"><a href="infrastructure-1.html#cb121-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-8"><a href="infrastructure-1.html#cb121-8" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_db_subnet_group&quot;</span> <span class="st">&quot;default&quot;</span> {</span>
+<span id="cb121-9"><a href="infrastructure-1.html#cb121-9" aria-hidden="true" tabindex="-1"></a>  name       <span class="op">=</span> <span class="st">&quot;vpc-subnet-group-${local.rds_name}&quot;</span></span>
+<span id="cb121-10"><a href="infrastructure-1.html#cb121-10" aria-hidden="true" tabindex="-1"></a>  subnet_ids <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">private_subnets</span></span>
+<span id="cb121-11"><a href="infrastructure-1.html#cb121-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb121-12"><a href="infrastructure-1.html#cb121-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-13"><a href="infrastructure-1.html#cb121-13" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_db_instance&quot;</span> <span class="st">&quot;rds_instance&quot;</span> {</span>
+<span id="cb121-14"><a href="infrastructure-1.html#cb121-14" aria-hidden="true" tabindex="-1"></a>  allocated_storage      <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">max_allocated_storage</span></span>
+<span id="cb121-15"><a href="infrastructure-1.html#cb121-15" aria-hidden="true" tabindex="-1"></a>  storage_type           <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">storage_type</span></span>
+<span id="cb121-16"><a href="infrastructure-1.html#cb121-16" aria-hidden="true" tabindex="-1"></a>  engine                 <span class="op">=</span> local<span class="op">.</span><span class="at">rds_engine</span></span>
+<span id="cb121-17"><a href="infrastructure-1.html#cb121-17" aria-hidden="true" tabindex="-1"></a>  engine_version         <span class="op">=</span> local<span class="op">.</span><span class="at">rds_engine_version</span></span>
+<span id="cb121-18"><a href="infrastructure-1.html#cb121-18" aria-hidden="true" tabindex="-1"></a>  instance_class         <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">rds_instance_class</span></span>
+<span id="cb121-19"><a href="infrastructure-1.html#cb121-19" aria-hidden="true" tabindex="-1"></a>  db_name                <span class="op">=</span> <span class="st">&quot;${local.rds_name}_db&quot;</span></span>
+<span id="cb121-20"><a href="infrastructure-1.html#cb121-20" aria-hidden="true" tabindex="-1"></a>  username               <span class="op">=</span> <span class="st">&quot;${local.rds_name}_admin&quot;</span></span>
+<span id="cb121-21"><a href="infrastructure-1.html#cb121-21" aria-hidden="true" tabindex="-1"></a>  password               <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">rds_password</span></span>
+<span id="cb121-22"><a href="infrastructure-1.html#cb121-22" aria-hidden="true" tabindex="-1"></a>  identifier             <span class="op">=</span> <span class="st">&quot;${local.rds_name}-${local.rds_engine}&quot;</span></span>
+<span id="cb121-23"><a href="infrastructure-1.html#cb121-23" aria-hidden="true" tabindex="-1"></a>  port                   <span class="op">=</span> local<span class="op">.</span><span class="at">rds_port</span></span>
+<span id="cb121-24"><a href="infrastructure-1.html#cb121-24" aria-hidden="true" tabindex="-1"></a>  vpc_security_group_ids <span class="op">=</span> [aws_security_group<span class="op">.</span><span class="at">rds_sg</span><span class="op">.</span><span class="at">id</span>]</span>
+<span id="cb121-25"><a href="infrastructure-1.html#cb121-25" aria-hidden="true" tabindex="-1"></a>  db_subnet_group_name   <span class="op">=</span> aws_db_subnet_group<span class="op">.</span><span class="at">default</span><span class="op">.</span><span class="at">name</span></span>
+<span id="cb121-26"><a href="infrastructure-1.html#cb121-26" aria-hidden="true" tabindex="-1"></a>  skip_final_snapshot    <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb121-27"><a href="infrastructure-1.html#cb121-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb121-28"><a href="infrastructure-1.html#cb121-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-29"><a href="infrastructure-1.html#cb121-29" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_security_group&quot;</span> <span class="st">&quot;rds_sg&quot;</span> {</span>
+<span id="cb121-30"><a href="infrastructure-1.html#cb121-30" aria-hidden="true" tabindex="-1"></a>  name   <span class="op">=</span> <span class="st">&quot;${local.rds_name}-${local.rds_engine}-sg&quot;</span></span>
+<span id="cb121-31"><a href="infrastructure-1.html#cb121-31" aria-hidden="true" tabindex="-1"></a>  vpc_id <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">vpc_id</span></span>
+<span id="cb121-32"><a href="infrastructure-1.html#cb121-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb121-33"><a href="infrastructure-1.html#cb121-33" aria-hidden="true" tabindex="-1"></a>  ingress {</span>
+<span id="cb121-34"><a href="infrastructure-1.html#cb121-34" aria-hidden="true" tabindex="-1"></a>    description <span class="op">=</span> <span class="st">&quot;Enable postgres access&quot;</span></span>
+<span id="cb121-35"><a href="infrastructure-1.html#cb121-35" aria-hidden="true" tabindex="-1"></a>    from_port   <span class="op">=</span> local<span class="op">.</span><span class="at">rds_port</span></span>
+<span id="cb121-36"><a href="infrastructure-1.html#cb121-36" aria-hidden="true" tabindex="-1"></a>    to_port     <span class="op">=</span> local<span class="op">.</span><span class="at">rds_port</span></span>
+<span id="cb121-37"><a href="infrastructure-1.html#cb121-37" aria-hidden="true" tabindex="-1"></a>    protocol    <span class="op">=</span> <span class="st">&quot;tcp&quot;</span></span>
+<span id="cb121-38"><a href="infrastructure-1.html#cb121-38" aria-hidden="true" tabindex="-1"></a>    cidr_blocks <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">private_subnets_cidr_blocks</span></span>
+<span id="cb121-39"><a href="infrastructure-1.html#cb121-39" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb121-40"><a href="infrastructure-1.html#cb121-40" aria-hidden="true" tabindex="-1"></a>  egress {</span>
+<span id="cb121-41"><a href="infrastructure-1.html#cb121-41" aria-hidden="true" tabindex="-1"></a>    from_port   <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb121-42"><a href="infrastructure-1.html#cb121-42" aria-hidden="true" tabindex="-1"></a>    to_port     <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb121-43"><a href="infrastructure-1.html#cb121-43" aria-hidden="true" tabindex="-1"></a>    protocol    <span class="op">=</span> <span class="st">&quot;-1&quot;</span></span>
+<span id="cb121-44"><a href="infrastructure-1.html#cb121-44" aria-hidden="true" tabindex="-1"></a>    cidr_blocks <span class="op">=</span> [<span class="st">&quot;0.0.0.0/0&quot;</span>]</span>
+<span id="cb121-45"><a href="infrastructure-1.html#cb121-45" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb121-46"><a href="infrastructure-1.html#cb121-46" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="root-directory-module.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="modules-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": true,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/seblum/kubernetes-training/edit/master/08.2-Deployment-Infrastructure_Essentials.md",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
