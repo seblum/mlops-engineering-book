@@ -425,17 +425,16 @@ Count can also be used as a form of a conditional if statement. This is possible
 <span id="cb107-5"><a href="additional-tips-tricks.html#cb107-5" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;short_upper_names&quot;</span> {</span>
 <span id="cb107-6"><a href="additional-tips-tricks.html#cb107-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value</span> = [for name in var.names : upper<span class="er">(</span><span class="ex">name</span><span class="kw">)</span> <span class="cf">if</span> <span class="ex">length</span><span class="er">(</span><span class="ex">name</span><span class="kw">)</span> <span class="op">&lt;</span> 5]</span>
 <span id="cb107-7"><a href="additional-tips-tricks.html#cb107-7" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
-<p><img src="images/06-Terraform/additionals_for_on_list.png" /></p>
+<p><img src="images/06-Terraform/additionals_for_each_on_list.png" /></p>
 <p>Using for to loop over lists and maps within a string can be used similarly. This allows us to use control statements directly withing strings using a syntax similar to string interpolation.</p>
 <div class="sourceCode" id="cb108"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb108-1"><a href="additional-tips-tricks.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;for_directive&quot;</span> {  </span>
 <span id="cb108-2"><a href="additional-tips-tricks.html#cb108-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value</span> = <span class="st">&quot;%{ for name in var.names }</span><span class="va">${name}</span><span class="st">, %{ endfor }&quot;</span>  </span>
 <span id="cb108-3"><a href="additional-tips-tricks.html#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
-<p><img src="images/06-Terraform/additionals_for_on_string.png" /></p>
+<p><img src="images/06-Terraform/additionals_for_each_on_string.png" /></p>
 </div>
 <div id="workspaces" class="section level3 hasAnchor" number="6.4.4">
 <h3><span class="header-section-number">6.4.4</span> Workspaces<a href="additional-tips-tricks.html#workspaces" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Terraform workspaces allow us to keep multiple state files for the same project. When we run Terraform for the first time in a project, the generated state file will go into the <em>default</em> workspace. Later, we can create a new workspace with the <code>terraform workspace new</code> command, optionally supplying an existing state file as a parameter.</p>
-<p><img src="images/06-Terraform/additionals_workspaces.png" /></p>
 
 </div>
 </div>

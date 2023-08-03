@@ -443,7 +443,7 @@ The example below shows how to do this, and uses the <code>mlflow.client.MLflowC
 <span id="cb31-2"><a href="core-components-1.html#cb31-2" aria-hidden="true" tabindex="-1"></a>mlflow_run <span class="op">=</span> mlflow.search_runs([current_experiment[<span class="st">&#39;experiment_id&#39;</span>]])</span>
 <span id="cb31-3"><a href="core-components-1.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;MLflow_run: </span><span class="sc">{</span>mlflow_run<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
 <div class="figure">
-<img src="images/06-MLflow/MLflow_cli_interface-tracking.png" alt="" />
+<img src="images/04-MLFlow/MLflow_cli_interface-tracking.png" alt="" />
 <p class="caption">MLflow Model Tracking CLI Run Overview</p>
 </div>
 <p>Yet, viewing all the results in the web interface of MLflow gives a much better overview. By default, the tracking API writes the data to the local filesystem of the machine it’s running on under a <code>./mlruns</code> directory. This directory can be accessed by the MLflow’s Tracking web interface by running <code>MLflow ui</code> via the command line. The web interface can be viewed in the browser under <a href="http://localhost:5000" class="uri">http://localhost:5000</a> (The port: 5000 is the MLflow default). The metrics dashboard of a run looks like the following:</p>
