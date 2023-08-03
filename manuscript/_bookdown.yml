@@ -43,6 +43,7 @@ rmd_files: ["index.Rmd",
             "09.2-Deployment-Usage_Pipeline-Workflow.md",
             "09.3-Deployment-Usage_Building-Model-Pipeline.md",
             "09.4-Deployment-Usage_Model-Serving.md",
+            "10-Acknowledgements.Rmd"
             ]
 
 
