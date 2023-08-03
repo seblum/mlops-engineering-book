@@ -1,6 +1,6 @@
-# MLOps Engineering with Airflow and MLflow on Kubernetes
+# ML Platform Design
 
-MLOps platforms can be set up in various ways to apply MLOps practices to the machine learning workflow.
+ML platforms can be set up in various ways to apply MLOps practices to the machine learning workflow.
 (1) SaaS tools provide an integrated development and management experience, with an aim to offer an end-to-end process. (2) Custom-made platforms offer high flexibility and can be tailored to specific needs. However, integrating multiple different services requires significant engineering effort. (3) Many cloud providers offer a mix of SaaS and custom-tailored platforms, providing a relatively well-integrated experience while remaining open enough to integrate other services.
 
  This project involves building a custom-tailored MLOps platform focused on MLOps engineering, as the entire infrastructure will be set up from scratch. An exemplary MLOps platform will be developed using Airflow and MLflow for management during the machine learning lifecycle and JupyterHub to provide a development environment. 
