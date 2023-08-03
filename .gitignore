@@ -6,3 +6,5 @@
 *.DS_Store
 ./manuscript/docs/*
 manuscript/docs
+./manuscript/svg-inkscape/*
+manuscript/svg-inkscape

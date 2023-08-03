@@ -113,7 +113,7 @@ output "short_upper_names" {
 }
 ```
 
-![](images/06-Terraform/additionals_for_on_list.png) 
+![](images/06-Terraform/additionals_for_each_on_list.png) 
 
 Using for to loop over lists and maps within a string can be used similarly. This allows us to use control statements directly withing strings using a syntax similar to string interpolation.
 
@@ -123,12 +123,11 @@ output "for_directive" {
 }
 ```
 
-![](images/06-Terraform/additionals_for_on_string.png) 
+![](images/06-Terraform/additionals_for_each_on_string.png) 
 
 
 ### Workspaces
 
 Terraform workspaces allow us to keep multiple state files for the same project. When we run Terraform for the first time in a project, the generated state file will go into the *default* workspace. Later, we can create a new workspace with the `terraform workspace new` command, optionally supplying an existing state file as a parameter.
 
-![](images/06-Terraform/additionals_workspaces.png)
 

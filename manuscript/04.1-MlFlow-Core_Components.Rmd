@@ -126,7 +126,7 @@ mlflow_run = mlflow.search_runs([current_experiment['experiment_id']])
 print(f"MLflow_run: {mlflow_run}")
 ```
 
-![MLflow Model Tracking CLI Run Overview](images/06-MLflow/MLflow_cli_interface-tracking.png)
+![MLflow Model Tracking CLI Run Overview](images/04-MLflow/MLflow_cli_interface-tracking.png)
 
 Yet, viewing all the results in the web interface of MLflow gives a much better overview. By default, the tracking API writes the data to the local filesystem of the machine it’s running on under a `./mlruns` directory. This directory can be accessed by the MLflow’s Tracking web interface by running `MLflow ui` via the command line. The web interface can be viewed in the browser under http://localhost:5000 (The port: 5000 is the MLflow default). The metrics dashboard of a run looks like the following:
 

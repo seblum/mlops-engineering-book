@@ -14,9 +14,29 @@ bookdown::gitbook:
       # after: |
       #   <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     edit: https://github.com/seblum/kubernetes-training/edit/master/%s
+bookdown::pdf_book:
+  includes:
+    in_header: latex/preamble.tex
+    #before_body: latex/before_body.tex
+    #after_body: latex/after_body.tex
+  keep_tex: yes
+  latex_engine: xelatex
+  dev: "cairo_pdf"
+  pandoc_args: --top-level-division=chapter
+  toc_depth: 2
+  toc_unnumbered: no
+  shell-escape: yes
+  quote_footer: ["\\VA{", "}{}"]
+  lot: no
+  lof: no
+bookdown::epub_book:
+  dev: svglite
+  cover_image: ../cover/Bookcover_IML_KDP_v2/cutout.png
+  pandoc_args: [ "--mathml" ]
 # bookdown::pdf_book:
+#   #split_by: section
 #   includes:
-#     in_header: preamble.tex
+#      in_header: preamble.tex
 #   latex_engine: xelatex
 #   citation_package: natbib
 #   keep_tex: yes
