@@ -5,7 +5,7 @@ While MLflow can be run locally for your personal model implementation, it is us
 
 The MLflow client can interface with a variety of backend and artifact storage configurations. The official [MLflow documentation](https://mlflow.org/docs/latest/tracking.html#how-runs-and-artifacts-are-recorded) outlines several detailed configurations. The example below depicts the main interaction between the different architectural components of a remote MLflow Tracking Server, a Postgres database for backend storage, and an S3 bucket for artifact storage.
 
-![MLflow Architecture Diagram](images/04-MLflow/architecture_mlflow.drawio.svg)
+![MLflow Architecture Diagram](images/04-MLflow/architecture_mlflow.drawio.svg){ width=100% }
 
 
 ### MLflow Tracking Server

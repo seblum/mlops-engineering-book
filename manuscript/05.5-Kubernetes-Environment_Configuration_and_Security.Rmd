@@ -12,6 +12,7 @@ Namespaces allow to organize resources in the cluster, which makes it more overs
 
 Of course, there is also the possibility of creating ones own namespace and using it by attaching a e.g. Deployment to it, such as seen in the following example.
 
+\footnotesize
 ```yaml
 # namespace.yaml
 apiVersion: v1
@@ -44,6 +45,7 @@ spec:
         ports:
         - containerPort: 5000
 ```
+\normalsize
 
 When creating a Service, a corresponding DNS entry is created as well, such as seen in the Services section when calling `backendflask` directly. This entry is created according to the namespace which is denoted to the service. This can be useful when using the same configuration across multiple namespaces such as development, staging, and production. It is also possible to reach across namespaces. One needs to use the fully qualified domain name (FQDN) tough, such as `<service-name>.<namespace-name>.svc.cluster.local`.
 
@@ -56,6 +58,7 @@ Annotations are an unstructured key-value mapping stored with a resource that ma
 
 Selectors are used to filter K8s objects based on a set of labels. A selector basically simply uses a boolean language to select pods. The selector matches the labels under a an all or nothing principle, meaning everything specified in the selector must be fulfilled by the labels. However, this works not the other way around. If there are multiple labels specified and the selector matches only one of them, the selector will match the ressource itself. How a selector matches the labels can be tested using the `kubectl` commands as seen below.
 
+\footnotesize
 ```bash
 # Show all pods including their labels
 kubectl get pods --show-labels
@@ -69,10 +72,12 @@ kubectl get pods -l key=value
 # or also look for multiple
 kubectl get pods -l 'key in (value1, value2)'
 ```
+\normalsize
 
 When using ReplicaSets in a Deployment, their selector matches the labels to a specific pod (check e.g. the section describing Deployments). Any Pods matching the label of the selector will be created according to the specified replicas. Of course, there can also be multiple labels specified.
 The same principle accounts when working with Services. Below example shows two different Pods and two NodePort services. Each service matches to a Pod based on their selector-label relationship. Have a look at their specific settings using `kubectl`. The Nodeport Service *labels-and-selectors-2* has no endpoints, as it is a all-or-none-principle and none of the created Pods matches the label `environment=dev`. In contrast, even though the Pod *cat-v1* has multiple labels specified `app: cat-v1; version: one`, the NodePort Service *labels-and-selectors* is linked to it. It is also linked to the second Pod *cat-v2*.
 
+\footnotesize
 ```yaml
 # labels.yaml
 apiVersion: v1
@@ -131,7 +136,7 @@ spec:
   - port: 80
     targetPort: 5000
 ```
-
+\normalsize
 
 ### ConfigMaps
 
@@ -140,6 +145,7 @@ Besides allow for an easy change of variables, another benefit of using ConfigMa
 
 The following example creates two different ConfigMaps. The first one includes three environment variables as data. The second one include a more complex configuration of an nginx server.
 
+\footnotesize
 ```yaml
 # configmaps.yaml
 apiVersion: v1
@@ -180,9 +186,11 @@ data:
         }
     }
 ```
+\normalsize
 
 Additionally, a Deployment is created which uses both ConfigMaps. A ConfigMap is declared under `spec.volumes` as well. It is also possible to state a reference to both ConfigMaps simultaneously. The Deployment creates two containers. The first container mounts each ConfigMap as a Volume. Container two uses environment variables to access and configure the key-value pairs of the ConfigMaps and store them on the container.
 
+\footnotesize
 ```yaml
 # configmaps_deployment.yaml
 apiVersion: apps/v1
@@ -277,9 +285,11 @@ spec:
                 name: nginx-conf
                 key: nginx.conf  
 ```
+\normalsize
 
 We can check for the attached configs by accessing the containers via the shell, similar to what we did in the section about Volumes. In the container *config-map-volume*, the configs are saved under the respective `mountPath` of the volume. In the *config-map-env*, the configs are stored as environment variables. 
 
+\footnotesize
 ```bash
 # get in container -volume or -env
 kubectl exec -it <config-map-name> -c >container-name< -- sh
@@ -289,7 +299,7 @@ ls
 # print environment variables
 printenv
 ```
-
+\normalsize
 
 ### Secrets
 
@@ -297,6 +307,7 @@ Secrets, as the name suggests, store and manage sensitive information. However, 
 
 It is possible to create secrets using imperative approach as shown below.
 
+\footnotesize
 ```bash
 # create the two secrets db-password and api-token
 kubectl create secret generic mysecret-from-cli --from-literal=db-password=123 --from-literal=api-token=token
@@ -310,9 +321,11 @@ echo "super-save-password" > secret
 # create a secret from file
 kubectl create secret generic mysecret-from-file --from-file=secret
 ```
+\normalsize
 
 Similar to ConfigMaps, secrets are accessed via an environment variable or a volume. 
 
+\footnotesize
 ```yaml
 # secrets.yaml
 apiVersion: apps/v1
@@ -357,20 +370,24 @@ spec:
             memory: "128Mi"
             cpu: "500m"
 ```
+\normalsize
 
 #### Exemplary use case of secrets
 
 When pulling from a private dockerhub repository, applying the deployment will throw an error since there are no username and password specified. As they should not be coded into the deployment yaml itself, they can be accessed via a secret. In fact, a specific secret can be specified for docker registry. The secret can be specified using the imperative approach.
 
+\footnotesize
 ```bash
 kubectl create secret docker-registry docker-hub-private \
 --docker-username=YOUR_USERNAME \
 --docker-password=YOUR_PASSWORD \
 --docker-email=YOUR_EMAIL
 ```
+\normalsize
 
 Finally, the secret is specified in the deployment configuration where it can be accessed during application.
 
+\footnotesize
 ```yaml
 # secret_dockerhub.yaml
 apiVersion: apps/v1
@@ -401,3 +418,4 @@ spec:
         ports:
         - containerPort: 80
 ```
+\normalsize

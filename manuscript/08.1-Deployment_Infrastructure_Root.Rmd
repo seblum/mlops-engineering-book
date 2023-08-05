@@ -12,6 +12,7 @@ Secondly, as Airflow needs access to and RDS Database, the RDS module is called.
 
 Third, variable values for the Airflow Helm chart are passed to the module. Using Helm makes the deployment of Airflow very easy. Since there are customizations on the deployment, such as a connection to the Airflow DAG repository on Github, it is necessary to specify these information beforehand, and to integrate them into the deployment.
 
+\footnotesize
 ```javascript
 locals {
   cluster_name            = "${var.name_prefix}-eks"
@@ -128,6 +129,5 @@ module "jupyterhub" {
     module.eks
   ]
 }
-
-
 ```
+\normalsize

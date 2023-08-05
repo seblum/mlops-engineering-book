@@ -10,7 +10,7 @@ Airflow and MLflow are very flexible with their running environment and their st
 The infrastructure will be maintained using the Infrastructure as Code tool *Terraform*, and incorporate best Ops practices such as CI/CD and automation. The project will also incorporate the work done by data and machine learning scientists since basic machine learning models will be implemented and run on the platform.
 
 
-![](images/01-Introduction/airflow-on-eks-basic.drawio.svg)
+![](images/01-Introduction/airflow-on-eks-basic.drawio.svg){ width=100% }
 
 The following chapters give an introductory tutorial on each of the previously introduced tools. A machine learning workflow using Airflow is set up on the deployed infrastructure, including data preprocessing, model training, and model deployment, as well as tracking the experiment and deploying the model into production using MLFlow. 
 

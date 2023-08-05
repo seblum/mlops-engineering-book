@@ -2,7 +2,7 @@
 
 The MLOps lifecycle typically involves several key roles and responsibilities, each with their own specific tasks and objectives.
 
-![Roles and their operating areas within the MLOps lifecycle](images/01-Introduction/mlops-roles-and-tasks.svg)
+![Roles and their operating areas within the MLOps lifecycle](images/01-Introduction/mlops-roles-and-tasks.svg){ width=100% }
 
 ### Data Engineer
 

@@ -16,6 +16,7 @@ Belows configuration shows a Deployment which includes a Liveness and a Readines
 + periodSeconds: The probe is called every x seconds by K8s
 + failureThreshold: The container will fail and restart if more than x consecutive probes fail
 
+\footnotesize
 ```yaml
 # healthchecks.yaml
 apiVersion: apps/v1
@@ -98,6 +99,6 @@ spec:
     - port: 80
       targetPort: 8080
 ```
-
+\normalsize
 
 ### Debugging

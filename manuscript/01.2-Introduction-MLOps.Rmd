@@ -25,7 +25,7 @@ The goal of DevOps is to automate and streamline the process of building, testin
 
 DevOps focuses on the deployment and management of software in general (or *traditional* sofware), while MLOps focuses specifically on the deployment and management of machine learning models in a production environment. The goal is basically the same as in DevOps, yet deploying a machine learning model. While this is achieved by the same tools and best practices used in DevOps, deploying machine learning models (compared to software) adds a lot of complexity to the process.
 
-![Traditional vs ML software](images/01-Introduction/mlops-vs-devops.svg)
+![Traditional vs ML software](images/01-Introduction/mlops-vs-devops.svg){ width=100% }
 
 Machine learning models are not just lines of code, but also require large amounts of data, and specialized hardware, to function properly. Further, machine learning models and their complex algorithms might need to change when there is a shift in new data. This process of ensuring that machine learning models are accurate and reliable with new data leads to additional challenges. 
 Another key difference is that MLOps places a great emphasis on model governance, which ensures that machine learning models are compliant with relevant regulations and standards. The above list of tools within DevOps can be extended to the following for MLOps.
@@ -42,7 +42,7 @@ It's important to note that the specific tools used in MLOps and DevOps may vary
 
 Incorporating the tools introduced by DevOps and MLOps can extend the machine learning workflow outlined in the previous section, resulting in a complete MLOps lifecycle that covers each stage of the machine learning process while integrating automation practices.
 
-![](images/01-Introduction/mlops-lifecycle.svg)
+![](images/01-Introduction/mlops-lifecycle.svg){ width=100% }
 
 Integrating MLOps into machine learning projects introduces additional complexity into the workflow. Although the development stage can be carried out on a local machine, subsequent stages are typically executed within a cloud platform. Additionally, the transition from one stage to another is automated using tools like CI/CD, which automate testing and deployment.
 
