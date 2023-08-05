@@ -25,7 +25,7 @@ bookdown::pdf_book:
   pandoc_args: --top-level-division=chapter
   toc_depth: 2
   toc_unnumbered: no
-  shell-escape: yes
+  #number_sections: true
   quote_footer: ["\\VA{", "}{}"]
   lot: no
   lof: no
@@ -33,11 +33,3 @@ bookdown::epub_book:
   dev: svglite
   cover_image: ../cover/Bookcover_IML_KDP_v2/cutout.png
   pandoc_args: [ "--mathml" ]
-# bookdown::pdf_book:
-#   #split_by: section
-#   includes:
-#      in_header: preamble.tex
-#   latex_engine: xelatex
-#   citation_package: natbib
-#   keep_tex: yes
-# bookdown::epub_book: default
