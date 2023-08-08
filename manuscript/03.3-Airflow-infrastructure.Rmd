@@ -50,7 +50,7 @@ airflow config get-value core executor
 
 ### DAG Directory
 
-The *DAG directory* contains the DAG files written in python. The DAG directory is read and used by each Airflow component for a different purpose. The *web interface* lists all written DAGs from the directory as well as their content. The *scheduler* and *executor* run a DAG or a task based on the input read from the DAG directory.
+The *DAG directory* contains the DAG files written in Python. The DAG directory is read and used by each Airflow component for a different purpose. The *web interface* lists all written DAGs from the directory as well as their content. The *scheduler* and *executor* run a DAG or a task based on the input read from the DAG directory.
 
 The DAG directory can be of different nature. It can be a local folder in case of a local installation, or also use a separate repository like Git where the DAG files are stored. The scheduler will recurse through the DAG Directory so it is also possible to create subfolders for example based on different projects.
 

@@ -58,7 +58,7 @@ helm pull bitnami/nginx-ingress-controller --version 5.3.19
 
 #### Installing a Helm Chart
 
-Once a Helm Chart is downloaded or added to the local setup, it can be installed using the `helm install` command followed by a custom release name, and the name of the chart to be installed. It is a best practice to update the list of charts before installing, just like when installing packages in other programming languages such as pip and python.
+Once a Helm Chart is downloaded or added to the local setup, it can be installed using the `helm install` command followed by a custom release name, and the name of the chart to be installed. It is a best practice to update the list of charts before installing, just like when installing packages in other programming languages such as Pip and Python.
 
 ```bash
 # Make sure we get the latest list of charts

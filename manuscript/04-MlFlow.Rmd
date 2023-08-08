@@ -16,4 +16,4 @@ MLflow also comes with a user web interface to conveniently view and compare mod
 
 ### Prerequisites {.unlisted .unnumbered}
 
-To go through this chapter it is necessary to have python and MLflow installed. One can install MLflow locally via `pip install MLflow`. This tutorial is based on MLflow v2.1.1. It is also recommended to have knowledge of VirtualEnv, Conda, or Docker when working with MLflow Projects.
+To go through this chapter it is necessary to have Python and MLflow installed. One can install MLflow locally via `pip install MLflow`. This tutorial is based on MLflow v2.1.1. It is also recommended to have knowledge of VirtualEnv, Conda, or Docker when working with MLflow Projects.

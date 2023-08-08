@@ -101,7 +101,7 @@ module "users" {
 
 ### for
 
-Terraform also offers a similar functionality as python list comprehension in the form of a for expression. This should not be confused with the *for-each* expression seen above. The basic syntax is shown below to convert the list of names of previous examples in var.names to uppercase:
+Terraform also offers a similar functionality as Python list comprehension in the form of a for expression. This should not be confused with the *for-each* expression seen above. The basic syntax is shown below to convert the list of names of previous examples in var.names to uppercase:
 
 ```bash
 output "upper_names" {

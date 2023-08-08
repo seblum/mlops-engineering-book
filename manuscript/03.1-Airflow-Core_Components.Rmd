@@ -12,7 +12,7 @@ Writing workflows in code has the benefit to use version control systems like *G
 
 A workflows in Airflow is implemented as a DAG, a *Directed Acyclic Graph*. A *graph* describes the actual set of components of a workflow. It is *directed* because it has an inherent flow representing dependencies between its components. It is *acyclic* as it does not loop or repeat.
 
-The DAG object is needed to nest the separate tasks intp a workflow. A workflow specified in code, e.g. python, is often also referred to as a *pipeline*. This terminology can be used synonymosly when working with Airflow. The following code snippet depicts how to define a DAG object in python code. The `dag_id` string is a unique identifier to the DAG object. The `default_args` dictionary consists of additional parameters that can be specified. There are only shown two additional parameters. There are a lot more though which can be seen in the [official documentation](https://airflow.apache.org/docs/apache-airflow/stable/_api/airflow/models/dag/index.html#airflow.models.dag.DAG).
+The DAG object is needed to nest the separate tasks intp a workflow. A workflow specified in code, e.g. Python, is often also referred to as a *pipeline*. This terminology can be used synonymosly when working with Airflow. The following code snippet depicts how to define a DAG object in Python code. The `dag_id` string is a unique identifier to the DAG object. The `default_args` dictionary consists of additional parameters that can be specified. There are only shown two additional parameters. There are a lot more though which can be seen in the [official documentation](https://airflow.apache.org/docs/apache-airflow/stable/_api/airflow/models/dag/index.html#airflow.models.dag.DAG).
 
 ```python
 from airflow.models import DAG
@@ -55,7 +55,7 @@ A DAG usually consists of multiple steps it runs through, also names as *tasks*.
 ### Operators
 
 An Operator represents a single predefined task in a workflow. It is basically a unit of work that Airflow has to complete. Operators usually run independently and generally do not share any information by themselves. There are different categories of operators to perform different tasks with, for example *Action operators*, *Transfer operators*, or *Sensors*.
-*Action Operators* execute a basic task based on the operators specifications. Examples are the `BashOperator`, the `PythonOperator`, or the `EmailOperator`. The operator names already suggest what kind of executions they provide; the PythonOperator runs python tasks.
+*Action Operators* execute a basic task based on the operators specifications. Examples are the `BashOperator`, the `PythonOperator`, or the `EmailOperator`. The operator names already suggest what kind of executions they provide; the PythonOperator runs Python tasks.
 *Transfer Operators* are designed to transfer data from one place to another, for example to copy data from one cloud bucket to another. Those operators are often stateful, which means the downloaded data are first stored locally and then uploaded to a destination storage. The principle of a stateful execution defines them as an own category of operator. 
 Finally, *Sensors* are a special subclass of operators that are triggered when an external event is happening, for example the creation of a file.
 
@@ -79,7 +79,7 @@ bash_task = BashOperator(
 
 **PythonOperator**
 
-The `PythonOperator` expects a python callable. Airflow passes a set of keyword arguments from the `op_kwargs` dictionary to the callable as input.
+The `PythonOperator` expects a Python callable. Airflow passes a set of keyword arguments from the `op_kwargs` dictionary to the callable as input.
 
 ```python
 from airflow.operators.python_operator import PythonOperator
@@ -202,7 +202,7 @@ Other sensors are for example:
 
 ###  Tasks
 
-To use an operator in a DAG it needs to be instantiated as a task. Tasks determine how to execute an operator’s work within the context of a DAG. The concepts of a *Task* and *Operator* are actually somewhat interchangeable as each task is actually a subclass of Airflow’s `BaseOperator`. However, it is useful to think of them as separate concepts. Tasks are Instances of operators and are usually assigned to a python variable.
+To use an operator in a DAG it needs to be instantiated as a task. Tasks determine how to execute an operator’s work within the context of a DAG. The concepts of a *Task* and *Operator* are actually somewhat interchangeable as each task is actually a subclass of Airflow’s `BaseOperator`. However, it is useful to think of them as separate concepts. Tasks are Instances of operators and are usually assigned to a Python variable.
 The following code instantiates the `BashOperator` to two different variables `task_1` and `task_2`. The `depends_on_past` argument ensures that the previously scheduled task has succeeded before the current task is triggered.
 
 ```python
@@ -246,7 +246,7 @@ airflow tasks test task_fundamentals sleep 2015-06-01
 
 #### Task dependencies
 
-A machine learning or data workflow usually has a specific order in which its tasks should run. Airflow alloes to define a specific order of task completion using task dependencies that are either referred to as upstream or downstream tasks. In Airflow 1.8 and later, this can be defined using the *bitshift operators* in python.
+A machine learning or data workflow usually has a specific order in which its tasks should run. Airflow alloes to define a specific order of task completion using task dependencies that are either referred to as upstream or downstream tasks. In Airflow 1.8 and later, this can be defined using the *bitshift operators* in Python.
 
 * **>>** - or the upstream operator (before)
 * **<<** - or the downstream operator (after)
@@ -309,7 +309,7 @@ If there is the need to pass a big data frame from *task_a* to *task_b*, the dat
 
 The XCom is identified by a *key*-*value* pair stored in the Airflow Metadata Database. The `key` of an XCom is basically its name and consists of a tuple (`dag_id`, `task_id`, `execution_date`,`key`). *key* within the XComs name denotes the name of the stored data and is a configurable string (by default it’s `return_value`). The XComs `value` is a json serializable. It is important to note that it is only designed for small amounts of data, depending on the attached metadata database (e.g. 2GB for SQLite, or 1GB Postgres database). XComs are explicitly pushed and pulled to/from the metadata database using the `xcom_push` and `xcom_pull` methods. While the `push_*`-methods upload the XCom, the `pull`-method downloads information from XCom. The XCom element can be viewed within Airflows web interface which is quite helpful to debug or monitor a DAG.
 
-Below example shows this mechanics. However, when looking at the `push` one can see a difference in their functionality. The method `push_by_returning` uses the operators' auto-push functionality that pushes their results into an default XCom key (the default is `return_value`). Using the auto-push functionality allows to only use python `return` statements and is enabled by setting the `do_xcom_push` argument to `True`, which it also is by default ( `@task` functions do this as well). To push an XCom with a specific key, the `xcom_push`-method needs to be called explicitly. In order to access the `xcom_push` one needs to access the task instance (ti) object. It can be accessed by passing the `"ti"` parameter to the python callable of the PythonOperator. Its usage can be seen in the `push` method, where also a custom key is given to the XCom.
+Below example shows this mechanics. However, when looking at the `push` one can see a difference in their functionality. The method `push_by_returning` uses the operators' auto-push functionality that pushes their results into an default XCom key (the default is `return_value`). Using the auto-push functionality allows to only use Python `return` statements and is enabled by setting the `do_xcom_push` argument to `True`, which it also is by default ( `@task` functions do this as well). To push an XCom with a specific key, the `xcom_push`-method needs to be called explicitly. In order to access the `xcom_push` one needs to access the task instance (ti) object. It can be accessed by passing the `"ti"` parameter to the Python callable of the PythonOperator. Its usage can be seen in the `push` method, where also a custom key is given to the XCom.
 Similarly, the `puller` function uses the `xcom_pull` method to pull the previously pushed values from the metadata databes.
 
 ```python

@@ -350,7 +350,7 @@ resource "helm_release" "airflow" {
 }
 ```
 
-In a final step of the Helm Chart, a custom `WebServerConfig.py` is specified which is set to integrate our Airflow deployment with a Github Authentication provider. The python script consists of two major parts: a custom AirflowSecurityManager class definition and the actual webserver_config configuration file for Apache Airflow's web server.
+In a final step of the Helm Chart, a custom `WebServerConfig.py` is specified which is set to integrate our Airflow deployment with a Github Authentication provider. The Python script consists of two major parts: a custom AirflowSecurityManager class definition and the actual webserver_config configuration file for Apache Airflow's web server.
 
 The custom `CustomSecurityManager` class extends the default AirflowSecurityManager to retrieves user information from the GitHub OAuth provider. The webserver_config configuration sets up the configurations for the web server component of Apache Airflow by indicating that OAuth will be used for user authentication. The `SECURITY_MANAGER_CLASS` is set to the previously defined `CustomSecurityManager` to customizes how user information is retrieved from the OAuth provider. Finally, the GitHub provider is configured with its required parameters like `client_id`, `client_secret`, and API endpoints.
 
