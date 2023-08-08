@@ -1,4 +1,3 @@
-
 from airflow.models import DAG
 from airflow.operators.bash_operator import BashOperator
 from pendulum import datetime
@@ -7,30 +6,26 @@ from pendulum import datetime
 # ----- Action Operators -----
 
 task_fundamentals = DAG(
-    dag_id='task_fundamentals',
+    dag_id="task_fundamentals",
     start_date=datetime(2023, 1, 1, tz="Europe/Amsterdam"),
-    schedule_interval=None
+    schedule_interval=None,
 )
 
-task_1 = BashOperator(
-    task_id="print_date",
-    bash_command="date",
-    dag=task_fundamentals
-)
+task_1 = BashOperator(task_id="print_date", bash_command="date", dag=task_fundamentals)
 
 task_2 = BashOperator(
     task_id="set_sleep",
     depends_on_past=False,
     bash_command="sleep 5",
     retries=3,
-    dag=task_fundamentals
+    dag=task_fundamentals,
 )
 
 task_3 = BashOperator(
     task_id="print_success",
     depends_on_past=False,
     bash_command='echo "Success!"',
-    dag=task_fundamentals
+    dag=task_fundamentals,
 )
 
 

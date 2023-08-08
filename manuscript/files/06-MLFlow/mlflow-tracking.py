@@ -6,6 +6,7 @@ import mlflow.sklearn
 import os
 from mlflow.tracking import MlflowClient
 import mlflow
+
 print("MLFlow Model Tracking Script")
 
 
@@ -65,7 +66,6 @@ experiment_name = "tracking-experiment"
 mlflow.set_experiment(experiment_name)
 
 with mlflow.start_run(run_name=run_name) as run:
-
     # Parameters
     mlflow.log_param("learning_rate", 0.01)
     mlflow.log_params({"epochs": 0.05, "final_activation": "sigmoid"})
@@ -93,7 +93,8 @@ with mlflow.start_run(run_name=run_name) as run:
 
 # add a note to the experiment
 MlflowClient().set_experiment_tag(
-    experiment_id, "mlflow.note.content", "my experiment note")
+    experiment_id, "mlflow.note.content", "my experiment note"
+)
 # add a note to the run
 MlflowClient().set_tag(run_id, "mlflow.note.content", "my run note")
 
@@ -109,14 +110,13 @@ with mlflow.start_run(run_id=run_id):
 print("> Display & View metrics")
 
 current_experiment = dict(mlflow.get_experiment_by_name(experiment_name))
-mlflow_run = mlflow.search_runs([current_experiment['experiment_id']])
+mlflow_run = mlflow.search_runs([current_experiment["experiment_id"]])
 print(f"mlflow_run: {mlflow_run}")
 
 
 # ---------------------
 # Logging artifacts
 print("> Logging artifacts")
-
 
 
 mlflow.set_tracking_uri("http://127.0.0.1:5000/")
@@ -134,12 +134,12 @@ with mlflow.start_run(run_id=run_id) as run:
     mlflow.log_artifact(
         local_path=file_path,
         # store the artifact directly in run's root
-        artifact_path=None
+        artifact_path=None,
     )
     mlflow.log_artifact(
         local_path=file_path,
         # store the artifact in a specific directory
-        artifact_path="data/subfolder"
+        artifact_path="data/subfolder",
     )
 
     # get and print the URI where the artifacts have been logged to
@@ -157,10 +157,11 @@ params = {"n_estimators": 4, "random_state": 42}
 
 mlflow.sklearn.autolog()
 
-run_name = 'autologging model example'
+run_name = "autologging model example"
 with mlflow.start_run(run_name=run_name) as run:
-    rfr = RandomForestRegressor(
-        **params).fit(np.array([[0, 1, 0], [0, 1, 0], [0, 1, 0]]), [1, 1, 1])
+    rfr = RandomForestRegressor(**params).fit(
+        np.array([[0, 1, 0], [0, 1, 0], [0, 1, 0]]), [1, 1, 1]
+    )
     print(f"run_id: {run.info.run_id}")
 
 mlflow.sklearn.autolog(disable=True)
