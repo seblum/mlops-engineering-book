@@ -4,8 +4,8 @@
 sort_def_list("glossary.Rmd")
 ```
 
-cognate (同源詞)
-: 擁有同一個詞源的詞彙。Words that have a common etymological origin.
+Machine Learning (ML)
+: Machine Learning \acr{yaml} \acr{RL}
 
 collocation
 : A collocation is a sequence of words or terms that co-occur more often than would be expected by chance

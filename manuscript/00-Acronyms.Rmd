@@ -1,0 +1,11 @@
+---
+acronyms:
+  keys:
+    - shortname: Rmd
+      longname: Rmarkdown document
+    - key: yaml
+      shortname: YAML
+      longname: YAML Ain't Markup Language
+---
+
+# Acronyms {.unnumbered}
