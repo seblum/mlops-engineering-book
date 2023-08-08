@@ -6,8 +6,8 @@ language:
     chapter_name: "Chapter "
 rmd_files: 
     ["index.Rmd",
-    # "00-Acronyms.Rmd",
-    "00-Glossary.Rmd",
+    "00-Acronyms.Rmd",
+    #"00-Glossary.Rmd",
     "00-Preamble.Rmd",
     "01-Introduction.Rmd",
     "01.1-Introduction-Machine_Learning_Workflow.Rmd",

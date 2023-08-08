@@ -1,11 +1,18 @@
 ---
 acronyms:
   keys:
-    - shortname: Rmd
-      longname: Rmarkdown document
-    - key: yaml
-      shortname: YAML
-      longname: YAML Ain't Markup Language
+    - shortname: ML
+      shortname: ML
+      longname: Machine Learning
+    - shortname: MLOps
+      shortname: MLOps
+      longname: Machine Learning Operations
+    - key: AI
+      shortname: AI
+      longname: Artificial Intelligence
+    - key: IDE
+      shortname: IDE
+      longname: Integrated Development Environment
 ---
 
 # Acronyms {.unnumbered}
