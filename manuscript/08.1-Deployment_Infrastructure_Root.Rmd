@@ -1,5 +1,5 @@
 
-## Root directory module
+## Root module
 
 The root directory of the Terraform infrastructure consists of the main module, calling other submodules that deploy specific infrastructure setting or tools.
 This enables to have an overview about the deployment in one place. At first, the necessary cluster infrastructure is deployed such as the `vpc` and the `eks` cluster itself. Afterward the custom tools to be run on EKS are deployed, such as `airflow`, `mlflow`, and `jupyterhub`.

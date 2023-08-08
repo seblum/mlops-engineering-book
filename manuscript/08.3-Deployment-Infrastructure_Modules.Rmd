@@ -1,4 +1,4 @@
-## Modules
+## Components
 
 Within the setup, there are multiple custom modules, namely airflow, mlflow, jupyterhub, and monitoring. Each module is responsible for deploying a specific workflow tool.
 
