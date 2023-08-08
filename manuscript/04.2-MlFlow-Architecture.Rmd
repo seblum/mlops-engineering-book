@@ -13,7 +13,7 @@ The MLflow client can interface with a variety of backend and artifact storage c
 The MLflow *Tracking Server* is the main component that handles the communication between the REST API to log parameters, metrics, experiments and metadata to a storage solution. The server uses both, the backend store and the artifact store to store and read data from. 
 Although it is possible to track parameters without running a server (e.g. locally), it is recommended to create a MLflow tracking server to log your data to. Some of the functionality of the API is also available via the web interface, for example to create an experiment. Further, the Tracking web user interface allows to view runs easily in the web browser.
 
-Running the CLI command `mlflow ui` starts a web server on your local machine serving the MLFlow UI. Alternatively, a remote [MLflow tracking server](https://mlflow.org/docs/latest/tracking.html#tracking-server) serves the same UI which can be accessed using the server's URL `http://<TRACKING-SERVER-IP-ADDRESS>:5000` from any machine that can connect to the tracking server.
+Running the CLI command `mlflow ui` starts a web server on your local machine serving the MLFlow user interface. Alternatively, a remote [MLflow tracking server](https://mlflow.org/docs/latest/tracking.html#tracking-server) serves the same user interface which can be accessed using the server's URL `http://<TRACKING-SERVER-IP-ADDRESS>:5000` from any machine that can connect to the tracking server.
 
 
 ### MLflow Backend Store

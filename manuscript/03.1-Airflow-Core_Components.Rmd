@@ -460,7 +460,7 @@ def taskflow_api_fundamentals():
 taskflow_api_fundamentals()
 ```
 
-Even the passing of data between tasks which might run on different workers is all handled by TaskFlow so there is no need to use XCom. However, XCom is still used behind the scenes, but all of the XCom usage passing data between tasks is abstracted away. This allows to view the XCom in the Airflow UI as before. 
+Even the passing of data between tasks which might run on different workers is all handled by TaskFlow so there is no need to use XCom. However, XCom is still used behind the scenes, but all of the XCom usage passing data between tasks is abstracted away. This allows to view the XCom in the Airflow user interface as before. 
 Belows example shows the `transform` function written in the traditional Airflow using XCom and highlights the simplicity of using TaskFlow.
 
 ```python

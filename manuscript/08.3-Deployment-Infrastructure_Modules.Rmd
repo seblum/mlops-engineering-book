@@ -211,7 +211,7 @@ resource "helm_release" "airflow" {
         }
       ],
       config = {
-        AIRFLOW__WEBSERVER__EXPOSE_CONFIG = true
+        AIRFLOW__WEBSERVER__EXPOSE_CONFIG = false
         AIRFLOW__WEBSERVER__BASE_URL      = "http://${var.domain_name}/${var.domain_suffix}"
 
         AIRFLOW__CORE__LOAD_EXAMPLES = false
