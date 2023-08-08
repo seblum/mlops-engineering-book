@@ -85,7 +85,7 @@ output "all_users" {
 }
 ```
 
-![](images/06-Terraform/additionals_for_each_on_list.png)
+![](images/06-Terraform/additionals_for_each.png)
 
 Using a map of resource with the *for_each* meta rather than an array of resources as with *count* has the benefit to remove items from the middle of the collection safely and without re-creating the resources following the deleted item. Of course, the same can also be done for modules.
 
@@ -130,4 +130,4 @@ output "for_directive" {
 
 Terraform workspaces allow us to keep multiple state files for the same project. When we run Terraform for the first time in a project, the generated state file will go into the *default* workspace. Later, we can create a new workspace with the `terraform workspace new` command, optionally supplying an existing state file as a parameter.
 
-
+![](images/06-Terraform/workspaces.png)
