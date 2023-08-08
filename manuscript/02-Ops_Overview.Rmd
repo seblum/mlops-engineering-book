@@ -1,5 +1,5 @@
 
-## Ops Tools & Principles
+# Ops Tools & Principles
 
 MLOps integrates a range of DevOps techniques and tools to enhance the development and deployment of machine learning models. By promoting cooperation between development and operations teams, MLOps strives to improve communication, enhance efficiency, and reduce delays in the development process. Advanced version control systems can be employed to achieve these objectives.
 
@@ -8,7 +8,7 @@ Automation plays a significant role in achieving these goals. For instance, CI/C
 To enhance flexibility and scalability in the operational process, containers and microservices are used to package and deploy software. Finally, monitoring and logging tools are used to track the performance of deployed and containerized software and address any issues that arise.
 
 
-### Containerization
+## Containerization
 
 Containerization is an essential component in operations as it enables deploying and running applications in a standardized, portable, and scalable way. This is achieved by packaging an application and its dependencies into a container image, which contains all the necessary code, runtime, system tools, libraries, and settings needed to run the application, isolated from the host operating system. Containers are lightweight, portable, and can run on any platform that supports containerization, such as Docker or Kubernetes.
 
@@ -34,7 +34,7 @@ ENTRYPOINT ["mlflow", "server"]
 -->
 
 
-### Version Control
+## Version Control
 
 Version control is a system that records changes to a file or set of files over time, to be able to recall specific versions later. It is an essential tool for any software development project as it allows multiple developers to work together, track changes, and easily rollback in case of errors. There are two main types of version control systems: centralized and distributed.
 
@@ -48,7 +48,7 @@ Versioning all components of a machine learning project, such as code, data, and
 
 Popular tools such as Azure ML, AWS Sagemaker, Kubeflow, and MLflow offer their own mechanisms for model versioning. For data versioning, there are tools like Data Version Control (DVC) and Git Large File Storage (LFS). The de-facto standard for code versioning is Git. The code-versioning system Github is used for this project, which will be depicted in more detail in the following.
 
-#### Github
+### Github
 
 GitHub provides a variety of branching options to enable flexible collaboration workflows. Each branch serves a specific purpose in the development process, and using them effectively can help teams collaborate more efficiently and effectively.
 
@@ -59,7 +59,7 @@ GitHub provides a variety of branching options to enable flexible collaboration 
 *Hotfix Branch:* A hotfix branch is used to quickly fix critical issues in the production code. It is typically created off the main branch, and once the hotfix is completed, it can be merged back into the main branch.
 *Release Branch:* A release branch is a separate branch that is created specifically for preparing a new version of the software for release. Once all the features and fixes for the new release have been added and tested, the release branch is merged back into the main branch, and a new version of the software is tagged and released.
 
-#### Git lifecycle
+### Git lifecycle
 
 After a programmer has made changes to their code, they would typically use Git to manage those changes through a series of steps. First, they would use the command `git status` to see which files have been changed and are ready to be committed. They would then stage the changes they want to include in the commit using the command `git add <FILE-OR-DIRECTORY>`, followed by creating a new commit with a message describing the changes using `git commit -m "MESSAGE"`.
 
@@ -74,7 +74,7 @@ If the programmer encounters any issues or bugs after pushing their changes, the
 While automating the code review process is generally viewed as advantageous, it is still typical to have a manual code review as the final step before approving a pull or merge request to be merged into the main branch. It is considered a best practice to mandate a manual approval from one or more reviewers who are not the authors of the code changes.
 
 
-### CI/CD
+## CI/CD
 
 Continuous Integration (CI) and Continuous Delivery / Continuous Delivery (CD) are related software development practices that work together to automate and streamline the software development and deployment process of code changes to production. Deploying new software and models without CI/CD often requires a lot of implicit knowledge and manual steps.
 
@@ -155,7 +155,7 @@ jobs:
 ```
 
 
-### Infrastructure as code 
+## Infrastructure as code 
 
 Infrastructure as Code (IaC) is a software engineering approach that enables the automation of infrastructure provisioning and management using machine-readable configuration files rather than manual processes or interactive interfaces.
 
