@@ -1,7 +1,9 @@
 ## Airflow infrastructure
 
 Before Data Scientists and Machine Learning Engineers can utilize the power of Airflow Workflows, Airflow obviously needs to be set up and deployed. 
-There are multiple ways an Airflow deployment can take place. It can be run either on a single machine or in a distributed setup on a cluster of machines. As stated in the prerequisites, a local Airflow setup is on a single machine can be used for this tutorial to give an introduction on how to work with airflow. Although Airflow can be run on a single machine, it should be deployed as a distributed system to utilize its full power when working with Airflow in production.
+There are multiple ways an Airflow deployment can take place. It can be run either on a single machine or in a distributed setup on a cluster of machines. As stated in the prerequisites, a local Airflow setup is on a single machine can be used for this tutorial to give an introduction on how to work with airflow. Although Airflow can be run on a single machine, it should be deployed as a distributed system to utilize its full power when working with Airflow in production. 
+
+Airflow can be configured by modifying the `airflow.cfg` file or by using environment variables. The `airflow.cfg` file is a key component, as it contains various settings and parameters that control the behavior and settings of the Airflow system. Some of the common settings that can be configured include settings that define the core behavior of Airflow, as well as settings regarding the Airflow Executor, Logging, Security, or the Scheduler. All available configuration settings can seen [here](https://airflow.apache.org/docs/apache-airflow/stable/configurations-ref.html). The `.cfg` is usually located in the "conf" directory within your Airflow installation.
 
 ### Airflow as a distributed system
 
