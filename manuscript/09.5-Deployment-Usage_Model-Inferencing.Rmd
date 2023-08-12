@@ -1,0 +1,82 @@
+
+## Model Serving & Inferencing
+
+The process of serving and making inferences utilizes Docker containers and runs them within Kubernetes pods.
+
+The concept involves running a Docker container that serves the pre-trained TensorFlow model using FastAPI. This containerized model is responsible for providing predictions and responses to incoming requests. Additionally, a Streamlit app is used to interact with the served model, enabling users to make inferences by sending input data to the model and receiving the corresponding predictions.
+
+### Streamlit App
+
+The Streamlit app offers a simple interface for performing inferences on the served model. The user interface enables users to upload a `jpg` image. Upon clicking the `predict` button, the image is sent to the model serving app, where a prediction is made. The prediction results are then returned as a JSON file, which can be downloaded upon request.
+
+**Importing Dependencies**
+This section imports the necessary dependencies for the code, including libraries for file handling, JSON processing, working with images, making HTTP requests, and creating the Streamlit application.
+
+```python
+# Imports necessary packages
+import io
+import json
+import os
+
+import pandas as pd
+import requests
+import streamlit as st
+from PIL import Image
+
+```
+
+#### Setting Up the Streamlit Application {.unlisted .unnumbered}
+At first, the header and subheader for the Streamlit application are set. Afterward, the FastAPI serving IP and port are retrieved from environment variables. They constructs the FastAPI endpoint URL and are later used to send a POST request to.
+
+```python
+st.header("MLOps Engineering Project")
+st.subheader("Skin Cancer Detection")
+
+# FastAPI endpoint
+FASTAPI_SERVING_IP = os.getenv("FASTAPI_SERVING_IP")
+FASTAPI_SERVING_PORT = os.getenv("FASTAPI_SERVING_PORT")
+FASTAPI_ENDPOINT = f"http://{FASTAPI_SERVING_IP}:{FASTAPI_SERVING_PORT}/predict"
+
+```
+
+#### Uploading test image {.unlisted .unnumbered}
+The `st.file_uploader` allows the user to upload a test image in JPG format using the Streamlit file uploader widget. The type of the uploaded file is limited to `.jpg`. If a test image has been uploaded, the image is processed by opening it with PIL and creating a file-like object.
+
+
+```python
+test_image = st.file_uploader("", type=["jpg"], accept_multiple_files=False)
+
+if test_image:
+    image = Image.open(test_image)
+    image_file = io.BytesIO(test_image.getvalue())
+    files = {"file": image_file}
+
+```
+
+#### Displaying the uploaded image and performing prediction {.unlisted .unnumbered}
+A two-column layout in the Streamlit app is created That displays the uploaded image in the first column. In the second columns, a button for the user to start the prediction process is displayed. When the button is clicked, it sends a POST request to the FastAPI endpoint with the uploaded image file. The prediction results are displayed as JSON and can be downloaded as a JSON file.
+
+```python
+    col1, col2 = st.columns(2)
+
+    with col1:
+        # Display the uploaded image in the first column
+        st.image(test_image, caption="", use_column_width="always")
+
+    with col2:
+        if st.button("Start Prediction"):
+            with st.spinner("Prediction in Progress. Please Wait..."):
+                # Send a POST request to FastAPI for prediction
+                output = requests.post(FASTAPI_ENDPOINT, files=files, timeout=8000)
+            st.success("Success! Click the Download button below to retrieve prediction results (JSON format)")
+            # Display the prediction results in JSON format
+            st.json(output.json())
+            # Add a download button to download the prediction results as a JSON file
+            st.download_button(
+                label="Download",
+                data=json.dumps(output.json()),
+                file_name="cnn_skin_cancer_prediction_results.json",
+            )
+
+```
+

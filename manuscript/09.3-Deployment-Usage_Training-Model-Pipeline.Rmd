@@ -1,5 +1,5 @@
 
-## Building the Pipeline Steps
+## Training Pipeline Steps
 
 As mentioned previously, the machine learning pipeline for this particular use case comprises three primary stages: preprocessing, training, and serving. Furthermore, only the model that achieves the highest accuracy is chosen for deployment, which introduces an additional step for model comparison. Each of these steps will be further explained in the upcoming sections.
 
