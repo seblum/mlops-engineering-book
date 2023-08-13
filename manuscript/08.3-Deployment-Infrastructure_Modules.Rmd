@@ -547,6 +547,20 @@ resource "helm_release" "jupyterhub" {
 }
 ```
 
+
+<!---
+
+### Seldon
+
+Seldon is used for Model deployment.
+
+helm chart installed
+
+--->
+
+
+
+
 <!---
 
 ### Monitoring
@@ -557,5 +571,7 @@ Prometheus is employed for [specific purpose], while Grafana is used for [specif
 
 #### Prometheus
 #### Grafana
+
+grafana github oauth and ingress
 --->
 
