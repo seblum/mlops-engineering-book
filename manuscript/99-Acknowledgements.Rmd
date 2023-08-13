@@ -1,4 +1,4 @@
-# Acknowledgements
+# Acknowledgements {.unnumbered}
 
 I would like to express my gratitude to the everyone contributing to this project and everyone who has provided invaluable insights and support throughout the development of this bookdown project:
 

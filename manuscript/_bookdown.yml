@@ -47,8 +47,8 @@ rmd_files:
     "09.3-Deployment-Usage_Training-Model-Pipeline.Rmd",
     "09.4-Deployment-Usage_Model-Serving.Rmd",
     "09.5-Deployment-Usage_Model-Inferencing.Rmd",
-    "10-Acknowledgements.Rmd",
-    "99-Glossary.Rmd"
+    "99-Glossary.Rmd",
+    "99-Acknowledgements.Rmd"
     ]
 
 
