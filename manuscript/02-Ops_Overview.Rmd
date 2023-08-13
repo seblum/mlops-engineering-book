@@ -14,7 +14,7 @@ Containerization is an essential component in operations as it enables deploying
 
 All of this makes them beneficial compared to deploying an application on a virtual machine or traditionally directly on a machine. Virtual machines would emulate an entire computer system and require a hypervisor to run, which introduces additional overhead. Similarly, a traditional deployment involves installing software directly onto a physical or virtual machine without the use of containers or virtualization. Not to mention the lack of portability of both.
 
-![](./images/01-Introduction/ops-containerization.drawio.svg)
+![](./images/01-Introduction/ops-containerization.drawio.svg){ width=100% }
 
 The concept of container images is analogous to shipping containers in the physical world. Like shipping containers can be loaded with different types of cargo, a container image can be used to create different containers with various applications and configurations. Both the physical containers and container images are standardized, just like blueprints, enabling multiple operators to work with them. This allows for the deployment and management of applications in various environments and cloud platforms, making containerization a versatile solution.
 
@@ -52,7 +52,7 @@ Popular tools such as Azure ML, AWS Sagemaker, Kubeflow, and MLflow offer their 
 
 GitHub provides a variety of branching options to enable flexible collaboration workflows. Each branch serves a specific purpose in the development process, and using them effectively can help teams collaborate more efficiently and effectively.
 
-![](./images/01-Introduction/ops-version-control.drawio.svg)
+![](./images/01-Introduction/ops-version-control.drawio.svg){ width=100% }
 
 *Main Branch:* The main branch is the default branch in a repository. It represents the latest stable version and production-ready state of a codebase, and changes to the code are merged into the main branch as they are completed and tested.
 *Feature Branch:* A feature branch is used to develop a new feature or functionality. It is typically created off the main branch, and once the feature is completed, it can be merged back into the main branch.
@@ -65,7 +65,7 @@ After a programmer has made changes to their code, they would typically use Git 
 
 After committing changes locally, the programmer may want to share those changes with others. They would do this by pushing their local commits to a remote repository using the command `git push`.  Once the changes are pushed, others can pull those changes down to their local machines and continue working on the project by using the command `git pull`.
 
-![](./images/01-Introduction/ops-git-commands.png)
+![](./images/01-Introduction/ops-git-commands.png){ width=100% }
 
 If the programmer is collaborating with others, they may need to merge their changes with changes made by others. This can be done using the `git merge <BRANCH-NAME>` command, which combines two branches of development history. The programmer may need to resolve any conflicts that arise during the merge.
 
@@ -78,7 +78,7 @@ While automating the code review process is generally viewed as advantageous, it
 
 Continuous Integration (CI) and Continuous Delivery / Continuous Delivery (CD) are related software development practices that work together to automate and streamline the software development and deployment process of code changes to production. Deploying new software and models without CI/CD often requires a lot of implicit knowledge and manual steps.
 
-![](./images/01-Introduction/ops-ci-cd.drawio.svg)
+![](./images/01-Introduction/ops-ci-cd.drawio.svg){ width=100% }
 
 1. *Continuous Integration (CI)*: is a software development practice that involves frequently integrating code changes into a shared central repository. The goal of CI is to catch and fix integration errors as soon as they are introduced, rather than waiting for them to accumulate over time. This is typically done by running automated tests and builds, to catch any errors that might have been introduced with new code changes, for example when merging a Git feature branch into the main branch.
 
@@ -97,6 +97,7 @@ At first, the environment variables are defined under `env`. Two variables are d
 The second part defines when the pipeline is or should be triggered. The exampele shows three possibilites to trigger a pipelines, when pushing on the master branch `push`, when a pull request to the master branch is granted `pull_request`, or when the pipeline is triggered manually via the Github interface `workflow_dispatch`.
 The third part of the code example introduces the actual jobs and steps performed by the pipeline. The pipeline consists of two jobs `pytest` and `docker`. The first represents the CI part of the pipeline. The run environment of the job is set up and the necessary requirements are installed. Afterward unit tests are run using the pytest library. If the `pytest` job was successful, the `docker` job will be triggered. The job builds the Dockerfile and pushes it automatically to the specified Dockerhub repository specified in `tags`. The step introduces another variable just like the `env.Variable` before, the `secrets.`. Secrets are a way by Github to safely store classified information like username and passwords. They can be set up using the Github Interface and used in the Github Actions CI using `secrets.SECRET-NAME`. 
 
+\footnotesize
 ```yaml
 name: Docker CI base
 
@@ -153,7 +154,7 @@ jobs:
           push: true
           tags: ${{ env.DOCKERREPO }}:${{ env.DIRECTORY }}
 ```
-
+\normalsize
 
 ## Infrastructure as code 
 

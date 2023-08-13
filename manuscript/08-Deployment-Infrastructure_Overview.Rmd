@@ -42,7 +42,6 @@ The *root* directory of the Terraform project contains the general configuration
 * The `outputs.tf` defining the output variables that expose relevant information about the deployed infrastructure.
 * The `providers.tf` that defining and configuring the providers used in the project, for example, AWS, Kubernetes, Helm.
 
-
 ### Infrastructure {.unlisted .unnumbered}
 
 The *infrastructure* directory holds the individual modules responsible for provisioning specific components of the AWS Cloud and EKS setup.
@@ -51,7 +50,6 @@ The *infrastructure* directory holds the individual modules responsible for prov
 * The `eks` module is responsible for creating and configuring an Amazon Elastic Kubernetes Service (EKS) cluster, including worker nodes and other related resources like the Cluster Autoscaler, Elastic Block Storage, or Elastic File System.
 * `networking` contains networking components that provide access to the cluster using ingresses and DNS records, for example the AWS Application Load Balancer or an External DNS.
 * The `rds` module provides resources to deploy and Amazon Relational Database Service (RDS), such as database instances, subnets, and security groups. This module is needed for the specific tools and components of our ML platform.
-
 
 ### Modules {.unlisted .unnumbered}
 

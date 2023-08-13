@@ -5,6 +5,7 @@ A Terraform module allows to reuse resources in multiple places throughout the p
 
 A Terraform module is build as a directory containing one or more resource definition files. Basically, when putting all our code in a single directory, we already have a module. This is exactly what we did in our previous examples. However, terraform does not include subdirectories on its own. Subdirectories must be called explicitly using a terraform `module`parameter. The example below references a module located in a `./network` subdirectory and passes two parameters to it.
 
+\footnotesize
 ```bash
 # main.tf
 module "network" {
@@ -13,9 +14,11 @@ module "network" {
   environment = "prod"
 }
 ```
+\normalsize
 
 Each module consists of a similar file structure as the root directory. This includes a `main.tf` where all resources are specified, as well as files for different data sources such as `variables.tf` and `outputs.tf`. However, providers are usually configured only in the root module and are not reused in modules. Note that there are different approaches on where to specify the providers. They are either specified in the `main.tf` or a separate `providers.tf`. It does not make a difference for Terraform as it does not distinguish between the resource definition files. It is merely a strategy to keep code and project in a clean and consistent structure.
 
+\footnotesize
 ```
 root
 │   main.tf
@@ -27,12 +30,13 @@ root
     │   variables.tf
     │   outputs.tf
 ```
-
+\normalsize
 
 ### Input Variables
 
 Each module can have multiple *Input Variables*. Input Variables serve as parameters for a Terraform module so users can customize behavior without editing the source. In the previous example of importing a `network` module, there have been two input variables specified, `create_public_ip` and `environment`. Input variables are usually specified in the `variables.tf` file.
 
+\footnotesize
 ```bash
 # variables.tf
 variable "instance_name" {
@@ -41,6 +45,8 @@ variable "instance_name" {
   description = "Name of the aws instance to be created"
 }
 ```
+\normalsize
+
 Each variable has a type (e.g. `string`, `map`, `set`, `boolen`) and may have a `default` value and `description`. Any variable that has no default must be supplied with a value when calling the `module` reference. This means that variables defined at the root module need values assigned to as a requirement so Terraform will not fail. This can be done by different resources, for example 
 
 * a variable's `default` value
@@ -50,6 +56,7 @@ Each variable has a type (e.g. `string`, `map`, `set`, `boolen`) and may have a 
 
 Variables can be used in expressions using the `var.`prefix such as shown in below example. We use the resource configuration of the previous example to create an `aws_instance` but this time its name is provided by an input variable.
 
+\footnotesize
 ```bash
 # main.tf
 resource "aws_instance" "awesome-instance" {
@@ -61,7 +68,7 @@ resource "aws_instance" "awesome-instance" {
   }
 }
 ```
-
+\normalsize
 
 ### Output Variables
 
@@ -69,6 +76,7 @@ Similar to Input variables, a terraform module has *output variables*. As their 
 
 The example below defines an output value *instance_address* containing the IP address of an EC2 instance the we create with a module. Any module that reference this module can use the *instance_address* value by referencing it via *module.module_name.instance_address*
 
+\footnotesize
 ```bash
 # outputs.tf
 output "instance_address" {
@@ -76,13 +84,15 @@ output "instance_address" {
       description = "Web server's private IP address"
     }
 ```
+\normalsize
 
-![](images/06-Terraform/outputs.png "outputs") 
+![](images/06-Terraform/outputs.png "outputs"){ width=100% }
 
 ### Local Variables
 
 Additionally to Input variables and output variables a module provides the use of local variables. Local values are basically just a convenience feature to assign a shorter name to an expression and work like standard variables. This means theor scope is also limited to the module they are declared in. Using local variables reduces code repetitions which can be especially valuable when dealing with output variables from a module. 
 
+\footnotesize
 ```bash
 # main.tf
 locals {
@@ -100,3 +110,4 @@ module "service2" {
   vpc_id = local.vpc_id
 }
 ```
+\normalsize

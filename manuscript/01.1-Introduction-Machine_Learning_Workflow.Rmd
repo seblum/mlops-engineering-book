@@ -1,27 +1,24 @@
+
 ## Machine Learning Workflow
 
 A machine learning workflow typically involves several stages. These stages are closely related and sometimes overlap as some stages may involve multiple iterations. In the following, the machine learning workflow is broken down to five different stages to make things easier, and give an overview.
 
-![](images/01-Introduction/ml-lifecycle.svg)
+![ML lifecycle](images/01-Introduction/ml-lifecycle.svg){ width=100% }
 
 **1. Data Preparation**
 In the first stage, data used to train a machine learning model is collected, cleaned, and preprocessed. Preprocessing includes tasks to remove missing or duplicate data, normalize data, and split data into a training and testing set.
-    
 **2. Model Building** 
 In the second stage, a machine learning model is selected and trained using the prepared data. This includes tasks such as selecting an appropriate algorithm as a machine learning model, training the model, and tuning the model's parameters to improve its performance.
-    
 **3. Model Evaluation**
 Afterward, the performance of the trained model is evaluated using the test data set. This includes tasks such as measuring the accuracy and other performance metrics, comparing the performance of different models, and identifying potential issues with the model.
-    
 **4. Model Deployment** 
 Finally, the selected and optimized model is deployed to a production environment where it can be used to make predictions on new data. This stage includes tasks like scaling the model to handle large amounts of data, and deploying the model to different environments to be used in different contexts
-    
 **5. Model Monitoring and Maintenance**
 It is important to monitor the model performance and update the model as needed, once the model is deployed. This includes tasks such as collecting feedback from the model, monitoring the model's performance metrics, and updating the model as necessary.
 
 Each stage is often handled by the same tool or platform which makes a clear differentiation across stages and tools fairly difficult. Further, some machine learning workflows will not have all the steps, or they might have some variations. A machine learning workflow is thereby not a walk in the park and the actual model code is just a small piece of the work. 
 
-![Only a small fraction of real-world ML systems is composed of the ML code, as shown by the small black box in the middle. The required surrounding infrastructure is vast and complex. (D. Sculley, et al., 2015)](images/01-Introduction/ml-sculley.svg)
+![Only a small fraction of real-world ML systems is composed of the ML code, as shown by the small black box in the middle. The required surrounding infrastructure is vast and complex. (D. Sculley, et al., 2015)](images/01-Introduction/ml-sculley.svg){ width=100% }
 
 Working with and developing machine learning models, monitoring their performance, and continuously retraining it on new data with possible alternative models can be challenging and involves the right tools.
 

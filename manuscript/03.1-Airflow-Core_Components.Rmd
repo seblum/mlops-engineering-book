@@ -14,6 +14,7 @@ A workflows in Airflow is implemented as a DAG, a *Directed Acyclic Graph*. A *g
 
 The DAG object is needed to nest the separate tasks intp a workflow. A workflow specified in code, e.g. Python, is often also referred to as a *pipeline*. This terminology can be used synonymosly when working with Airflow. The following code snippet depicts how to define a DAG object in Python code. The `dag_id` string is a unique identifier to the DAG object. The `default_args` dictionary consists of additional parameters that can be specified. There are only shown two additional parameters. There are a lot more though which can be seen in the [official documentation](https://airflow.apache.org/docs/apache-airflow/stable/_api/airflow/models/dag/index.html#airflow.models.dag.DAG).
 
+\footnotesize
 ```python
 from airflow.models import DAG
 from pendulum import datetime
@@ -30,16 +31,18 @@ example_dag = DAG(
     default_args=default_args
 )
 ```
+\normalsize
 
 The state of a workflow can accessed via the web user inteface, such as shown in below images. The first image shows Airflows overview of all DAGs currently "Active" and further information about them such as their "Owner", how many "Runs" have been performaned and whether they were successful, and much more. 
 The second image depicts a detailed overview of the DAG "xcom_fundamentals". Besudes looking into the *Audit Logs* of the DAG and the *Task Duration*, it is also possible to check the *Code* of the DAG.
 
-![](./images/03-Airflow/web-interface_dags.png)
+![](./images/03-Airflow/web-interface_dags.png){ width=100% }
 
-![](./images/03-Airflow/web-interface_dag-grid.png)
+![](./images/03-Airflow/web-interface_dag-grid.png){ width=100% }
 
 The Airflow command line interface also allows to interact with the DAGs. Below command shows its exemplary usage and how to list all active DAGs. Further examples of using the CLI in a specific context are show in the subsection about Tasks.
 
+\footnotesize
 ```bash
 # Create the database schema
 airflow db init
@@ -47,10 +50,10 @@ airflow db init
 # Print the list of active DAGs
 airflow dags list
 ```
+\normalsize
 
 People sometimes think of a DAG definition file as a place where the actual data processing is done. That is not the case at all! The scripts purpose is to only define a DAG object. It needs to evaluate quickly (in seconds, not minutes) since the scheduler of Airflow will load and execute it periodically to account for changes in the DAG definition.
 A DAG usually consists of multiple steps it runs through, also names as *tasks*. Tasks themselves consist of *operators*. This will be outlined in the following subsections.
-
 
 ### Operators
 
@@ -67,6 +70,7 @@ The `PythonOperator` is actually declared a deprecated function. Airflow 2.0 pro
 
 As its name suggests, the `BashOperator` executes commands in the bash shell. 
 
+\footnotesize
 ```python
 from airflow.operators.bash_operator import BashOperator
 
@@ -76,11 +80,13 @@ bash_task = BashOperator(
     dag=action_operator_fundamentals
 )
 ```
+\normalsize
 
 **PythonOperator**
 
 The `PythonOperator` expects a Python callable. Airflow passes a set of keyword arguments from the `op_kwargs` dictionary to the callable as input.
 
+\footnotesize
 ```python
 from airflow.operators.python_operator import PythonOperator
 
@@ -94,11 +100,13 @@ sleep_task = PythonOperator(
     dag=action_operator_fundamentals
 )
 ```
+\normalsize
 
 **EmailOperator**
 
 The `EmailOperator` allows to send predefined emails from an Airflow DAG run. For example, this could be used to notify if a workflow was successfull or not. The `EmailOperator` does require the Airflow system to be configured with email server details as a prerequisite. Please refer to the official docs on how to do this.
 
+\footnotesize
 ```python
 from airflow.operators.email_operator import EmailOperator
 
@@ -111,6 +119,7 @@ email_task = EmailOperator(
     dag=action_operator_fundamentals
 )
 ```
+\normalsize
 
 #### Transfer Operators
 
@@ -118,6 +127,7 @@ email_task = EmailOperator(
 
 The `GoogleApiToS3Operator` makes requests to any Google API that supports discovery and uploads its response to AWS S3. The example below loads data from Google Sheets and saves it to an AWS S3 file.
 
+\footnotesize
 ```python
 from airflow.providers.amazon.aws.transfers.google_api_to_s3 import GoogleApiToS3Operator
 
@@ -135,11 +145,13 @@ task_google_sheets_values_to_s3 = GoogleApiToS3Operator(
     s3_destination_key=s3_destination_key,
 )
 ```
+\normalsize
 
 **DynamoDBToS3Operator**
 
 The `DynamoDBToS3Operator` copies the content of an AWS DynamoDB table to an AWS S3 bucket. It is also possible to specifiy criteria such as `dynamodb_scan_kwargs` to filter the transfered data and only replicate records according to criteria.
 
+\footnotesize
 ```python
 from airflow.providers.amazon.aws.transfers.dynamodb_to_s3 import DynamoDBToS3Operator
 
@@ -154,11 +166,13 @@ backup_db = DynamoDBToS3Operator(
     file_size=20,
 )
 ```
+\normalsize
 
 **AzureFileShareToGCSOperator**
 
 The `AzureFileShareToGCSOperator` transfers files from the Azure FileShare to the Google Storage. Even though the storage systems are quite similar, this operator is beneficial when the cloud provider needs to be changed. The `share_name`-parameter denotes the Azure FileShare share name to transfer files from. Similarly, the `dest_gcs`specifies the destination bucket on the Google Cloud.
 
+\footnotesize
 ```python
 from airflow.providers.google.cloud.transfers.azure_fileshare_to_gcs import AzureFileShareToGCSOperator
 
@@ -176,6 +190,7 @@ sync_azure_files_with_gcs = AzureFileShareToGCSOperator(
     google_impersonation_chain=None,
 )
 ```
+\normalsize
 
 #### Sensors
 
@@ -184,6 +199,7 @@ A *sensor* is a special subclass of an operator that is triggered when an extern
 It is also possible to specify further requirements to check the condition. The `mode` argument sets how to check for a condition. `mode='poke'` denotes to run a task repeatedly until it is successful (this is the default), whereas `mode='reschedule'` gives up a task slot and tries again later.
 Simultaneously, the `poke_interval` defines how long a sensor should wait between checks, and the `timeout` parameter defines how long to wait before letting a task fail. Below example shows a `FileSensor` that checks the creation of a file with a `poke_interval` defined.
 
+\footnotesize
 ```python
 from airflow.contrib.sensors.file_sensor import FileSensor
 
@@ -193,18 +209,19 @@ file_sensor_task = FileSensor(task_id='file_sense',
                               dag=sensor_operator_fundamentals
                               )
 ```
+\normalsize
 
 Other sensors are for example:
 * `ExternalTaskSensor` - waits for a task in another DAG to complete
 * `HttpSensor` - Requests a web URL and checks for content
 * `SqlSensor` - Runs a SQL query to check for content
 
-
 ###  Tasks
 
 To use an operator in a DAG it needs to be instantiated as a task. Tasks determine how to execute an operator’s work within the context of a DAG. The concepts of a *Task* and *Operator* are actually somewhat interchangeable as each task is actually a subclass of Airflow’s `BaseOperator`. However, it is useful to think of them as separate concepts. Tasks are Instances of operators and are usually assigned to a Python variable.
 The following code instantiates the `BashOperator` to two different variables `task_1` and `task_2`. The `depends_on_past` argument ensures that the previously scheduled task has succeeded before the current task is triggered.
 
+\footnotesize
 ```python
 task_1 = BashOperator(
     task_id="print_date",
@@ -227,9 +244,11 @@ task_3 = BashOperator(
     dag=task_fundamentals
 )
 ```
+\normalsize
 
 Tasks can be referred to by their `task_id` either using the web interface or using the CLI within the airflow tools. `airflow tasks test` runs task instances locally, outputs their log to stdout (on screen), does not bother with dependencies, and does not communicate the state (running, success, failed, …) to the database. It simply allows testing a single task instance. The same accounts for `airflow dags test`
 
+\footnotesize
 ```bash
 # Run a single task with the following command
 airflow run <dag_id> <task_id> <start_date>
@@ -243,6 +262,7 @@ airflow tasks test task_fundamentals print_date 2015-06-01
 # Testing the task sleep
 airflow tasks test task_fundamentals sleep 2015-06-01
 ```
+\normalsize
 
 #### Task dependencies
 
@@ -253,12 +273,16 @@ A machine learning or data workflow usually has a specific order in which its ta
 
 An exemplary code and chaining examples of tasks would look like this:
 
+\footnotesize
 ```python
 # Simply chained dependencies
 task_1 >> task_2 >> task_3
 ```
-![](./images/03-Airflow/task-dependencies.png "task-dependencies")
+\normalsize
 
+![](./images/03-Airflow/task-dependencies.png "task-dependencies"){ width=100% }
+
+\footnotesize
 ```python
 # Mixed dependencies
 task_1 >> task_3 << task_2
@@ -269,26 +293,34 @@ task_2 >> task_3
 
 # or
 [task_1, task_2] >> task_3
-
 ```
-![](./images/03-Airflow/task-dependencies_mixed.png "task-dependencies_mixed")
+\normalsize
 
+![](./images/03-Airflow/task-dependencies_mixed.png "task-dependencies_mixed"){ width=100% }
+
+\footnotesize
 ```python
 # It is also possible to define dependencies with
 task_1.set_downstream(task_2)
 task_3.set_upstream(task_1)
 ```
-![](./images/03-Airflow/task-dependencies_upstream.png "task-dependencies_upstream")
+\normalsize
 
+![](./images/03-Airflow/task-dependencies_upstream.png "task-dependencies_upstream"){ width=100% }
+
+\footnotesize
 ```python
 # It is also possible to mix it completely wild
 task_1 >> task_3 << task_2
 task_1.set_downstream(task_2)
 ```
-![](./images/03-Airflow/task-dependencies_wild.png "task-dependencies_wild")
+\normalsize
+
+![](./images/03-Airflow/task-dependencies_wild.png "task-dependencies_wild"){ width=100% }
 
 It is possible to list all tasks within a DAG using the CLI. Below commands show two approaches.
 
+\footnotesize
 ```bash
 # Prints the list of tasks in the "task_fundamentals" DAG
 airflow tasks list task_fundamentals
@@ -296,9 +328,9 @@ airflow tasks list task_fundamentals
 # Prints the hierarchy of tasks in the "task_fundamentals" DAG
 airflow tasks list task_fundamentals --tree
 ```
+\normalsize
 
 In general, each task of a DAG runs on a different compute resource (also called worker). It may require an extensive use of environment variables to achieve running on the same environment or with elevated privileges. This means that tasks naturally cannot cross communicate which impedes the exchange of information and data. To achieve cross communication an additional feature of Airflow needs to be used, called *XCom*. 
-
 
 ### XCom
 
@@ -312,11 +344,11 @@ The XCom is identified by a *key*-*value* pair stored in the Airflow Metadata Da
 Below example shows this mechanics. However, when looking at the `push` one can see a difference in their functionality. The method `push_by_returning` uses the operators' auto-push functionality that pushes their results into an default XCom key (the default is `return_value`). Using the auto-push functionality allows to only use Python `return` statements and is enabled by setting the `do_xcom_push` argument to `True`, which it also is by default ( `@task` functions do this as well). To push an XCom with a specific key, the `xcom_push`-method needs to be called explicitly. In order to access the `xcom_push` one needs to access the task instance (ti) object. It can be accessed by passing the `"ti"` parameter to the Python callable of the PythonOperator. Its usage can be seen in the `push` method, where also a custom key is given to the XCom.
 Similarly, the `puller` function uses the `xcom_pull` method to pull the previously pushed values from the metadata databes.
 
+\footnotesize
 ```python
 from airflow.models import DAG
 from pendulum import datetime
 from airflow.operators.python_operator import PythonOperator
-
 
 xcom_fundamentals = DAG(
     dag_id='xcom_fundamentals',
@@ -354,7 +386,6 @@ def puller(**kwargs):
     print(f"pulled_value_1: {pulled_value_1}")
     print(f"pulled_value_2: {pulled_value_2}")
 
-
 push1 = PythonOperator(
     task_id='push',
     # provide context is for getting the TI (task instance ) parameters
@@ -381,7 +412,7 @@ pull = PythonOperator(
 # push1, push2 are upstream to pull
 [push1, push2] >> pull
 ```
-
+\normalsize
 
 ### Scheduling
 
@@ -389,7 +420,7 @@ A workflow can be run either triggered manually or on a scheduled basis. Each DA
 
 The Airflow scheduler monitors all DAGs and tasks, and triggers those task instances whose dependencies have been met. A scheduled tasks needs several attributes specified. When looking at the first example of how to define a DAG we can see that we already defined the attributes `start_date`, and `schedule_interval`. We can also add optional attributes such as `end_date`, and `max_tries`.
 
-
+\footnotesize
 ```python
 from airflow.models import DAG
 
@@ -407,7 +438,7 @@ example_dag = DAG(
     default_args=default_args
 )
 ```
-
+\normalsize
 
 ### Taskflow
 
@@ -417,6 +448,7 @@ All of the processing in a TaskFlow DAG is similar to the traditional paradigm o
 
 Defining a workflow of an ETL-pipeline using the TaskFlow paradigm is shown in belows example. The pipeline invokes an *extract* task, sends the ordered data to a *transform* task for summarization, and finally invokes a *load* task with the previously summarized data. Its quite easy to catch that the Taskflow workflow contrasts with Airflow's traditional paradigm in several ways.
 
+\footnotesize
 ```python
 import json
 import pendulum
@@ -459,10 +491,12 @@ def taskflow_api_fundamentals():
 # Finally execute the DAG
 taskflow_api_fundamentals()
 ```
+\normalsize
 
 Even the passing of data between tasks which might run on different workers is all handled by TaskFlow so there is no need to use XCom. However, XCom is still used behind the scenes, but all of the XCom usage passing data between tasks is abstracted away. This allows to view the XCom in the Airflow user interface as before. 
 Belows example shows the `transform` function written in the traditional Airflow using XCom and highlights the simplicity of using TaskFlow.
 
+\footnotesize
 ```python
 def transform(**kwargs):
     ti = kwargs["ti"]
@@ -477,6 +511,7 @@ def transform(**kwargs):
     total_value_json_string = json.dumps(total_value)
     ti.xcom_push("total_order_value", total_value_json_string)
 ```
+\normalsize
 
 As it is clearly visible, using TaskFlow is an easy approach to workflowing in Airflow. It takes away a lot of worries when it comes to building pipelines and allows for a flexible programing experience using decorators. It allows for several more functionalities, such as reusing decorated tasks in multiple DAGs, overriding task parameters like the `task_id`, custom XCom backends to automatically store data in e.g. AWS S3, and using TaskGroups to group multiple tasks for a better overview in the Airflow Interface.
 

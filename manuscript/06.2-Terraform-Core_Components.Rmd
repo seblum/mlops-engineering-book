@@ -9,16 +9,19 @@ Terraform relies on plugins called providers to interact with Cloud providers, S
 
 Depending on the provider it is necessary to supply it with specific parameters. The aws provier for example needs the `region` as well as username and password. If nothing is specified it will automatically pull these information from the *AWS CLI* and the credentials specified under the directory `.aws/config`. It is also a best practice to specify the version of the provider, as the providers are usually maintained and updated on a regular basis.
 
+\footnotesize
 ```bash
 provider "aws" {
   region = "us-east-1"
 }
 ```
+\normalsize
 
 ### Resources
 
 A *resource* is the core building block when working with Terraform. It can be a `"local_file"` such as shown in the example above, or a cloud resource such as an `"aws_instance"` on aws. The resource type is followed by the custom name of the resource in Terraform. Resource definitions are usually specified in the `main.tf`file. Each customization and setting to a ressource is done within its resource specification. The style convention when writing Terraform code states that the resource name is named in lowercase as well as it should not repeat the resource type. An example can be seen below
 
+\footnotesize
 ```bash
 # Ressource type: aws_instance
 # Ressource name: my-instance
@@ -33,6 +36,7 @@ resource "aws_instance" "my-instance" {
   }
 }
 ```
+\normalsize
 
 ### Data Sources
 
@@ -40,6 +44,7 @@ resource "aws_instance" "my-instance" {
 
 A typical example is shown below as the `"aws_ami"` data source available in the AWS provider. This data source is used to recover attributes from an existing AMI (Amazon Machine Image). The example creates a data source called `"ubuntu”` that queries the AMI registry and returns several attributes related to the located image.
 
+\footnotesize
 ```bash
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -54,15 +59,18 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 ```
+\normalsize
 
 Data sources and their attributes can be used in resource definitions by prepending the `data` prefix to the attribute name. The following example used the `"aws_ami"` data source within an `"aws_instace"` resource.
 
+\footnotesize
 ```bash
 resource "aws_instance" "web" {
   ami = data.aws_ami.ubuntu.id 
   instance_type = "t2.micro"
 }
 ```
+\normalsize
 
 ### State
 
@@ -71,6 +79,7 @@ Providing information about already existing resources is the primary purpose of
 
 Terraform uses the concept of a backend to store and retrieve its statefile. The default backend is the local backend which means to store the statefile in the project's root folder. However, we can also configure an alternative (remote) backend to store it elsewhere. The backend can be declared within a `terraform` block in the project files. The given example stores the statefile in an AWS S3 Bucket callen `some-bucket`. Keep in mind this needs access to an AWS account and also needs the AWS provider of terraform.
 
+\footnotesize
 ```bash
 terraform {
   backend "s3" {
@@ -80,3 +89,4 @@ terraform {
   }
 }
 ```
+\normalsize

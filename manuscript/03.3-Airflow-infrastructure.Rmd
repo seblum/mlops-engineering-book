@@ -19,7 +19,7 @@ An Airflow deployment generally consists of five different compontens:
 
 The following graphs shows how the components build up the Airflow architecture.
 
-![Architecture of Airflow as a distributed system](./images/03-Airflow/architecture_airflow.drawio.svg)
+![Architecture of Airflow as a distributed system](./images/03-Airflow/architecture_airflow.drawio.svg){ width=100% }
 
 ### Scheduler 
 
@@ -44,9 +44,11 @@ In a production ready deployment of Airflow the executor pushes the task executi
 
 Examining which executor is currently set can be done by running the following command.
 
+\footnotesize
 ```bash
 airflow config get-value core executor
 ```
+\normalsize
 
 ### DAG Directory
 

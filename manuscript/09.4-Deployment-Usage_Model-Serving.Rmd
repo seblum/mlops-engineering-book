@@ -19,6 +19,7 @@ To initiate the prediction process, the model is first retrieved from the MLflow
 
 #### Importing Dependencies {.unlisted .unnumbered}
 
+\footnotesize
 ```python
 # Imports necessary packages
 import io
@@ -34,26 +35,27 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from PIL import Image
 from tensorflow import keras
-
 ```
+\normalsize
 
 #### Creating the FastAPI Instance {.unlisted .unnumbered}
 An instance of the FastAPI application is created as well as its name and version defined.
 
+\footnotesize
 ```python
 # Create FastAPI instance
 app = FastAPI()
 
 model_name = "Skin Cancer Detection"
 version = "v1.0.0"
-
 ```
+\normalsize
 
 #### Defining API Endpoints {.unlisted .unnumbered}
 
 This section defines three API endpoints: `/info`, `/health`, and `/predict`. The `/info` endpoint returns information about the model, including its name and version. The `/health` endpoint returns the health status of the service. 
 
-
+\footnotesize
 ```python
 @app.get("/info")
 async def model_info():
@@ -74,11 +76,12 @@ async def service_health():
         - Dictionary indicating the health status of the service
     """
     return {"ok"}
-
 ```
+\normalsize
 
 The `/predict` endpoint is used for making predictions and accepts an uploaded file. Within the predict endpoint, two helper functions for image preprocessing are defined. `_read_imagefile` reads the image file from the provided data and returns it as a PIL Image object. `_preprocess_image` performs normalization and reshaping on the image data to prepare it for the model.
 
+\footnotesize
 ```python
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
@@ -123,11 +126,12 @@ async def predict(file: UploadFile = File(...)):
         np_image = np_image / 255.0
         np_image = np_image.reshape(1, 224, 224, 3)
         return np_image
-
 ```
+\normalsize
 
 The following code snippoet contains the actual logic for the `/predict` endpoint. It checks if the uploaded file has a `.jpg` extension. If it does, it reads the image, loads the MLflow model, preprocesses the image, performs the prediction using the model, and returns the predictions as a JSON response. If the file format is not `.jpg`, it raises a `HTTPException` with a status code of 400 and an error message indicating the invalid file format.
 
+\footnotesize
 ```python
     if file.filename.endswith(".jpg"):
         print("[+] Read File")
@@ -150,6 +154,5 @@ The following code snippoet contains the actual logic for the `/predict` endpoin
     else:
         # Raise a HTTP 400 Exception, indicating Bad Request
         raise HTTPException(status_code=400, detail="Invalid file format. Only JPG Files accepted.")
-
 ```
 --->

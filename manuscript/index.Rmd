@@ -4,13 +4,16 @@ subtitle: "Building, Deploying, and Managing Machine Learning Workflows with Air
 author: "Sebastian Blum"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-documentclass: book
+documentclass: scrbook
 bibliography: [book.bib, packages.bib]
 # url: your book url like https://bookdown.org/yihui/bookdown
 # cover-image: path to the social sharing image like images/cover.jpg
 description: |
   Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions.
 link-citations: yes
+links-as-notes: true
+fontsize: 10pt
+linestretch: 1.15
 github-repo: seblum/mlops-engineering-book
 ---
 
