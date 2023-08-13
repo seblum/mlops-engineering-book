@@ -1,0 +1,17 @@
+# Airflow
+
+[Apache Airflow](https://github.com/apache/airflow) is an open-source platform to develop, schedule and monitor workflows. Airflow comes with a web user interface that aims to make managing workflows as easy as possible and provides a good overview of each workflow over time and the ability to inspect logs and manage tasks, for example retrying a task in case of failure.
+
+![](./images/03-Airflow/web-interface_overview.png){ width=100% }
+
+However, the philosophy of Airflow is to define workflows as code, so coding will always be required. Thus, Airflow can also be referred to as a *“Workflows as code”*-tool that allows for a dynamic, extensible, and flexible management of its workflows.
+
+The Airflow platform contains different operators to easily extend and connect with many other technologies. Being able to manage a workflow for all stages of the training of ML models, and the possibility to combine Airflow with other tools like MLflow for model tracking, make Apache Airflow a great tool to incorporate in an MLOps architecture.
+
+The aim of this chapter is to give a tutorial on how to use Airflow from a user perspective, as well as give a short overview of its deployment. Airflow can be deployed in multiple ways, starting from a single processing unit on a local machine to a distributed setup with multiple compute resources for large workflows in a production setting. A detailed description of what an Airflow deployment involves is shown in the section Airflow Infrastructure. 
+The usage tutorial is based on the local installation of Airflow. Please refer to the prerequisits on what is needed to follow through.
+
+### Prerequisites {.unlisted .unnumbered}
+
+The main prerequisites to follow this tutorial to have an Apache Airflow instance installed. The official documentation gives a good overview on [how to do](https://airflow.apache.org/docs/apache-airflow/stable/start.html). It is sufficient to run Airflow on a local deployment using `airflow standalone` or `airflow webserver` and accessing it via any browser under `http://localhost:8080/`. There is no need to set up a complex Airflow deployment on a cluster or else. Further needed is intermediate knowledge of the programming language Python and basic knowledge of bash.
+

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.3 Modules | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.3 Modules | MLOps Engineering" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-08-03" />
+<meta name="date" content="2023-08-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -163,15 +163,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.5" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#devops-engineer"><i class="fa fa-check"></i><b>1.3.5</b> DevOps Engineer</a></li>
 <li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>1.4</b> Ops Tools &amp; Principles</a>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>2</b> Ops Tools &amp; Principles</a>
 <ul>
-<li class="chapter" data-level="1.4.1" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#containerization"><i class="fa fa-check"></i><b>1.4.1</b> Containerization</a></li>
-<li class="chapter" data-level="1.4.2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#version-control"><i class="fa fa-check"></i><b>1.4.2</b> Version Control</a></li>
-<li class="chapter" data-level="1.4.3" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#cicd"><i class="fa fa-check"></i><b>1.4.3</b> CI/CD</a></li>
-<li class="chapter" data-level="1.4.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#infrastructure-as-code"><i class="fa fa-check"></i><b>1.4.4</b> Infrastructure as code</a></li>
+<li class="chapter" data-level="2.1" data-path="containerization.html"><a href="containerization.html"><i class="fa fa-check"></i><b>2.1</b> Containerization</a></li>
+<li class="chapter" data-level="2.2" data-path="version-control.html"><a href="version-control.html"><i class="fa fa-check"></i><b>2.2</b> Version Control</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="version-control.html"><a href="version-control.html#github"><i class="fa fa-check"></i><b>2.2.1</b> Github</a></li>
+<li class="chapter" data-level="2.2.2" data-path="version-control.html"><a href="version-control.html#git-lifecycle"><i class="fa fa-check"></i><b>2.2.2</b> Git lifecycle</a></li>
 </ul></li>
+<li class="chapter" data-level="2.3" data-path="cicd.html"><a href="cicd.html"><i class="fa fa-check"></i><b>2.3</b> CI/CD</a></li>
+<li class="chapter" data-level="2.4" data-path="infrastructure-as-code.html"><a href="infrastructure-as-code.html"><i class="fa fa-check"></i><b>2.4</b> Infrastructure as code</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="overview-about-book-tutorials.html"><a href="overview-about-book-tutorials.html"><i class="fa fa-check"></i><b>2</b> Overview about book tutorials</a></li>
 <li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="core-components.html"><a href="core-components.html"><i class="fa fa-check"></i><b>3.1</b> Core Components</a>
@@ -288,9 +291,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>6.5</b> Exemplary Deployment</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="ml-platform-design.html"><a href="ml-platform-design.html"><i class="fa fa-check"></i><b>7</b> ML Platform Design</a></li>
-<li class="chapter" data-level="8" data-path="ml-platform-deployment.html"><a href="ml-platform-deployment.html"><i class="fa fa-check"></i><b>8</b> ML Platform Deployment</a>
+<li class="chapter" data-level="8" data-path="platform-deployment.html"><a href="platform-deployment.html"><i class="fa fa-check"></i><b>8</b> Platform Deployment</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="root-directory-module.html"><a href="root-directory-module.html"><i class="fa fa-check"></i><b>8.1</b> Root directory module</a></li>
+<li class="chapter" data-level="8.1" data-path="root-module.html"><a href="root-module.html"><i class="fa fa-check"></i><b>8.1</b> Root module</a></li>
 <li class="chapter" data-level="8.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html"><i class="fa fa-check"></i><b>8.2</b> Infrastructure</a>
 <ul>
 <li class="chapter" data-level="8.2.1" data-path="infrastructure-1.html"><a href="infrastructure-1.html#virtual-private-cloud"><i class="fa fa-check"></i><b>8.2.1</b> Virtual Private Cloud</a></li>
@@ -298,36 +301,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2.3" data-path="infrastructure-1.html"><a href="infrastructure-1.html#networking"><i class="fa fa-check"></i><b>8.2.3</b> Networking</a></li>
 <li class="chapter" data-level="8.2.4" data-path="infrastructure-1.html"><a href="infrastructure-1.html#relational-database-service"><i class="fa fa-check"></i><b>8.2.4</b> Relational Database Service</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="modules-2.html"><a href="modules-2.html"><i class="fa fa-check"></i><b>8.3</b> Modules</a>
+<li class="chapter" data-level="8.3" data-path="components.html"><a href="components.html"><i class="fa fa-check"></i><b>8.3</b> Components</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="modules-2.html"><a href="modules-2.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
-<li class="chapter" data-level="8.3.2" data-path="modules-2.html"><a href="modules-2.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
+<li class="chapter" data-level="8.3.1" data-path="components.html"><a href="components.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
+<li class="chapter" data-level="8.3.2" data-path="components.html"><a href="components.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="design-decisions.html"><a href="design-decisions.html"><i class="fa fa-check"></i><b>8.4</b> Design Decisions</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="use-case-development.html"><a href="use-case-development.html"><i class="fa fa-check"></i><b>9</b> Use Case Development</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="integrated-development-environment.html"><a href="integrated-development-environment.html"><i class="fa fa-check"></i><b>9.1</b> Integrated Development Environment</a>
+<li class="chapter" data-level="9.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html"><i class="fa fa-check"></i><b>9.1</b> Integrated Development Environment</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="integrated-development-environment.html"><a href="integrated-development-environment.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
+<li class="chapter" data-level="9.1.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Pipeline Workflow</a>
+<li class="chapter" data-level="9.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Training Pipeline Workflow</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
-<li class="chapter" data-level="9.2.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
+<li class="chapter" data-level="9.2.1" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
+<li class="chapter" data-level="9.2.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Building the Pipeline Steps</a>
+<li class="chapter" data-level="9.3" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Training Pipeline Steps</a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
-<li class="chapter" data-level="9.3.2" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
+<li class="chapter" data-level="9.3.1" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="9.3.2" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
 </ul></li>
 <li class="chapter" data-level="9.4" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html"><i class="fa fa-check"></i><b>9.4</b> Model Serving &amp; Inferencing</a>
 <ul>
 <li class="chapter" data-level="9.4.1" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#model-serving-1"><i class="fa fa-check"></i><b>9.4.1</b> Model Serving</a></li>
-<li class="chapter" data-level="9.4.2" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.4.2</b> Streamlit App</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="model-inferencing.html"><a href="model-inferencing.html"><i class="fa fa-check"></i><b>9.5</b> Model Inferencing</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="model-inferencing.html"><a href="model-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.5.1</b> Streamlit App</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>10</b> Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="glossary.html"><a href="glossary.html"><i class="fa fa-check"></i>Glossary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul>
 
       </nav>
@@ -349,12 +356,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">6.3</span> Modules<a href="modules.html#modules" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A Terraform module allows to reuse resources in multiple places throughout the project. They act as a container to package resource configurations. Much like in standard programming languages, Terraform code can be organized across multiple files and packages instead of having one single file containing all the code. Wrapping code into a module not only allows to reuse it throughout the project, but also in different environments, for example when deploying a <em>dev</em> and a <em>prod</em> infrastructure. Both environments can reuse code from the same module, just with different settings.</p>
 <p>A Terraform module is build as a directory containing one or more resource definition files. Basically, when putting all our code in a single directory, we already have a module. This is exactly what we did in our previous examples. However, terraform does not include subdirectories on its own. Subdirectories must be called explicitly using a terraform <code>module</code>parameter. The example below references a module located in a <code>./network</code> subdirectory and passes two parameters to it.</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb95-1"><a href="modules.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main.tf</span></span>
-<span id="cb95-2"><a href="modules.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> <span class="st">&quot;network&quot;</span> {</span>
-<span id="cb95-3"><a href="modules.html#cb95-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">source</span> = <span class="st">&quot;./networking&quot;</span></span>
-<span id="cb95-4"><a href="modules.html#cb95-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">create_public_ip</span> = true</span>
-<span id="cb95-5"><a href="modules.html#cb95-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">environment</span> = <span class="st">&quot;prod&quot;</span></span>
-<span id="cb95-6"><a href="modules.html#cb95-6" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb94-1"><a href="modules.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main.tf</span></span>
+<span id="cb94-2"><a href="modules.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> <span class="st">&quot;network&quot;</span> {</span>
+<span id="cb94-3"><a href="modules.html#cb94-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">source</span> = <span class="st">&quot;./networking&quot;</span></span>
+<span id="cb94-4"><a href="modules.html#cb94-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">create_public_ip</span> = true</span>
+<span id="cb94-5"><a href="modules.html#cb94-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">environment</span> = <span class="st">&quot;prod&quot;</span></span>
+<span id="cb94-6"><a href="modules.html#cb94-6" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
 <p>Each module consists of a similar file structure as the root directory. This includes a <code>main.tf</code> where all resources are specified, as well as files for different data sources such as <code>variables.tf</code> and <code>outputs.tf</code>. However, providers are usually configured only in the root module and are not reused in modules. Note that there are different approaches on where to specify the providers. They are either specified in the <code>main.tf</code> or a separate <code>providers.tf</code>. It does not make a difference for Terraform as it does not distinguish between the resource definition files. It is merely a strategy to keep code and project in a clean and consistent structure.</p>
 <pre><code>root
 │   main.tf
@@ -368,12 +375,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="input-variables" class="section level3 hasAnchor" number="6.3.1">
 <h3><span class="header-section-number">6.3.1</span> Input Variables<a href="modules.html#input-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Each module can have multiple <em>Input Variables</em>. Input Variables serve as parameters for a Terraform module so users can customize behavior without editing the source. In the previous example of importing a <code>network</code> module, there have been two input variables specified, <code>create_public_ip</code> and <code>environment</code>. Input variables are usually specified in the <code>variables.tf</code> file.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb97-1"><a href="modules.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variables.tf</span></span>
-<span id="cb97-2"><a href="modules.html#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="ex">variable</span> <span class="st">&quot;instance_name&quot;</span> {</span>
-<span id="cb97-3"><a href="modules.html#cb97-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">type</span> = string</span>
-<span id="cb97-4"><a href="modules.html#cb97-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">default</span> = <span class="st">&quot;awesome-instance&quot;</span></span>
-<span id="cb97-5"><a href="modules.html#cb97-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">description</span> = <span class="st">&quot;Name of the aws instance to be created&quot;</span></span>
-<span id="cb97-6"><a href="modules.html#cb97-6" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb96-1"><a href="modules.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variables.tf</span></span>
+<span id="cb96-2"><a href="modules.html#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="ex">variable</span> <span class="st">&quot;instance_name&quot;</span> {</span>
+<span id="cb96-3"><a href="modules.html#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">type</span> = string</span>
+<span id="cb96-4"><a href="modules.html#cb96-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">default</span> = <span class="st">&quot;awesome-instance&quot;</span></span>
+<span id="cb96-5"><a href="modules.html#cb96-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">description</span> = <span class="st">&quot;Name of the aws instance to be created&quot;</span></span>
+<span id="cb96-6"><a href="modules.html#cb96-6" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
 <p>Each variable has a type (e.g. <code>string</code>, <code>map</code>, <code>set</code>, <code>boolen</code>) and may have a <code>default</code> value and <code>description</code>. Any variable that has no default must be supplied with a value when calling the <code>module</code> reference. This means that variables defined at the root module need values assigned to as a requirement so Terraform will not fail. This can be done by different resources, for example</p>
 <ul>
 <li>a variable’s <code>default</code> value</li>
@@ -382,45 +389,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>a <code>.tfvars</code> file where the variable values are specified; Terraform can load variable definitions from these files automatically (please check online resources for further insights)</li>
 </ul>
 <p>Variables can be used in expressions using the <code>var.</code>prefix such as shown in below example. We use the resource configuration of the previous example to create an <code>aws_instance</code> but this time its name is provided by an input variable.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb98-1"><a href="modules.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main.tf</span></span>
-<span id="cb98-2"><a href="modules.html#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_instance&quot;</span> <span class="st">&quot;awesome-instance&quot;</span> {</span>
-<span id="cb98-3"><a href="modules.html#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">ami</span>           = <span class="st">&quot;ami-0ddbdea833a8d2f0d&quot;</span></span>
-<span id="cb98-4"><a href="modules.html#cb98-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">instance_type</span> = <span class="st">&quot;t2.micro&quot;</span></span>
-<span id="cb98-5"><a href="modules.html#cb98-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb98-6"><a href="modules.html#cb98-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">tags</span> = {</span>
-<span id="cb98-7"><a href="modules.html#cb98-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Name</span> = var.instance_name</span>
-<span id="cb98-8"><a href="modules.html#cb98-8" aria-hidden="true" tabindex="-1"></a>  <span class="er">}</span></span>
-<span id="cb98-9"><a href="modules.html#cb98-9" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb97-1"><a href="modules.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main.tf</span></span>
+<span id="cb97-2"><a href="modules.html#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_instance&quot;</span> <span class="st">&quot;awesome-instance&quot;</span> {</span>
+<span id="cb97-3"><a href="modules.html#cb97-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">ami</span>           = <span class="st">&quot;ami-0ddbdea833a8d2f0d&quot;</span></span>
+<span id="cb97-4"><a href="modules.html#cb97-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">instance_type</span> = <span class="st">&quot;t2.micro&quot;</span></span>
+<span id="cb97-5"><a href="modules.html#cb97-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb97-6"><a href="modules.html#cb97-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">tags</span> = {</span>
+<span id="cb97-7"><a href="modules.html#cb97-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Name</span> = var.instance_name</span>
+<span id="cb97-8"><a href="modules.html#cb97-8" aria-hidden="true" tabindex="-1"></a>  <span class="er">}</span></span>
+<span id="cb97-9"><a href="modules.html#cb97-9" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
 </div>
 <div id="output-variables" class="section level3 hasAnchor" number="6.3.2">
 <h3><span class="header-section-number">6.3.2</span> Output Variables<a href="modules.html#output-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Similar to Input variables, a terraform module has <em>output variables</em>. As their name states, output variables return values of a Terraform module and are denoted in the <em>outputs.tf</em> file as expected. A module’s consumer has no access to any resources or data created within the module itself. However, sometimes a modules attrivutes are needed for another module or resource. Output variables address this issue by exposing a defined subset of the created resources.</p>
 <p>The example below defines an output value <em>instance_address</em> containing the IP address of an EC2 instance the we create with a module. Any module that reference this module can use the <em>instance_address</em> value by referencing it via <em>module.module_name.instance_address</em></p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb99-1"><a href="modules.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># outputs.tf</span></span>
-<span id="cb99-2"><a href="modules.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;instance_address&quot;</span> {</span>
-<span id="cb99-3"><a href="modules.html#cb99-3" aria-hidden="true" tabindex="-1"></a>      <span class="ex">value</span> = aws_instance.awesome-instance.private_ip</span>
-<span id="cb99-4"><a href="modules.html#cb99-4" aria-hidden="true" tabindex="-1"></a>      <span class="ex">description</span> = <span class="st">&quot;Web server&#39;s private IP address&quot;</span></span>
-<span id="cb99-5"><a href="modules.html#cb99-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span></code></pre></div>
-<p><img src="images/06-Terraform/outputs.png" title="outputs" /></p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb98-1"><a href="modules.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># outputs.tf</span></span>
+<span id="cb98-2"><a href="modules.html#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;instance_address&quot;</span> {</span>
+<span id="cb98-3"><a href="modules.html#cb98-3" aria-hidden="true" tabindex="-1"></a>      <span class="ex">value</span> = aws_instance.awesome-instance.private_ip</span>
+<span id="cb98-4"><a href="modules.html#cb98-4" aria-hidden="true" tabindex="-1"></a>      <span class="ex">description</span> = <span class="st">&quot;Web server&#39;s private IP address&quot;</span></span>
+<span id="cb98-5"><a href="modules.html#cb98-5" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span></code></pre></div>
+<p><img src="images/06-Terraform/outputs.png" title="outputs" style="width:100.0%" /></p>
 </div>
 <div id="local-variables" class="section level3 hasAnchor" number="6.3.3">
 <h3><span class="header-section-number">6.3.3</span> Local Variables<a href="modules.html#local-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Additionally to Input variables and output variables a module provides the use of local variables. Local values are basically just a convenience feature to assign a shorter name to an expression and work like standard variables. This means theor scope is also limited to the module they are declared in. Using local variables reduces code repetitions which can be especially valuable when dealing with output variables from a module.</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb100-1"><a href="modules.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main.tf</span></span>
-<span id="cb100-2"><a href="modules.html#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="ex">locals</span> {</span>
-<span id="cb100-3"><a href="modules.html#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">vpc_id</span> = module.network.vpc_id</span>
-<span id="cb100-4"><a href="modules.html#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
-<span id="cb100-5"><a href="modules.html#cb100-5" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> <span class="st">&quot;network&quot;</span> {</span>
-<span id="cb100-6"><a href="modules.html#cb100-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">source</span> = <span class="st">&quot;./network&quot;</span></span>
-<span id="cb100-7"><a href="modules.html#cb100-7" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
-<span id="cb100-8"><a href="modules.html#cb100-8" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> <span class="st">&quot;service1&quot;</span> {</span>
-<span id="cb100-9"><a href="modules.html#cb100-9" aria-hidden="true" tabindex="-1"></a>  <span class="bu">source</span> = <span class="st">&quot;./service1&quot;</span></span>
-<span id="cb100-10"><a href="modules.html#cb100-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">vpc_id</span> = local.vpc_id</span>
-<span id="cb100-11"><a href="modules.html#cb100-11" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
-<span id="cb100-12"><a href="modules.html#cb100-12" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> <span class="st">&quot;service2&quot;</span> {</span>
-<span id="cb100-13"><a href="modules.html#cb100-13" aria-hidden="true" tabindex="-1"></a>  <span class="bu">source</span> = <span class="st">&quot;./service2&quot;</span></span>
-<span id="cb100-14"><a href="modules.html#cb100-14" aria-hidden="true" tabindex="-1"></a>  <span class="ex">vpc_id</span> = local.vpc_id</span>
-<span id="cb100-15"><a href="modules.html#cb100-15" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb99-1"><a href="modules.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main.tf</span></span>
+<span id="cb99-2"><a href="modules.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="ex">locals</span> {</span>
+<span id="cb99-3"><a href="modules.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">vpc_id</span> = module.network.vpc_id</span>
+<span id="cb99-4"><a href="modules.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb99-5"><a href="modules.html#cb99-5" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> <span class="st">&quot;network&quot;</span> {</span>
+<span id="cb99-6"><a href="modules.html#cb99-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">source</span> = <span class="st">&quot;./network&quot;</span></span>
+<span id="cb99-7"><a href="modules.html#cb99-7" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb99-8"><a href="modules.html#cb99-8" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> <span class="st">&quot;service1&quot;</span> {</span>
+<span id="cb99-9"><a href="modules.html#cb99-9" aria-hidden="true" tabindex="-1"></a>  <span class="bu">source</span> = <span class="st">&quot;./service1&quot;</span></span>
+<span id="cb99-10"><a href="modules.html#cb99-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">vpc_id</span> = local.vpc_id</span>
+<span id="cb99-11"><a href="modules.html#cb99-11" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb99-12"><a href="modules.html#cb99-12" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> <span class="st">&quot;service2&quot;</span> {</span>
+<span id="cb99-13"><a href="modules.html#cb99-13" aria-hidden="true" tabindex="-1"></a>  <span class="bu">source</span> = <span class="st">&quot;./service2&quot;</span></span>
+<span id="cb99-14"><a href="modules.html#cb99-14" aria-hidden="true" tabindex="-1"></a>  <span class="ex">vpc_id</span> = local.vpc_id</span>
+<span id="cb99-15"><a href="modules.html#cb99-15" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
 
 </div>
 </div>

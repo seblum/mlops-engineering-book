@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8.3 Components | MLOps Engineering</title>
+  <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8.3 Components | MLOps Engineering" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  <meta name="github-repo" content="seblum/mlops-engineering-book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8.3 Components | MLOps Engineering" />
+  
+  <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  
+
+<meta name="author" content="Sebastian Blum" />
+
+
+<meta name="date" content="2023-08-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="infrastructure-1.html"/>
+<link rel="next" href="design-decisions.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MLOps Engineering</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html"><i class="fa fa-check"></i>Preamble</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html"><i class="fa fa-check"></i><b>1.1</b> Machine Learning Workflow</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html#ml-worflow-tools"><i class="fa fa-check"></i><b>1.1.1</b> ML Worflow Tools</a></li>
+<li class="chapter" data-level="1.1.2" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html#developing-machine-learning-models"><i class="fa fa-check"></i><b>1.1.2</b> Developing Machine Learning Models</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html"><i class="fa fa-check"></i><b>1.2</b> Machine Learning Operations (MLOps)</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#ml-dev-ops"><i class="fa fa-check"></i><b>1.2.1</b> ML + (Dev)-Ops</a></li>
+<li class="chapter" data-level="1.2.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#mlops-lifecycle"><i class="fa fa-check"></i><b>1.2.2</b> MLOps Lifecycle</a></li>
+<li class="chapter" data-level="1.2.3" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#mlops-engineering"><i class="fa fa-check"></i><b>1.2.3</b> MLOps Engineering</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html"><i class="fa fa-check"></i><b>1.3</b> Roles and Tasks in MLOps</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#data-engineer"><i class="fa fa-check"></i><b>1.3.1</b> Data Engineer</a></li>
+<li class="chapter" data-level="1.3.2" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#data-scientist"><i class="fa fa-check"></i><b>1.3.2</b> Data Scientist</a></li>
+<li class="chapter" data-level="1.3.3" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#ml-engineer"><i class="fa fa-check"></i><b>1.3.3</b> ML Engineer</a></li>
+<li class="chapter" data-level="1.3.4" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#mlops-engineer"><i class="fa fa-check"></i><b>1.3.4</b> MLOps Engineer</a></li>
+<li class="chapter" data-level="1.3.5" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#devops-engineer"><i class="fa fa-check"></i><b>1.3.5</b> DevOps Engineer</a></li>
+<li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>2</b> Ops Tools &amp; Principles</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="containerization.html"><a href="containerization.html"><i class="fa fa-check"></i><b>2.1</b> Containerization</a></li>
+<li class="chapter" data-level="2.2" data-path="version-control.html"><a href="version-control.html"><i class="fa fa-check"></i><b>2.2</b> Version Control</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="version-control.html"><a href="version-control.html#github"><i class="fa fa-check"></i><b>2.2.1</b> Github</a></li>
+<li class="chapter" data-level="2.2.2" data-path="version-control.html"><a href="version-control.html#git-lifecycle"><i class="fa fa-check"></i><b>2.2.2</b> Git lifecycle</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="cicd.html"><a href="cicd.html"><i class="fa fa-check"></i><b>2.3</b> CI/CD</a></li>
+<li class="chapter" data-level="2.4" data-path="infrastructure-as-code.html"><a href="infrastructure-as-code.html"><i class="fa fa-check"></i><b>2.4</b> Infrastructure as code</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="core-components.html"><a href="core-components.html"><i class="fa fa-check"></i><b>3.1</b> Core Components</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="core-components.html"><a href="core-components.html#dags"><i class="fa fa-check"></i><b>3.1.1</b> DAGs</a></li>
+<li class="chapter" data-level="3.1.2" data-path="core-components.html"><a href="core-components.html#operators"><i class="fa fa-check"></i><b>3.1.2</b> Operators</a></li>
+<li class="chapter" data-level="3.1.3" data-path="core-components.html"><a href="core-components.html#tasks"><i class="fa fa-check"></i><b>3.1.3</b> Tasks</a></li>
+<li class="chapter" data-level="3.1.4" data-path="core-components.html"><a href="core-components.html#xcom"><i class="fa fa-check"></i><b>3.1.4</b> XCom</a></li>
+<li class="chapter" data-level="3.1.5" data-path="core-components.html"><a href="core-components.html#scheduling"><i class="fa fa-check"></i><b>3.1.5</b> Scheduling</a></li>
+<li class="chapter" data-level="3.1.6" data-path="core-components.html"><a href="core-components.html#taskflow"><i class="fa fa-check"></i><b>3.1.6</b> Taskflow</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>3.2</b> Exemplary ML workflow</a></li>
+<li class="chapter" data-level="3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>3.3</b> Airflow infrastructure</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#airflow-as-a-distributed-system"><i class="fa fa-check"></i><b>3.3.1</b> Airflow as a distributed system</a></li>
+<li class="chapter" data-level="3.3.2" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#scheduler"><i class="fa fa-check"></i><b>3.3.2</b> Scheduler</a></li>
+<li class="chapter" data-level="3.3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#webserver"><i class="fa fa-check"></i><b>3.3.3</b> Webserver</a></li>
+<li class="chapter" data-level="3.3.4" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#executor"><i class="fa fa-check"></i><b>3.3.4</b> Executor</a></li>
+<li class="chapter" data-level="3.3.5" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#dag-directory"><i class="fa fa-check"></i><b>3.3.5</b> DAG Directory</a></li>
+<li class="chapter" data-level="3.3.6" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#metadata-database"><i class="fa fa-check"></i><b>3.3.6</b> Metadata Database</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>4</b> MLflow</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="core-components-1.html"><a href="core-components-1.html"><i class="fa fa-check"></i><b>4.1</b> Core Components</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-tracking"><i class="fa fa-check"></i><b>4.1.1</b> MLflow Tracking</a></li>
+<li class="chapter" data-level="4.1.2" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-models"><i class="fa fa-check"></i><b>4.1.2</b> MLflow Models</a></li>
+<li class="chapter" data-level="4.1.3" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-model-registry"><i class="fa fa-check"></i><b>4.1.3</b> MLflow Model Registry</a></li>
+<li class="chapter" data-level="4.1.4" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-projects"><i class="fa fa-check"></i><b>4.1.4</b> MLflow Projects</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html"><i class="fa fa-check"></i><b>4.2</b> MLFflow Architecture</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>4.2.1</b> MLflow Tracking Server</a></li>
+<li class="chapter" data-level="4.2.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-backend-store"><i class="fa fa-check"></i><b>4.2.2</b> MLflow Backend Store</a></li>
+<li class="chapter" data-level="4.2.3" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-artifact-store"><i class="fa fa-check"></i><b>4.2.3</b> MLflow Artifact Store</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>5</b> Kubernetes</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="core-components-2.html"><a href="core-components-2.html"><i class="fa fa-check"></i><b>5.1</b> Core Components</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="core-components-2.html"><a href="core-components-2.html#nodes"><i class="fa fa-check"></i><b>5.1.1</b> Nodes</a></li>
+<li class="chapter" data-level="5.1.2" data-path="core-components-2.html"><a href="core-components-2.html#pods"><i class="fa fa-check"></i><b>5.1.2</b> Pods</a></li>
+<li class="chapter" data-level="5.1.3" data-path="core-components-2.html"><a href="core-components-2.html#imperative-declarative-management"><i class="fa fa-check"></i><b>5.1.3</b> Imperative &amp; Declarative Management</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>5.2</b> Application Deployment &amp; Design</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>5.2.1</b> Deployments</a></li>
+<li class="chapter" data-level="5.2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html#resource-management"><i class="fa fa-check"></i><b>5.2.2</b> Resource Management</a></li>
+<li class="chapter" data-level="5.2.3" data-path="application-deployment-design.html"><a href="application-deployment-design.html#daemonsets"><i class="fa fa-check"></i><b>5.2.3</b> DaemonSets</a></li>
+<li class="chapter" data-level="5.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>5.2.4</b> StatefulSets</a></li>
+<li class="chapter" data-level="5.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>5.2.5</b> Jobs &amp; Cron Jobs</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>5.3</b> Services &amp; Networking</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>5.3.1</b> Services</a></li>
+<li class="chapter" data-level="5.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>5.3.2</b> Service Discovery</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>5.4</b> Volume &amp; Storage</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>5.4.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="5.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>5.4.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="5.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>5.4.3</b> Persistent Volumes</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>5.5</b> Environment, Configuration &amp; Security</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#namespaces"><i class="fa fa-check"></i><b>5.5.1</b> Namespaces</a></li>
+<li class="chapter" data-level="5.5.2" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>5.5.2</b> Labels, Selectors and Annotations</a></li>
+<li class="chapter" data-level="5.5.3" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#configmaps"><i class="fa fa-check"></i><b>5.5.3</b> ConfigMaps</a></li>
+<li class="chapter" data-level="5.5.4" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#secrets"><i class="fa fa-check"></i><b>5.5.4</b> Secrets</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>5.6</b> Observability &amp; Maintenance</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>5.6.1</b> Health Checks</a></li>
+<li class="chapter" data-level="5.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>5.6.2</b> Debugging</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>5.7</b> Helm</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="helm.html"><a href="helm.html#helm-chart-structure"><i class="fa fa-check"></i><b>5.7.1</b> Helm Chart Structure</a></li>
+<li class="chapter" data-level="5.7.2" data-path="helm.html"><a href="helm.html#working-with-helm"><i class="fa fa-check"></i><b>5.7.2</b> Working with Helm</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>6</b> Terraform</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>6.1</b> Basic usage</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="basic-usage.html"><a href="basic-usage.html#terraform-init"><i class="fa fa-check"></i><b>6.1.1</b> terraform init</a></li>
+<li class="chapter" data-level="6.1.2" data-path="basic-usage.html"><a href="basic-usage.html#terraform-validate"><i class="fa fa-check"></i><b>6.1.2</b> terraform validate</a></li>
+<li class="chapter" data-level="6.1.3" data-path="basic-usage.html"><a href="basic-usage.html#terraform-plan"><i class="fa fa-check"></i><b>6.1.3</b> terraform plan</a></li>
+<li class="chapter" data-level="6.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>6.1.4</b> terraform apply</a></li>
+<li class="chapter" data-level="6.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>6.1.5</b> terraform destroy</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="core-components-3.html"><a href="core-components-3.html"><i class="fa fa-check"></i><b>6.2</b> Core Components</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="core-components-3.html"><a href="core-components-3.html#providers"><i class="fa fa-check"></i><b>6.2.1</b> Providers</a></li>
+<li class="chapter" data-level="6.2.2" data-path="core-components-3.html"><a href="core-components-3.html#resources"><i class="fa fa-check"></i><b>6.2.2</b> Resources</a></li>
+<li class="chapter" data-level="6.2.3" data-path="core-components-3.html"><a href="core-components-3.html#data-sources"><i class="fa fa-check"></i><b>6.2.3</b> Data Sources</a></li>
+<li class="chapter" data-level="6.2.4" data-path="core-components-3.html"><a href="core-components-3.html#state"><i class="fa fa-check"></i><b>6.2.4</b> State</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>6.3</b> Modules</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>6.3.1</b> Input Variables</a></li>
+<li class="chapter" data-level="6.3.2" data-path="modules.html"><a href="modules.html#output-variables"><i class="fa fa-check"></i><b>6.3.2</b> Output Variables</a></li>
+<li class="chapter" data-level="6.3.3" data-path="modules.html"><a href="modules.html#local-variables"><i class="fa fa-check"></i><b>6.3.3</b> Local Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html"><i class="fa fa-check"></i><b>6.4</b> Additional tips &amp; tricks</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#count"><i class="fa fa-check"></i><b>6.4.1</b> count</a></li>
+<li class="chapter" data-level="6.4.2" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for-each"><i class="fa fa-check"></i><b>6.4.2</b> for-each</a></li>
+<li class="chapter" data-level="6.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>6.4.3</b> for</a></li>
+<li class="chapter" data-level="6.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>6.4.4</b> Workspaces</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>6.5</b> Exemplary Deployment</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ml-platform-design.html"><a href="ml-platform-design.html"><i class="fa fa-check"></i><b>7</b> ML Platform Design</a></li>
+<li class="chapter" data-level="8" data-path="platform-deployment.html"><a href="platform-deployment.html"><i class="fa fa-check"></i><b>8</b> Platform Deployment</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="root-module.html"><a href="root-module.html"><i class="fa fa-check"></i><b>8.1</b> Root module</a></li>
+<li class="chapter" data-level="8.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html"><i class="fa fa-check"></i><b>8.2</b> Infrastructure</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="infrastructure-1.html"><a href="infrastructure-1.html#virtual-private-cloud"><i class="fa fa-check"></i><b>8.2.1</b> Virtual Private Cloud</a></li>
+<li class="chapter" data-level="8.2.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html#elastic-kubernetes-service"><i class="fa fa-check"></i><b>8.2.2</b> Elastic Kubernetes Service</a></li>
+<li class="chapter" data-level="8.2.3" data-path="infrastructure-1.html"><a href="infrastructure-1.html#networking"><i class="fa fa-check"></i><b>8.2.3</b> Networking</a></li>
+<li class="chapter" data-level="8.2.4" data-path="infrastructure-1.html"><a href="infrastructure-1.html#relational-database-service"><i class="fa fa-check"></i><b>8.2.4</b> Relational Database Service</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="components.html"><a href="components.html"><i class="fa fa-check"></i><b>8.3</b> Components</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="components.html"><a href="components.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
+<li class="chapter" data-level="8.3.2" data-path="components.html"><a href="components.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="design-decisions.html"><a href="design-decisions.html"><i class="fa fa-check"></i><b>8.4</b> Design Decisions</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="use-case-development.html"><a href="use-case-development.html"><i class="fa fa-check"></i><b>9</b> Use Case Development</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html"><i class="fa fa-check"></i><b>9.1</b> Integrated Development Environment</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Training Pipeline Workflow</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
+<li class="chapter" data-level="9.2.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Training Pipeline Steps</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="9.3.2" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html"><i class="fa fa-check"></i><b>9.4</b> Model Serving &amp; Inferencing</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#model-serving-1"><i class="fa fa-check"></i><b>9.4.1</b> Model Serving</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="model-inferencing.html"><a href="model-inferencing.html"><i class="fa fa-check"></i><b>9.5</b> Model Inferencing</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="model-inferencing.html"><a href="model-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.5.1</b> Streamlit App</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="glossary.html"><a href="glossary.html"><i class="fa fa-check"></i>Glossary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MLOps Engineering</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="components" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Components<a href="components.html#components" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Within the setup, there are multiple custom modules, namely airflow, mlflow, jupyterhub, and monitoring. Each module is responsible for deploying a specific workflow tool.</p>
+<p>These module names also align with their corresponding namespaces within the cluster.</p>
+<div id="airflow-1" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Airflow<a href="components.html#airflow-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>Airflow</code> module is responsible for provisioning all components related to the deployment of Airflow. Being a crucial workflow orchestration tool in our ML platform, Airflow is tightly integrated with various other components in the Terraform codebase, which requires it to receive multiple input variables and configurations.
+Airflow itself is deployed in the Terraform code via a Helm chart. The provided Terraform code also integrates the Airflow deployment with AWS S3 for efficient data storage and logging. It also utilizes an AWS RDS instance from the infrastructure section to serve as the metadata storage. Additionally, relevant Kubernetes secrets are incorporated into the setup to ensure a secure deployment.</p>
+<p>The code starts by declaring several local variables that store the names of Kubernetes secrets and S3 buckets for data storage and logging. Next, it creates a Kubernetes namespace for Airflow to isolate the deployment.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb121-1"><a href="components.html#cb121-1" aria-hidden="true" tabindex="-1"></a>locals {</span>
+<span id="cb121-2"><a href="components.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  k8s_airflow_db_secret_name   <span class="op">=</span> <span class="st">&quot;${var.name_prefix}-${var.namespace}-db-auth&quot;</span></span>
+<span id="cb121-3"><a href="components.html#cb121-3" aria-hidden="true" tabindex="-1"></a>  git_airflow_repo_secret_name <span class="op">=</span> <span class="st">&quot;${var.name_prefix}-${var.namespace}-https-git-secret&quot;</span></span>
+<span id="cb121-4"><a href="components.html#cb121-4" aria-hidden="true" tabindex="-1"></a>  git_organization_secret_name <span class="op">=</span> <span class="st">&quot;${var.name_prefix}-${var.namespace}-organization-git-secret&quot;</span></span>
+<span id="cb121-5"><a href="components.html#cb121-5" aria-hidden="true" tabindex="-1"></a>  s3_data_bucket_secret_name   <span class="op">=</span> <span class="st">&quot;${var.name_prefix}-${var.namespace}-${var.s3_data_bucket_secret_name}&quot;</span></span>
+<span id="cb121-6"><a href="components.html#cb121-6" aria-hidden="true" tabindex="-1"></a>  s3_data_bucket_name          <span class="op">=</span> <span class="st">&quot;${var.name_prefix}-${var.namespace}-${var.s3_data_bucket_name}&quot;</span></span>
+<span id="cb121-7"><a href="components.html#cb121-7" aria-hidden="true" tabindex="-1"></a>  s3_log_bucket_name           <span class="op">=</span> <span class="st">&quot;${var.name_prefix}-${var.namespace}-log-storage&quot;</span></span>
+<span id="cb121-8"><a href="components.html#cb121-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb121-9"><a href="components.html#cb121-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-10"><a href="components.html#cb121-10" aria-hidden="true" tabindex="-1"></a>data <span class="st">&quot;aws_caller_identity&quot;</span> <span class="st">&quot;current&quot;</span> {}</span>
+<span id="cb121-11"><a href="components.html#cb121-11" aria-hidden="true" tabindex="-1"></a>data <span class="st">&quot;aws_region&quot;</span> <span class="st">&quot;current&quot;</span> {} # </span>
+<span id="cb121-12"><a href="components.html#cb121-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-13"><a href="components.html#cb121-13" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;kubernetes_namespace&quot;</span> <span class="st">&quot;airflow&quot;</span> {</span>
+<span id="cb121-14"><a href="components.html#cb121-14" aria-hidden="true" tabindex="-1"></a>  metadata {</span>
+<span id="cb121-15"><a href="components.html#cb121-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-16"><a href="components.html#cb121-16" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">namespace</span></span>
+<span id="cb121-17"><a href="components.html#cb121-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb121-18"><a href="components.html#cb121-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb121-19"><a href="components.html#cb121-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-20"><a href="components.html#cb121-20" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="cb121-21"><a href="components.html#cb121-21" aria-hidden="true" tabindex="-1"></a># Log <span class="bu">Storage</span></span>
+<span id="cb121-22"><a href="components.html#cb121-22" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="cb121-23"><a href="components.html#cb121-23" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;s3-remote-logging&quot;</span> {</span>
+<span id="cb121-24"><a href="components.html#cb121-24" aria-hidden="true" tabindex="-1"></a>  source             <span class="op">=</span> <span class="st">&quot;./remote_logging&quot;</span></span>
+<span id="cb121-25"><a href="components.html#cb121-25" aria-hidden="true" tabindex="-1"></a>  s3_log_bucket_name <span class="op">=</span> local<span class="op">.</span><span class="at">s3_log_bucket_name</span></span>
+<span id="cb121-26"><a href="components.html#cb121-26" aria-hidden="true" tabindex="-1"></a>  namespace          <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">namespace</span></span>
+<span id="cb121-27"><a href="components.html#cb121-27" aria-hidden="true" tabindex="-1"></a>  s3_force_destroy   <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">s3_force_destroy</span></span>
+<span id="cb121-28"><a href="components.html#cb121-28" aria-hidden="true" tabindex="-1"></a>  oidc_provider_arn  <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">oidc_provider_arn</span></span>
+<span id="cb121-29"><a href="components.html#cb121-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb121-30"><a href="components.html#cb121-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-31"><a href="components.html#cb121-31" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="cb121-32"><a href="components.html#cb121-32" aria-hidden="true" tabindex="-1"></a># Data <span class="bu">Storage</span></span>
+<span id="cb121-33"><a href="components.html#cb121-33" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="cb121-34"><a href="components.html#cb121-34" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;s3-data-storage&quot;</span> {</span>
+<span id="cb121-35"><a href="components.html#cb121-35" aria-hidden="true" tabindex="-1"></a>  source                     <span class="op">=</span> <span class="st">&quot;./data_storage&quot;</span></span>
+<span id="cb121-36"><a href="components.html#cb121-36" aria-hidden="true" tabindex="-1"></a>  s3_data_bucket_name        <span class="op">=</span> local<span class="op">.</span><span class="at">s3_data_bucket_name</span></span>
+<span id="cb121-37"><a href="components.html#cb121-37" aria-hidden="true" tabindex="-1"></a>  namespace                  <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">namespace</span></span>
+<span id="cb121-38"><a href="components.html#cb121-38" aria-hidden="true" tabindex="-1"></a>  s3_force_destroy           <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">s3_force_destroy</span></span>
+<span id="cb121-39"><a href="components.html#cb121-39" aria-hidden="true" tabindex="-1"></a>  s3_data_bucket_secret_name <span class="op">=</span> local<span class="op">.</span><span class="at">s3_data_bucket_secret_name</span></span>
+<span id="cb121-40"><a href="components.html#cb121-40" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Afterward, two custom modules, <code>"s3-remote-logging"</code> and <code>"s3-data-storage"</code> set up S3 buckets for remote logging and data storage. Both modules handle creating the S3 buckets and necessary IAM roles for accessing them. The terraform code of both modules is not depicted here, it is visible on <a href="https://github.com/seblum/mlops-airflow-on-eks">github</a> though.
+The main difference between the modules are in the in the assume role policies that are needed for the different use cases of storing and reading data, or logging to S3. While the <code>"s3_log_bucket_role"</code> allows a Federated entity, specified by an OIDC provider ARN, to assume the role using <code>"sts:AssumeRoleWithWebIdentity"</code>, the <code>"s3_data_bucket_role"</code> allows both a specific IAM user (constructed from the user’s ARN) and the Amazon S3 service itself to assume the role using <code>"sts:AssumeRole"</code>.</p>
+<p><strong>s3-data-storage role policy</strong></p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb122-1"><a href="components.html#cb122-1" aria-hidden="true" tabindex="-1"></a># s3<span class="op">-</span>data<span class="op">-</span>storage role policy</span>
+<span id="cb122-2"><a href="components.html#cb122-2" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_iam_role&quot;</span> <span class="st">&quot;s3_data_bucket_role&quot;</span> {</span>
+<span id="cb122-3"><a href="components.html#cb122-3" aria-hidden="true" tabindex="-1"></a>  name                 <span class="op">=</span> <span class="st">&quot;${var.namespace}-s3-data-bucket-role&quot;</span></span>
+<span id="cb122-4"><a href="components.html#cb122-4" aria-hidden="true" tabindex="-1"></a>  max_session_duration <span class="op">=</span> <span class="dv">28800</span></span>
+<span id="cb122-5"><a href="components.html#cb122-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-6"><a href="components.html#cb122-6" aria-hidden="true" tabindex="-1"></a>  assume_role_policy <span class="op">=</span> <span class="op">&lt;&lt;</span>EOF</span>
+<span id="cb122-7"><a href="components.html#cb122-7" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb122-8"><a href="components.html#cb122-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Version&quot;</span><span class="op">:</span> <span class="st">&quot;2012-10-17&quot;</span><span class="op">,</span></span>
+<span id="cb122-9"><a href="components.html#cb122-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Statement&quot;</span><span class="op">:</span> [</span>
+<span id="cb122-10"><a href="components.html#cb122-10" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb122-11"><a href="components.html#cb122-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Effect&quot;</span><span class="op">:</span> <span class="st">&quot;Allow&quot;</span><span class="op">,</span></span>
+<span id="cb122-12"><a href="components.html#cb122-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Principal&quot;</span><span class="op">:</span> {</span>
+<span id="cb122-13"><a href="components.html#cb122-13" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;AWS&quot;</span><span class="op">:</span> <span class="st">&quot;arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/${aws_iam_user.s3_data_bucket_user.name}&quot;</span></span>
+<span id="cb122-14"><a href="components.html#cb122-14" aria-hidden="true" tabindex="-1"></a>            }<span class="op">,</span></span>
+<span id="cb122-15"><a href="components.html#cb122-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Action&quot;</span><span class="op">:</span> <span class="st">&quot;sts:AssumeRole&quot;</span></span>
+<span id="cb122-16"><a href="components.html#cb122-16" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span>
+<span id="cb122-17"><a href="components.html#cb122-17" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb122-18"><a href="components.html#cb122-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Effect&quot;</span><span class="op">:</span> <span class="st">&quot;Allow&quot;</span><span class="op">,</span></span>
+<span id="cb122-19"><a href="components.html#cb122-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Principal&quot;</span><span class="op">:</span> {</span>
+<span id="cb122-20"><a href="components.html#cb122-20" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;Service&quot;</span><span class="op">:</span> <span class="st">&quot;s3.amazonaws.com&quot;</span></span>
+<span id="cb122-21"><a href="components.html#cb122-21" aria-hidden="true" tabindex="-1"></a>            }<span class="op">,</span></span>
+<span id="cb122-22"><a href="components.html#cb122-22" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Action&quot;</span><span class="op">:</span> <span class="st">&quot;sts:AssumeRole&quot;</span></span>
+<span id="cb122-23"><a href="components.html#cb122-23" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb122-24"><a href="components.html#cb122-24" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb122-25"><a href="components.html#cb122-25" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb122-26"><a href="components.html#cb122-26" aria-hidden="true" tabindex="-1"></a>  EOF</span>
+<span id="cb122-27"><a href="components.html#cb122-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>s3-remote-logging role policy</strong></p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb123-1"><a href="components.html#cb123-1" aria-hidden="true" tabindex="-1"></a># s3<span class="op">-</span>remote<span class="op">-</span>logging role policy</span>
+<span id="cb123-2"><a href="components.html#cb123-2" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;aws_iam_role&quot;</span> <span class="st">&quot;s3_log_bucket_role&quot;</span> {</span>
+<span id="cb123-3"><a href="components.html#cb123-3" aria-hidden="true" tabindex="-1"></a>  name                 <span class="op">=</span> <span class="st">&quot;${var.namespace}-s3-log-bucket-access-role&quot;</span></span>
+<span id="cb123-4"><a href="components.html#cb123-4" aria-hidden="true" tabindex="-1"></a>  max_session_duration <span class="op">=</span> <span class="dv">28800</span></span>
+<span id="cb123-5"><a href="components.html#cb123-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-6"><a href="components.html#cb123-6" aria-hidden="true" tabindex="-1"></a>  assume_role_policy <span class="op">=</span> <span class="op">&lt;&lt;</span>EOF</span>
+<span id="cb123-7"><a href="components.html#cb123-7" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb123-8"><a href="components.html#cb123-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Version&quot;</span><span class="op">:</span> <span class="st">&quot;2012-10-17&quot;</span><span class="op">,</span></span>
+<span id="cb123-9"><a href="components.html#cb123-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Statement&quot;</span><span class="op">:</span> [</span>
+<span id="cb123-10"><a href="components.html#cb123-10" aria-hidden="true" tabindex="-1"></a>      {</span>
+<span id="cb123-11"><a href="components.html#cb123-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Action&quot;</span> <span class="op">:</span> <span class="st">&quot;sts:AssumeRoleWithWebIdentity&quot;</span><span class="op">,</span></span>
+<span id="cb123-12"><a href="components.html#cb123-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Effect&quot;</span><span class="op">:</span> <span class="st">&quot;Allow&quot;</span><span class="op">,</span></span>
+<span id="cb123-13"><a href="components.html#cb123-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Principal&quot;</span> <span class="op">:</span> {</span>
+<span id="cb123-14"><a href="components.html#cb123-14" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;Federated&quot;</span> <span class="op">:</span> [</span>
+<span id="cb123-15"><a href="components.html#cb123-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;${var.oidc_provider_arn}&quot;</span> </span>
+<span id="cb123-16"><a href="components.html#cb123-16" aria-hidden="true" tabindex="-1"></a>          ]</span>
+<span id="cb123-17"><a href="components.html#cb123-17" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb123-18"><a href="components.html#cb123-18" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb123-19"><a href="components.html#cb123-19" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb123-20"><a href="components.html#cb123-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb123-21"><a href="components.html#cb123-21" aria-hidden="true" tabindex="-1"></a>  EOF</span>
+<span id="cb123-22"><a href="components.html#cb123-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>After the S3 buckets are set up, the code proceeds to create Kubernetes secrets to store various credentials required for Airflow’s operation. These include credentials for PostgreSQL database, GitHub authentication secrets for accessing private repositories, and secrets for accessing GitHub organizations which are required to authenticate users. The <code>"rds-airflow"</code> module is used to create the RDS instance for Airflow, which will serve as the external database for the deployment.</p>
+<p>The Apache Airflow deployment is defined using a <code>helm_release</code> of the <em>Airflow Community Helm Chart</em> and is highly customized to cater to our specific needs. The release includes various configurations for Airflow, such as custom environment variables, extra environment variables sourced from the GitHub organization secret, and the <code>KubernetesExecutor</code> Airflow executor.
+The deployment enables DAG synchronization of a dedicated Github repository which includes our Airflow DAGs (see chapter 9). It also configures a persistent volume using Amazon EFS for Airflow logs and a Kubernetes Ingress resource to expose the Airflow web interface using an Application Load Balancer (ALB). Additionally, readiness and liveness probes are configured for the web server.</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb124-1"><a href="components.html#cb124-1" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="cb124-2"><a href="components.html#cb124-2" aria-hidden="true" tabindex="-1"></a># Helm Release Airflow</span>
+<span id="cb124-3"><a href="components.html#cb124-3" aria-hidden="true" tabindex="-1"></a>#</span>
+<span id="cb124-4"><a href="components.html#cb124-4" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;kubernetes_secret&quot;</span> <span class="st">&quot;airflow_db_credentials&quot;</span> {</span>
+<span id="cb124-5"><a href="components.html#cb124-5" aria-hidden="true" tabindex="-1"></a>  metadata {</span>
+<span id="cb124-6"><a href="components.html#cb124-6" aria-hidden="true" tabindex="-1"></a>    name      <span class="op">=</span> local<span class="op">.</span><span class="at">k8s_airflow_db_secret_name</span></span>
+<span id="cb124-7"><a href="components.html#cb124-7" aria-hidden="true" tabindex="-1"></a>    namespace <span class="op">=</span> helm_release<span class="op">.</span><span class="at">airflow</span><span class="op">.</span><span class="at">namespace</span></span>
+<span id="cb124-8"><a href="components.html#cb124-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb124-9"><a href="components.html#cb124-9" aria-hidden="true" tabindex="-1"></a>  data <span class="op">=</span> {</span>
+<span id="cb124-10"><a href="components.html#cb124-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;postgresql-password&quot;</span> <span class="op">=</span> module<span class="op">.</span><span class="at">rds</span><span class="op">-</span>airflow<span class="op">.</span><span class="at">rds_password</span></span>
+<span id="cb124-11"><a href="components.html#cb124-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb124-12"><a href="components.html#cb124-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb124-13"><a href="components.html#cb124-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-14"><a href="components.html#cb124-14" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;kubernetes_secret&quot;</span> <span class="st">&quot;airflow_https_git_secret&quot;</span> {</span>
+<span id="cb124-15"><a href="components.html#cb124-15" aria-hidden="true" tabindex="-1"></a>  metadata {</span>
+<span id="cb124-16"><a href="components.html#cb124-16" aria-hidden="true" tabindex="-1"></a>    name      <span class="op">=</span> local<span class="op">.</span><span class="at">git_airflow_repo_secret_name</span></span>
+<span id="cb124-17"><a href="components.html#cb124-17" aria-hidden="true" tabindex="-1"></a>    namespace <span class="op">=</span> helm_release<span class="op">.</span><span class="at">airflow</span><span class="op">.</span><span class="at">namespace</span></span>
+<span id="cb124-18"><a href="components.html#cb124-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb124-19"><a href="components.html#cb124-19" aria-hidden="true" tabindex="-1"></a>  data <span class="op">=</span> {</span>
+<span id="cb124-20"><a href="components.html#cb124-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;username&quot;</span> <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">git_username</span></span>
+<span id="cb124-21"><a href="components.html#cb124-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;password&quot;</span> <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">git_token</span></span>
+<span id="cb124-22"><a href="components.html#cb124-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb124-23"><a href="components.html#cb124-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb124-24"><a href="components.html#cb124-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-25"><a href="components.html#cb124-25" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;kubernetes_secret&quot;</span> <span class="st">&quot;airflow_organization_git_secret&quot;</span> {</span>
+<span id="cb124-26"><a href="components.html#cb124-26" aria-hidden="true" tabindex="-1"></a>  metadata {</span>
+<span id="cb124-27"><a href="components.html#cb124-27" aria-hidden="true" tabindex="-1"></a>    name      <span class="op">=</span> local<span class="op">.</span><span class="at">git_organization_secret_name</span></span>
+<span id="cb124-28"><a href="components.html#cb124-28" aria-hidden="true" tabindex="-1"></a>    namespace <span class="op">=</span> helm_release<span class="op">.</span><span class="at">airflow</span><span class="op">.</span><span class="at">namespace</span></span>
+<span id="cb124-29"><a href="components.html#cb124-29" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb124-30"><a href="components.html#cb124-30" aria-hidden="true" tabindex="-1"></a>  data <span class="op">=</span> {</span>
+<span id="cb124-31"><a href="components.html#cb124-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;GITHUB_CLIENT_ID&quot;</span>     <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">git_client_id</span></span>
+<span id="cb124-32"><a href="components.html#cb124-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;GITHUB_CLIENT_SECRET&quot;</span> <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">git_client_secret</span></span>
+<span id="cb124-33"><a href="components.html#cb124-33" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb124-34"><a href="components.html#cb124-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb124-35"><a href="components.html#cb124-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-36"><a href="components.html#cb124-36" aria-hidden="true" tabindex="-1"></a># RDS</span>
+<span id="cb124-37"><a href="components.html#cb124-37" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;random_password&quot;</span> <span class="st">&quot;rds_password&quot;</span> {</span>
+<span id="cb124-38"><a href="components.html#cb124-38" aria-hidden="true" tabindex="-1"></a>  length  <span class="op">=</span> <span class="dv">16</span></span>
+<span id="cb124-39"><a href="components.html#cb124-39" aria-hidden="true" tabindex="-1"></a>  special <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb124-40"><a href="components.html#cb124-40" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb124-41"><a href="components.html#cb124-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-42"><a href="components.html#cb124-42" aria-hidden="true" tabindex="-1"></a>module <span class="st">&quot;rds-airflow&quot;</span> {</span>
+<span id="cb124-43"><a href="components.html#cb124-43" aria-hidden="true" tabindex="-1"></a>  source                      <span class="op">=</span> <span class="st">&quot;../../infrastructure/rds&quot;</span></span>
+<span id="cb124-44"><a href="components.html#cb124-44" aria-hidden="true" tabindex="-1"></a>  vpc_id                      <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">vpc_id</span></span>
+<span id="cb124-45"><a href="components.html#cb124-45" aria-hidden="true" tabindex="-1"></a>  private_subnets             <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">private_subnets</span></span>
+<span id="cb124-46"><a href="components.html#cb124-46" aria-hidden="true" tabindex="-1"></a>  private_subnets_cidr_blocks <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">private_subnets_cidr_blocks</span></span>
+<span id="cb124-47"><a href="components.html#cb124-47" aria-hidden="true" tabindex="-1"></a>  rds_port                    <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">rds_port</span></span>
+<span id="cb124-48"><a href="components.html#cb124-48" aria-hidden="true" tabindex="-1"></a>  rds_name                    <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">rds_name</span></span>
+<span id="cb124-49"><a href="components.html#cb124-49" aria-hidden="true" tabindex="-1"></a>  rds_password                <span class="op">=</span> <span class="fu">coalesce</span>(<span class="kw">var</span><span class="op">.</span><span class="at">rds_password</span><span class="op">,</span> random_password<span class="op">.</span><span class="at">rds_password</span><span class="op">.</span><span class="at">result</span>)</span>
+<span id="cb124-50"><a href="components.html#cb124-50" aria-hidden="true" tabindex="-1"></a>  rds_engine                  <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">rds_engine</span></span>
+<span id="cb124-51"><a href="components.html#cb124-51" aria-hidden="true" tabindex="-1"></a>  rds_engine_version          <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">rds_engine_version</span></span>
+<span id="cb124-52"><a href="components.html#cb124-52" aria-hidden="true" tabindex="-1"></a>  rds_instance_class          <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">rds_instance_class</span></span>
+<span id="cb124-53"><a href="components.html#cb124-53" aria-hidden="true" tabindex="-1"></a>  storage_type                <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">storage_type</span></span>
+<span id="cb124-54"><a href="components.html#cb124-54" aria-hidden="true" tabindex="-1"></a>  max_allocated_storage       <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">max_allocated_storage</span></span>
+<span id="cb124-55"><a href="components.html#cb124-55" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb124-56"><a href="components.html#cb124-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-57"><a href="components.html#cb124-57" aria-hidden="true" tabindex="-1"></a># HELM</span>
+<span id="cb124-58"><a href="components.html#cb124-58" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;helm_release&quot;</span> <span class="st">&quot;airflow&quot;</span> {</span>
+<span id="cb124-59"><a href="components.html#cb124-59" aria-hidden="true" tabindex="-1"></a>  name             <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">name</span></span>
+<span id="cb124-60"><a href="components.html#cb124-60" aria-hidden="true" tabindex="-1"></a>  namespace        <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">namespace</span></span>
+<span id="cb124-61"><a href="components.html#cb124-61" aria-hidden="true" tabindex="-1"></a>  create_namespace <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">create_namespace</span></span>
+<span id="cb124-62"><a href="components.html#cb124-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-63"><a href="components.html#cb124-63" aria-hidden="true" tabindex="-1"></a>  repository <span class="op">=</span> <span class="st">&quot;https://airflow-helm.github.io/charts&quot;</span></span>
+<span id="cb124-64"><a href="components.html#cb124-64" aria-hidden="true" tabindex="-1"></a>  chart      <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">helm_chart_name</span></span>
+<span id="cb124-65"><a href="components.html#cb124-65" aria-hidden="true" tabindex="-1"></a>  version    <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">helm_chart_version</span></span>
+<span id="cb124-66"><a href="components.html#cb124-66" aria-hidden="true" tabindex="-1"></a>  wait       <span class="op">=</span> <span class="kw">false</span> # deactivate post install hooks otherwise will fail</span>
+<span id="cb124-67"><a href="components.html#cb124-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-68"><a href="components.html#cb124-68" aria-hidden="true" tabindex="-1"></a>  values <span class="op">=</span> [<span class="fu">yamlencode</span>({</span>
+<span id="cb124-69"><a href="components.html#cb124-69" aria-hidden="true" tabindex="-1"></a>    airflow <span class="op">=</span> {</span>
+<span id="cb124-70"><a href="components.html#cb124-70" aria-hidden="true" tabindex="-1"></a>      extraEnv <span class="op">=</span> [</span>
+<span id="cb124-71"><a href="components.html#cb124-71" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb124-72"><a href="components.html#cb124-72" aria-hidden="true" tabindex="-1"></a>          name <span class="op">=</span> <span class="st">&quot;GITHUB_CLIENT_ID&quot;</span></span>
+<span id="cb124-73"><a href="components.html#cb124-73" aria-hidden="true" tabindex="-1"></a>          valueFrom <span class="op">=</span> {</span>
+<span id="cb124-74"><a href="components.html#cb124-74" aria-hidden="true" tabindex="-1"></a>            secretKeyRef <span class="op">=</span> {</span>
+<span id="cb124-75"><a href="components.html#cb124-75" aria-hidden="true" tabindex="-1"></a>              name <span class="op">=</span> local<span class="op">.</span><span class="at">git_organization_secret_name</span></span>
+<span id="cb124-76"><a href="components.html#cb124-76" aria-hidden="true" tabindex="-1"></a>              key  <span class="op">=</span> <span class="st">&quot;GITHUB_CLIENT_ID&quot;</span></span>
+<span id="cb124-77"><a href="components.html#cb124-77" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb124-78"><a href="components.html#cb124-78" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb124-79"><a href="components.html#cb124-79" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span>
+<span id="cb124-80"><a href="components.html#cb124-80" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb124-81"><a href="components.html#cb124-81" aria-hidden="true" tabindex="-1"></a>          name <span class="op">=</span> <span class="st">&quot;GITHUB_CLIENT_SECRET&quot;</span></span>
+<span id="cb124-82"><a href="components.html#cb124-82" aria-hidden="true" tabindex="-1"></a>          valueFrom <span class="op">=</span> {</span>
+<span id="cb124-83"><a href="components.html#cb124-83" aria-hidden="true" tabindex="-1"></a>            secretKeyRef <span class="op">=</span> {</span>
+<span id="cb124-84"><a href="components.html#cb124-84" aria-hidden="true" tabindex="-1"></a>              name <span class="op">=</span> local<span class="op">.</span><span class="at">git_organization_secret_name</span></span>
+<span id="cb124-85"><a href="components.html#cb124-85" aria-hidden="true" tabindex="-1"></a>              key  <span class="op">=</span> <span class="st">&quot;GITHUB_CLIENT_SECRET&quot;</span></span>
+<span id="cb124-86"><a href="components.html#cb124-86" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb124-87"><a href="components.html#cb124-87" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb124-88"><a href="components.html#cb124-88" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb124-89"><a href="components.html#cb124-89" aria-hidden="true" tabindex="-1"></a>      ]<span class="op">,</span></span>
+<span id="cb124-90"><a href="components.html#cb124-90" aria-hidden="true" tabindex="-1"></a>      config <span class="op">=</span> {</span>
+<span id="cb124-91"><a href="components.html#cb124-91" aria-hidden="true" tabindex="-1"></a>        AIRFLOW__WEBSERVER__EXPOSE_CONFIG <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb124-92"><a href="components.html#cb124-92" aria-hidden="true" tabindex="-1"></a>        AIRFLOW__WEBSERVER__BASE_URL      <span class="op">=</span> <span class="st">&quot;http://${var.domain_name}/${var.domain_suffix}&quot;</span></span>
+<span id="cb124-93"><a href="components.html#cb124-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-94"><a href="components.html#cb124-94" aria-hidden="true" tabindex="-1"></a>        AIRFLOW__CORE__LOAD_EXAMPLES <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb124-95"><a href="components.html#cb124-95" aria-hidden="true" tabindex="-1"></a>        AIRFLOW__CORE__DEFAULT_TIMEZONE <span class="op">=</span> <span class="st">&quot;Europe/Amsterdam&quot;</span></span>
+<span id="cb124-96"><a href="components.html#cb124-96" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb124-97"><a href="components.html#cb124-97" aria-hidden="true" tabindex="-1"></a>      users <span class="op">=</span> []</span>
+<span id="cb124-98"><a href="components.html#cb124-98" aria-hidden="true" tabindex="-1"></a>      image <span class="op">=</span> {</span>
+<span id="cb124-99"><a href="components.html#cb124-99" aria-hidden="true" tabindex="-1"></a>        repository <span class="op">=</span> <span class="st">&quot;seblum/airflow&quot;</span></span>
+<span id="cb124-100"><a href="components.html#cb124-100" aria-hidden="true" tabindex="-1"></a>        tag        <span class="op">=</span> <span class="st">&quot;2.6.3-python3.11-custom-light&quot;</span></span>
+<span id="cb124-101"><a href="components.html#cb124-101" aria-hidden="true" tabindex="-1"></a>        pullPolicy <span class="op">=</span> <span class="st">&quot;IfNotPresent&quot;</span></span>
+<span id="cb124-102"><a href="components.html#cb124-102" aria-hidden="true" tabindex="-1"></a>        pullSecret <span class="op">=</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb124-103"><a href="components.html#cb124-103" aria-hidden="true" tabindex="-1"></a>        uid        <span class="op">=</span> <span class="dv">50000</span></span>
+<span id="cb124-104"><a href="components.html#cb124-104" aria-hidden="true" tabindex="-1"></a>        gid        <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb124-105"><a href="components.html#cb124-105" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb124-106"><a href="components.html#cb124-106" aria-hidden="true" tabindex="-1"></a>      executor           <span class="op">=</span> <span class="st">&quot;KubernetesExecutor&quot;</span></span>
+<span id="cb124-107"><a href="components.html#cb124-107" aria-hidden="true" tabindex="-1"></a>      fernetKey          <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">fernet_key</span></span>
+<span id="cb124-108"><a href="components.html#cb124-108" aria-hidden="true" tabindex="-1"></a>      webserverSecretKey <span class="op">=</span> <span class="st">&quot;THIS IS UNSAFE!&quot;</span></span>
+<span id="cb124-109"><a href="components.html#cb124-109" aria-hidden="true" tabindex="-1"></a>      connections <span class="op">=</span> [</span>
+<span id="cb124-110"><a href="components.html#cb124-110" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb124-111"><a href="components.html#cb124-111" aria-hidden="true" tabindex="-1"></a>          id          <span class="op">=</span> <span class="st">&quot;aws_logs_storage_access&quot;</span></span>
+<span id="cb124-112"><a href="components.html#cb124-112" aria-hidden="true" tabindex="-1"></a>          type        <span class="op">=</span> <span class="st">&quot;aws&quot;</span></span>
+<span id="cb124-113"><a href="components.html#cb124-113" aria-hidden="true" tabindex="-1"></a>          description <span class="op">=</span> <span class="st">&quot;AWS connection to store logs on S3&quot;</span></span>
+<span id="cb124-114"><a href="components.html#cb124-114" aria-hidden="true" tabindex="-1"></a>          extra       <span class="op">=</span> <span class="st">&quot;{</span><span class="sc">\&quot;</span><span class="st">region_name</span><span class="sc">\&quot;</span><span class="st">: </span><span class="sc">\&quot;</span><span class="st">${data.aws_region.current.name}</span><span class="sc">\&quot;</span><span class="st">}&quot;</span></span>
+<span id="cb124-115"><a href="components.html#cb124-115" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb124-116"><a href="components.html#cb124-116" aria-hidden="true" tabindex="-1"></a>      ]<span class="op">,</span></span>
+<span id="cb124-117"><a href="components.html#cb124-117" aria-hidden="true" tabindex="-1"></a>      variables <span class="op">=</span> [</span>
+<span id="cb124-118"><a href="components.html#cb124-118" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb124-119"><a href="components.html#cb124-119" aria-hidden="true" tabindex="-1"></a>          key   <span class="op">=</span> <span class="st">&quot;MLFLOW_TRACKING_URI&quot;</span></span>
+<span id="cb124-120"><a href="components.html#cb124-120" aria-hidden="true" tabindex="-1"></a>          value <span class="op">=</span> <span class="st">&quot;http://mlflow-service.mlflow.svc.cluster.local&quot;</span></span>
+<span id="cb124-121"><a href="components.html#cb124-121" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span>
+<span id="cb124-122"><a href="components.html#cb124-122" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb124-123"><a href="components.html#cb124-123" aria-hidden="true" tabindex="-1"></a>          key   <span class="op">=</span> <span class="st">&quot;s3_access_name&quot;</span></span>
+<span id="cb124-124"><a href="components.html#cb124-124" aria-hidden="true" tabindex="-1"></a>          value <span class="op">=</span> <span class="st">&quot;${local.s3_data_bucket_secret_name}&quot;</span></span>
+<span id="cb124-125"><a href="components.html#cb124-125" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb124-126"><a href="components.html#cb124-126" aria-hidden="true" tabindex="-1"></a>      ]</span>
+<span id="cb124-127"><a href="components.html#cb124-127" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb124-128"><a href="components.html#cb124-128" aria-hidden="true" tabindex="-1"></a>    serviceAccount <span class="op">=</span> {</span>
+<span id="cb124-129"><a href="components.html#cb124-129" aria-hidden="true" tabindex="-1"></a>      create <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb124-130"><a href="components.html#cb124-130" aria-hidden="true" tabindex="-1"></a>      name   <span class="op">=</span> <span class="st">&quot;airflow-sa&quot;</span></span>
+<span id="cb124-131"><a href="components.html#cb124-131" aria-hidden="true" tabindex="-1"></a>      annotations <span class="op">=</span> {</span>
+<span id="cb124-132"><a href="components.html#cb124-132" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;eks.amazonaws.com/role-arn&quot;</span> <span class="op">=</span> <span class="st">&quot;${module.s3-remote-logging.s3_log_bucket_role_arn}&quot;</span></span>
+<span id="cb124-133"><a href="components.html#cb124-133" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb124-134"><a href="components.html#cb124-134" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb124-135"><a href="components.html#cb124-135" aria-hidden="true" tabindex="-1"></a>    scheduler <span class="op">=</span> {</span>
+<span id="cb124-136"><a href="components.html#cb124-136" aria-hidden="true" tabindex="-1"></a>      logCleanup <span class="op">=</span> {</span>
+<span id="cb124-137"><a href="components.html#cb124-137" aria-hidden="true" tabindex="-1"></a>        enabled <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb124-138"><a href="components.html#cb124-138" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb124-139"><a href="components.html#cb124-139" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb124-140"><a href="components.html#cb124-140" aria-hidden="true" tabindex="-1"></a>    workers <span class="op">=</span> {</span>
+<span id="cb124-141"><a href="components.html#cb124-141" aria-hidden="true" tabindex="-1"></a>      enabled <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb124-142"><a href="components.html#cb124-142" aria-hidden="true" tabindex="-1"></a>      logCleanup <span class="op">=</span> {</span>
+<span id="cb124-143"><a href="components.html#cb124-143" aria-hidden="true" tabindex="-1"></a>        enables <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb124-144"><a href="components.html#cb124-144" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb124-145"><a href="components.html#cb124-145" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb124-146"><a href="components.html#cb124-146" aria-hidden="true" tabindex="-1"></a>    flower <span class="op">=</span> {</span>
+<span id="cb124-147"><a href="components.html#cb124-147" aria-hidden="true" tabindex="-1"></a>      enabled <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb124-148"><a href="components.html#cb124-148" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb124-149"><a href="components.html#cb124-149" aria-hidden="true" tabindex="-1"></a>    postgresql <span class="op">=</span> {</span>
+<span id="cb124-150"><a href="components.html#cb124-150" aria-hidden="true" tabindex="-1"></a>      enabled <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb124-151"><a href="components.html#cb124-151" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb124-152"><a href="components.html#cb124-152" aria-hidden="true" tabindex="-1"></a>    redis <span class="op">=</span> {</span>
+<span id="cb124-153"><a href="components.html#cb124-153" aria-hidden="true" tabindex="-1"></a>      enabled <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb124-154"><a href="components.html#cb124-154" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb124-155"><a href="components.html#cb124-155" aria-hidden="true" tabindex="-1"></a>    externalDatabase <span class="op">=</span> {</span>
+<span id="cb124-156"><a href="components.html#cb124-156" aria-hidden="true" tabindex="-1"></a>      type              <span class="op">=</span> <span class="st">&quot;postgres&quot;</span></span>
+<span id="cb124-157"><a href="components.html#cb124-157" aria-hidden="true" tabindex="-1"></a>      host              <span class="op">=</span> module<span class="op">.</span><span class="at">rds</span><span class="op">-</span>airflow<span class="op">.</span><span class="at">rds_host</span></span>
+<span id="cb124-158"><a href="components.html#cb124-158" aria-hidden="true" tabindex="-1"></a>      port              <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">rds_port</span></span>
+<span id="cb124-159"><a href="components.html#cb124-159" aria-hidden="true" tabindex="-1"></a>      database          <span class="op">=</span> <span class="st">&quot;airflow_db&quot;</span></span>
+<span id="cb124-160"><a href="components.html#cb124-160" aria-hidden="true" tabindex="-1"></a>      user              <span class="op">=</span> <span class="st">&quot;airflow_admin&quot;</span></span>
+<span id="cb124-161"><a href="components.html#cb124-161" aria-hidden="true" tabindex="-1"></a>      passwordSecret    <span class="op">=</span> local<span class="op">.</span><span class="at">k8s_airflow_db_secret_name</span></span>
+<span id="cb124-162"><a href="components.html#cb124-162" aria-hidden="true" tabindex="-1"></a>      passwordSecretKey <span class="op">=</span> <span class="st">&quot;postgresql-password&quot;</span></span>
+<span id="cb124-163"><a href="components.html#cb124-163" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb124-164"><a href="components.html#cb124-164" aria-hidden="true" tabindex="-1"></a>    dags <span class="op">=</span> {</span>
+<span id="cb124-165"><a href="components.html#cb124-165" aria-hidden="true" tabindex="-1"></a>      path <span class="op">=</span> <span class="st">&quot;/opt/airflow/dags&quot;</span></span>
+<span id="cb124-166"><a href="components.html#cb124-166" aria-hidden="true" tabindex="-1"></a>      gitSync <span class="op">=</span> {</span>
+<span id="cb124-167"><a href="components.html#cb124-167" aria-hidden="true" tabindex="-1"></a>        enabled               <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb124-168"><a href="components.html#cb124-168" aria-hidden="true" tabindex="-1"></a>        repo                  <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">git_repository_url</span></span>
+<span id="cb124-169"><a href="components.html#cb124-169" aria-hidden="true" tabindex="-1"></a>        branch                <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">git_branch</span></span>
+<span id="cb124-170"><a href="components.html#cb124-170" aria-hidden="true" tabindex="-1"></a>        revision              <span class="op">=</span> <span class="st">&quot;HEAD&quot;</span></span>
+<span id="cb124-171"><a href="components.html#cb124-171" aria-hidden="true" tabindex="-1"></a>        repoSubPath           <span class="op">=</span> <span class="st">&quot;workflows&quot;</span></span>
+<span id="cb124-172"><a href="components.html#cb124-172" aria-hidden="true" tabindex="-1"></a>        httpSecret            <span class="op">=</span> local<span class="op">.</span><span class="at">git_airflow_repo_secret_name</span></span>
+<span id="cb124-173"><a href="components.html#cb124-173" aria-hidden="true" tabindex="-1"></a>        httpSecretUsernameKey <span class="op">=</span> <span class="st">&quot;username&quot;</span></span>
+<span id="cb124-174"><a href="components.html#cb124-174" aria-hidden="true" tabindex="-1"></a>        httpSecretPasswordKey <span class="op">=</span> <span class="st">&quot;password&quot;</span></span>
+<span id="cb124-175"><a href="components.html#cb124-175" aria-hidden="true" tabindex="-1"></a>        syncWait              <span class="op">=</span> <span class="dv">60</span></span>
+<span id="cb124-176"><a href="components.html#cb124-176" aria-hidden="true" tabindex="-1"></a>        syncTimeout           <span class="op">=</span> <span class="dv">120</span></span>
+<span id="cb124-177"><a href="components.html#cb124-177" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb124-178"><a href="components.html#cb124-178" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb124-179"><a href="components.html#cb124-179" aria-hidden="true" tabindex="-1"></a>    logs <span class="op">=</span> {</span>
+<span id="cb124-180"><a href="components.html#cb124-180" aria-hidden="true" tabindex="-1"></a>      path <span class="op">=</span> <span class="st">&quot;/opt/airflow/logs&quot;</span></span>
+<span id="cb124-181"><a href="components.html#cb124-181" aria-hidden="true" tabindex="-1"></a>      persistence <span class="op">=</span> {</span>
+<span id="cb124-182"><a href="components.html#cb124-182" aria-hidden="true" tabindex="-1"></a>        enabled <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb124-183"><a href="components.html#cb124-183" aria-hidden="true" tabindex="-1"></a>        <span class="dt">storageClass</span> <span class="op">:</span> <span class="st">&quot;efs&quot;</span></span>
+<span id="cb124-184"><a href="components.html#cb124-184" aria-hidden="true" tabindex="-1"></a>        <span class="dt">size</span> <span class="op">:</span> <span class="st">&quot;5Gi&quot;</span></span>
+<span id="cb124-185"><a href="components.html#cb124-185" aria-hidden="true" tabindex="-1"></a>        <span class="dt">accessMode</span> <span class="op">:</span> <span class="st">&quot;ReadWriteMany&quot;</span></span>
+<span id="cb124-186"><a href="components.html#cb124-186" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb124-187"><a href="components.html#cb124-187" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb124-188"><a href="components.html#cb124-188" aria-hidden="true" tabindex="-1"></a>    ingress <span class="op">=</span> {</span>
+<span id="cb124-189"><a href="components.html#cb124-189" aria-hidden="true" tabindex="-1"></a>      enabled    <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb124-190"><a href="components.html#cb124-190" aria-hidden="true" tabindex="-1"></a>      apiVersion <span class="op">=</span> <span class="st">&quot;networking.k8s.io/v1&quot;</span></span>
+<span id="cb124-191"><a href="components.html#cb124-191" aria-hidden="true" tabindex="-1"></a>      web <span class="op">=</span> {</span>
+<span id="cb124-192"><a href="components.html#cb124-192" aria-hidden="true" tabindex="-1"></a>        annotations <span class="op">=</span> {</span>
+<span id="cb124-193"><a href="components.html#cb124-193" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;external-dns.alpha.kubernetes.io/hostname&quot;</span>  <span class="op">=</span> <span class="st">&quot;${var.domain_name}&quot;</span></span>
+<span id="cb124-194"><a href="components.html#cb124-194" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;alb.ingress.kubernetes.io/scheme&quot;</span>           <span class="op">=</span> <span class="st">&quot;internet-facing&quot;</span></span>
+<span id="cb124-195"><a href="components.html#cb124-195" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;alb.ingress.kubernetes.io/target-type&quot;</span>      <span class="op">=</span> <span class="st">&quot;ip&quot;</span></span>
+<span id="cb124-196"><a href="components.html#cb124-196" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;kubernetes.io/ingress.class&quot;</span>                <span class="op">=</span> <span class="st">&quot;alb&quot;</span></span>
+<span id="cb124-197"><a href="components.html#cb124-197" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;alb.ingress.kubernetes.io/group.name&quot;</span>       <span class="op">=</span> <span class="st">&quot;mlplatform&quot;</span></span>
+<span id="cb124-198"><a href="components.html#cb124-198" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;alb.ingress.kubernetes.io/healthcheck-path&quot;</span> <span class="op">=</span> <span class="st">&quot;/${var.domain_suffix}/health&quot;</span></span>
+<span id="cb124-199"><a href="components.html#cb124-199" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb124-200"><a href="components.html#cb124-200" aria-hidden="true" tabindex="-1"></a>        path <span class="op">=</span> <span class="st">&quot;/${var.domain_suffix}&quot;</span></span>
+<span id="cb124-201"><a href="components.html#cb124-201" aria-hidden="true" tabindex="-1"></a>        host <span class="op">=</span> <span class="st">&quot;${var.domain_name}&quot;</span></span>
+<span id="cb124-202"><a href="components.html#cb124-202" aria-hidden="true" tabindex="-1"></a>        precedingPaths <span class="op">=</span> [{</span>
+<span id="cb124-203"><a href="components.html#cb124-203" aria-hidden="true" tabindex="-1"></a>          path        <span class="op">=</span> <span class="st">&quot;/${var.domain_suffix}*&quot;</span></span>
+<span id="cb124-204"><a href="components.html#cb124-204" aria-hidden="true" tabindex="-1"></a>          serviceName <span class="op">=</span> <span class="st">&quot;airflow-web&quot;</span></span>
+<span id="cb124-205"><a href="components.html#cb124-205" aria-hidden="true" tabindex="-1"></a>          servicePort <span class="op">=</span> <span class="st">&quot;web&quot;</span></span>
+<span id="cb124-206"><a href="components.html#cb124-206" aria-hidden="true" tabindex="-1"></a>        }]</span>
+<span id="cb124-207"><a href="components.html#cb124-207" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb124-208"><a href="components.html#cb124-208" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb124-209"><a href="components.html#cb124-209" aria-hidden="true" tabindex="-1"></a>    web <span class="op">=</span> {</span>
+<span id="cb124-210"><a href="components.html#cb124-210" aria-hidden="true" tabindex="-1"></a>      readinessProbe <span class="op">=</span> {</span>
+<span id="cb124-211"><a href="components.html#cb124-211" aria-hidden="true" tabindex="-1"></a>        enabled             <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb124-212"><a href="components.html#cb124-212" aria-hidden="true" tabindex="-1"></a>        initialDelaySeconds <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb124-213"><a href="components.html#cb124-213" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb124-214"><a href="components.html#cb124-214" aria-hidden="true" tabindex="-1"></a>      livenessProbe <span class="op">=</span> {</span>
+<span id="cb124-215"><a href="components.html#cb124-215" aria-hidden="true" tabindex="-1"></a>        enabled             <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb124-216"><a href="components.html#cb124-216" aria-hidden="true" tabindex="-1"></a>        initialDelaySeconds <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb124-217"><a href="components.html#cb124-217" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb124-218"><a href="components.html#cb124-218" aria-hidden="true" tabindex="-1"></a>      webserverConfig <span class="op">=</span> {</span>
+<span id="cb124-219"><a href="components.html#cb124-219" aria-hidden="true" tabindex="-1"></a>        stringOverride <span class="op">=</span> <span class="fu">file</span>(<span class="st">&quot;${path.module}/WebServerConfig.py&quot;</span>)</span>
+<span id="cb124-220"><a href="components.html#cb124-220" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb124-221"><a href="components.html#cb124-221" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb124-222"><a href="components.html#cb124-222" aria-hidden="true" tabindex="-1"></a>  })]</span>
+<span id="cb124-223"><a href="components.html#cb124-223" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In a final step of the Helm Chart, a custom <code>WebServerConfig.py</code> is specified which is set to integrate our Airflow deployment with a Github Authentication provider. The Python script consists of two major parts: a custom AirflowSecurityManager class definition and the actual webserver_config configuration file for Apache Airflow’s web server.</p>
+<p>The custom <code>CustomSecurityManager</code> class extends the default AirflowSecurityManager to retrieves user information from the GitHub OAuth provider. The webserver_config configuration sets up the configurations for the web server component of Apache Airflow by indicating that OAuth will be used for user authentication. The <code>SECURITY_MANAGER_CLASS</code> is set to the previously defined <code>CustomSecurityManager</code> to customizes how user information is retrieved from the OAuth provider. Finally, the GitHub provider is configured with its required parameters like <code>client_id</code>, <code>client_secret</code>, and API endpoints.</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb125-1"><a href="components.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="co">#######################################</span></span>
+<span id="cb125-2"><a href="components.html#cb125-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom AirflowSecurityManager</span></span>
+<span id="cb125-3"><a href="components.html#cb125-3" aria-hidden="true" tabindex="-1"></a><span class="co">#######################################</span></span>
+<span id="cb125-4"><a href="components.html#cb125-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow.www.security <span class="im">import</span> AirflowSecurityManager</span>
+<span id="cb125-5"><a href="components.html#cb125-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb125-6"><a href="components.html#cb125-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-7"><a href="components.html#cb125-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-8"><a href="components.html#cb125-8" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CustomSecurityManager(AirflowSecurityManager):</span>
+<span id="cb125-9"><a href="components.html#cb125-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_oauth_user_info(<span class="va">self</span>, provider, resp):</span>
+<span id="cb125-10"><a href="components.html#cb125-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> provider <span class="op">==</span> <span class="st">&quot;github&quot;</span>:</span>
+<span id="cb125-11"><a href="components.html#cb125-11" aria-hidden="true" tabindex="-1"></a>            user_data <span class="op">=</span> <span class="va">self</span>.appbuilder.sm.oauth_remotes[provider].get(<span class="st">&quot;user&quot;</span>).json()</span>
+<span id="cb125-12"><a href="components.html#cb125-12" aria-hidden="true" tabindex="-1"></a>            emails_data <span class="op">=</span> (</span>
+<span id="cb125-13"><a href="components.html#cb125-13" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.appbuilder.sm.oauth_remotes[provider].get(<span class="st">&quot;user/emails&quot;</span>).json()</span>
+<span id="cb125-14"><a href="components.html#cb125-14" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb125-15"><a href="components.html#cb125-15" aria-hidden="true" tabindex="-1"></a>            teams_data <span class="op">=</span> (</span>
+<span id="cb125-16"><a href="components.html#cb125-16" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.appbuilder.sm.oauth_remotes[provider].get(<span class="st">&quot;user/teams&quot;</span>).json()</span>
+<span id="cb125-17"><a href="components.html#cb125-17" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb125-18"><a href="components.html#cb125-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-19"><a href="components.html#cb125-19" aria-hidden="true" tabindex="-1"></a>            <span class="co"># unpack the user&#39;s name</span></span>
+<span id="cb125-20"><a href="components.html#cb125-20" aria-hidden="true" tabindex="-1"></a>            first_name <span class="op">=</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb125-21"><a href="components.html#cb125-21" aria-hidden="true" tabindex="-1"></a>            last_name <span class="op">=</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb125-22"><a href="components.html#cb125-22" aria-hidden="true" tabindex="-1"></a>            name <span class="op">=</span> user_data.get(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;&quot;</span>).split(maxsplit<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb125-23"><a href="components.html#cb125-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(name) <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb125-24"><a href="components.html#cb125-24" aria-hidden="true" tabindex="-1"></a>                first_name <span class="op">=</span> name[<span class="dv">0</span>]</span>
+<span id="cb125-25"><a href="components.html#cb125-25" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> <span class="bu">len</span>(name) <span class="op">==</span> <span class="dv">2</span>:</span>
+<span id="cb125-26"><a href="components.html#cb125-26" aria-hidden="true" tabindex="-1"></a>                first_name <span class="op">=</span> name[<span class="dv">0</span>]</span>
+<span id="cb125-27"><a href="components.html#cb125-27" aria-hidden="true" tabindex="-1"></a>                last_name <span class="op">=</span> name[<span class="dv">1</span>]</span>
+<span id="cb125-28"><a href="components.html#cb125-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-29"><a href="components.html#cb125-29" aria-hidden="true" tabindex="-1"></a>            <span class="co"># unpack the user&#39;s email</span></span>
+<span id="cb125-30"><a href="components.html#cb125-30" aria-hidden="true" tabindex="-1"></a>            email <span class="op">=</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb125-31"><a href="components.html#cb125-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> email_data <span class="kw">in</span> emails_data:</span>
+<span id="cb125-32"><a href="components.html#cb125-32" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> email_data[<span class="st">&quot;primary&quot;</span>]:</span>
+<span id="cb125-33"><a href="components.html#cb125-33" aria-hidden="true" tabindex="-1"></a>                    email <span class="op">=</span> email_data[<span class="st">&quot;email&quot;</span>]</span>
+<span id="cb125-34"><a href="components.html#cb125-34" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">break</span></span>
+<span id="cb125-35"><a href="components.html#cb125-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-36"><a href="components.html#cb125-36" aria-hidden="true" tabindex="-1"></a>            <span class="co"># unpack the user&#39;s teams as role_keys</span></span>
+<span id="cb125-37"><a href="components.html#cb125-37" aria-hidden="true" tabindex="-1"></a>            <span class="co"># </span><span class="al">NOTE</span><span class="co">: each role key will be &quot;my-github-org/my-team-name&quot;</span></span>
+<span id="cb125-38"><a href="components.html#cb125-38" aria-hidden="true" tabindex="-1"></a>            role_keys <span class="op">=</span> []</span>
+<span id="cb125-39"><a href="components.html#cb125-39" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> team_data <span class="kw">in</span> teams_data:</span>
+<span id="cb125-40"><a href="components.html#cb125-40" aria-hidden="true" tabindex="-1"></a>                team_org <span class="op">=</span> team_data[<span class="st">&quot;organization&quot;</span>][<span class="st">&quot;login&quot;</span>]</span>
+<span id="cb125-41"><a href="components.html#cb125-41" aria-hidden="true" tabindex="-1"></a>                team_slug <span class="op">=</span> team_data[<span class="st">&quot;slug&quot;</span>]</span>
+<span id="cb125-42"><a href="components.html#cb125-42" aria-hidden="true" tabindex="-1"></a>                team_ref <span class="op">=</span> team_org <span class="op">+</span> <span class="st">&quot;/&quot;</span> <span class="op">+</span> team_slug</span>
+<span id="cb125-43"><a href="components.html#cb125-43" aria-hidden="true" tabindex="-1"></a>                role_keys.append(team_ref)</span>
+<span id="cb125-44"><a href="components.html#cb125-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-45"><a href="components.html#cb125-45" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> {</span>
+<span id="cb125-46"><a href="components.html#cb125-46" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;username&quot;</span>: <span class="st">&quot;github_&quot;</span> <span class="op">+</span> user_data.get(<span class="st">&quot;login&quot;</span>, <span class="st">&quot;&quot;</span>),</span>
+<span id="cb125-47"><a href="components.html#cb125-47" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;first_name&quot;</span>: first_name,</span>
+<span id="cb125-48"><a href="components.html#cb125-48" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;last_name&quot;</span>: last_name,</span>
+<span id="cb125-49"><a href="components.html#cb125-49" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;email&quot;</span>: email,</span>
+<span id="cb125-50"><a href="components.html#cb125-50" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;role_keys&quot;</span>: role_keys,</span>
+<span id="cb125-51"><a href="components.html#cb125-51" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb125-52"><a href="components.html#cb125-52" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb125-53"><a href="components.html#cb125-53" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> {}</span>
+<span id="cb125-54"><a href="components.html#cb125-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-55"><a href="components.html#cb125-55" aria-hidden="true" tabindex="-1"></a><span class="co">#######################################</span></span>
+<span id="cb125-56"><a href="components.html#cb125-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Actual `webserver_config.py`</span></span>
+<span id="cb125-57"><a href="components.html#cb125-57" aria-hidden="true" tabindex="-1"></a><span class="co">#######################################</span></span>
+<span id="cb125-58"><a href="components.html#cb125-58" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask_appbuilder.security.manager <span class="im">import</span> AUTH_OAUTH</span>
+<span id="cb125-59"><a href="components.html#cb125-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-60"><a href="components.html#cb125-60" aria-hidden="true" tabindex="-1"></a><span class="co"># only needed for airflow 1.10</span></span>
+<span id="cb125-61"><a href="components.html#cb125-61" aria-hidden="true" tabindex="-1"></a><span class="co"># from airflow import configuration as conf</span></span>
+<span id="cb125-62"><a href="components.html#cb125-62" aria-hidden="true" tabindex="-1"></a><span class="co"># SQLALCHEMY_DATABASE_URI = conf.get(&quot;core&quot;, &quot;SQL_ALCHEMY_CONN&quot;)</span></span>
+<span id="cb125-63"><a href="components.html#cb125-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-64"><a href="components.html#cb125-64" aria-hidden="true" tabindex="-1"></a>AUTH_TYPE <span class="op">=</span> AUTH_OAUTH</span>
+<span id="cb125-65"><a href="components.html#cb125-65" aria-hidden="true" tabindex="-1"></a>SECURITY_MANAGER_CLASS <span class="op">=</span> CustomSecurityManager</span>
+<span id="cb125-66"><a href="components.html#cb125-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-67"><a href="components.html#cb125-67" aria-hidden="true" tabindex="-1"></a><span class="co"># registration configs</span></span>
+<span id="cb125-68"><a href="components.html#cb125-68" aria-hidden="true" tabindex="-1"></a>AUTH_USER_REGISTRATION <span class="op">=</span> <span class="va">True</span>  <span class="co"># allow users who are not already in the FAB DB</span></span>
+<span id="cb125-69"><a href="components.html#cb125-69" aria-hidden="true" tabindex="-1"></a>AUTH_USER_REGISTRATION_ROLE <span class="op">=</span> (</span>
+<span id="cb125-70"><a href="components.html#cb125-70" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Public&quot;</span>  <span class="co"># this role will be given in addition to any AUTH_ROLES_MAPPING</span></span>
+<span id="cb125-71"><a href="components.html#cb125-71" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb125-72"><a href="components.html#cb125-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-73"><a href="components.html#cb125-73" aria-hidden="true" tabindex="-1"></a><span class="co"># the list of providers which the user can choose from</span></span>
+<span id="cb125-74"><a href="components.html#cb125-74" aria-hidden="true" tabindex="-1"></a>OAUTH_PROVIDERS <span class="op">=</span> [</span>
+<span id="cb125-75"><a href="components.html#cb125-75" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb125-76"><a href="components.html#cb125-76" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;name&quot;</span>: <span class="st">&quot;github&quot;</span>,</span>
+<span id="cb125-77"><a href="components.html#cb125-77" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;icon&quot;</span>: <span class="st">&quot;fa-github&quot;</span>,</span>
+<span id="cb125-78"><a href="components.html#cb125-78" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;token_key&quot;</span>: <span class="st">&quot;access_token&quot;</span>,</span>
+<span id="cb125-79"><a href="components.html#cb125-79" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;remote_app&quot;</span>: {</span>
+<span id="cb125-80"><a href="components.html#cb125-80" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;client_id&quot;</span>: os.getenv(<span class="st">&quot;GITHUB_CLIENT_ID&quot;</span>),</span>
+<span id="cb125-81"><a href="components.html#cb125-81" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;client_secret&quot;</span>: os.getenv(<span class="st">&quot;GITHUB_CLIENT_SECRET&quot;</span>),</span>
+<span id="cb125-82"><a href="components.html#cb125-82" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;api_base_url&quot;</span>: <span class="st">&quot;https://api.github.com&quot;</span>,</span>
+<span id="cb125-83"><a href="components.html#cb125-83" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;client_kwargs&quot;</span>: {<span class="st">&quot;scope&quot;</span>: <span class="st">&quot;read:org read:user user:email&quot;</span>},</span>
+<span id="cb125-84"><a href="components.html#cb125-84" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;access_token_url&quot;</span>: <span class="st">&quot;https://github.com/login/oauth/access_token&quot;</span>,</span>
+<span id="cb125-85"><a href="components.html#cb125-85" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;authorize_url&quot;</span>: <span class="st">&quot;https://github.com/login/oauth/authorize&quot;</span>,</span>
+<span id="cb125-86"><a href="components.html#cb125-86" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb125-87"><a href="components.html#cb125-87" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb125-88"><a href="components.html#cb125-88" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb125-89"><a href="components.html#cb125-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-90"><a href="components.html#cb125-90" aria-hidden="true" tabindex="-1"></a><span class="co"># a mapping from the values of `userinfo[&quot;role_keys&quot;]` to a list of FAB roles</span></span>
+<span id="cb125-91"><a href="components.html#cb125-91" aria-hidden="true" tabindex="-1"></a>AUTH_ROLES_MAPPING <span class="op">=</span> {</span>
+<span id="cb125-92"><a href="components.html#cb125-92" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;github-organization/airflow-users-team&quot;</span>: [<span class="st">&quot;User&quot;</span>],</span>
+<span id="cb125-93"><a href="components.html#cb125-93" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;github-organization/airflow-admin-team&quot;</span>: [<span class="st">&quot;Admin&quot;</span>],</span>
+<span id="cb125-94"><a href="components.html#cb125-94" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb125-95"><a href="components.html#cb125-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-96"><a href="components.html#cb125-96" aria-hidden="true" tabindex="-1"></a><span class="co"># if we should replace ALL the user&#39;s roles each login, or only on registration</span></span>
+<span id="cb125-97"><a href="components.html#cb125-97" aria-hidden="true" tabindex="-1"></a>AUTH_ROLES_SYNC_AT_LOGIN <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb125-98"><a href="components.html#cb125-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-99"><a href="components.html#cb125-99" aria-hidden="true" tabindex="-1"></a><span class="co"># force users to re-auth after 30min of inactivity (to keep roles in sync)</span></span>
+<span id="cb125-100"><a href="components.html#cb125-100" aria-hidden="true" tabindex="-1"></a>PERMANENT_SESSION_LIFETIME <span class="op">=</span> <span class="dv">1800</span></span></code></pre></div>
+<!---
+### Mlflow
+
+To enable model tracking, MLflow is deployed with specific requirements. These include a data store on AWS S3, a metadata store using PostgreSQL (RDS), and the MLflow server. The first two components are created using Terraform resources.
+
+However, MLflow does not have native support for Kubernetes and does not offer an official Helm chart. Despite being an excellent tool, we need to set up a basic custom Helm chart to deploy the MLflow server in this case. We also use a custom container image for running MLflow. This process involves creating YAML configurations for deployment, service, and configmap, which will be executed on our Kubernetes cluster.
+
+It's important to note that the deployment has an open endpoint, which means it lacks sufficient security measures.
+
+```javascript
+
+```
+--->
+</div>
+<div id="jupyterhub" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Jupyterhub<a href="components.html#jupyterhub" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>JupyterHub is utilized in the setup to provide an IDE (Integrated Development Environment). Belows Terraform code defines a <code>helm_release</code> that deploys JupyterHub on our EKS cluster. There are no other resources needed to run JupyterHub compared to the other components of our ML platform
+The Helm configuration specifies various settings and customizations to include a JupyterHub instance with a single-user Jupyter notebook server. For example defining a post-start lifecycle hook to run a Git clone command inside the single-user notebook server container, or defining extra environment variable for the single-user server, namely <code>"MLFLOW_TRACKING_URI"</code> pointing to the previous specified MLflow service.</p>
+<p>The Airflow configuration enables an Ingress resource to expose JupyterHub to the specified domain, and adds annotations to control routing and manage the AWS Application Load Balancer (ALB). It also includes settings for the JupyterHub proxy and enables a culling mechanism to automatically shut down idle user sessions.</p>
+<p>Similar to the Airflow deployment, the JupyterHub instance is configured to use GitHub OAuthenticator for user authentication. The OAuthenticator is configured with the provided GitHub <code>client_id</code> and <code>client_secret</code>, and the <code>oauth_callback_url</code> to set a specific endpoint under the specified domain name.</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb126-1"><a href="components.html#cb126-1" aria-hidden="true" tabindex="-1"></a>resource <span class="st">&quot;helm_release&quot;</span> <span class="st">&quot;jupyterhub&quot;</span> {</span>
+<span id="cb126-2"><a href="components.html#cb126-2" aria-hidden="true" tabindex="-1"></a>  name             <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">name</span></span>
+<span id="cb126-3"><a href="components.html#cb126-3" aria-hidden="true" tabindex="-1"></a>  namespace        <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">name</span></span>
+<span id="cb126-4"><a href="components.html#cb126-4" aria-hidden="true" tabindex="-1"></a>  create_namespace <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">create_namespace</span></span>
+<span id="cb126-5"><a href="components.html#cb126-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-6"><a href="components.html#cb126-6" aria-hidden="true" tabindex="-1"></a>  repository <span class="op">=</span> <span class="st">&quot;https://jupyterhub.github.io/helm-chart/&quot;</span></span>
+<span id="cb126-7"><a href="components.html#cb126-7" aria-hidden="true" tabindex="-1"></a>  chart      <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">helm_chart_name</span></span>
+<span id="cb126-8"><a href="components.html#cb126-8" aria-hidden="true" tabindex="-1"></a>  version    <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">helm_chart_version</span></span>
+<span id="cb126-9"><a href="components.html#cb126-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-10"><a href="components.html#cb126-10" aria-hidden="true" tabindex="-1"></a>  values <span class="op">=</span> [<span class="fu">yamlencode</span>({</span>
+<span id="cb126-11"><a href="components.html#cb126-11" aria-hidden="true" tabindex="-1"></a>    singleuser <span class="op">=</span> {</span>
+<span id="cb126-12"><a href="components.html#cb126-12" aria-hidden="true" tabindex="-1"></a>      defaultUrl <span class="op">=</span> <span class="st">&quot;/lab&quot;</span></span>
+<span id="cb126-13"><a href="components.html#cb126-13" aria-hidden="true" tabindex="-1"></a>      image <span class="op">=</span> {</span>
+<span id="cb126-14"><a href="components.html#cb126-14" aria-hidden="true" tabindex="-1"></a>        name <span class="op">=</span> <span class="st">&quot;seblum/jupyterhub-server&quot;</span></span>
+<span id="cb126-15"><a href="components.html#cb126-15" aria-hidden="true" tabindex="-1"></a>        tag  <span class="op">=</span> <span class="st">&quot;latest&quot;</span></span>
+<span id="cb126-16"><a href="components.html#cb126-16" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb126-17"><a href="components.html#cb126-17" aria-hidden="true" tabindex="-1"></a>      lifecycleHooks <span class="op">=</span> {</span>
+<span id="cb126-18"><a href="components.html#cb126-18" aria-hidden="true" tabindex="-1"></a>        postStart <span class="op">=</span> {</span>
+<span id="cb126-19"><a href="components.html#cb126-19" aria-hidden="true" tabindex="-1"></a>          exec <span class="op">=</span> {</span>
+<span id="cb126-20"><a href="components.html#cb126-20" aria-hidden="true" tabindex="-1"></a>            command <span class="op">=</span> [<span class="st">&quot;git&quot;</span><span class="op">,</span> <span class="st">&quot;clone&quot;</span><span class="op">,</span> <span class="st">&quot;${var.git_repository_url}&quot;</span>]</span>
+<span id="cb126-21"><a href="components.html#cb126-21" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb126-22"><a href="components.html#cb126-22" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb126-23"><a href="components.html#cb126-23" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb126-24"><a href="components.html#cb126-24" aria-hidden="true" tabindex="-1"></a>      extraEnv <span class="op">=</span> {</span>
+<span id="cb126-25"><a href="components.html#cb126-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;MLFLOW_TRACKING_URI&quot;</span> <span class="op">=</span> <span class="st">&quot;http://mlflow-service.mlflow.svc.cluster.local&quot;</span></span>
+<span id="cb126-26"><a href="components.html#cb126-26" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb126-27"><a href="components.html#cb126-27" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb126-28"><a href="components.html#cb126-28" aria-hidden="true" tabindex="-1"></a>    ingress <span class="op">=</span> {</span>
+<span id="cb126-29"><a href="components.html#cb126-29" aria-hidden="true" tabindex="-1"></a>      <span class="dt">enabled</span> <span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb126-30"><a href="components.html#cb126-30" aria-hidden="true" tabindex="-1"></a>      annotations <span class="op">=</span> {</span>
+<span id="cb126-31"><a href="components.html#cb126-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;external-dns.alpha.kubernetes.io/hostname&quot;</span> <span class="op">=</span> <span class="st">&quot;${var.domain_name}&quot;</span></span>
+<span id="cb126-32"><a href="components.html#cb126-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;alb.ingress.kubernetes.io/scheme&quot;</span>          <span class="op">=</span> <span class="st">&quot;internet-facing&quot;</span></span>
+<span id="cb126-33"><a href="components.html#cb126-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;alb.ingress.kubernetes.io/target-type&quot;</span>     <span class="op">=</span> <span class="st">&quot;ip&quot;</span></span>
+<span id="cb126-34"><a href="components.html#cb126-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;kubernetes.io/ingress.class&quot;</span>               <span class="op">=</span> <span class="st">&quot;alb&quot;</span></span>
+<span id="cb126-35"><a href="components.html#cb126-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;alb.ingress.kubernetes.io/group.name&quot;</span>      <span class="op">=</span> <span class="st">&quot;mlplatform&quot;</span></span>
+<span id="cb126-36"><a href="components.html#cb126-36" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb126-37"><a href="components.html#cb126-37" aria-hidden="true" tabindex="-1"></a>      hosts <span class="op">=</span> [<span class="st">&quot;${var.domain_name}&quot;</span><span class="op">,</span> <span class="st">&quot;www.${var.domain_name}&quot;</span>]</span>
+<span id="cb126-38"><a href="components.html#cb126-38" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb126-39"><a href="components.html#cb126-39" aria-hidden="true" tabindex="-1"></a>    proxy <span class="op">=</span> {</span>
+<span id="cb126-40"><a href="components.html#cb126-40" aria-hidden="true" tabindex="-1"></a>      service <span class="op">=</span> {</span>
+<span id="cb126-41"><a href="components.html#cb126-41" aria-hidden="true" tabindex="-1"></a>        type <span class="op">=</span> <span class="st">&quot;ClusterIP&quot;</span></span>
+<span id="cb126-42"><a href="components.html#cb126-42" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb126-43"><a href="components.html#cb126-43" aria-hidden="true" tabindex="-1"></a>      secretToken <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">proxy_secret_token</span></span>
+<span id="cb126-44"><a href="components.html#cb126-44" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb126-45"><a href="components.html#cb126-45" aria-hidden="true" tabindex="-1"></a>    cull <span class="op">=</span> {</span>
+<span id="cb126-46"><a href="components.html#cb126-46" aria-hidden="true" tabindex="-1"></a>      enabled <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb126-47"><a href="components.html#cb126-47" aria-hidden="true" tabindex="-1"></a>      users   <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb126-48"><a href="components.html#cb126-48" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb126-49"><a href="components.html#cb126-49" aria-hidden="true" tabindex="-1"></a>    hub <span class="op">=</span> {</span>
+<span id="cb126-50"><a href="components.html#cb126-50" aria-hidden="true" tabindex="-1"></a>      baseUrl <span class="op">=</span> <span class="st">&quot;/${var.domain_suffix}&quot;</span></span>
+<span id="cb126-51"><a href="components.html#cb126-51" aria-hidden="true" tabindex="-1"></a>      config <span class="op">=</span> {</span>
+<span id="cb126-52"><a href="components.html#cb126-52" aria-hidden="true" tabindex="-1"></a>        GitHubOAuthenticator <span class="op">=</span> {</span>
+<span id="cb126-53"><a href="components.html#cb126-53" aria-hidden="true" tabindex="-1"></a>          client_id          <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">git_client_id</span></span>
+<span id="cb126-54"><a href="components.html#cb126-54" aria-hidden="true" tabindex="-1"></a>          client_secret      <span class="op">=</span> <span class="kw">var</span><span class="op">.</span><span class="at">git_client_secret</span></span>
+<span id="cb126-55"><a href="components.html#cb126-55" aria-hidden="true" tabindex="-1"></a>          oauth_callback_url <span class="op">=</span> <span class="st">&quot;http://${var.domain_name}/${var.domain_suffix}/hub/oauth_callback&quot;</span></span>
+<span id="cb126-56"><a href="components.html#cb126-56" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb126-57"><a href="components.html#cb126-57" aria-hidden="true" tabindex="-1"></a>        JupyterHub <span class="op">=</span> {</span>
+<span id="cb126-58"><a href="components.html#cb126-58" aria-hidden="true" tabindex="-1"></a>          authenticator_class <span class="op">=</span> <span class="st">&quot;github&quot;</span></span>
+<span id="cb126-59"><a href="components.html#cb126-59" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb126-60"><a href="components.html#cb126-60" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb126-61"><a href="components.html#cb126-61" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb126-62"><a href="components.html#cb126-62" aria-hidden="true" tabindex="-1"></a>  })]</span>
+<span id="cb126-63"><a href="components.html#cb126-63" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<!---
+
+### Seldon
+
+Seldon is used for Model deployment.
+
+helm chart installed
+
+--->
+<!---
+
+### Monitoring
+
+Monitoring using Prometheus and Grafana is included in the setup. Although it is not directly part of the ML pipeline, it serves as a good example of how to monitor the cluster effectively. A basic monitoring setup is achieved using Prometheus and Grafana.
+
+Prometheus is employed for [specific purpose], while Grafana is used for [specific purpose]. Both Prometheus and Grafana are deployed using a Helm chart. The connection between Grafana and Prometheus is established within the Grafana Helm chart.
+
+#### Prometheus
+#### Grafana
+
+grafana github oauth and ingress
+--->
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="infrastructure-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="design-decisions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": true,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/seblum/kubernetes-training/edit/master/08.3-Deployment-Infrastructure_Modules.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

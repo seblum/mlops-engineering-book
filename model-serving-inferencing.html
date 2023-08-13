@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9.4 Model Serving &amp; Inferencing | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9.4 Model Serving &amp; Inferencing | MLOps Engineering" />
   <meta property="og:type" content="book" />
@@ -23,15 +23,15 @@
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-08-03" />
+<meta name="date" content="2023-08-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="building-the-pipeline-steps.html"/>
-<link rel="next" href="acknowledgements.html"/>
+<link rel="prev" href="training-pipeline-steps.html"/>
+<link rel="next" href="model-inferencing.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -163,15 +163,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.5" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#devops-engineer"><i class="fa fa-check"></i><b>1.3.5</b> DevOps Engineer</a></li>
 <li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>1.4</b> Ops Tools &amp; Principles</a>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>2</b> Ops Tools &amp; Principles</a>
 <ul>
-<li class="chapter" data-level="1.4.1" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#containerization"><i class="fa fa-check"></i><b>1.4.1</b> Containerization</a></li>
-<li class="chapter" data-level="1.4.2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#version-control"><i class="fa fa-check"></i><b>1.4.2</b> Version Control</a></li>
-<li class="chapter" data-level="1.4.3" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#cicd"><i class="fa fa-check"></i><b>1.4.3</b> CI/CD</a></li>
-<li class="chapter" data-level="1.4.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#infrastructure-as-code"><i class="fa fa-check"></i><b>1.4.4</b> Infrastructure as code</a></li>
+<li class="chapter" data-level="2.1" data-path="containerization.html"><a href="containerization.html"><i class="fa fa-check"></i><b>2.1</b> Containerization</a></li>
+<li class="chapter" data-level="2.2" data-path="version-control.html"><a href="version-control.html"><i class="fa fa-check"></i><b>2.2</b> Version Control</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="version-control.html"><a href="version-control.html#github"><i class="fa fa-check"></i><b>2.2.1</b> Github</a></li>
+<li class="chapter" data-level="2.2.2" data-path="version-control.html"><a href="version-control.html#git-lifecycle"><i class="fa fa-check"></i><b>2.2.2</b> Git lifecycle</a></li>
 </ul></li>
+<li class="chapter" data-level="2.3" data-path="cicd.html"><a href="cicd.html"><i class="fa fa-check"></i><b>2.3</b> CI/CD</a></li>
+<li class="chapter" data-level="2.4" data-path="infrastructure-as-code.html"><a href="infrastructure-as-code.html"><i class="fa fa-check"></i><b>2.4</b> Infrastructure as code</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="overview-about-book-tutorials.html"><a href="overview-about-book-tutorials.html"><i class="fa fa-check"></i><b>2</b> Overview about book tutorials</a></li>
 <li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="core-components.html"><a href="core-components.html"><i class="fa fa-check"></i><b>3.1</b> Core Components</a>
@@ -288,9 +291,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>6.5</b> Exemplary Deployment</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="ml-platform-design.html"><a href="ml-platform-design.html"><i class="fa fa-check"></i><b>7</b> ML Platform Design</a></li>
-<li class="chapter" data-level="8" data-path="ml-platform-deployment.html"><a href="ml-platform-deployment.html"><i class="fa fa-check"></i><b>8</b> ML Platform Deployment</a>
+<li class="chapter" data-level="8" data-path="platform-deployment.html"><a href="platform-deployment.html"><i class="fa fa-check"></i><b>8</b> Platform Deployment</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="root-directory-module.html"><a href="root-directory-module.html"><i class="fa fa-check"></i><b>8.1</b> Root directory module</a></li>
+<li class="chapter" data-level="8.1" data-path="root-module.html"><a href="root-module.html"><i class="fa fa-check"></i><b>8.1</b> Root module</a></li>
 <li class="chapter" data-level="8.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html"><i class="fa fa-check"></i><b>8.2</b> Infrastructure</a>
 <ul>
 <li class="chapter" data-level="8.2.1" data-path="infrastructure-1.html"><a href="infrastructure-1.html#virtual-private-cloud"><i class="fa fa-check"></i><b>8.2.1</b> Virtual Private Cloud</a></li>
@@ -298,36 +301,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2.3" data-path="infrastructure-1.html"><a href="infrastructure-1.html#networking"><i class="fa fa-check"></i><b>8.2.3</b> Networking</a></li>
 <li class="chapter" data-level="8.2.4" data-path="infrastructure-1.html"><a href="infrastructure-1.html#relational-database-service"><i class="fa fa-check"></i><b>8.2.4</b> Relational Database Service</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="modules-2.html"><a href="modules-2.html"><i class="fa fa-check"></i><b>8.3</b> Modules</a>
+<li class="chapter" data-level="8.3" data-path="components.html"><a href="components.html"><i class="fa fa-check"></i><b>8.3</b> Components</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="modules-2.html"><a href="modules-2.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
-<li class="chapter" data-level="8.3.2" data-path="modules-2.html"><a href="modules-2.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
+<li class="chapter" data-level="8.3.1" data-path="components.html"><a href="components.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
+<li class="chapter" data-level="8.3.2" data-path="components.html"><a href="components.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="design-decisions.html"><a href="design-decisions.html"><i class="fa fa-check"></i><b>8.4</b> Design Decisions</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="use-case-development.html"><a href="use-case-development.html"><i class="fa fa-check"></i><b>9</b> Use Case Development</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="integrated-development-environment.html"><a href="integrated-development-environment.html"><i class="fa fa-check"></i><b>9.1</b> Integrated Development Environment</a>
+<li class="chapter" data-level="9.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html"><i class="fa fa-check"></i><b>9.1</b> Integrated Development Environment</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="integrated-development-environment.html"><a href="integrated-development-environment.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
+<li class="chapter" data-level="9.1.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Pipeline Workflow</a>
+<li class="chapter" data-level="9.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Training Pipeline Workflow</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
-<li class="chapter" data-level="9.2.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
+<li class="chapter" data-level="9.2.1" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
+<li class="chapter" data-level="9.2.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Building the Pipeline Steps</a>
+<li class="chapter" data-level="9.3" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Training Pipeline Steps</a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
-<li class="chapter" data-level="9.3.2" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
+<li class="chapter" data-level="9.3.1" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="9.3.2" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
 </ul></li>
 <li class="chapter" data-level="9.4" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html"><i class="fa fa-check"></i><b>9.4</b> Model Serving &amp; Inferencing</a>
 <ul>
 <li class="chapter" data-level="9.4.1" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#model-serving-1"><i class="fa fa-check"></i><b>9.4.1</b> Model Serving</a></li>
-<li class="chapter" data-level="9.4.2" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.4.2</b> Streamlit App</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="model-inferencing.html"><a href="model-inferencing.html"><i class="fa fa-check"></i><b>9.5</b> Model Inferencing</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="model-inferencing.html"><a href="model-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.5.1</b> Streamlit App</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>10</b> Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="glossary.html"><a href="glossary.html"><i class="fa fa-check"></i>Glossary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul>
 
       </nav>
@@ -351,194 +358,163 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The concept involves running a Docker container that serves the pre-trained TensorFlow model using FastAPI. This containerized model is responsible for providing predictions and responses to incoming requests. Additionally, a Streamlit app is used to interact with the served model, enabling users to make inferences by sending input data to the model and receiving the corresponding predictions.</p>
 <div id="model-serving-1" class="section level3 hasAnchor" number="9.4.1">
 <h3><span class="header-section-number">9.4.1</span> Model Serving<a href="model-serving-inferencing.html#model-serving-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The model serving application is built on FastAPI, which includes various endpoints catering to our use case. The primary endpoint, <code>predict</code>, allows for multiple predictions to be made, while additional maintenance endpoints such as <code>info</code> or <code>health</code> provide relevant information about the app itself.</p>
-<p>To initiate the prediction process, the model is first retrieved from the MLflow registry. The specific model to be fetched and the location of the MLflow server are specified through environment variables. Once the model is loaded, it is used to generate predictions based on the provided input data. The API call returns the predictions in the form of a Python list.</p>
-<div id="importing-dependencies-2" class="section level4 unlisted unnumbered hasAnchor">
-<h4>Importing Dependencies<a href="model-serving-inferencing.html#importing-dependencies-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb150"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb150-1"><a href="model-serving-inferencing.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports necessary packages</span></span>
-<span id="cb150-2"><a href="model-serving-inferencing.html#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io</span>
-<span id="cb150-3"><a href="model-serving-inferencing.html#cb150-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb150-4"><a href="model-serving-inferencing.html#cb150-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> io <span class="im">import</span> BytesIO</span>
-<span id="cb150-5"><a href="model-serving-inferencing.html#cb150-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb150-6"><a href="model-serving-inferencing.html#cb150-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlflow</span>
-<span id="cb150-7"><a href="model-serving-inferencing.html#cb150-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlflow.keras</span>
-<span id="cb150-8"><a href="model-serving-inferencing.html#cb150-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb150-9"><a href="model-serving-inferencing.html#cb150-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb150-10"><a href="model-serving-inferencing.html#cb150-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastapi <span class="im">import</span> FastAPI, File, HTTPException, UploadFile</span>
-<span id="cb150-11"><a href="model-serving-inferencing.html#cb150-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastapi.encoders <span class="im">import</span> jsonable_encoder</span>
-<span id="cb150-12"><a href="model-serving-inferencing.html#cb150-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastapi.responses <span class="im">import</span> JSONResponse</span>
-<span id="cb150-13"><a href="model-serving-inferencing.html#cb150-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
-<span id="cb150-14"><a href="model-serving-inferencing.html#cb150-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow <span class="im">import</span> keras</span></code></pre></div>
-</div>
-<div id="creating-the-fastapi-instance" class="section level4 unlisted unnumbered hasAnchor">
-<h4>Creating the FastAPI Instance<a href="model-serving-inferencing.html#creating-the-fastapi-instance" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>An instance of the FastAPI application is created as well as its name and version defined.</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb151-1"><a href="model-serving-inferencing.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create FastAPI instance</span></span>
-<span id="cb151-2"><a href="model-serving-inferencing.html#cb151-2" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> FastAPI()</span>
-<span id="cb151-3"><a href="model-serving-inferencing.html#cb151-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb151-4"><a href="model-serving-inferencing.html#cb151-4" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">&quot;Skin Cancer Detection&quot;</span></span>
-<span id="cb151-5"><a href="model-serving-inferencing.html#cb151-5" aria-hidden="true" tabindex="-1"></a>version <span class="op">=</span> <span class="st">&quot;v1.0.0&quot;</span></span></code></pre></div>
-</div>
-<div id="defining-api-endpoints" class="section level4 unlisted unnumbered hasAnchor">
-<h4>Defining API Endpoints<a href="model-serving-inferencing.html#defining-api-endpoints" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>This section defines three API endpoints: <code>/info</code>, <code>/health</code>, and <code>/predict</code>. The <code>/info</code> endpoint returns information about the model, including its name and version. The <code>/health</code> endpoint returns the health status of the service.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb152-1"><a href="model-serving-inferencing.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.get</span>(<span class="st">&quot;/info&quot;</span>)</span>
-<span id="cb152-2"><a href="model-serving-inferencing.html#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="cf">async</span> <span class="kw">def</span> model_info():</span>
-<span id="cb152-3"><a href="model-serving-inferencing.html#cb152-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb152-4"><a href="model-serving-inferencing.html#cb152-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Endpoint to retrieve information about the model.</span></span>
-<span id="cb152-5"><a href="model-serving-inferencing.html#cb152-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb152-6"><a href="model-serving-inferencing.html#cb152-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
-<span id="cb152-7"><a href="model-serving-inferencing.html#cb152-7" aria-hidden="true" tabindex="-1"></a><span class="co">        - Dictionary containing the model name and version</span></span>
-<span id="cb152-8"><a href="model-serving-inferencing.html#cb152-8" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
-<span id="cb152-9"><a href="model-serving-inferencing.html#cb152-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">&quot;name&quot;</span>: model_name, <span class="st">&quot;version&quot;</span>: version}</span>
-<span id="cb152-10"><a href="model-serving-inferencing.html#cb152-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb152-11"><a href="model-serving-inferencing.html#cb152-11" aria-hidden="true" tabindex="-1"></a><span class="at">@app.get</span>(<span class="st">&quot;/health&quot;</span>)</span>
-<span id="cb152-12"><a href="model-serving-inferencing.html#cb152-12" aria-hidden="true" tabindex="-1"></a><span class="cf">async</span> <span class="kw">def</span> service_health():</span>
-<span id="cb152-13"><a href="model-serving-inferencing.html#cb152-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb152-14"><a href="model-serving-inferencing.html#cb152-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Endpoint to check the health status of the service.</span></span>
-<span id="cb152-15"><a href="model-serving-inferencing.html#cb152-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb152-16"><a href="model-serving-inferencing.html#cb152-16" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
-<span id="cb152-17"><a href="model-serving-inferencing.html#cb152-17" aria-hidden="true" tabindex="-1"></a><span class="co">        - Dictionary indicating the health status of the service</span></span>
-<span id="cb152-18"><a href="model-serving-inferencing.html#cb152-18" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
-<span id="cb152-19"><a href="model-serving-inferencing.html#cb152-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">&quot;ok&quot;</span>}</span></code></pre></div>
-<p>The <code>/predict</code> endpoint is used for making predictions and accepts an uploaded file. Within the predict endpoint, two helper functions for image preprocessing are defined. <code>_read_imagefile</code> reads the image file from the provided data and returns it as a PIL Image object. <code>_preprocess_image</code> performs normalization and reshaping on the image data to prepare it for the model.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb153-1"><a href="model-serving-inferencing.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="at">@app.post</span>(<span class="st">&quot;/predict&quot;</span>)</span>
-<span id="cb153-2"><a href="model-serving-inferencing.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="cf">async</span> <span class="kw">def</span> predict(<span class="bu">file</span>: UploadFile <span class="op">=</span> File(...)):</span>
-<span id="cb153-3"><a href="model-serving-inferencing.html#cb153-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb153-4"><a href="model-serving-inferencing.html#cb153-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Endpoint to make predictions on skin cancer images.</span></span>
-<span id="cb153-5"><a href="model-serving-inferencing.html#cb153-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb153-6"><a href="model-serving-inferencing.html#cb153-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
-<span id="cb153-7"><a href="model-serving-inferencing.html#cb153-7" aria-hidden="true" tabindex="-1"></a><span class="co">        - file: Uploaded image file (JPG format)</span></span>
-<span id="cb153-8"><a href="model-serving-inferencing.html#cb153-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb153-9"><a href="model-serving-inferencing.html#cb153-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
-<span id="cb153-10"><a href="model-serving-inferencing.html#cb153-10" aria-hidden="true" tabindex="-1"></a><span class="co">        - Prediction results as a JSON object</span></span>
-<span id="cb153-11"><a href="model-serving-inferencing.html#cb153-11" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
-<span id="cb153-12"><a href="model-serving-inferencing.html#cb153-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get environment variables</span></span>
-<span id="cb153-13"><a href="model-serving-inferencing.html#cb153-13" aria-hidden="true" tabindex="-1"></a>    MLFLOW_TRACKING_URI <span class="op">=</span> os.getenv(<span class="st">&quot;MLFLOW_TRACKING_URI&quot;</span>)</span>
-<span id="cb153-14"><a href="model-serving-inferencing.html#cb153-14" aria-hidden="true" tabindex="-1"></a>    MLFLOW_MODEL_NAME <span class="op">=</span> os.getenv(<span class="st">&quot;MLFLOW_MODEL_NAME&quot;</span>)</span>
-<span id="cb153-15"><a href="model-serving-inferencing.html#cb153-15" aria-hidden="true" tabindex="-1"></a>    MLFLOW_MODEL_VERSION <span class="op">=</span> os.getenv(<span class="st">&quot;MLFLOW_MODEL_VERSION&quot;</span>)</span>
-<span id="cb153-16"><a href="model-serving-inferencing.html#cb153-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb153-17"><a href="model-serving-inferencing.html#cb153-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _read_imagefile(data) <span class="op">-&gt;</span> Image.Image:</span>
-<span id="cb153-18"><a href="model-serving-inferencing.html#cb153-18" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb153-19"><a href="model-serving-inferencing.html#cb153-19" aria-hidden="true" tabindex="-1"></a><span class="co">        Read image file from bytes data.</span></span>
-<span id="cb153-20"><a href="model-serving-inferencing.html#cb153-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb153-21"><a href="model-serving-inferencing.html#cb153-21" aria-hidden="true" tabindex="-1"></a><span class="co">        Parameters:</span></span>
-<span id="cb153-22"><a href="model-serving-inferencing.html#cb153-22" aria-hidden="true" tabindex="-1"></a><span class="co">            - data: Bytes data of the image file</span></span>
-<span id="cb153-23"><a href="model-serving-inferencing.html#cb153-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb153-24"><a href="model-serving-inferencing.html#cb153-24" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
-<span id="cb153-25"><a href="model-serving-inferencing.html#cb153-25" aria-hidden="true" tabindex="-1"></a><span class="co">            - PIL Image object</span></span>
-<span id="cb153-26"><a href="model-serving-inferencing.html#cb153-26" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
-<span id="cb153-27"><a href="model-serving-inferencing.html#cb153-27" aria-hidden="true" tabindex="-1"></a>        image <span class="op">=</span> Image.<span class="bu">open</span>(BytesIO(data))</span>
-<span id="cb153-28"><a href="model-serving-inferencing.html#cb153-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> image</span>
-<span id="cb153-29"><a href="model-serving-inferencing.html#cb153-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb153-30"><a href="model-serving-inferencing.html#cb153-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _preprocess_image(image) <span class="op">-&gt;</span> np.array:</span>
-<span id="cb153-31"><a href="model-serving-inferencing.html#cb153-31" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb153-32"><a href="model-serving-inferencing.html#cb153-32" aria-hidden="true" tabindex="-1"></a><span class="co">        Preprocess the input image for model prediction.</span></span>
-<span id="cb153-33"><a href="model-serving-inferencing.html#cb153-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb153-34"><a href="model-serving-inferencing.html#cb153-34" aria-hidden="true" tabindex="-1"></a><span class="co">        Parameters:</span></span>
-<span id="cb153-35"><a href="model-serving-inferencing.html#cb153-35" aria-hidden="true" tabindex="-1"></a><span class="co">            - image: PIL Image object</span></span>
-<span id="cb153-36"><a href="model-serving-inferencing.html#cb153-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb153-37"><a href="model-serving-inferencing.html#cb153-37" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
-<span id="cb153-38"><a href="model-serving-inferencing.html#cb153-38" aria-hidden="true" tabindex="-1"></a><span class="co">            - Processed numpy array image</span></span>
-<span id="cb153-39"><a href="model-serving-inferencing.html#cb153-39" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
-<span id="cb153-40"><a href="model-serving-inferencing.html#cb153-40" aria-hidden="true" tabindex="-1"></a>        np_image <span class="op">=</span> np.array(image, dtype<span class="op">=</span><span class="st">&quot;uint8&quot;</span>)</span>
-<span id="cb153-41"><a href="model-serving-inferencing.html#cb153-41" aria-hidden="true" tabindex="-1"></a>        np_image <span class="op">=</span> np_image <span class="op">/</span> <span class="fl">255.0</span></span>
-<span id="cb153-42"><a href="model-serving-inferencing.html#cb153-42" aria-hidden="true" tabindex="-1"></a>        np_image <span class="op">=</span> np_image.reshape(<span class="dv">1</span>, <span class="dv">224</span>, <span class="dv">224</span>, <span class="dv">3</span>)</span>
-<span id="cb153-43"><a href="model-serving-inferencing.html#cb153-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np_image</span></code></pre></div>
-<p>The following code snippoet contains the actual logic for the <code>/predict</code> endpoint. It checks if the uploaded file has a <code>.jpg</code> extension. If it does, it reads the image, loads the MLflow model, preprocesses the image, performs the prediction using the model, and returns the predictions as a JSON response. If the file format is not <code>.jpg</code>, it raises a <code>HTTPException</code> with a status code of 400 and an error message indicating the invalid file format.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb154-1"><a href="model-serving-inferencing.html#cb154-1" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">file</span>.filename.endswith(<span class="st">&quot;.jpg&quot;</span>):</span>
-<span id="cb154-2"><a href="model-serving-inferencing.html#cb154-2" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;[+] Read File&quot;</span>)</span>
-<span id="cb154-3"><a href="model-serving-inferencing.html#cb154-3" aria-hidden="true" tabindex="-1"></a>        image <span class="op">=</span> _read_imagefile(<span class="cf">await</span> <span class="bu">file</span>.read())</span>
-<span id="cb154-4"><a href="model-serving-inferencing.html#cb154-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-5"><a href="model-serving-inferencing.html#cb154-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;[+] Initialize MLflow&quot;</span>)</span>
-<span id="cb154-6"><a href="model-serving-inferencing.html#cb154-6" aria-hidden="true" tabindex="-1"></a>        mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)</span>
-<span id="cb154-7"><a href="model-serving-inferencing.html#cb154-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-8"><a href="model-serving-inferencing.html#cb154-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;[+] Load Model&quot;</span>)</span>
-<span id="cb154-9"><a href="model-serving-inferencing.html#cb154-9" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> mlflow.keras.load_model(<span class="ss">f&quot;models:/</span><span class="sc">{</span>MLFLOW_MODEL_NAME<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>MLFLOW_MODEL_VERSION<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb154-10"><a href="model-serving-inferencing.html#cb154-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-11"><a href="model-serving-inferencing.html#cb154-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;[+] Preprocess Data&quot;</span>)</span>
-<span id="cb154-12"><a href="model-serving-inferencing.html#cb154-12" aria-hidden="true" tabindex="-1"></a>        np_image <span class="op">=</span> _preprocess_image(image)</span>
-<span id="cb154-13"><a href="model-serving-inferencing.html#cb154-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-14"><a href="model-serving-inferencing.html#cb154-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;[+] Initiate Prediction&quot;</span>)</span>
-<span id="cb154-15"><a href="model-serving-inferencing.html#cb154-15" aria-hidden="true" tabindex="-1"></a>        preds <span class="op">=</span> model.predict(np_image)</span>
-<span id="cb154-16"><a href="model-serving-inferencing.html#cb154-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-17"><a href="model-serving-inferencing.html#cb154-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;[+] Return Model Prediction&quot;</span>)</span>
-<span id="cb154-18"><a href="model-serving-inferencing.html#cb154-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {<span class="st">&quot;prediction&quot;</span>: preds.tolist()}</span>
-<span id="cb154-19"><a href="model-serving-inferencing.html#cb154-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb154-20"><a href="model-serving-inferencing.html#cb154-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Raise a HTTP 400 Exception, indicating Bad Request</span></span>
-<span id="cb154-21"><a href="model-serving-inferencing.html#cb154-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> HTTPException(status_code<span class="op">=</span><span class="dv">400</span>, detail<span class="op">=</span><span class="st">&quot;Invalid file format. Only JPG Files accepted.&quot;</span>)</span></code></pre></div>
-</div>
-</div>
-<div id="streamlit-app" class="section level3 hasAnchor" number="9.4.2">
-<h3><span class="header-section-number">9.4.2</span> Streamlit App<a href="model-serving-inferencing.html#streamlit-app" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The Streamlit app offers a simple interface for performing inferences on the served model. The user interface enables users to upload a <code>jpg</code> image. Upon clicking the <code>predict</code> button, the image is sent to the model serving app, where a prediction is made. The prediction results are then returned as a JSON file, which can be downloaded upon request.</p>
-<p><strong>Importing Dependencies</strong>
-This section imports the necessary dependencies for the code, including libraries for file handling, JSON processing, working with images, making HTTP requests, and creating the Streamlit application.</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb155-1"><a href="model-serving-inferencing.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports necessary packages</span></span>
-<span id="cb155-2"><a href="model-serving-inferencing.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io</span>
-<span id="cb155-3"><a href="model-serving-inferencing.html#cb155-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb155-4"><a href="model-serving-inferencing.html#cb155-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb155-5"><a href="model-serving-inferencing.html#cb155-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-6"><a href="model-serving-inferencing.html#cb155-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb155-7"><a href="model-serving-inferencing.html#cb155-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb155-8"><a href="model-serving-inferencing.html#cb155-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> streamlit <span class="im">as</span> st</span>
-<span id="cb155-9"><a href="model-serving-inferencing.html#cb155-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span></code></pre></div>
-<div id="setting-up-the-streamlit-application" class="section level4 unlisted unnumbered hasAnchor">
-<h4>Setting Up the Streamlit Application<a href="model-serving-inferencing.html#setting-up-the-streamlit-application" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>At first, the header and subheader for the Streamlit application are set. Afterward, the FastAPI serving IP and port are retrieved from environment variables. They constructs the FastAPI endpoint URL and are later used to send a POST request to.</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb156-1"><a href="model-serving-inferencing.html#cb156-1" aria-hidden="true" tabindex="-1"></a>st.header(<span class="st">&quot;MLOps Engineering Project&quot;</span>)</span>
-<span id="cb156-2"><a href="model-serving-inferencing.html#cb156-2" aria-hidden="true" tabindex="-1"></a>st.subheader(<span class="st">&quot;Skin Cancer Detection&quot;</span>)</span>
-<span id="cb156-3"><a href="model-serving-inferencing.html#cb156-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb156-4"><a href="model-serving-inferencing.html#cb156-4" aria-hidden="true" tabindex="-1"></a><span class="co"># FastAPI endpoint</span></span>
-<span id="cb156-5"><a href="model-serving-inferencing.html#cb156-5" aria-hidden="true" tabindex="-1"></a>FASTAPI_SERVING_IP <span class="op">=</span> os.getenv(<span class="st">&quot;FASTAPI_SERVING_IP&quot;</span>)</span>
-<span id="cb156-6"><a href="model-serving-inferencing.html#cb156-6" aria-hidden="true" tabindex="-1"></a>FASTAPI_SERVING_PORT <span class="op">=</span> os.getenv(<span class="st">&quot;FASTAPI_SERVING_PORT&quot;</span>)</span>
-<span id="cb156-7"><a href="model-serving-inferencing.html#cb156-7" aria-hidden="true" tabindex="-1"></a>FASTAPI_ENDPOINT <span class="op">=</span> <span class="ss">f&quot;http://</span><span class="sc">{</span>FASTAPI_SERVING_IP<span class="sc">}</span><span class="ss">:</span><span class="sc">{</span>FASTAPI_SERVING_PORT<span class="sc">}</span><span class="ss">/predict&quot;</span></span></code></pre></div>
-</div>
-<div id="uploading-test-image" class="section level4 unlisted unnumbered hasAnchor">
-<h4>Uploading test image<a href="model-serving-inferencing.html#uploading-test-image" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>The <code>st.file_uploader</code> allows the user to upload a test image in JPG format using the Streamlit file uploader widget. The type of the uploaded file is limited to <code>.jpg</code>. If a test image has been uploaded, the image is processed by opening it with PIL and creating a file-like object.</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb157-1"><a href="model-serving-inferencing.html#cb157-1" aria-hidden="true" tabindex="-1"></a>test_image <span class="op">=</span> st.file_uploader(<span class="st">&quot;&quot;</span>, <span class="bu">type</span><span class="op">=</span>[<span class="st">&quot;jpg&quot;</span>], accept_multiple_files<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb157-2"><a href="model-serving-inferencing.html#cb157-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb157-3"><a href="model-serving-inferencing.html#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> test_image:</span>
-<span id="cb157-4"><a href="model-serving-inferencing.html#cb157-4" aria-hidden="true" tabindex="-1"></a>    image <span class="op">=</span> Image.<span class="bu">open</span>(test_image)</span>
-<span id="cb157-5"><a href="model-serving-inferencing.html#cb157-5" aria-hidden="true" tabindex="-1"></a>    image_file <span class="op">=</span> io.BytesIO(test_image.getvalue())</span>
-<span id="cb157-6"><a href="model-serving-inferencing.html#cb157-6" aria-hidden="true" tabindex="-1"></a>    files <span class="op">=</span> {<span class="st">&quot;file&quot;</span>: image_file}</span></code></pre></div>
-</div>
-<div id="displaying-the-uploaded-image-and-performing-prediction" class="section level4 unlisted unnumbered hasAnchor">
-<h4>Displaying the uploaded image and performing prediction<a href="model-serving-inferencing.html#displaying-the-uploaded-image-and-performing-prediction" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>A two-column layout in the Streamlit app is created That displays the uploaded image in the first column. In the second columns, a button for the user to start the prediction process is displayed. When the button is clicked, it sends a POST request to the FastAPI endpoint with the uploaded image file. The prediction results are displayed as JSON and can be downloaded as a JSON file.</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb158-1"><a href="model-serving-inferencing.html#cb158-1" aria-hidden="true" tabindex="-1"></a>    col1, col2 <span class="op">=</span> st.columns(<span class="dv">2</span>)</span>
-<span id="cb158-2"><a href="model-serving-inferencing.html#cb158-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb158-3"><a href="model-serving-inferencing.html#cb158-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> col1:</span>
-<span id="cb158-4"><a href="model-serving-inferencing.html#cb158-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Display the uploaded image in the first column</span></span>
-<span id="cb158-5"><a href="model-serving-inferencing.html#cb158-5" aria-hidden="true" tabindex="-1"></a>        st.image(test_image, caption<span class="op">=</span><span class="st">&quot;&quot;</span>, use_column_width<span class="op">=</span><span class="st">&quot;always&quot;</span>)</span>
-<span id="cb158-6"><a href="model-serving-inferencing.html#cb158-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb158-7"><a href="model-serving-inferencing.html#cb158-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> col2:</span>
-<span id="cb158-8"><a href="model-serving-inferencing.html#cb158-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> st.button(<span class="st">&quot;Start Prediction&quot;</span>):</span>
-<span id="cb158-9"><a href="model-serving-inferencing.html#cb158-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> st.spinner(<span class="st">&quot;Prediction in Progress. Please Wait...&quot;</span>):</span>
-<span id="cb158-10"><a href="model-serving-inferencing.html#cb158-10" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Send a POST request to FastAPI for prediction</span></span>
-<span id="cb158-11"><a href="model-serving-inferencing.html#cb158-11" aria-hidden="true" tabindex="-1"></a>                output <span class="op">=</span> requests.post(FASTAPI_ENDPOINT, files<span class="op">=</span>files, timeout<span class="op">=</span><span class="dv">8000</span>)</span>
-<span id="cb158-12"><a href="model-serving-inferencing.html#cb158-12" aria-hidden="true" tabindex="-1"></a>            st.success(<span class="st">&quot;Success! Click the Download button below to retrieve prediction results (JSON format)&quot;</span>)</span>
-<span id="cb158-13"><a href="model-serving-inferencing.html#cb158-13" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Display the prediction results in JSON format</span></span>
-<span id="cb158-14"><a href="model-serving-inferencing.html#cb158-14" aria-hidden="true" tabindex="-1"></a>            st.json(output.json())</span>
-<span id="cb158-15"><a href="model-serving-inferencing.html#cb158-15" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Add a download button to download the prediction results as a JSON file</span></span>
-<span id="cb158-16"><a href="model-serving-inferencing.html#cb158-16" aria-hidden="true" tabindex="-1"></a>            st.download_button(</span>
-<span id="cb158-17"><a href="model-serving-inferencing.html#cb158-17" aria-hidden="true" tabindex="-1"></a>                label<span class="op">=</span><span class="st">&quot;Download&quot;</span>,</span>
-<span id="cb158-18"><a href="model-serving-inferencing.html#cb158-18" aria-hidden="true" tabindex="-1"></a>                data<span class="op">=</span>json.dumps(output.json()),</span>
-<span id="cb158-19"><a href="model-serving-inferencing.html#cb158-19" aria-hidden="true" tabindex="-1"></a>                file_name<span class="op">=</span><span class="st">&quot;cnn_skin_cancer_prediction_results.json&quot;</span>,</span>
-<span id="cb158-20"><a href="model-serving-inferencing.html#cb158-20" aria-hidden="true" tabindex="-1"></a>            )</span></code></pre></div>
+<p>Model Serving is done via Seldon. Explanation is TBD</p>
+<!---
+### Model Serving
+
+The model serving application is built on FastAPI, which includes various endpoints catering to our use case. The primary endpoint, `predict`, allows for multiple predictions to be made, while additional maintenance endpoints such as `info` or `health` provide relevant information about the app itself.
+
+To initiate the prediction process, the model is first retrieved from the MLflow registry. The specific model to be fetched and the location of the MLflow server are specified through environment variables. Once the model is loaded, it is used to generate predictions based on the provided input data. The API call returns the predictions in the form of a Python list.
+
+#### Importing Dependencies {.unlisted .unnumbered}
+
+\footnotesize
+```python
+# Imports necessary packages
+import io
+import os
+from io import BytesIO
+
+import mlflow
+import mlflow.keras
+import numpy as np
+import pandas as pd
+from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
+from PIL import Image
+from tensorflow import keras
+```
+\normalsize
+
+#### Creating the FastAPI Instance {.unlisted .unnumbered}
+An instance of the FastAPI application is created as well as its name and version defined.
+
+\footnotesize
+```python
+# Create FastAPI instance
+app = FastAPI()
+
+model_name = "Skin Cancer Detection"
+version = "v1.0.0"
+```
+\normalsize
+
+#### Defining API Endpoints {.unlisted .unnumbered}
+
+This section defines three API endpoints: `/info`, `/health`, and `/predict`. The `/info` endpoint returns information about the model, including its name and version. The `/health` endpoint returns the health status of the service. 
+
+\footnotesize
+```python
+@app.get("/info")
+async def model_info():
+    """
+    Endpoint to retrieve information about the model.
+
+    Returns:
+        - Dictionary containing the model name and version
+    """
+    return {"name": model_name, "version": version}
+
+@app.get("/health")
+async def service_health():
+    """
+    Endpoint to check the health status of the service.
+
+    Returns:
+        - Dictionary indicating the health status of the service
+    """
+    return {"ok"}
+```
+\normalsize
+
+The `/predict` endpoint is used for making predictions and accepts an uploaded file. Within the predict endpoint, two helper functions for image preprocessing are defined. `_read_imagefile` reads the image file from the provided data and returns it as a PIL Image object. `_preprocess_image` performs normalization and reshaping on the image data to prepare it for the model.
+
+\footnotesize
+```python
+@app.post("/predict")
+async def predict(file: UploadFile = File(...)):
+    """
+    Endpoint to make predictions on skin cancer images.
+
+    Parameters:
+        - file: Uploaded image file (JPG format)
+
+    Returns:
+        - Prediction results as a JSON object
+    """
+    # Get environment variables
+    MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI")
+    MLFLOW_MODEL_NAME = os.getenv("MLFLOW_MODEL_NAME")
+    MLFLOW_MODEL_VERSION = os.getenv("MLFLOW_MODEL_VERSION")
+
+    def _read_imagefile(data) -> Image.Image:
+        """
+        Read image file from bytes data.
+
+        Parameters:
+            - data: Bytes data of the image file
+
+        Returns:
+            - PIL Image object
+        """
+        image = Image.open(BytesIO(data))
+        return image
+
+    def _preprocess_image(image) -> np.array:
+        """
+        Preprocess the input image for model prediction.
+
+        Parameters:
+            - image: PIL Image object
+
+        Returns:
+            - Processed numpy array image
+        """
+        np_image = np.array(image, dtype="uint8")
+        np_image = np_image / 255.0
+        np_image = np_image.reshape(1, 224, 224, 3)
+        return np_image
+```
+\normalsize
+
+The following code snippoet contains the actual logic for the `/predict` endpoint. It checks if the uploaded file has a `.jpg` extension. If it does, it reads the image, loads the MLflow model, preprocesses the image, performs the prediction using the model, and returns the predictions as a JSON response. If the file format is not `.jpg`, it raises a `HTTPException` with a status code of 400 and an error message indicating the invalid file format.
+
+\footnotesize
+```python
+    if file.filename.endswith(".jpg"):
+        print("[+] Read File")
+        image = _read_imagefile(await file.read())
+
+        print("[+] Initialize MLflow")
+        mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+
+        print("[+] Load Model")
+        model = mlflow.keras.load_model(f"models:/{MLFLOW_MODEL_NAME}/{MLFLOW_MODEL_VERSION}")
+
+        print("[+] Preprocess Data")
+        np_image = _preprocess_image(image)
+
+        print("[+] Initiate Prediction")
+        preds = model.predict(np_image)
+
+        print("[+] Return Model Prediction")
+        return {"prediction": preds.tolist()}
+    else:
+        # Raise a HTTP 400 Exception, indicating Bad Request
+        raise HTTPException(status_code=400, detail="Invalid file format. Only JPG Files accepted.")
+```
+--->
 
 </div>
 </div>
-</div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="building-the-pipeline-steps.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="acknowledgements.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="training-pipeline-steps.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-inferencing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

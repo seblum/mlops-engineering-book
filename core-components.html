@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.1 Core Components | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.1 Core Components | MLOps Engineering" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-08-03" />
+<meta name="date" content="2023-08-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -163,15 +163,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.5" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#devops-engineer"><i class="fa fa-check"></i><b>1.3.5</b> DevOps Engineer</a></li>
 <li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>1.4</b> Ops Tools &amp; Principles</a>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>2</b> Ops Tools &amp; Principles</a>
 <ul>
-<li class="chapter" data-level="1.4.1" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#containerization"><i class="fa fa-check"></i><b>1.4.1</b> Containerization</a></li>
-<li class="chapter" data-level="1.4.2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#version-control"><i class="fa fa-check"></i><b>1.4.2</b> Version Control</a></li>
-<li class="chapter" data-level="1.4.3" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#cicd"><i class="fa fa-check"></i><b>1.4.3</b> CI/CD</a></li>
-<li class="chapter" data-level="1.4.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#infrastructure-as-code"><i class="fa fa-check"></i><b>1.4.4</b> Infrastructure as code</a></li>
+<li class="chapter" data-level="2.1" data-path="containerization.html"><a href="containerization.html"><i class="fa fa-check"></i><b>2.1</b> Containerization</a></li>
+<li class="chapter" data-level="2.2" data-path="version-control.html"><a href="version-control.html"><i class="fa fa-check"></i><b>2.2</b> Version Control</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="version-control.html"><a href="version-control.html#github"><i class="fa fa-check"></i><b>2.2.1</b> Github</a></li>
+<li class="chapter" data-level="2.2.2" data-path="version-control.html"><a href="version-control.html#git-lifecycle"><i class="fa fa-check"></i><b>2.2.2</b> Git lifecycle</a></li>
 </ul></li>
+<li class="chapter" data-level="2.3" data-path="cicd.html"><a href="cicd.html"><i class="fa fa-check"></i><b>2.3</b> CI/CD</a></li>
+<li class="chapter" data-level="2.4" data-path="infrastructure-as-code.html"><a href="infrastructure-as-code.html"><i class="fa fa-check"></i><b>2.4</b> Infrastructure as code</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="overview-about-book-tutorials.html"><a href="overview-about-book-tutorials.html"><i class="fa fa-check"></i><b>2</b> Overview about book tutorials</a></li>
 <li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="core-components.html"><a href="core-components.html"><i class="fa fa-check"></i><b>3.1</b> Core Components</a>
@@ -288,9 +291,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>6.5</b> Exemplary Deployment</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="ml-platform-design.html"><a href="ml-platform-design.html"><i class="fa fa-check"></i><b>7</b> ML Platform Design</a></li>
-<li class="chapter" data-level="8" data-path="ml-platform-deployment.html"><a href="ml-platform-deployment.html"><i class="fa fa-check"></i><b>8</b> ML Platform Deployment</a>
+<li class="chapter" data-level="8" data-path="platform-deployment.html"><a href="platform-deployment.html"><i class="fa fa-check"></i><b>8</b> Platform Deployment</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="root-directory-module.html"><a href="root-directory-module.html"><i class="fa fa-check"></i><b>8.1</b> Root directory module</a></li>
+<li class="chapter" data-level="8.1" data-path="root-module.html"><a href="root-module.html"><i class="fa fa-check"></i><b>8.1</b> Root module</a></li>
 <li class="chapter" data-level="8.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html"><i class="fa fa-check"></i><b>8.2</b> Infrastructure</a>
 <ul>
 <li class="chapter" data-level="8.2.1" data-path="infrastructure-1.html"><a href="infrastructure-1.html#virtual-private-cloud"><i class="fa fa-check"></i><b>8.2.1</b> Virtual Private Cloud</a></li>
@@ -298,36 +301,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2.3" data-path="infrastructure-1.html"><a href="infrastructure-1.html#networking"><i class="fa fa-check"></i><b>8.2.3</b> Networking</a></li>
 <li class="chapter" data-level="8.2.4" data-path="infrastructure-1.html"><a href="infrastructure-1.html#relational-database-service"><i class="fa fa-check"></i><b>8.2.4</b> Relational Database Service</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="modules-2.html"><a href="modules-2.html"><i class="fa fa-check"></i><b>8.3</b> Modules</a>
+<li class="chapter" data-level="8.3" data-path="components.html"><a href="components.html"><i class="fa fa-check"></i><b>8.3</b> Components</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="modules-2.html"><a href="modules-2.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
-<li class="chapter" data-level="8.3.2" data-path="modules-2.html"><a href="modules-2.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
+<li class="chapter" data-level="8.3.1" data-path="components.html"><a href="components.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
+<li class="chapter" data-level="8.3.2" data-path="components.html"><a href="components.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="design-decisions.html"><a href="design-decisions.html"><i class="fa fa-check"></i><b>8.4</b> Design Decisions</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="use-case-development.html"><a href="use-case-development.html"><i class="fa fa-check"></i><b>9</b> Use Case Development</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="integrated-development-environment.html"><a href="integrated-development-environment.html"><i class="fa fa-check"></i><b>9.1</b> Integrated Development Environment</a>
+<li class="chapter" data-level="9.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html"><i class="fa fa-check"></i><b>9.1</b> Integrated Development Environment</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="integrated-development-environment.html"><a href="integrated-development-environment.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
+<li class="chapter" data-level="9.1.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Pipeline Workflow</a>
+<li class="chapter" data-level="9.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Training Pipeline Workflow</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
-<li class="chapter" data-level="9.2.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
+<li class="chapter" data-level="9.2.1" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
+<li class="chapter" data-level="9.2.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Building the Pipeline Steps</a>
+<li class="chapter" data-level="9.3" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Training Pipeline Steps</a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
-<li class="chapter" data-level="9.3.2" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
+<li class="chapter" data-level="9.3.1" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="9.3.2" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
 </ul></li>
 <li class="chapter" data-level="9.4" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html"><i class="fa fa-check"></i><b>9.4</b> Model Serving &amp; Inferencing</a>
 <ul>
 <li class="chapter" data-level="9.4.1" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#model-serving-1"><i class="fa fa-check"></i><b>9.4.1</b> Model Serving</a></li>
-<li class="chapter" data-level="9.4.2" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.4.2</b> Streamlit App</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="model-inferencing.html"><a href="model-inferencing.html"><i class="fa fa-check"></i><b>9.5</b> Model Inferencing</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="model-inferencing.html"><a href="model-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.5.1</b> Streamlit App</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>10</b> Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="glossary.html"><a href="glossary.html"><i class="fa fa-check"></i>Glossary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul>
 
       </nav>
@@ -354,7 +361,7 @@ Writing workflows in code has the benefit to use version control systems like <e
 <div id="dags" class="section level3 hasAnchor" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> DAGs<a href="core-components.html#dags" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A workflows in Airflow is implemented as a DAG, a <em>Directed Acyclic Graph</em>. A <em>graph</em> describes the actual set of components of a workflow. It is <em>directed</em> because it has an inherent flow representing dependencies between its components. It is <em>acyclic</em> as it does not loop or repeat.</p>
-<p>The DAG object is needed to nest the separate tasks intp a workflow. A workflow specified in code, e.g. python, is often also referred to as a <em>pipeline</em>. This terminology can be used synonymosly when working with Airflow. The following code snippet depicts how to define a DAG object in python code. The <code>dag_id</code> string is a unique identifier to the DAG object. The <code>default_args</code> dictionary consists of additional parameters that can be specified. There are only shown two additional parameters. There are a lot more though which can be seen in the <a href="https://airflow.apache.org/docs/apache-airflow/stable/_api/airflow/models/dag/index.html#airflow.models.dag.DAG">official documentation</a>.</p>
+<p>The DAG object is needed to nest the separate tasks intp a workflow. A workflow specified in code, e.g. Python, is often also referred to as a <em>pipeline</em>. This terminology can be used synonymosly when working with Airflow. The following code snippet depicts how to define a DAG object in Python code. The <code>dag_id</code> string is a unique identifier to the DAG object. The <code>default_args</code> dictionary consists of additional parameters that can be specified. There are only shown two additional parameters. There are a lot more though which can be seen in the <a href="https://airflow.apache.org/docs/apache-airflow/stable/_api/airflow/models/dag/index.html#airflow.models.dag.DAG">official documentation</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="core-components.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow.models <span class="im">import</span> DAG</span>
 <span id="cb2-2"><a href="core-components.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pendulum <span class="im">import</span> datetime</span>
 <span id="cb2-3"><a href="core-components.html#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -371,8 +378,8 @@ Writing workflows in code has the benefit to use version control systems like <e
 <span id="cb2-14"><a href="core-components.html#cb2-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>The state of a workflow can accessed via the web user inteface, such as shown in below images. The first image shows Airflows overview of all DAGs currently “Active” and further information about them such as their “Owner”, how many “Runs” have been performaned and whether they were successful, and much more.
 The second image depicts a detailed overview of the DAG “xcom_fundamentals”. Besudes looking into the <em>Audit Logs</em> of the DAG and the <em>Task Duration</em>, it is also possible to check the <em>Code</em> of the DAG.</p>
-<p><img src="images/03-Airflow/web-interface_dags.png" /></p>
-<p><img src="images/03-Airflow/web-interface_dag-grid.png" /></p>
+<p><img src="images/03-Airflow/web-interface_dags.png" style="width:100.0%" /></p>
+<p><img src="images/03-Airflow/web-interface_dag-grid.png" style="width:100.0%" /></p>
 <p>The Airflow command line interface also allows to interact with the DAGs. Below command shows its exemplary usage and how to list all active DAGs. Further examples of using the CLI in a specific context are show in the subsection about Tasks.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="core-components.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the database schema</span></span>
 <span id="cb3-2"><a href="core-components.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">airflow</span> db init</span>
@@ -385,7 +392,7 @@ A DAG usually consists of multiple steps it runs through, also names as <em>task
 <div id="operators" class="section level3 hasAnchor" number="3.1.2">
 <h3><span class="header-section-number">3.1.2</span> Operators<a href="core-components.html#operators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>An Operator represents a single predefined task in a workflow. It is basically a unit of work that Airflow has to complete. Operators usually run independently and generally do not share any information by themselves. There are different categories of operators to perform different tasks with, for example <em>Action operators</em>, <em>Transfer operators</em>, or <em>Sensors</em>.
-<em>Action Operators</em> execute a basic task based on the operators specifications. Examples are the <code>BashOperator</code>, the <code>PythonOperator</code>, or the <code>EmailOperator</code>. The operator names already suggest what kind of executions they provide; the PythonOperator runs python tasks.
+<em>Action Operators</em> execute a basic task based on the operators specifications. Examples are the <code>BashOperator</code>, the <code>PythonOperator</code>, or the <code>EmailOperator</code>. The operator names already suggest what kind of executions they provide; the PythonOperator runs Python tasks.
 <em>Transfer Operators</em> are designed to transfer data from one place to another, for example to copy data from one cloud bucket to another. Those operators are often stateful, which means the downloaded data are first stored locally and then uploaded to a destination storage. The principle of a stateful execution defines them as an own category of operator.
 Finally, <em>Sensors</em> are a special subclass of operators that are triggered when an external event is happening, for example the creation of a file.</p>
 <p>The <code>PythonOperator</code> is actually declared a deprecated function. Airflow 2.0 promotes to use the <code>@task</code>-decorator of <em>Taskflow</em> to define tasks in a more pythonic context. Yet, it still works in Airflow 2.0 and is still a very good example on how operators work.</p>
@@ -401,7 +408,7 @@ Finally, <em>Sensors</em> are a special subclass of operators that are triggered
 <span id="cb4-6"><a href="core-components.html#cb4-6" aria-hidden="true" tabindex="-1"></a>    dag<span class="op">=</span>action_operator_fundamentals</span>
 <span id="cb4-7"><a href="core-components.html#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><strong>PythonOperator</strong></p>
-<p>The <code>PythonOperator</code> expects a python callable. Airflow passes a set of keyword arguments from the <code>op_kwargs</code> dictionary to the callable as input.</p>
+<p>The <code>PythonOperator</code> expects a Python callable. Airflow passes a set of keyword arguments from the <code>op_kwargs</code> dictionary to the callable as input.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="core-components.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow.operators.python_operator <span class="im">import</span> PythonOperator</span>
 <span id="cb5-2"><a href="core-components.html#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="core-components.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sleep(length_of_time):</span>
@@ -497,7 +504,7 @@ Simultaneously, the <code>poke_interval</code> defines how long a sensor should 
 </div>
 <div id="tasks" class="section level3 hasAnchor" number="3.1.3">
 <h3><span class="header-section-number">3.1.3</span> Tasks<a href="core-components.html#tasks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To use an operator in a DAG it needs to be instantiated as a task. Tasks determine how to execute an operator’s work within the context of a DAG. The concepts of a <em>Task</em> and <em>Operator</em> are actually somewhat interchangeable as each task is actually a subclass of Airflow’s <code>BaseOperator</code>. However, it is useful to think of them as separate concepts. Tasks are Instances of operators and are usually assigned to a python variable.
+<p>To use an operator in a DAG it needs to be instantiated as a task. Tasks determine how to execute an operator’s work within the context of a DAG. The concepts of a <em>Task</em> and <em>Operator</em> are actually somewhat interchangeable as each task is actually a subclass of Airflow’s <code>BaseOperator</code>. However, it is useful to think of them as separate concepts. Tasks are Instances of operators and are usually assigned to a Python variable.
 The following code instantiates the <code>BashOperator</code> to two different variables <code>task_1</code> and <code>task_2</code>. The <code>depends_on_past</code> argument ensures that the previously scheduled task has succeeded before the current task is triggered.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="core-components.html#cb11-1" aria-hidden="true" tabindex="-1"></a>task_1 <span class="op">=</span> BashOperator(</span>
 <span id="cb11-2"><a href="core-components.html#cb11-2" aria-hidden="true" tabindex="-1"></a>    task_id<span class="op">=</span><span class="st">&quot;print_date&quot;</span>,</span>
@@ -533,7 +540,7 @@ The following code instantiates the <code>BashOperator</code> to two different v
 <span id="cb12-11"><a href="core-components.html#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="ex">airflow</span> tasks test task_fundamentals sleep 2015-06-01</span></code></pre></div>
 <div id="task-dependencies" class="section level4 hasAnchor" number="3.1.3.1">
 <h4><span class="header-section-number">3.1.3.1</span> Task dependencies<a href="core-components.html#task-dependencies" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>A machine learning or data workflow usually has a specific order in which its tasks should run. Airflow alloes to define a specific order of task completion using task dependencies that are either referred to as upstream or downstream tasks. In Airflow 1.8 and later, this can be defined using the <em>bitshift operators</em> in python.</p>
+<p>A machine learning or data workflow usually has a specific order in which its tasks should run. Airflow alloes to define a specific order of task completion using task dependencies that are either referred to as upstream or downstream tasks. In Airflow 1.8 and later, this can be defined using the <em>bitshift operators</em> in Python.</p>
 <ul>
 <li><strong>&gt;&gt;</strong> - or the upstream operator (before)</li>
 <li><strong>&lt;&lt;</strong> - or the downstream operator (after)</li>
@@ -541,7 +548,7 @@ The following code instantiates the <code>BashOperator</code> to two different v
 <p>An exemplary code and chaining examples of tasks would look like this:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="core-components.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simply chained dependencies</span></span>
 <span id="cb13-2"><a href="core-components.html#cb13-2" aria-hidden="true" tabindex="-1"></a>task_1 <span class="op">&gt;&gt;</span> task_2 <span class="op">&gt;&gt;</span> task_3</span></code></pre></div>
-<p><img src="images/03-Airflow/task-dependencies.png" title="task-dependencies" /></p>
+<p><img src="images/03-Airflow/task-dependencies.png" title="task-dependencies" style="width:100.0%" /></p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="core-components.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mixed dependencies</span></span>
 <span id="cb14-2"><a href="core-components.html#cb14-2" aria-hidden="true" tabindex="-1"></a>task_1 <span class="op">&gt;&gt;</span> task_3 <span class="op">&lt;&lt;</span> task_2</span>
 <span id="cb14-3"><a href="core-components.html#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -551,15 +558,15 @@ The following code instantiates the <code>BashOperator</code> to two different v
 <span id="cb14-7"><a href="core-components.html#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-8"><a href="core-components.html#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
 <span id="cb14-9"><a href="core-components.html#cb14-9" aria-hidden="true" tabindex="-1"></a>[task_1, task_2] <span class="op">&gt;&gt;</span> task_3</span></code></pre></div>
-<p><img src="images/03-Airflow/task-dependencies_mixed.png" title="task-dependencies_mixed" /></p>
+<p><img src="images/03-Airflow/task-dependencies_mixed.png" title="task-dependencies_mixed" style="width:100.0%" /></p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="core-components.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># It is also possible to define dependencies with</span></span>
 <span id="cb15-2"><a href="core-components.html#cb15-2" aria-hidden="true" tabindex="-1"></a>task_1.set_downstream(task_2)</span>
 <span id="cb15-3"><a href="core-components.html#cb15-3" aria-hidden="true" tabindex="-1"></a>task_3.set_upstream(task_1)</span></code></pre></div>
-<p><img src="images/03-Airflow/task-dependencies_upstream.png" title="task-dependencies_upstream" /></p>
+<p><img src="images/03-Airflow/task-dependencies_upstream.png" title="task-dependencies_upstream" style="width:100.0%" /></p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="core-components.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># It is also possible to mix it completely wild</span></span>
 <span id="cb16-2"><a href="core-components.html#cb16-2" aria-hidden="true" tabindex="-1"></a>task_1 <span class="op">&gt;&gt;</span> task_3 <span class="op">&lt;&lt;</span> task_2</span>
 <span id="cb16-3"><a href="core-components.html#cb16-3" aria-hidden="true" tabindex="-1"></a>task_1.set_downstream(task_2)</span></code></pre></div>
-<p><img src="images/03-Airflow/task-dependencies_wild.png" title="task-dependencies_wild" /></p>
+<p><img src="images/03-Airflow/task-dependencies_wild.png" title="task-dependencies_wild" style="width:100.0%" /></p>
 <p>It is possible to list all tasks within a DAG using the CLI. Below commands show two approaches.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="core-components.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prints the list of tasks in the &quot;task_fundamentals&quot; DAG</span></span>
 <span id="cb17-2"><a href="core-components.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">airflow</span> tasks list task_fundamentals</span>
@@ -575,75 +582,73 @@ The following code instantiates the <code>BashOperator</code> to two different v
 The goal of using XComs is not to pass large values like dataframes themselves. XComs are used to store all relevant metadata that are needed to pass data from one task to another, including infomration about the sender, the recipient, and the data itself.</p>
 <p>If there is the need to pass a big data frame from <em>task_a</em> to <em>task_b</em>, the data is stored in a persistent storage solution (a bucket, or database) and the information about the storage location is stored in the XCom. This means that <em>task_a</em> pushes the data to a storage solution and writes the information where the data is stored (e.g. a AWS S3 URI) within an XCom to the Airflow database. Afterward, <em>task_b</em> can access this information and retrieve the data from the external storage using the AWS .</p>
 <p>The XCom is identified by a <em>key</em>-<em>value</em> pair stored in the Airflow Metadata Database. The <code>key</code> of an XCom is basically its name and consists of a tuple (<code>dag_id</code>, <code>task_id</code>, <code>execution_date</code>,<code>key</code>). <em>key</em> within the XComs name denotes the name of the stored data and is a configurable string (by default it’s <code>return_value</code>). The XComs <code>value</code> is a json serializable. It is important to note that it is only designed for small amounts of data, depending on the attached metadata database (e.g. 2GB for SQLite, or 1GB Postgres database). XComs are explicitly pushed and pulled to/from the metadata database using the <code>xcom_push</code> and <code>xcom_pull</code> methods. While the <code>push_*</code>-methods upload the XCom, the <code>pull</code>-method downloads information from XCom. The XCom element can be viewed within Airflows web interface which is quite helpful to debug or monitor a DAG.</p>
-<p>Below example shows this mechanics. However, when looking at the <code>push</code> one can see a difference in their functionality. The method <code>push_by_returning</code> uses the operators’ auto-push functionality that pushes their results into an default XCom key (the default is <code>return_value</code>). Using the auto-push functionality allows to only use python <code>return</code> statements and is enabled by setting the <code>do_xcom_push</code> argument to <code>True</code>, which it also is by default ( <code>@task</code> functions do this as well). To push an XCom with a specific key, the <code>xcom_push</code>-method needs to be called explicitly. In order to access the <code>xcom_push</code> one needs to access the task instance (ti) object. It can be accessed by passing the <code>"ti"</code> parameter to the python callable of the PythonOperator. Its usage can be seen in the <code>push</code> method, where also a custom key is given to the XCom.
+<p>Below example shows this mechanics. However, when looking at the <code>push</code> one can see a difference in their functionality. The method <code>push_by_returning</code> uses the operators’ auto-push functionality that pushes their results into an default XCom key (the default is <code>return_value</code>). Using the auto-push functionality allows to only use Python <code>return</code> statements and is enabled by setting the <code>do_xcom_push</code> argument to <code>True</code>, which it also is by default ( <code>@task</code> functions do this as well). To push an XCom with a specific key, the <code>xcom_push</code>-method needs to be called explicitly. In order to access the <code>xcom_push</code> one needs to access the task instance (ti) object. It can be accessed by passing the <code>"ti"</code> parameter to the Python callable of the PythonOperator. Its usage can be seen in the <code>push</code> method, where also a custom key is given to the XCom.
 Similarly, the <code>puller</code> function uses the <code>xcom_pull</code> method to pull the previously pushed values from the metadata databes.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="core-components.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow.models <span class="im">import</span> DAG</span>
 <span id="cb18-2"><a href="core-components.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pendulum <span class="im">import</span> datetime</span>
 <span id="cb18-3"><a href="core-components.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow.operators.python_operator <span class="im">import</span> PythonOperator</span>
 <span id="cb18-4"><a href="core-components.html#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="core-components.html#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="core-components.html#cb18-6" aria-hidden="true" tabindex="-1"></a>xcom_fundamentals <span class="op">=</span> DAG(</span>
-<span id="cb18-7"><a href="core-components.html#cb18-7" aria-hidden="true" tabindex="-1"></a>    dag_id<span class="op">=</span><span class="st">&#39;xcom_fundamentals&#39;</span>,</span>
-<span id="cb18-8"><a href="core-components.html#cb18-8" aria-hidden="true" tabindex="-1"></a>    start_date<span class="op">=</span>datetime(<span class="dv">2023</span>, <span class="dv">1</span>, <span class="dv">1</span>, tz<span class="op">=</span><span class="st">&quot;Europe/Amsterdam&quot;</span>),</span>
-<span id="cb18-9"><a href="core-components.html#cb18-9" aria-hidden="true" tabindex="-1"></a>    schedule_interval<span class="op">=</span><span class="va">None</span></span>
-<span id="cb18-10"><a href="core-components.html#cb18-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-11"><a href="core-components.html#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-12"><a href="core-components.html#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># DAG definition etc.</span></span>
-<span id="cb18-13"><a href="core-components.html#cb18-13" aria-hidden="true" tabindex="-1"></a>value_1 <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb18-14"><a href="core-components.html#cb18-14" aria-hidden="true" tabindex="-1"></a>value_2 <span class="op">=</span> {<span class="st">&#39;a&#39;</span>: <span class="st">&#39;b&#39;</span>}</span>
-<span id="cb18-15"><a href="core-components.html#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-16"><a href="core-components.html#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> push(<span class="op">**</span>kwargs):</span>
-<span id="cb18-17"><a href="core-components.html#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Pushes an XCom without a specific target&quot;&quot;&quot;</span></span>
-<span id="cb18-18"><a href="core-components.html#cb18-18" aria-hidden="true" tabindex="-1"></a>    kwargs[<span class="st">&#39;ti&#39;</span>].xcom_push(key<span class="op">=</span><span class="st">&#39;value from pusher 1&#39;</span>, value<span class="op">=</span>value_1)</span>
-<span id="cb18-19"><a href="core-components.html#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-20"><a href="core-components.html#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> push_by_returning(<span class="op">**</span>kwargs):</span>
-<span id="cb18-21"><a href="core-components.html#cb18-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Pushes an XCom without a specific target, just by returning it&quot;&quot;&quot;</span></span>
-<span id="cb18-22"><a href="core-components.html#cb18-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Airflow does this automatically as auto-push is turned on.</span></span>
-<span id="cb18-23"><a href="core-components.html#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> value_2</span>
-<span id="cb18-24"><a href="core-components.html#cb18-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-25"><a href="core-components.html#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> puller(<span class="op">**</span>kwargs):</span>
-<span id="cb18-26"><a href="core-components.html#cb18-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Pull all previously pushed XComs and check if the pushed values match the pulled values.&quot;&quot;&quot;</span></span>
-<span id="cb18-27"><a href="core-components.html#cb18-27" aria-hidden="true" tabindex="-1"></a>    ti <span class="op">=</span> kwargs[<span class="st">&#39;ti&#39;</span>]</span>
-<span id="cb18-28"><a href="core-components.html#cb18-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-29"><a href="core-components.html#cb18-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get value_1</span></span>
-<span id="cb18-30"><a href="core-components.html#cb18-30" aria-hidden="true" tabindex="-1"></a>    pulled_value_1 <span class="op">=</span> ti.xcom_pull(key<span class="op">=</span><span class="va">None</span>, task_ids<span class="op">=</span><span class="st">&#39;push&#39;</span>)</span>
-<span id="cb18-31"><a href="core-components.html#cb18-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-32"><a href="core-components.html#cb18-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get value_2</span></span>
-<span id="cb18-33"><a href="core-components.html#cb18-33" aria-hidden="true" tabindex="-1"></a>    pulled_value_2 <span class="op">=</span> ti.xcom_pull(task_ids<span class="op">=</span><span class="st">&#39;push_by_returning&#39;</span>)</span>
-<span id="cb18-34"><a href="core-components.html#cb18-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-35"><a href="core-components.html#cb18-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get both value_1 and value_2 the same time</span></span>
-<span id="cb18-36"><a href="core-components.html#cb18-36" aria-hidden="true" tabindex="-1"></a>    pulled_value_1, pulled_value_2 <span class="op">=</span> ti.xcom_pull(</span>
-<span id="cb18-37"><a href="core-components.html#cb18-37" aria-hidden="true" tabindex="-1"></a>        key<span class="op">=</span><span class="va">None</span>, task_ids<span class="op">=</span>[<span class="st">&#39;push&#39;</span>, <span class="st">&#39;push_by_returning&#39;</span>])</span>
-<span id="cb18-38"><a href="core-components.html#cb18-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-39"><a href="core-components.html#cb18-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;pulled_value_1: </span><span class="sc">{</span>pulled_value_1<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb18-40"><a href="core-components.html#cb18-40" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;pulled_value_2: </span><span class="sc">{</span>pulled_value_2<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb18-41"><a href="core-components.html#cb18-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-42"><a href="core-components.html#cb18-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-43"><a href="core-components.html#cb18-43" aria-hidden="true" tabindex="-1"></a>push1 <span class="op">=</span> PythonOperator(</span>
-<span id="cb18-44"><a href="core-components.html#cb18-44" aria-hidden="true" tabindex="-1"></a>    task_id<span class="op">=</span><span class="st">&#39;push&#39;</span>,</span>
-<span id="cb18-45"><a href="core-components.html#cb18-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># provide context is for getting the TI (task instance ) parameters</span></span>
-<span id="cb18-46"><a href="core-components.html#cb18-46" aria-hidden="true" tabindex="-1"></a>    provide_context<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb18-47"><a href="core-components.html#cb18-47" aria-hidden="true" tabindex="-1"></a>    dag<span class="op">=</span>xcom_fundamentals,</span>
-<span id="cb18-48"><a href="core-components.html#cb18-48" aria-hidden="true" tabindex="-1"></a>    python_callable<span class="op">=</span>push,</span>
-<span id="cb18-49"><a href="core-components.html#cb18-49" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-50"><a href="core-components.html#cb18-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-51"><a href="core-components.html#cb18-51" aria-hidden="true" tabindex="-1"></a>push2 <span class="op">=</span> PythonOperator(</span>
-<span id="cb18-52"><a href="core-components.html#cb18-52" aria-hidden="true" tabindex="-1"></a>    task_id<span class="op">=</span><span class="st">&#39;push_by_returning&#39;</span>,</span>
-<span id="cb18-53"><a href="core-components.html#cb18-53" aria-hidden="true" tabindex="-1"></a>    dag<span class="op">=</span>xcom_fundamentals,</span>
-<span id="cb18-54"><a href="core-components.html#cb18-54" aria-hidden="true" tabindex="-1"></a>    python_callable<span class="op">=</span>push_by_returning,</span>
-<span id="cb18-55"><a href="core-components.html#cb18-55" aria-hidden="true" tabindex="-1"></a>    <span class="co"># do_xcom_push=False</span></span>
-<span id="cb18-56"><a href="core-components.html#cb18-56" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-57"><a href="core-components.html#cb18-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-58"><a href="core-components.html#cb18-58" aria-hidden="true" tabindex="-1"></a>pull <span class="op">=</span> PythonOperator(</span>
-<span id="cb18-59"><a href="core-components.html#cb18-59" aria-hidden="true" tabindex="-1"></a>    task_id<span class="op">=</span><span class="st">&#39;puller&#39;</span>,</span>
-<span id="cb18-60"><a href="core-components.html#cb18-60" aria-hidden="true" tabindex="-1"></a>    <span class="co"># provide context is for getting the TI (task instance ) parameters</span></span>
-<span id="cb18-61"><a href="core-components.html#cb18-61" aria-hidden="true" tabindex="-1"></a>    provide_context<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb18-62"><a href="core-components.html#cb18-62" aria-hidden="true" tabindex="-1"></a>    dag<span class="op">=</span>xcom_fundamentals,</span>
-<span id="cb18-63"><a href="core-components.html#cb18-63" aria-hidden="true" tabindex="-1"></a>    python_callable<span class="op">=</span>puller,</span>
-<span id="cb18-64"><a href="core-components.html#cb18-64" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-65"><a href="core-components.html#cb18-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-66"><a href="core-components.html#cb18-66" aria-hidden="true" tabindex="-1"></a><span class="co"># push1, push2 are upstream to pull</span></span>
-<span id="cb18-67"><a href="core-components.html#cb18-67" aria-hidden="true" tabindex="-1"></a>[push1, push2] <span class="op">&gt;&gt;</span> pull</span></code></pre></div>
+<span id="cb18-5"><a href="core-components.html#cb18-5" aria-hidden="true" tabindex="-1"></a>xcom_fundamentals <span class="op">=</span> DAG(</span>
+<span id="cb18-6"><a href="core-components.html#cb18-6" aria-hidden="true" tabindex="-1"></a>    dag_id<span class="op">=</span><span class="st">&#39;xcom_fundamentals&#39;</span>,</span>
+<span id="cb18-7"><a href="core-components.html#cb18-7" aria-hidden="true" tabindex="-1"></a>    start_date<span class="op">=</span>datetime(<span class="dv">2023</span>, <span class="dv">1</span>, <span class="dv">1</span>, tz<span class="op">=</span><span class="st">&quot;Europe/Amsterdam&quot;</span>),</span>
+<span id="cb18-8"><a href="core-components.html#cb18-8" aria-hidden="true" tabindex="-1"></a>    schedule_interval<span class="op">=</span><span class="va">None</span></span>
+<span id="cb18-9"><a href="core-components.html#cb18-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-10"><a href="core-components.html#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="core-components.html#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># DAG definition etc.</span></span>
+<span id="cb18-12"><a href="core-components.html#cb18-12" aria-hidden="true" tabindex="-1"></a>value_1 <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb18-13"><a href="core-components.html#cb18-13" aria-hidden="true" tabindex="-1"></a>value_2 <span class="op">=</span> {<span class="st">&#39;a&#39;</span>: <span class="st">&#39;b&#39;</span>}</span>
+<span id="cb18-14"><a href="core-components.html#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="core-components.html#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> push(<span class="op">**</span>kwargs):</span>
+<span id="cb18-16"><a href="core-components.html#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Pushes an XCom without a specific target&quot;&quot;&quot;</span></span>
+<span id="cb18-17"><a href="core-components.html#cb18-17" aria-hidden="true" tabindex="-1"></a>    kwargs[<span class="st">&#39;ti&#39;</span>].xcom_push(key<span class="op">=</span><span class="st">&#39;value from pusher 1&#39;</span>, value<span class="op">=</span>value_1)</span>
+<span id="cb18-18"><a href="core-components.html#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-19"><a href="core-components.html#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> push_by_returning(<span class="op">**</span>kwargs):</span>
+<span id="cb18-20"><a href="core-components.html#cb18-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Pushes an XCom without a specific target, just by returning it&quot;&quot;&quot;</span></span>
+<span id="cb18-21"><a href="core-components.html#cb18-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Airflow does this automatically as auto-push is turned on.</span></span>
+<span id="cb18-22"><a href="core-components.html#cb18-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> value_2</span>
+<span id="cb18-23"><a href="core-components.html#cb18-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-24"><a href="core-components.html#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> puller(<span class="op">**</span>kwargs):</span>
+<span id="cb18-25"><a href="core-components.html#cb18-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Pull all previously pushed XComs and check if the pushed values match the pulled values.&quot;&quot;&quot;</span></span>
+<span id="cb18-26"><a href="core-components.html#cb18-26" aria-hidden="true" tabindex="-1"></a>    ti <span class="op">=</span> kwargs[<span class="st">&#39;ti&#39;</span>]</span>
+<span id="cb18-27"><a href="core-components.html#cb18-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-28"><a href="core-components.html#cb18-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get value_1</span></span>
+<span id="cb18-29"><a href="core-components.html#cb18-29" aria-hidden="true" tabindex="-1"></a>    pulled_value_1 <span class="op">=</span> ti.xcom_pull(key<span class="op">=</span><span class="va">None</span>, task_ids<span class="op">=</span><span class="st">&#39;push&#39;</span>)</span>
+<span id="cb18-30"><a href="core-components.html#cb18-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-31"><a href="core-components.html#cb18-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get value_2</span></span>
+<span id="cb18-32"><a href="core-components.html#cb18-32" aria-hidden="true" tabindex="-1"></a>    pulled_value_2 <span class="op">=</span> ti.xcom_pull(task_ids<span class="op">=</span><span class="st">&#39;push_by_returning&#39;</span>)</span>
+<span id="cb18-33"><a href="core-components.html#cb18-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-34"><a href="core-components.html#cb18-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get both value_1 and value_2 the same time</span></span>
+<span id="cb18-35"><a href="core-components.html#cb18-35" aria-hidden="true" tabindex="-1"></a>    pulled_value_1, pulled_value_2 <span class="op">=</span> ti.xcom_pull(</span>
+<span id="cb18-36"><a href="core-components.html#cb18-36" aria-hidden="true" tabindex="-1"></a>        key<span class="op">=</span><span class="va">None</span>, task_ids<span class="op">=</span>[<span class="st">&#39;push&#39;</span>, <span class="st">&#39;push_by_returning&#39;</span>])</span>
+<span id="cb18-37"><a href="core-components.html#cb18-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-38"><a href="core-components.html#cb18-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;pulled_value_1: </span><span class="sc">{</span>pulled_value_1<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb18-39"><a href="core-components.html#cb18-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;pulled_value_2: </span><span class="sc">{</span>pulled_value_2<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb18-40"><a href="core-components.html#cb18-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-41"><a href="core-components.html#cb18-41" aria-hidden="true" tabindex="-1"></a>push1 <span class="op">=</span> PythonOperator(</span>
+<span id="cb18-42"><a href="core-components.html#cb18-42" aria-hidden="true" tabindex="-1"></a>    task_id<span class="op">=</span><span class="st">&#39;push&#39;</span>,</span>
+<span id="cb18-43"><a href="core-components.html#cb18-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># provide context is for getting the TI (task instance ) parameters</span></span>
+<span id="cb18-44"><a href="core-components.html#cb18-44" aria-hidden="true" tabindex="-1"></a>    provide_context<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb18-45"><a href="core-components.html#cb18-45" aria-hidden="true" tabindex="-1"></a>    dag<span class="op">=</span>xcom_fundamentals,</span>
+<span id="cb18-46"><a href="core-components.html#cb18-46" aria-hidden="true" tabindex="-1"></a>    python_callable<span class="op">=</span>push,</span>
+<span id="cb18-47"><a href="core-components.html#cb18-47" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-48"><a href="core-components.html#cb18-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-49"><a href="core-components.html#cb18-49" aria-hidden="true" tabindex="-1"></a>push2 <span class="op">=</span> PythonOperator(</span>
+<span id="cb18-50"><a href="core-components.html#cb18-50" aria-hidden="true" tabindex="-1"></a>    task_id<span class="op">=</span><span class="st">&#39;push_by_returning&#39;</span>,</span>
+<span id="cb18-51"><a href="core-components.html#cb18-51" aria-hidden="true" tabindex="-1"></a>    dag<span class="op">=</span>xcom_fundamentals,</span>
+<span id="cb18-52"><a href="core-components.html#cb18-52" aria-hidden="true" tabindex="-1"></a>    python_callable<span class="op">=</span>push_by_returning,</span>
+<span id="cb18-53"><a href="core-components.html#cb18-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># do_xcom_push=False</span></span>
+<span id="cb18-54"><a href="core-components.html#cb18-54" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-55"><a href="core-components.html#cb18-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-56"><a href="core-components.html#cb18-56" aria-hidden="true" tabindex="-1"></a>pull <span class="op">=</span> PythonOperator(</span>
+<span id="cb18-57"><a href="core-components.html#cb18-57" aria-hidden="true" tabindex="-1"></a>    task_id<span class="op">=</span><span class="st">&#39;puller&#39;</span>,</span>
+<span id="cb18-58"><a href="core-components.html#cb18-58" aria-hidden="true" tabindex="-1"></a>    <span class="co"># provide context is for getting the TI (task instance ) parameters</span></span>
+<span id="cb18-59"><a href="core-components.html#cb18-59" aria-hidden="true" tabindex="-1"></a>    provide_context<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb18-60"><a href="core-components.html#cb18-60" aria-hidden="true" tabindex="-1"></a>    dag<span class="op">=</span>xcom_fundamentals,</span>
+<span id="cb18-61"><a href="core-components.html#cb18-61" aria-hidden="true" tabindex="-1"></a>    python_callable<span class="op">=</span>puller,</span>
+<span id="cb18-62"><a href="core-components.html#cb18-62" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-63"><a href="core-components.html#cb18-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-64"><a href="core-components.html#cb18-64" aria-hidden="true" tabindex="-1"></a><span class="co"># push1, push2 are upstream to pull</span></span>
+<span id="cb18-65"><a href="core-components.html#cb18-65" aria-hidden="true" tabindex="-1"></a>[push1, push2] <span class="op">&gt;&gt;</span> pull</span></code></pre></div>
 </div>
 <div id="scheduling" class="section level3 hasAnchor" number="3.1.5">
 <h3><span class="header-section-number">3.1.5</span> Scheduling<a href="core-components.html#scheduling" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -710,7 +715,7 @@ Similarly, the <code>puller</code> function uses the <code>xcom_pull</code> meth
 <span id="cb20-38"><a href="core-components.html#cb20-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-39"><a href="core-components.html#cb20-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Finally execute the DAG</span></span>
 <span id="cb20-40"><a href="core-components.html#cb20-40" aria-hidden="true" tabindex="-1"></a>taskflow_api_fundamentals()</span></code></pre></div>
-<p>Even the passing of data between tasks which might run on different workers is all handled by TaskFlow so there is no need to use XCom. However, XCom is still used behind the scenes, but all of the XCom usage passing data between tasks is abstracted away. This allows to view the XCom in the Airflow UI as before.
+<p>Even the passing of data between tasks which might run on different workers is all handled by TaskFlow so there is no need to use XCom. However, XCom is still used behind the scenes, but all of the XCom usage passing data between tasks is abstracted away. This allows to view the XCom in the Airflow user interface as before.
 Belows example shows the <code>transform</code> function written in the traditional Airflow using XCom and highlights the simplicity of using TaskFlow.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="core-components.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> transform(<span class="op">**</span>kwargs):</span>
 <span id="cb21-2"><a href="core-components.html#cb21-2" aria-hidden="true" tabindex="-1"></a>    ti <span class="op">=</span> kwargs[<span class="st">&quot;ti&quot;</span>]</span>

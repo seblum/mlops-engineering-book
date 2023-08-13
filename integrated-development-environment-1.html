@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 ML Platform Deployment | MLOps Engineering</title>
+  <title>9.1 Integrated Development Environment | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 ML Platform Deployment | MLOps Engineering" />
+  <meta property="og:title" content="9.1 Integrated Development Environment | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 ML Platform Deployment | MLOps Engineering" />
+  <meta name="twitter:title" content="9.1 Integrated Development Environment | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -23,15 +23,15 @@
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-08-03" />
+<meta name="date" content="2023-08-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="ml-platform-design.html"/>
-<link rel="next" href="root-directory-module.html"/>
+<link rel="prev" href="use-case-development.html"/>
+<link rel="next" href="training-pipeline-workflow.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -163,15 +163,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.5" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#devops-engineer"><i class="fa fa-check"></i><b>1.3.5</b> DevOps Engineer</a></li>
 <li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>1.4</b> Ops Tools &amp; Principles</a>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>2</b> Ops Tools &amp; Principles</a>
 <ul>
-<li class="chapter" data-level="1.4.1" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#containerization"><i class="fa fa-check"></i><b>1.4.1</b> Containerization</a></li>
-<li class="chapter" data-level="1.4.2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#version-control"><i class="fa fa-check"></i><b>1.4.2</b> Version Control</a></li>
-<li class="chapter" data-level="1.4.3" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#cicd"><i class="fa fa-check"></i><b>1.4.3</b> CI/CD</a></li>
-<li class="chapter" data-level="1.4.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#infrastructure-as-code"><i class="fa fa-check"></i><b>1.4.4</b> Infrastructure as code</a></li>
+<li class="chapter" data-level="2.1" data-path="containerization.html"><a href="containerization.html"><i class="fa fa-check"></i><b>2.1</b> Containerization</a></li>
+<li class="chapter" data-level="2.2" data-path="version-control.html"><a href="version-control.html"><i class="fa fa-check"></i><b>2.2</b> Version Control</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="version-control.html"><a href="version-control.html#github"><i class="fa fa-check"></i><b>2.2.1</b> Github</a></li>
+<li class="chapter" data-level="2.2.2" data-path="version-control.html"><a href="version-control.html#git-lifecycle"><i class="fa fa-check"></i><b>2.2.2</b> Git lifecycle</a></li>
 </ul></li>
+<li class="chapter" data-level="2.3" data-path="cicd.html"><a href="cicd.html"><i class="fa fa-check"></i><b>2.3</b> CI/CD</a></li>
+<li class="chapter" data-level="2.4" data-path="infrastructure-as-code.html"><a href="infrastructure-as-code.html"><i class="fa fa-check"></i><b>2.4</b> Infrastructure as code</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="overview-about-book-tutorials.html"><a href="overview-about-book-tutorials.html"><i class="fa fa-check"></i><b>2</b> Overview about book tutorials</a></li>
 <li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="core-components.html"><a href="core-components.html"><i class="fa fa-check"></i><b>3.1</b> Core Components</a>
@@ -288,9 +291,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>6.5</b> Exemplary Deployment</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="ml-platform-design.html"><a href="ml-platform-design.html"><i class="fa fa-check"></i><b>7</b> ML Platform Design</a></li>
-<li class="chapter" data-level="8" data-path="ml-platform-deployment.html"><a href="ml-platform-deployment.html"><i class="fa fa-check"></i><b>8</b> ML Platform Deployment</a>
+<li class="chapter" data-level="8" data-path="platform-deployment.html"><a href="platform-deployment.html"><i class="fa fa-check"></i><b>8</b> Platform Deployment</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="root-directory-module.html"><a href="root-directory-module.html"><i class="fa fa-check"></i><b>8.1</b> Root directory module</a></li>
+<li class="chapter" data-level="8.1" data-path="root-module.html"><a href="root-module.html"><i class="fa fa-check"></i><b>8.1</b> Root module</a></li>
 <li class="chapter" data-level="8.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html"><i class="fa fa-check"></i><b>8.2</b> Infrastructure</a>
 <ul>
 <li class="chapter" data-level="8.2.1" data-path="infrastructure-1.html"><a href="infrastructure-1.html#virtual-private-cloud"><i class="fa fa-check"></i><b>8.2.1</b> Virtual Private Cloud</a></li>
@@ -298,36 +301,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2.3" data-path="infrastructure-1.html"><a href="infrastructure-1.html#networking"><i class="fa fa-check"></i><b>8.2.3</b> Networking</a></li>
 <li class="chapter" data-level="8.2.4" data-path="infrastructure-1.html"><a href="infrastructure-1.html#relational-database-service"><i class="fa fa-check"></i><b>8.2.4</b> Relational Database Service</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="modules-2.html"><a href="modules-2.html"><i class="fa fa-check"></i><b>8.3</b> Modules</a>
+<li class="chapter" data-level="8.3" data-path="components.html"><a href="components.html"><i class="fa fa-check"></i><b>8.3</b> Components</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="modules-2.html"><a href="modules-2.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
-<li class="chapter" data-level="8.3.2" data-path="modules-2.html"><a href="modules-2.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
+<li class="chapter" data-level="8.3.1" data-path="components.html"><a href="components.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
+<li class="chapter" data-level="8.3.2" data-path="components.html"><a href="components.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="design-decisions.html"><a href="design-decisions.html"><i class="fa fa-check"></i><b>8.4</b> Design Decisions</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="use-case-development.html"><a href="use-case-development.html"><i class="fa fa-check"></i><b>9</b> Use Case Development</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="integrated-development-environment.html"><a href="integrated-development-environment.html"><i class="fa fa-check"></i><b>9.1</b> Integrated Development Environment</a>
+<li class="chapter" data-level="9.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html"><i class="fa fa-check"></i><b>9.1</b> Integrated Development Environment</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="integrated-development-environment.html"><a href="integrated-development-environment.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
+<li class="chapter" data-level="9.1.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Pipeline Workflow</a>
+<li class="chapter" data-level="9.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Training Pipeline Workflow</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
-<li class="chapter" data-level="9.2.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
+<li class="chapter" data-level="9.2.1" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
+<li class="chapter" data-level="9.2.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Building the Pipeline Steps</a>
+<li class="chapter" data-level="9.3" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Training Pipeline Steps</a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
-<li class="chapter" data-level="9.3.2" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
+<li class="chapter" data-level="9.3.1" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="9.3.2" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
 </ul></li>
 <li class="chapter" data-level="9.4" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html"><i class="fa fa-check"></i><b>9.4</b> Model Serving &amp; Inferencing</a>
 <ul>
 <li class="chapter" data-level="9.4.1" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#model-serving-1"><i class="fa fa-check"></i><b>9.4.1</b> Model Serving</a></li>
-<li class="chapter" data-level="9.4.2" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.4.2</b> Streamlit App</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="model-inferencing.html"><a href="model-inferencing.html"><i class="fa fa-check"></i><b>9.5</b> Model Inferencing</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="model-inferencing.html"><a href="model-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.5.1</b> Streamlit App</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>10</b> Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="glossary.html"><a href="glossary.html"><i class="fa fa-check"></i>Glossary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul>
 
       </nav>
@@ -345,64 +352,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="ml-platform-deployment" class="section level1 hasAnchor" number="8">
-<h1><span class="header-section-number">Chapter 8</span> ML Platform Deployment<a href="ml-platform-deployment.html#ml-platform-deployment" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<blockquote>
-<p><strong><em>NOTE:</em></strong> The chapter discussing the deployment of an ML platform with Airflow and MLflow on AWS EKS, utilizing Terraform for deployment, is currently in the writing phase. The information provided in this disclaimer is based on the current state of knowledge up until July 2023. Thank you for your understanding and patience as I work on completing this chapter.</p>
-</blockquote>
-<p>The provided directory structure represents the Terraform project for managing the infrastructure of our ML platform. It follows a modular organization to promote reusability and maintainability of the codebase. The full codebase is also available and can be accessed on <a href="https://github.com/seblum/mlops-airflow-on-eks">github</a></p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb110-1"><a href="ml-platform-deployment.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="ex">root</span></span>
-<span id="cb110-2"><a href="ml-platform-deployment.html#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   main.tf</span>
-<span id="cb110-3"><a href="ml-platform-deployment.html#cb110-3" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   variables.tf</span>
-<span id="cb110-4"><a href="ml-platform-deployment.html#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   outputs.tf</span>
-<span id="cb110-5"><a href="ml-platform-deployment.html#cb110-5" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   providers.tf</span>
-<span id="cb110-6"><a href="ml-platform-deployment.html#cb110-6" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
-<span id="cb110-7"><a href="ml-platform-deployment.html#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> infrastructure</span>
-<span id="cb110-8"><a href="ml-platform-deployment.html#cb110-8" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
-<span id="cb110-9"><a href="ml-platform-deployment.html#cb110-9" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── vpc</span>
-<span id="cb110-10"><a href="ml-platform-deployment.html#cb110-10" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
-<span id="cb110-11"><a href="ml-platform-deployment.html#cb110-11" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── eks</span>
-<span id="cb110-12"><a href="ml-platform-deployment.html#cb110-12" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
-<span id="cb110-13"><a href="ml-platform-deployment.html#cb110-13" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── networking</span>
-<span id="cb110-14"><a href="ml-platform-deployment.html#cb110-14" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
-<span id="cb110-15"><a href="ml-platform-deployment.html#cb110-15" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── rds</span>
-<span id="cb110-16"><a href="ml-platform-deployment.html#cb110-16" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
-<span id="cb110-17"><a href="ml-platform-deployment.html#cb110-17" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> modules</span>
-<span id="cb110-18"><a href="ml-platform-deployment.html#cb110-18" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│</span></span>
-<span id="cb110-19"><a href="ml-platform-deployment.html#cb110-19" aria-hidden="true" tabindex="-1"></a>    <span class="ex">└──</span> airflow</span>
-<span id="cb110-20"><a href="ml-platform-deployment.html#cb110-20" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│</span></span>
-<span id="cb110-21"><a href="ml-platform-deployment.html#cb110-21" aria-hidden="true" tabindex="-1"></a>    <span class="ex">└──</span> mlflow</span>
-<span id="cb110-22"><a href="ml-platform-deployment.html#cb110-22" aria-hidden="true" tabindex="-1"></a>    <span class="ex">│</span></span>
-<span id="cb110-23"><a href="ml-platform-deployment.html#cb110-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">└──</span> jupyterhub</span></code></pre></div>
-<p>By structuring the Terraform project this way it becomes easier to manage, scale, and maintain the infrastructure as the project grows. Each module can be independently developed, tested, and reused across different projects, promoting consistency and reducing duplication of code and effort.</p>
-<div id="root" class="section level3 unlisted unnumbered hasAnchor">
-<h3>Root<a href="ml-platform-deployment.html#root" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The <em>root</em> directory of the Terraform project contains the general configuration files related to the overall infrastructure setup.</p>
-<ul>
-<li>The <code>main.tf</code> Terraform configuration file, where all major resources are defined and organized into modules.</li>
-<li>The <code>variables.tf</code> containing the definition of input variables used throughout the project, allowing users to customize the infrastructure setup.</li>
-<li>The <code>outputs.tf</code> defining the output variables that expose relevant information about the deployed infrastructure.</li>
-<li>The <code>providers.tf</code> that defining and configuring the providers used in the project, for example, AWS, Kubernetes, Helm.</li>
-</ul>
-</div>
-<div id="infrastructure" class="section level3 unlisted unnumbered hasAnchor">
-<h3>Infrastructure<a href="ml-platform-deployment.html#infrastructure" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The <em>infrastructure</em> directory holds the individual modules responsible for provisioning specific components of the AWS Cloud and EKS setup.</p>
-<ul>
-<li><code>vpc</code> defines a module that configures resources related to the Virtual Private Cloud (VPC), such as subnets, route tables, and internet gateways.</li>
-<li>The <code>eks</code> module is responsible for creating and configuring an Amazon Elastic Kubernetes Service (EKS) cluster, including worker nodes and other related resources like the Cluster Autoscaler, Elastic Block Storage, or Elastic File System.</li>
-<li><code>networking</code> contains networking components that provide access to the cluster using ingresses and DNS records, for example the AWS Application Load Balancer or an External DNS.</li>
-<li>The <code>rds</code> module provides resources to deploy and Amazon Relational Database Service (RDS), such as database instances, subnets, and security groups. This module is needed for the specific tools and components of our ML platform.</li>
-</ul>
-</div>
-<div id="modules-1" class="section level3 unlisted unnumbered hasAnchor">
-<h3>Modules<a href="ml-platform-deployment.html#modules-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The <em>modules</em> directory contains Terraform modules that are specific for setting up out ML Platform and provides the components to integrate the MLOps Framework, such as tools for model tracking (MLflow), workflow management (Airflow), or a integrated development environment (JupyterHub).</p>
-<ul>
-<li><code>airflow</code> provides the Terraform module to deploy an Apache Airflow instance based on the Helm provider, which enables to orchestrate our ML workflows. The module is highly customized as it sets up necessary connections to other services, sets airflow variables that can be used by Data Scientists, creates an ingress ressource, and enables user management and authentication using Github.</li>
-<li>The <code>mlflow</code> module sets up MLflow to managing machine learning experiments and models. As MLflow does not natively provide a solution to deploy on Kubernetes, a custom Helm deployment is integrated that configures the necessary deployment, services, and ingress ressources.</li>
-<li><code>jupyterhub</code> deploys a JupyterHub environment via Helm that enables multi-user notebook environment, suitable for collaborative data science and machine learning work. The Helm chart is highly customized providing user management and authentication via Github, provisioning ingress resources, and cloning a custom Github repository that provides all our Data Science and Machine Learning code.</li>
-</ul>
+<div id="integrated-development-environment-1" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Integrated Development Environment<a href="integrated-development-environment-1.html#integrated-development-environment-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Jupyterhub serves as the integrated server environment within the ML platform, providing an Integrated Development Environment (IDE). However, it deviates from the traditional Jupyter Notebooks and instead utilizes VSCode as the IDE. Upon initialization, Jupyterhub clones the GitHub repository <em>mlops-airflow-DAGs</em> that contains the code for the use case. This is the same repository that is synchronized with Airflow to load the provided DAGs. The purpose of this approach is to offer a user-friendly and efficient development experience to platform users.</p>
+<p>In addition to synchronizing with Airflow, the use of GitHub provides additional tools to streamline development and incorporate DevOps practices effectively. One of these tools is Github Actions, which enables automation through CI/CD (Continuous Integration/Continuous Deployment) and supports the Git workflow. By configuring Github Actions through code, developers can seamlessly integrate these practices into their development processes. The configuration files for Github Actions are also cloned alongside the repository, ensuring that the integration and development processes remain smooth and efficient.</p>
+<div id="github-repository" class="section level3 hasAnchor" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> Github Repository<a href="integrated-development-environment-1.html#github-repository" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The code for the model pipeline is located in the GitHub repository called <em>mlops-airflow-DAGs</em>. It encompasses the setup of an Airflow DAG and the utilization of MLflow. The code responsible for the pipeline functionality can be located in the <code>src</code> subdirectory of the repository. The Airflow DAG is written in the <code>airflow_DAG.py</code> file situated in the root directory of the repository. Additionally, the repository includes a GitHub Actions workflow file located in the <code>.github/workflows/</code> subdirectory. The <code>Docker</code> subdirectory contains the Dockerfiles for the various containers used in the ML pipeline. These include a container with the code for data preprocessing and model training, a Dockerfile for serving the model using fastAPI, and a file that runs a streamlit app for sending inferences to the served model.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb128-1"><a href="integrated-development-environment-1.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="ex">root</span></span>
+<span id="cb128-2"><a href="integrated-development-environment-1.html#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   Readme.md</span>
+<span id="cb128-3"><a href="integrated-development-environment-1.html#cb128-3" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb128-4"><a href="integrated-development-environment-1.html#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> .github/workflows/</span>
+<span id="cb128-5"><a href="integrated-development-environment-1.html#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb128-6"><a href="integrated-development-environment-1.html#cb128-6" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> airflow_docker_DAG.py</span>
+<span id="cb128-7"><a href="integrated-development-environment-1.html#cb128-7" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> airflow_kubernetes_DAG.py</span>
+<span id="cb128-8"><a href="integrated-development-environment-1.html#cb128-8" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb128-9"><a href="integrated-development-environment-1.html#cb128-9" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> src</span>
+<span id="cb128-10"><a href="integrated-development-environment-1.html#cb128-10" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── preprocessing.py</span>
+<span id="cb128-11"><a href="integrated-development-environment-1.html#cb128-11" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   train.py</span>
+<span id="cb128-12"><a href="integrated-development-environment-1.html#cb128-12" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   ...</span>
+<span id="cb128-13"><a href="integrated-development-environment-1.html#cb128-13" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── model</span>
+<span id="cb128-14"><a href="integrated-development-environment-1.html#cb128-14" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>       └── utils.py</span>
+<span id="cb128-15"><a href="integrated-development-environment-1.html#cb128-15" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>           ...</span>
+<span id="cb128-16"><a href="integrated-development-environment-1.html#cb128-16" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span></span>
+<span id="cb128-17"><a href="integrated-development-environment-1.html#cb128-17" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> Docker</span>
+<span id="cb128-18"><a href="integrated-development-environment-1.html#cb128-18" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
+<span id="cb128-19"><a href="integrated-development-environment-1.html#cb128-19" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── fastapi-serve-app</span>
+<span id="cb128-20"><a href="integrated-development-environment-1.html#cb128-20" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │   └── Dockerfile</span>
+<span id="cb128-21"><a href="integrated-development-environment-1.html#cb128-21" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │       ...</span>
+<span id="cb128-22"><a href="integrated-development-environment-1.html#cb128-22" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   │</span>
+<span id="cb128-23"><a href="integrated-development-environment-1.html#cb128-23" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── python-base-cnn-model</span>
+<span id="cb128-24"><a href="integrated-development-environment-1.html#cb128-24" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>       └── Dockerfile</span>
+<span id="cb128-25"><a href="integrated-development-environment-1.html#cb128-25" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>           ...</span></code></pre></div>
 
 </div>
 </div>
@@ -411,8 +392,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="ml-platform-design.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="root-directory-module.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="use-case-development.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="training-pipeline-workflow.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -443,7 +424,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/08-Deployment-Infrastructure_Overview.Rmd",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/09.1-Deployment-Usage_IDE.Rmd",
 "text": "Edit"
 },
 "history": {

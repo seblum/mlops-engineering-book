@@ -1,0 +1,6 @@
+# Acknowledgements {.unnumbered}
+
+I would like to express my gratitude to the everyone contributing to this project and everyone who has provided invaluable insights and support throughout the development of this bookdown project:
+
+I am grateful to everyone who have contributed their time and expertise in reviewing drafts and providing valuable feedback. Your input has undoubtedly shaped the final outcome of this bookdown, and I am deeply appreciative of your efforts.
+

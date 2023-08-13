@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9.2 Training Pipeline Workflow | MLOps Engineering</title>
+  <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9.2 Training Pipeline Workflow | MLOps Engineering" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  <meta name="github-repo" content="seblum/mlops-engineering-book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9.2 Training Pipeline Workflow | MLOps Engineering" />
+  
+  <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
+  
+
+<meta name="author" content="Sebastian Blum" />
+
+
+<meta name="date" content="2023-08-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="integrated-development-environment-1.html"/>
+<link rel="next" href="training-pipeline-steps.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MLOps Engineering</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="preamble.html"><a href="preamble.html"><i class="fa fa-check"></i>Preamble</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html"><i class="fa fa-check"></i><b>1.1</b> Machine Learning Workflow</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html#ml-worflow-tools"><i class="fa fa-check"></i><b>1.1.1</b> ML Worflow Tools</a></li>
+<li class="chapter" data-level="1.1.2" data-path="machine-learning-workflow.html"><a href="machine-learning-workflow.html#developing-machine-learning-models"><i class="fa fa-check"></i><b>1.1.2</b> Developing Machine Learning Models</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html"><i class="fa fa-check"></i><b>1.2</b> Machine Learning Operations (MLOps)</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#ml-dev-ops"><i class="fa fa-check"></i><b>1.2.1</b> ML + (Dev)-Ops</a></li>
+<li class="chapter" data-level="1.2.2" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#mlops-lifecycle"><i class="fa fa-check"></i><b>1.2.2</b> MLOps Lifecycle</a></li>
+<li class="chapter" data-level="1.2.3" data-path="machine-learning-operations-mlops.html"><a href="machine-learning-operations-mlops.html#mlops-engineering"><i class="fa fa-check"></i><b>1.2.3</b> MLOps Engineering</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html"><i class="fa fa-check"></i><b>1.3</b> Roles and Tasks in MLOps</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#data-engineer"><i class="fa fa-check"></i><b>1.3.1</b> Data Engineer</a></li>
+<li class="chapter" data-level="1.3.2" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#data-scientist"><i class="fa fa-check"></i><b>1.3.2</b> Data Scientist</a></li>
+<li class="chapter" data-level="1.3.3" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#ml-engineer"><i class="fa fa-check"></i><b>1.3.3</b> ML Engineer</a></li>
+<li class="chapter" data-level="1.3.4" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#mlops-engineer"><i class="fa fa-check"></i><b>1.3.4</b> MLOps Engineer</a></li>
+<li class="chapter" data-level="1.3.5" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#devops-engineer"><i class="fa fa-check"></i><b>1.3.5</b> DevOps Engineer</a></li>
+<li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>2</b> Ops Tools &amp; Principles</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="containerization.html"><a href="containerization.html"><i class="fa fa-check"></i><b>2.1</b> Containerization</a></li>
+<li class="chapter" data-level="2.2" data-path="version-control.html"><a href="version-control.html"><i class="fa fa-check"></i><b>2.2</b> Version Control</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="version-control.html"><a href="version-control.html#github"><i class="fa fa-check"></i><b>2.2.1</b> Github</a></li>
+<li class="chapter" data-level="2.2.2" data-path="version-control.html"><a href="version-control.html#git-lifecycle"><i class="fa fa-check"></i><b>2.2.2</b> Git lifecycle</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="cicd.html"><a href="cicd.html"><i class="fa fa-check"></i><b>2.3</b> CI/CD</a></li>
+<li class="chapter" data-level="2.4" data-path="infrastructure-as-code.html"><a href="infrastructure-as-code.html"><i class="fa fa-check"></i><b>2.4</b> Infrastructure as code</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="core-components.html"><a href="core-components.html"><i class="fa fa-check"></i><b>3.1</b> Core Components</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="core-components.html"><a href="core-components.html#dags"><i class="fa fa-check"></i><b>3.1.1</b> DAGs</a></li>
+<li class="chapter" data-level="3.1.2" data-path="core-components.html"><a href="core-components.html#operators"><i class="fa fa-check"></i><b>3.1.2</b> Operators</a></li>
+<li class="chapter" data-level="3.1.3" data-path="core-components.html"><a href="core-components.html#tasks"><i class="fa fa-check"></i><b>3.1.3</b> Tasks</a></li>
+<li class="chapter" data-level="3.1.4" data-path="core-components.html"><a href="core-components.html#xcom"><i class="fa fa-check"></i><b>3.1.4</b> XCom</a></li>
+<li class="chapter" data-level="3.1.5" data-path="core-components.html"><a href="core-components.html#scheduling"><i class="fa fa-check"></i><b>3.1.5</b> Scheduling</a></li>
+<li class="chapter" data-level="3.1.6" data-path="core-components.html"><a href="core-components.html#taskflow"><i class="fa fa-check"></i><b>3.1.6</b> Taskflow</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="exemplary-ml-workflow.html"><a href="exemplary-ml-workflow.html"><i class="fa fa-check"></i><b>3.2</b> Exemplary ML workflow</a></li>
+<li class="chapter" data-level="3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html"><i class="fa fa-check"></i><b>3.3</b> Airflow infrastructure</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#airflow-as-a-distributed-system"><i class="fa fa-check"></i><b>3.3.1</b> Airflow as a distributed system</a></li>
+<li class="chapter" data-level="3.3.2" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#scheduler"><i class="fa fa-check"></i><b>3.3.2</b> Scheduler</a></li>
+<li class="chapter" data-level="3.3.3" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#webserver"><i class="fa fa-check"></i><b>3.3.3</b> Webserver</a></li>
+<li class="chapter" data-level="3.3.4" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#executor"><i class="fa fa-check"></i><b>3.3.4</b> Executor</a></li>
+<li class="chapter" data-level="3.3.5" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#dag-directory"><i class="fa fa-check"></i><b>3.3.5</b> DAG Directory</a></li>
+<li class="chapter" data-level="3.3.6" data-path="airflow-infrastructure.html"><a href="airflow-infrastructure.html#metadata-database"><i class="fa fa-check"></i><b>3.3.6</b> Metadata Database</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="mlflow.html"><a href="mlflow.html"><i class="fa fa-check"></i><b>4</b> MLflow</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="core-components-1.html"><a href="core-components-1.html"><i class="fa fa-check"></i><b>4.1</b> Core Components</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-tracking"><i class="fa fa-check"></i><b>4.1.1</b> MLflow Tracking</a></li>
+<li class="chapter" data-level="4.1.2" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-models"><i class="fa fa-check"></i><b>4.1.2</b> MLflow Models</a></li>
+<li class="chapter" data-level="4.1.3" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-model-registry"><i class="fa fa-check"></i><b>4.1.3</b> MLflow Model Registry</a></li>
+<li class="chapter" data-level="4.1.4" data-path="core-components-1.html"><a href="core-components-1.html#mlflow-projects"><i class="fa fa-check"></i><b>4.1.4</b> MLflow Projects</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html"><i class="fa fa-check"></i><b>4.2</b> MLFflow Architecture</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-tracking-server"><i class="fa fa-check"></i><b>4.2.1</b> MLflow Tracking Server</a></li>
+<li class="chapter" data-level="4.2.2" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-backend-store"><i class="fa fa-check"></i><b>4.2.2</b> MLflow Backend Store</a></li>
+<li class="chapter" data-level="4.2.3" data-path="mlfflow-architecture.html"><a href="mlfflow-architecture.html#mlflow-artifact-store"><i class="fa fa-check"></i><b>4.2.3</b> MLflow Artifact Store</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="kubernetes.html"><a href="kubernetes.html"><i class="fa fa-check"></i><b>5</b> Kubernetes</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="core-components-2.html"><a href="core-components-2.html"><i class="fa fa-check"></i><b>5.1</b> Core Components</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="core-components-2.html"><a href="core-components-2.html#nodes"><i class="fa fa-check"></i><b>5.1.1</b> Nodes</a></li>
+<li class="chapter" data-level="5.1.2" data-path="core-components-2.html"><a href="core-components-2.html#pods"><i class="fa fa-check"></i><b>5.1.2</b> Pods</a></li>
+<li class="chapter" data-level="5.1.3" data-path="core-components-2.html"><a href="core-components-2.html#imperative-declarative-management"><i class="fa fa-check"></i><b>5.1.3</b> Imperative &amp; Declarative Management</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html"><i class="fa fa-check"></i><b>5.2</b> Application Deployment &amp; Design</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="application-deployment-design.html"><a href="application-deployment-design.html#deployments"><i class="fa fa-check"></i><b>5.2.1</b> Deployments</a></li>
+<li class="chapter" data-level="5.2.2" data-path="application-deployment-design.html"><a href="application-deployment-design.html#resource-management"><i class="fa fa-check"></i><b>5.2.2</b> Resource Management</a></li>
+<li class="chapter" data-level="5.2.3" data-path="application-deployment-design.html"><a href="application-deployment-design.html#daemonsets"><i class="fa fa-check"></i><b>5.2.3</b> DaemonSets</a></li>
+<li class="chapter" data-level="5.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>5.2.4</b> StatefulSets</a></li>
+<li class="chapter" data-level="5.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>5.2.5</b> Jobs &amp; Cron Jobs</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>5.3</b> Services &amp; Networking</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>5.3.1</b> Services</a></li>
+<li class="chapter" data-level="5.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>5.3.2</b> Service Discovery</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>5.4</b> Volume &amp; Storage</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>5.4.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="5.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>5.4.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="5.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>5.4.3</b> Persistent Volumes</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>5.5</b> Environment, Configuration &amp; Security</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#namespaces"><i class="fa fa-check"></i><b>5.5.1</b> Namespaces</a></li>
+<li class="chapter" data-level="5.5.2" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#labels-selectors-and-annotations"><i class="fa fa-check"></i><b>5.5.2</b> Labels, Selectors and Annotations</a></li>
+<li class="chapter" data-level="5.5.3" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#configmaps"><i class="fa fa-check"></i><b>5.5.3</b> ConfigMaps</a></li>
+<li class="chapter" data-level="5.5.4" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html#secrets"><i class="fa fa-check"></i><b>5.5.4</b> Secrets</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>5.6</b> Observability &amp; Maintenance</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>5.6.1</b> Health Checks</a></li>
+<li class="chapter" data-level="5.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>5.6.2</b> Debugging</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>5.7</b> Helm</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="helm.html"><a href="helm.html#helm-chart-structure"><i class="fa fa-check"></i><b>5.7.1</b> Helm Chart Structure</a></li>
+<li class="chapter" data-level="5.7.2" data-path="helm.html"><a href="helm.html#working-with-helm"><i class="fa fa-check"></i><b>5.7.2</b> Working with Helm</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="terraform.html"><a href="terraform.html"><i class="fa fa-check"></i><b>6</b> Terraform</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="basic-usage.html"><a href="basic-usage.html"><i class="fa fa-check"></i><b>6.1</b> Basic usage</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="basic-usage.html"><a href="basic-usage.html#terraform-init"><i class="fa fa-check"></i><b>6.1.1</b> terraform init</a></li>
+<li class="chapter" data-level="6.1.2" data-path="basic-usage.html"><a href="basic-usage.html#terraform-validate"><i class="fa fa-check"></i><b>6.1.2</b> terraform validate</a></li>
+<li class="chapter" data-level="6.1.3" data-path="basic-usage.html"><a href="basic-usage.html#terraform-plan"><i class="fa fa-check"></i><b>6.1.3</b> terraform plan</a></li>
+<li class="chapter" data-level="6.1.4" data-path="basic-usage.html"><a href="basic-usage.html#terraform-apply"><i class="fa fa-check"></i><b>6.1.4</b> terraform apply</a></li>
+<li class="chapter" data-level="6.1.5" data-path="basic-usage.html"><a href="basic-usage.html#terraform-destroy"><i class="fa fa-check"></i><b>6.1.5</b> terraform destroy</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="core-components-3.html"><a href="core-components-3.html"><i class="fa fa-check"></i><b>6.2</b> Core Components</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="core-components-3.html"><a href="core-components-3.html#providers"><i class="fa fa-check"></i><b>6.2.1</b> Providers</a></li>
+<li class="chapter" data-level="6.2.2" data-path="core-components-3.html"><a href="core-components-3.html#resources"><i class="fa fa-check"></i><b>6.2.2</b> Resources</a></li>
+<li class="chapter" data-level="6.2.3" data-path="core-components-3.html"><a href="core-components-3.html#data-sources"><i class="fa fa-check"></i><b>6.2.3</b> Data Sources</a></li>
+<li class="chapter" data-level="6.2.4" data-path="core-components-3.html"><a href="core-components-3.html#state"><i class="fa fa-check"></i><b>6.2.4</b> State</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="modules.html"><a href="modules.html"><i class="fa fa-check"></i><b>6.3</b> Modules</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="modules.html"><a href="modules.html#input-variables"><i class="fa fa-check"></i><b>6.3.1</b> Input Variables</a></li>
+<li class="chapter" data-level="6.3.2" data-path="modules.html"><a href="modules.html#output-variables"><i class="fa fa-check"></i><b>6.3.2</b> Output Variables</a></li>
+<li class="chapter" data-level="6.3.3" data-path="modules.html"><a href="modules.html#local-variables"><i class="fa fa-check"></i><b>6.3.3</b> Local Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html"><i class="fa fa-check"></i><b>6.4</b> Additional tips &amp; tricks</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#count"><i class="fa fa-check"></i><b>6.4.1</b> count</a></li>
+<li class="chapter" data-level="6.4.2" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for-each"><i class="fa fa-check"></i><b>6.4.2</b> for-each</a></li>
+<li class="chapter" data-level="6.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>6.4.3</b> for</a></li>
+<li class="chapter" data-level="6.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>6.4.4</b> Workspaces</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>6.5</b> Exemplary Deployment</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ml-platform-design.html"><a href="ml-platform-design.html"><i class="fa fa-check"></i><b>7</b> ML Platform Design</a></li>
+<li class="chapter" data-level="8" data-path="platform-deployment.html"><a href="platform-deployment.html"><i class="fa fa-check"></i><b>8</b> Platform Deployment</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="root-module.html"><a href="root-module.html"><i class="fa fa-check"></i><b>8.1</b> Root module</a></li>
+<li class="chapter" data-level="8.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html"><i class="fa fa-check"></i><b>8.2</b> Infrastructure</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="infrastructure-1.html"><a href="infrastructure-1.html#virtual-private-cloud"><i class="fa fa-check"></i><b>8.2.1</b> Virtual Private Cloud</a></li>
+<li class="chapter" data-level="8.2.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html#elastic-kubernetes-service"><i class="fa fa-check"></i><b>8.2.2</b> Elastic Kubernetes Service</a></li>
+<li class="chapter" data-level="8.2.3" data-path="infrastructure-1.html"><a href="infrastructure-1.html#networking"><i class="fa fa-check"></i><b>8.2.3</b> Networking</a></li>
+<li class="chapter" data-level="8.2.4" data-path="infrastructure-1.html"><a href="infrastructure-1.html#relational-database-service"><i class="fa fa-check"></i><b>8.2.4</b> Relational Database Service</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="components.html"><a href="components.html"><i class="fa fa-check"></i><b>8.3</b> Components</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="components.html"><a href="components.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
+<li class="chapter" data-level="8.3.2" data-path="components.html"><a href="components.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="design-decisions.html"><a href="design-decisions.html"><i class="fa fa-check"></i><b>8.4</b> Design Decisions</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="use-case-development.html"><a href="use-case-development.html"><i class="fa fa-check"></i><b>9</b> Use Case Development</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html"><i class="fa fa-check"></i><b>9.1</b> Integrated Development Environment</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Training Pipeline Workflow</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
+<li class="chapter" data-level="9.2.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Training Pipeline Steps</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="9.3.2" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html"><i class="fa fa-check"></i><b>9.4</b> Model Serving &amp; Inferencing</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#model-serving-1"><i class="fa fa-check"></i><b>9.4.1</b> Model Serving</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="model-inferencing.html"><a href="model-inferencing.html"><i class="fa fa-check"></i><b>9.5</b> Model Inferencing</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="model-inferencing.html"><a href="model-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.5.1</b> Streamlit App</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="glossary.html"><a href="glossary.html"><i class="fa fa-check"></i>Glossary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MLOps Engineering</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="training-pipeline-workflow" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Training Pipeline Workflow<a href="training-pipeline-workflow.html#training-pipeline-workflow" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The code and machine learning pipeline have been modularized into distinct steps, including preprocessing, model training, model comparison, and model serving. Airflow serves as the model workflow tool, generating DAGs for managing the pipeline. MLflow is integrated to facilitate model tracking, registry, and serving functionalities. To ensure portability and scalability, the codebase has been containerized using Docker, allowing it to be executed in Docker and/or Kubernetes environments.</p>
+<p>The <code>src</code> code is installed as a Python package within the Docker container, enabling easy invocation within the Airflow DAG. However, it is important to note that although Model Serving is triggered within the Airflow pipeline, it consists of a separate Python code and is not integrated into the <code>src</code> package. Likewise, model inferencing has its own distinct description and functionality. The code bases for both model serving and model inferencing can be found in the app/ directory, alongside their respective Dockerfiles. A detailed explanation of how these components function will be provided in the following section.</p>
+<div id="airflow-workflow" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Airflow Workflow<a href="training-pipeline-workflow.html#airflow-workflow" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The specification of the Airflow DAG, which includes the DAG structure, tasks, and their dependencies, can be found in the <code>airflow_DAG.py</code> file. The DAG is built using the TaskFlow API.</p>
+<p>An ML pipeline of this use case consists of three main steps: preprocessing, training, and serving. The preprocessing step involves data processing and storing it in the S3 storage. The training step and code are designed to accommodate different TensorFlow models, allowing for parallel training on multiple models, thereby reducing the time to deployment. Since there are multiple models, it is essential to serve only the model with the best metrics based on the current data. Hence, an intermediate step is incorporated to compare the metrics of all the models and select the best one for serving.</p>
+<p>To execute the pipeline steps, the Airflow Docker Operator is employed, which ensures that each step runs in a separate and isolated environment using Docker or Kubernetes jobs. Dockerizing the code is a prerequisite for this process. The Airflow task then invokes the relevant methods of the Python code and executes them accordingly.</p>
+<p>Once the model is in the serving phase, a Streamlit app is deployed for applying inference on new data.</p>
+<p><img src="images/09-Deployment-Usage/use-case-pipeline-graph.png" style="width:100.0%" /></p>
+<p>The code below defines the <code>ml_pipeline_dag</code> function as an Airflow DAG using the <code>dag</code> decorator. Each step of the pipeline, including data preprocessing, model training, model comparison, and serving the best model, is represented as a separate task with the <code>@task</code> decorator. Dependencies between these tasks are established by passing the output of one task as an argument to the next task. The <code>ml_pipeline</code> object serves as a representation of the entire DAG.</p>
+<div id="importing-dependencies" class="section level4 unlisted unnumbered hasAnchor">
+<h4>Importing Dependencies<a href="training-pipeline-workflow.html#importing-dependencies" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>At first the necessary dependencies for the code are imported, including libraries for MLflow, Airflow, and other utilities.</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb129-1"><a href="training-pipeline-workflow.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports necessary packages</span></span>
+<span id="cb129-2"><a href="training-pipeline-workflow.html#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb129-3"><a href="training-pipeline-workflow.html#cb129-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> enum <span class="im">import</span> Enum</span>
+<span id="cb129-4"><a href="training-pipeline-workflow.html#cb129-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlflow</span>
+<span id="cb129-5"><a href="training-pipeline-workflow.html#cb129-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pendulum</span>
+<span id="cb129-6"><a href="training-pipeline-workflow.html#cb129-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow.decorators <span class="im">import</span> dag, task</span></code></pre></div>
+</div>
+<div id="setting-mlflow-tracking-uri-and-experiment" class="section level4 unlisted unnumbered hasAnchor">
+<h4>Setting MLflow Tracking URI and Experiment<a href="training-pipeline-workflow.html#setting-mlflow-tracking-uri-and-experiment" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Secondly, the necessary variables and constants for the whole Airflow DAG are defined and set. Either hard coded as string, or read from environment variables. Also, the MLflow tracking URI is set and a MLflow experiment retrieved, or created if none exists already.</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb130-1"><a href="training-pipeline-workflow.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define variables and constants</span></span>
+<span id="cb130-2"><a href="training-pipeline-workflow.html#cb130-2" aria-hidden="true" tabindex="-1"></a>MLFLOW_TRACKING_URI_local <span class="op">=</span> <span class="st">&quot;http://127.0.0.1:5008/&quot;</span></span>
+<span id="cb130-3"><a href="training-pipeline-workflow.html#cb130-3" aria-hidden="true" tabindex="-1"></a>MLFLOW_TRACKING_URI <span class="op">=</span> <span class="st">&quot;http://host.docker.internal:5008&quot;</span></span>
+<span id="cb130-4"><a href="training-pipeline-workflow.html#cb130-4" aria-hidden="true" tabindex="-1"></a>EXPERIMENT_NAME <span class="op">=</span> <span class="st">&quot;cnn_skin_cancer&quot;</span></span>
+<span id="cb130-5"><a href="training-pipeline-workflow.html#cb130-5" aria-hidden="true" tabindex="-1"></a>AWS_BUCKET <span class="op">=</span> os.getenv(<span class="st">&quot;AWS_BUCKET&quot;</span>)</span>
+<span id="cb130-6"><a href="training-pipeline-workflow.html#cb130-6" aria-hidden="true" tabindex="-1"></a>AWS_REGION <span class="op">=</span> os.getenv(<span class="st">&quot;AWS_REGION&quot;</span>)</span>
+<span id="cb130-7"><a href="training-pipeline-workflow.html#cb130-7" aria-hidden="true" tabindex="-1"></a>AWS_ACCESS_KEY_ID <span class="op">=</span> os.getenv(<span class="st">&quot;AWS_ACCESS_KEY_ID&quot;</span>)</span>
+<span id="cb130-8"><a href="training-pipeline-workflow.html#cb130-8" aria-hidden="true" tabindex="-1"></a>AWS_SECRET_ACCESS_KEY <span class="op">=</span> os.getenv(<span class="st">&quot;AWS_SECRET_ACCESS_KEY&quot;</span>)</span>
+<span id="cb130-9"><a href="training-pipeline-workflow.html#cb130-9" aria-hidden="true" tabindex="-1"></a>AWS_ROLE_NAME <span class="op">=</span> os.getenv(<span class="st">&quot;AWS_ROLE_NAME&quot;</span>)</span>
+<span id="cb130-10"><a href="training-pipeline-workflow.html#cb130-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-11"><a href="training-pipeline-workflow.html#cb130-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Set MLflow tracking URI</span></span>
+<span id="cb130-12"><a href="training-pipeline-workflow.html#cb130-12" aria-hidden="true" tabindex="-1"></a>mlflow.set_tracking_uri(MLFLOW_TRACKING_URI_local)</span>
+<span id="cb130-13"><a href="training-pipeline-workflow.html#cb130-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-14"><a href="training-pipeline-workflow.html#cb130-14" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb130-15"><a href="training-pipeline-workflow.html#cb130-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Creating an experiment</span></span>
+<span id="cb130-16"><a href="training-pipeline-workflow.html#cb130-16" aria-hidden="true" tabindex="-1"></a>    mlflow_experiment_id <span class="op">=</span> mlflow.create_experiment(EXPERIMENT_NAME)</span>
+<span id="cb130-17"><a href="training-pipeline-workflow.html#cb130-17" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
+<span id="cb130-18"><a href="training-pipeline-workflow.html#cb130-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb130-19"><a href="training-pipeline-workflow.html#cb130-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting the environment with the created experiment</span></span>
+<span id="cb130-20"><a href="training-pipeline-workflow.html#cb130-20" aria-hidden="true" tabindex="-1"></a>mlflow_experiment_id <span class="op">=</span> mlflow.set_experiment(EXPERIMENT_NAME).experiment_id</span></code></pre></div>
+</div>
+<div id="setting-default-arguments-and-environment-data" class="section level4 unlisted unnumbered hasAnchor">
+<h4>Setting Default Arguments and Environment Data<a href="training-pipeline-workflow.html#setting-default-arguments-and-environment-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb131"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb131-1"><a href="training-pipeline-workflow.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set various model params and airflow or environment args</span></span>
+<span id="cb131-2"><a href="training-pipeline-workflow.html#cb131-2" aria-hidden="true" tabindex="-1"></a>dag_default_args <span class="op">=</span> {</span>
+<span id="cb131-3"><a href="training-pipeline-workflow.html#cb131-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;owner&quot;</span>: <span class="st">&quot;seblum&quot;</span>,</span>
+<span id="cb131-4"><a href="training-pipeline-workflow.html#cb131-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;depends_on_past&quot;</span>: <span class="va">False</span>,</span>
+<span id="cb131-5"><a href="training-pipeline-workflow.html#cb131-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;start_date&quot;</span>: pendulum.datetime(<span class="dv">2021</span>, <span class="dv">1</span>, <span class="dv">1</span>, tz<span class="op">=</span><span class="st">&quot;UTC&quot;</span>),</span>
+<span id="cb131-6"><a href="training-pipeline-workflow.html#cb131-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;tags&quot;</span>: [<span class="st">&quot;Keras CNN to classify skin cancer&quot;</span>],</span>
+<span id="cb131-7"><a href="training-pipeline-workflow.html#cb131-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb131-8"><a href="training-pipeline-workflow.html#cb131-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-9"><a href="training-pipeline-workflow.html#cb131-9" aria-hidden="true" tabindex="-1"></a>kwargs_env_data <span class="op">=</span> {</span>
+<span id="cb131-10"><a href="training-pipeline-workflow.html#cb131-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;MLFLOW_TRACKING_URI&quot;</span>: MLFLOW_TRACKING_URI,</span>
+<span id="cb131-11"><a href="training-pipeline-workflow.html#cb131-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;MLFLOW_EXPERIMENT_ID&quot;</span>: mlflow_experiment_id,</span>
+<span id="cb131-12"><a href="training-pipeline-workflow.html#cb131-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;AWS_ACCESS_KEY_ID&quot;</span>: AWS_ACCESS_KEY_ID,</span>
+<span id="cb131-13"><a href="training-pipeline-workflow.html#cb131-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;AWS_SECRET_ACCESS_KEY&quot;</span>: AWS_SECRET_ACCESS_KEY,</span>
+<span id="cb131-14"><a href="training-pipeline-workflow.html#cb131-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;AWS_BUCKET&quot;</span>: AWS_BUCKET,</span>
+<span id="cb131-15"><a href="training-pipeline-workflow.html#cb131-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;AWS_REGION&quot;</span>: AWS_REGION,</span>
+<span id="cb131-16"><a href="training-pipeline-workflow.html#cb131-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;AWS_ROLE_NAME&quot;</span>: AWS_ROLE_NAME,</span>
+<span id="cb131-17"><a href="training-pipeline-workflow.html#cb131-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb131-18"><a href="training-pipeline-workflow.html#cb131-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-19"><a href="training-pipeline-workflow.html#cb131-19" aria-hidden="true" tabindex="-1"></a>model_params <span class="op">=</span> {</span>
+<span id="cb131-20"><a href="training-pipeline-workflow.html#cb131-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;num_classes&quot;</span>: <span class="dv">2</span>,</span>
+<span id="cb131-21"><a href="training-pipeline-workflow.html#cb131-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;input_shape&quot;</span>: (<span class="dv">224</span>, <span class="dv">224</span>, <span class="dv">3</span>),</span>
+<span id="cb131-22"><a href="training-pipeline-workflow.html#cb131-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;activation&quot;</span>: <span class="st">&quot;relu&quot;</span>,</span>
+<span id="cb131-23"><a href="training-pipeline-workflow.html#cb131-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;kernel_initializer_glob&quot;</span>: <span class="st">&quot;glorot_uniform&quot;</span>,</span>
+<span id="cb131-24"><a href="training-pipeline-workflow.html#cb131-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;kernel_initializer_norm&quot;</span>: <span class="st">&quot;normal&quot;</span>,</span>
+<span id="cb131-25"><a href="training-pipeline-workflow.html#cb131-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;optimizer&quot;</span>: <span class="st">&quot;adam&quot;</span>,</span>
+<span id="cb131-26"><a href="training-pipeline-workflow.html#cb131-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;loss&quot;</span>: <span class="st">&quot;binary_crossentropy&quot;</span>,</span>
+<span id="cb131-27"><a href="training-pipeline-workflow.html#cb131-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;metrics&quot;</span>: [<span class="st">&quot;accuracy&quot;</span>],</span>
+<span id="cb131-28"><a href="training-pipeline-workflow.html#cb131-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;validation_split&quot;</span>: <span class="fl">0.2</span>,</span>
+<span id="cb131-29"><a href="training-pipeline-workflow.html#cb131-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;epochs&quot;</span>: <span class="dv">2</span>,</span>
+<span id="cb131-30"><a href="training-pipeline-workflow.html#cb131-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;batch_size&quot;</span>: <span class="dv">64</span>,</span>
+<span id="cb131-31"><a href="training-pipeline-workflow.html#cb131-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;learning_rate&quot;</span>: <span class="fl">1e-5</span>,</span>
+<span id="cb131-32"><a href="training-pipeline-workflow.html#cb131-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;pooling&quot;</span>: <span class="st">&quot;avg&quot;</span>,  <span class="co"># needed for resnet50</span></span>
+<span id="cb131-33"><a href="training-pipeline-workflow.html#cb131-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;verbose&quot;</span>: <span class="dv">2</span>,</span>
+<span id="cb131-34"><a href="training-pipeline-workflow.html#cb131-34" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="defining-the-airflow-dag" class="section level4 unlisted unnumbered hasAnchor">
+<h4>Defining the Airflow DAG<a href="training-pipeline-workflow.html#defining-the-airflow-dag" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>After all parameters have been set, the actual Airflow DAG for the CNN skin cancer workflow is defined. As each single task of the ML pipeline of the Airflow DAG is executed as a container run, the container image that is pulled from DockerHub needs to be specified.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb132-1"><a href="training-pipeline-workflow.html#cb132-1" aria-hidden="true" tabindex="-1"></a>skin_cancer_container_image <span class="op">=</span> <span class="st">&quot;seblum/cnn-skin-cancer:latest&quot;</span></span>
+<span id="cb132-2"><a href="training-pipeline-workflow.html#cb132-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-3"><a href="training-pipeline-workflow.html#cb132-3" aria-hidden="true" tabindex="-1"></a><span class="at">@dag</span>(</span>
+<span id="cb132-4"><a href="training-pipeline-workflow.html#cb132-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;cnn_skin_cancer_docker_workflow&quot;</span>,</span>
+<span id="cb132-5"><a href="training-pipeline-workflow.html#cb132-5" aria-hidden="true" tabindex="-1"></a>    default_args<span class="op">=</span>dag_default_args,</span>
+<span id="cb132-6"><a href="training-pipeline-workflow.html#cb132-6" aria-hidden="true" tabindex="-1"></a>    schedule_interval<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb132-7"><a href="training-pipeline-workflow.html#cb132-7" aria-hidden="true" tabindex="-1"></a>    max_active_runs<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb132-8"><a href="training-pipeline-workflow.html#cb132-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb132-9"><a href="training-pipeline-workflow.html#cb132-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cnn_skin_cancer_workflow():</span></code></pre></div>
+</div>
+<div id="defining-preprocessing-task" class="section level4 unlisted unnumbered hasAnchor">
+<h4>Defining Preprocessing Task<a href="training-pipeline-workflow.html#defining-preprocessing-task" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>As a first step, the preprocessing task is defined, which performs data preprocessing.</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb133-1"><a href="training-pipeline-workflow.html#cb133-1" aria-hidden="true" tabindex="-1"></a>    <span class="at">@task.docker</span>(</span>
+<span id="cb133-2"><a href="training-pipeline-workflow.html#cb133-2" aria-hidden="true" tabindex="-1"></a>        image<span class="op">=</span>skin_cancer_container_image,</span>
+<span id="cb133-3"><a href="training-pipeline-workflow.html#cb133-3" aria-hidden="true" tabindex="-1"></a>        multiple_outputs<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb133-4"><a href="training-pipeline-workflow.html#cb133-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Add the previously defined variables and constants as environment variables to the container</span></span>
+<span id="cb133-5"><a href="training-pipeline-workflow.html#cb133-5" aria-hidden="true" tabindex="-1"></a>        environment<span class="op">=</span>kwargs_env_data,</span>
+<span id="cb133-6"><a href="training-pipeline-workflow.html#cb133-6" aria-hidden="true" tabindex="-1"></a>        working_dir<span class="op">=</span><span class="st">&quot;/app&quot;</span>,</span>
+<span id="cb133-7"><a href="training-pipeline-workflow.html#cb133-7" aria-hidden="true" tabindex="-1"></a>        force_pull<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb133-8"><a href="training-pipeline-workflow.html#cb133-8" aria-hidden="true" tabindex="-1"></a>        network_mode<span class="op">=</span><span class="st">&quot;bridge&quot;</span>,</span>
+<span id="cb133-9"><a href="training-pipeline-workflow.html#cb133-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb133-10"><a href="training-pipeline-workflow.html#cb133-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> preprocessing_op(mlflow_experiment_id):</span>
+<span id="cb133-11"><a href="training-pipeline-workflow.html#cb133-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb133-12"><a href="training-pipeline-workflow.html#cb133-12" aria-hidden="true" tabindex="-1"></a><span class="co">        Perform data preprocessing.</span></span>
+<span id="cb133-13"><a href="training-pipeline-workflow.html#cb133-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-14"><a href="training-pipeline-workflow.html#cb133-14" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
+<span id="cb133-15"><a href="training-pipeline-workflow.html#cb133-15" aria-hidden="true" tabindex="-1"></a><span class="co">            mlflow_experiment_id (str): The MLflow experiment ID.</span></span>
+<span id="cb133-16"><a href="training-pipeline-workflow.html#cb133-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-17"><a href="training-pipeline-workflow.html#cb133-17" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb133-18"><a href="training-pipeline-workflow.html#cb133-18" aria-hidden="true" tabindex="-1"></a><span class="co">            dict: A dictionary containing the paths to preprocessed data.</span></span>
+<span id="cb133-19"><a href="training-pipeline-workflow.html#cb133-19" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb133-20"><a href="training-pipeline-workflow.html#cb133-20" aria-hidden="true" tabindex="-1"></a>        <span class="im">import</span> os</span>
+<span id="cb133-21"><a href="training-pipeline-workflow.html#cb133-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-22"><a href="training-pipeline-workflow.html#cb133-22" aria-hidden="true" tabindex="-1"></a>        <span class="im">from</span> src.preprocessing <span class="im">import</span> data_preprocessing</span>
+<span id="cb133-23"><a href="training-pipeline-workflow.html#cb133-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-24"><a href="training-pipeline-workflow.html#cb133-24" aria-hidden="true" tabindex="-1"></a>        aws_bucket <span class="op">=</span> os.getenv(<span class="st">&quot;AWS_BUCKET&quot;</span>)</span>
+<span id="cb133-25"><a href="training-pipeline-workflow.html#cb133-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-26"><a href="training-pipeline-workflow.html#cb133-26" aria-hidden="true" tabindex="-1"></a>        (</span>
+<span id="cb133-27"><a href="training-pipeline-workflow.html#cb133-27" aria-hidden="true" tabindex="-1"></a>            X_train_data_path,</span>
+<span id="cb133-28"><a href="training-pipeline-workflow.html#cb133-28" aria-hidden="true" tabindex="-1"></a>            y_train_data_path,</span>
+<span id="cb133-29"><a href="training-pipeline-workflow.html#cb133-29" aria-hidden="true" tabindex="-1"></a>            X_test_data_path,</span>
+<span id="cb133-30"><a href="training-pipeline-workflow.html#cb133-30" aria-hidden="true" tabindex="-1"></a>            y_test_data_path,</span>
+<span id="cb133-31"><a href="training-pipeline-workflow.html#cb133-31" aria-hidden="true" tabindex="-1"></a>        ) <span class="op">=</span> data_preprocessing(mlflow_experiment_id<span class="op">=</span>mlflow_experiment_id, aws_bucket<span class="op">=</span>aws_bucket)</span>
+<span id="cb133-32"><a href="training-pipeline-workflow.html#cb133-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-33"><a href="training-pipeline-workflow.html#cb133-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create dictionary with S3 paths to return</span></span>
+<span id="cb133-34"><a href="training-pipeline-workflow.html#cb133-34" aria-hidden="true" tabindex="-1"></a>        return_dict <span class="op">=</span> {</span>
+<span id="cb133-35"><a href="training-pipeline-workflow.html#cb133-35" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;X_train_data_path&quot;</span>: X_train_data_path,</span>
+<span id="cb133-36"><a href="training-pipeline-workflow.html#cb133-36" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;y_train_data_path&quot;</span>: y_train_data_path,</span>
+<span id="cb133-37"><a href="training-pipeline-workflow.html#cb133-37" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;X_test_data_path&quot;</span>: X_test_data_path,</span>
+<span id="cb133-38"><a href="training-pipeline-workflow.html#cb133-38" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;y_test_data_path&quot;</span>: y_test_data_path,</span>
+<span id="cb133-39"><a href="training-pipeline-workflow.html#cb133-39" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb133-40"><a href="training-pipeline-workflow.html#cb133-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> return_dict</span></code></pre></div>
+</div>
+<div id="defining-model-training-task" class="section level4 unlisted unnumbered hasAnchor">
+<h4>Defining Model Training Task<a href="training-pipeline-workflow.html#defining-model-training-task" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Similarly, the model training task is defined, which trains a machine learning model.</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb134-1"><a href="training-pipeline-workflow.html#cb134-1" aria-hidden="true" tabindex="-1"></a>    <span class="at">@task.docker</span>(</span>
+<span id="cb134-2"><a href="training-pipeline-workflow.html#cb134-2" aria-hidden="true" tabindex="-1"></a>        image<span class="op">=</span>skin_cancer_container_image,</span>
+<span id="cb134-3"><a href="training-pipeline-workflow.html#cb134-3" aria-hidden="true" tabindex="-1"></a>        multiple_outputs<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb134-4"><a href="training-pipeline-workflow.html#cb134-4" aria-hidden="true" tabindex="-1"></a>        environment<span class="op">=</span>kwargs_env_data,</span>
+<span id="cb134-5"><a href="training-pipeline-workflow.html#cb134-5" aria-hidden="true" tabindex="-1"></a>        working_dir<span class="op">=</span><span class="st">&quot;/app&quot;</span>,</span>
+<span id="cb134-6"><a href="training-pipeline-workflow.html#cb134-6" aria-hidden="true" tabindex="-1"></a>        force_pull<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb134-7"><a href="training-pipeline-workflow.html#cb134-7" aria-hidden="true" tabindex="-1"></a>        network_mode<span class="op">=</span><span class="st">&quot;bridge&quot;</span>,</span>
+<span id="cb134-8"><a href="training-pipeline-workflow.html#cb134-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb134-9"><a href="training-pipeline-workflow.html#cb134-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> model_training_op(mlflow_experiment_id, model_class, model_params, <span class="bu">input</span>):</span>
+<span id="cb134-10"><a href="training-pipeline-workflow.html#cb134-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb134-11"><a href="training-pipeline-workflow.html#cb134-11" aria-hidden="true" tabindex="-1"></a><span class="co">        Train a model.</span></span>
+<span id="cb134-12"><a href="training-pipeline-workflow.html#cb134-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-13"><a href="training-pipeline-workflow.html#cb134-13" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
+<span id="cb134-14"><a href="training-pipeline-workflow.html#cb134-14" aria-hidden="true" tabindex="-1"></a><span class="co">            mlflow_experiment_id (str): The MLflow experiment ID.</span></span>
+<span id="cb134-15"><a href="training-pipeline-workflow.html#cb134-15" aria-hidden="true" tabindex="-1"></a><span class="co">            model_class (str): The class of the model to train.</span></span>
+<span id="cb134-16"><a href="training-pipeline-workflow.html#cb134-16" aria-hidden="true" tabindex="-1"></a><span class="co">            model_params (dict): A dictionary containing the model parameters.</span></span>
+<span id="cb134-17"><a href="training-pipeline-workflow.html#cb134-17" aria-hidden="true" tabindex="-1"></a><span class="co">            input (dict): A dictionary containing the input data.</span></span>
+<span id="cb134-18"><a href="training-pipeline-workflow.html#cb134-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-19"><a href="training-pipeline-workflow.html#cb134-19" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb134-20"><a href="training-pipeline-workflow.html#cb134-20" aria-hidden="true" tabindex="-1"></a><span class="co">            dict: A dictionary containing the results of the model training.</span></span>
+<span id="cb134-21"><a href="training-pipeline-workflow.html#cb134-21" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb134-22"><a href="training-pipeline-workflow.html#cb134-22" aria-hidden="true" tabindex="-1"></a>        <span class="im">import</span> os</span>
+<span id="cb134-23"><a href="training-pipeline-workflow.html#cb134-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-24"><a href="training-pipeline-workflow.html#cb134-24" aria-hidden="true" tabindex="-1"></a>        <span class="im">from</span> src.train <span class="im">import</span> train_model</span>
+<span id="cb134-25"><a href="training-pipeline-workflow.html#cb134-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-26"><a href="training-pipeline-workflow.html#cb134-26" aria-hidden="true" tabindex="-1"></a>        aws_bucket <span class="op">=</span> os.getenv(<span class="st">&quot;AWS_BUCKET&quot;</span>)</span>
+<span id="cb134-27"><a href="training-pipeline-workflow.html#cb134-27" aria-hidden="true" tabindex="-1"></a>        run_id, model_name, model_version, model_stage <span class="op">=</span> train_model(</span>
+<span id="cb134-28"><a href="training-pipeline-workflow.html#cb134-28" aria-hidden="true" tabindex="-1"></a>            mlflow_experiment_id<span class="op">=</span>mlflow_experiment_id,</span>
+<span id="cb134-29"><a href="training-pipeline-workflow.html#cb134-29" aria-hidden="true" tabindex="-1"></a>            model_class<span class="op">=</span>model_class,</span>
+<span id="cb134-30"><a href="training-pipeline-workflow.html#cb134-30" aria-hidden="true" tabindex="-1"></a>            model_params<span class="op">=</span>model_params,</span>
+<span id="cb134-31"><a href="training-pipeline-workflow.html#cb134-31" aria-hidden="true" tabindex="-1"></a>            aws_bucket<span class="op">=</span>aws_bucket,</span>
+<span id="cb134-32"><a href="training-pipeline-workflow.html#cb134-32" aria-hidden="true" tabindex="-1"></a>            import_dict<span class="op">=</span><span class="bu">input</span>,</span>
+<span id="cb134-33"><a href="training-pipeline-workflow.html#cb134-33" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb134-34"><a href="training-pipeline-workflow.html#cb134-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-35"><a href="training-pipeline-workflow.html#cb134-35" aria-hidden="true" tabindex="-1"></a>        return_dict <span class="op">=</span> {</span>
+<span id="cb134-36"><a href="training-pipeline-workflow.html#cb134-36" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;run_id&quot;</span>: run_id,</span>
+<span id="cb134-37"><a href="training-pipeline-workflow.html#cb134-37" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;model_name&quot;</span>: model_name,</span>
+<span id="cb134-38"><a href="training-pipeline-workflow.html#cb134-38" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;model_version&quot;</span>: model_version,</span>
+<span id="cb134-39"><a href="training-pipeline-workflow.html#cb134-39" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;model_stage&quot;</span>: model_stage,</span>
+<span id="cb134-40"><a href="training-pipeline-workflow.html#cb134-40" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb134-41"><a href="training-pipeline-workflow.html#cb134-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> return_dict</span></code></pre></div>
+</div>
+<div id="defining-model-comparison-task" class="section level4 unlisted unnumbered hasAnchor">
+<h4>Defining Model Comparison Task<a href="training-pipeline-workflow.html#defining-model-comparison-task" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The following code snippet defines the model comparison task, which compares trained models.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb135-1"><a href="training-pipeline-workflow.html#cb135-1" aria-hidden="true" tabindex="-1"></a>    <span class="at">@task.docker</span>(</span>
+<span id="cb135-2"><a href="training-pipeline-workflow.html#cb135-2" aria-hidden="true" tabindex="-1"></a>        image<span class="op">=</span>skin_cancer_container_image,</span>
+<span id="cb135-3"><a href="training-pipeline-workflow.html#cb135-3" aria-hidden="true" tabindex="-1"></a>        multiple_outputs<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb135-4"><a href="training-pipeline-workflow.html#cb135-4" aria-hidden="true" tabindex="-1"></a>        environment<span class="op">=</span>kwargs_env_data,</span>
+<span id="cb135-5"><a href="training-pipeline-workflow.html#cb135-5" aria-hidden="true" tabindex="-1"></a>        force_pull<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb135-6"><a href="training-pipeline-workflow.html#cb135-6" aria-hidden="true" tabindex="-1"></a>        network_mode<span class="op">=</span><span class="st">&quot;bridge&quot;</span>,</span>
+<span id="cb135-7"><a href="training-pipeline-workflow.html#cb135-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb135-8"><a href="training-pipeline-workflow.html#cb135-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> compare_models_op(train_data_basic, train_data_resnet50, train_data_crossval):</span>
+<span id="cb135-9"><a href="training-pipeline-workflow.html#cb135-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb135-10"><a href="training-pipeline-workflow.html#cb135-10" aria-hidden="true" tabindex="-1"></a><span class="co">        Compare trained models.</span></span>
+<span id="cb135-11"><a href="training-pipeline-workflow.html#cb135-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-12"><a href="training-pipeline-workflow.html#cb135-12" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
+<span id="cb135-13"><a href="training-pipeline-workflow.html#cb135-13" aria-hidden="true" tabindex="-1"></a><span class="co">            train_data_basic (dict): A dictionary containing the results of training the basic model.</span></span>
+<span id="cb135-14"><a href="training-pipeline-workflow.html#cb135-14" aria-hidden="true" tabindex="-1"></a><span class="co">            train_data_resnet50 (dict): A dictionary containing the results of training the ResNet50 model.</span></span>
+<span id="cb135-15"><a href="training-pipeline-workflow.html#cb135-15" aria-hidden="true" tabindex="-1"></a><span class="co">            train_data_crossval (dict): A dictionary containing the results of training the CrossVal model.</span></span>
+<span id="cb135-16"><a href="training-pipeline-workflow.html#cb135-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-17"><a href="training-pipeline-workflow.html#cb135-17" aria-hidden="true" tabindex="-1"></a><span class="co">        Returns:</span></span>
+<span id="cb135-18"><a href="training-pipeline-workflow.html#cb135-18" aria-hidden="true" tabindex="-1"></a><span class="co">            dict: A dictionary containing the results of the model comparison.</span></span>
+<span id="cb135-19"><a href="training-pipeline-workflow.html#cb135-19" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb135-20"><a href="training-pipeline-workflow.html#cb135-20" aria-hidden="true" tabindex="-1"></a>        compare_dict <span class="op">=</span> {</span>
+<span id="cb135-21"><a href="training-pipeline-workflow.html#cb135-21" aria-hidden="true" tabindex="-1"></a>            train_data_basic[<span class="st">&quot;model_name&quot;</span>]: train_data_basic[<span class="st">&quot;run_id&quot;</span>],</span>
+<span id="cb135-22"><a href="training-pipeline-workflow.html#cb135-22" aria-hidden="true" tabindex="-1"></a>            train_data_resnet50[<span class="st">&quot;model_name&quot;</span>]: train_data_resnet50[<span class="st">&quot;run_id&quot;</span>],</span>
+<span id="cb135-23"><a href="training-pipeline-workflow.html#cb135-23" aria-hidden="true" tabindex="-1"></a>            train_data_crossval[<span class="st">&quot;model_name&quot;</span>]: train_data_crossval[<span class="st">&quot;run_id&quot;</span>],</span>
+<span id="cb135-24"><a href="training-pipeline-workflow.html#cb135-24" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb135-25"><a href="training-pipeline-workflow.html#cb135-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-26"><a href="training-pipeline-workflow.html#cb135-26" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(compare_dict)</span>
+<span id="cb135-27"><a href="training-pipeline-workflow.html#cb135-27" aria-hidden="true" tabindex="-1"></a>        <span class="im">from</span> src.compare_models <span class="im">import</span> compare_models</span>
+<span id="cb135-28"><a href="training-pipeline-workflow.html#cb135-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-29"><a href="training-pipeline-workflow.html#cb135-29" aria-hidden="true" tabindex="-1"></a>        serving_model_name, serving_model_uri, serving_model_version <span class="op">=</span> compare_models(input_dict<span class="op">=</span>compare_dict)</span>
+<span id="cb135-30"><a href="training-pipeline-workflow.html#cb135-30" aria-hidden="true" tabindex="-1"></a>        return_dict <span class="op">=</span> {</span>
+<span id="cb135-31"><a href="training-pipeline-workflow.html#cb135-31" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;serving_model_name&quot;</span>: serving_model_name,</span>
+<span id="cb135-32"><a href="training-pipeline-workflow.html#cb135-32" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;serving_model_uri&quot;</span>: serving_model_uri,</span>
+<span id="cb135-33"><a href="training-pipeline-workflow.html#cb135-33" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;serving_model_version&quot;</span>: serving_model_version,</span>
+<span id="cb135-34"><a href="training-pipeline-workflow.html#cb135-34" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb135-35"><a href="training-pipeline-workflow.html#cb135-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> return_dict</span></code></pre></div>
+</div>
+<div id="defining-pipeline" class="section level4 unlisted unnumbered hasAnchor">
+<h4>Defining Pipeline<a href="training-pipeline-workflow.html#defining-pipeline" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>After the tasks have been specified, they are connected together to define the workflow pipeline, specifying inputs and outputs.</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb136-1"><a href="training-pipeline-workflow.html#cb136-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># CREATE PIPELINE</span></span>
+<span id="cb136-2"><a href="training-pipeline-workflow.html#cb136-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-3"><a href="training-pipeline-workflow.html#cb136-3" aria-hidden="true" tabindex="-1"></a>    preprocessed_data <span class="op">=</span> preprocessing_op(</span>
+<span id="cb136-4"><a href="training-pipeline-workflow.html#cb136-4" aria-hidden="true" tabindex="-1"></a>        mlflow_experiment_id<span class="op">=</span>mlflow_experiment_id,</span>
+<span id="cb136-5"><a href="training-pipeline-workflow.html#cb136-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb136-6"><a href="training-pipeline-workflow.html#cb136-6" aria-hidden="true" tabindex="-1"></a>    train_data_basic <span class="op">=</span> model_training_op(</span>
+<span id="cb136-7"><a href="training-pipeline-workflow.html#cb136-7" aria-hidden="true" tabindex="-1"></a>        mlflow_experiment_id<span class="op">=</span>mlflow_experiment_id,</span>
+<span id="cb136-8"><a href="training-pipeline-workflow.html#cb136-8" aria-hidden="true" tabindex="-1"></a>        model_class<span class="op">=</span>Model_Class.Basic.name,</span>
+<span id="cb136-9"><a href="training-pipeline-workflow.html#cb136-9" aria-hidden="true" tabindex="-1"></a>        model_params<span class="op">=</span>model_params,</span>
+<span id="cb136-10"><a href="training-pipeline-workflow.html#cb136-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">input</span><span class="op">=</span>preprocessed_data,</span>
+<span id="cb136-11"><a href="training-pipeline-workflow.html#cb136-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb136-12"><a href="training-pipeline-workflow.html#cb136-12" aria-hidden="true" tabindex="-1"></a>    train_data_resnet50 <span class="op">=</span> model_training_op(</span>
+<span id="cb136-13"><a href="training-pipeline-workflow.html#cb136-13" aria-hidden="true" tabindex="-1"></a>        mlflow_experiment_id<span class="op">=</span>mlflow_experiment_id,</span>
+<span id="cb136-14"><a href="training-pipeline-workflow.html#cb136-14" aria-hidden="true" tabindex="-1"></a>        model_class<span class="op">=</span>Model_Class.ResNet50.name,</span>
+<span id="cb136-15"><a href="training-pipeline-workflow.html#cb136-15" aria-hidden="true" tabindex="-1"></a>        model_params<span class="op">=</span>model_params,</span>
+<span id="cb136-16"><a href="training-pipeline-workflow.html#cb136-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">input</span><span class="op">=</span>preprocessed_data,</span>
+<span id="cb136-17"><a href="training-pipeline-workflow.html#cb136-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb136-18"><a href="training-pipeline-workflow.html#cb136-18" aria-hidden="true" tabindex="-1"></a>    train_data_crossval <span class="op">=</span> model_training_op(</span>
+<span id="cb136-19"><a href="training-pipeline-workflow.html#cb136-19" aria-hidden="true" tabindex="-1"></a>        mlflow_experiment_id<span class="op">=</span>mlflow_experiment_id,</span>
+<span id="cb136-20"><a href="training-pipeline-workflow.html#cb136-20" aria-hidden="true" tabindex="-1"></a>        model_class<span class="op">=</span>Model_Class.CrossVal.name,</span>
+<span id="cb136-21"><a href="training-pipeline-workflow.html#cb136-21" aria-hidden="true" tabindex="-1"></a>        model_params<span class="op">=</span>model_params,</span>
+<span id="cb136-22"><a href="training-pipeline-workflow.html#cb136-22" aria-hidden="true" tabindex="-1"></a>        <span class="bu">input</span><span class="op">=</span>preprocessed_data,</span>
+<span id="cb136-23"><a href="training-pipeline-workflow.html#cb136-23" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb136-24"><a href="training-pipeline-workflow.html#cb136-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb136-25"><a href="training-pipeline-workflow.html#cb136-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Similarly, the operations for compare_models, serve_fastapi_app, and serve_streamlit_app</span></span>
+<span id="cb136-26"><a href="training-pipeline-workflow.html#cb136-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># would be added to the pipeline as well.</span></span></code></pre></div>
+<p>Finally, the Airflow DAG function is called in a last step.</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb137-1"><a href="training-pipeline-workflow.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call the airflow DAG</span></span>
+<span id="cb137-2"><a href="training-pipeline-workflow.html#cb137-2" aria-hidden="true" tabindex="-1"></a>cnn_skin_cancer_workflow()</span></code></pre></div>
+</div>
+</div>
+<div id="mlflow-1" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> MLflow<a href="training-pipeline-workflow.html#mlflow-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Mlflow is leveraged in the preprocessing and model training stages to store crucial data parameters, model training parameters, and metrics, while also enabling the saving of trained models in the model registry. In the <code>airflow_DAG.py</code> file, Mlflow is invoked to create an experiment, and the experiment ID is passed to each pipeline step to store parameters in separate runs. This ensures a clear distinction between the execution of different models.</p>
+<p>The <code>train_model</code> pipeline steps serve as a container for the model training procedure. Within the container, the model is trained using specific code. All the relevant information about the model and the model itself are logged using mlflow as well. This workflow ensures the comprehensive tracking of model parameters and metrics, and the saved model can be accessed and compared during the subsequent model comparison step. In fact, during this stage, the best model is transferred to another model stage within the model registry.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="integrated-development-environment-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="training-pipeline-steps.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": true,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/seblum/kubernetes-training/edit/master/09.2-Deployment-Usage_Pipeline-Workflow.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

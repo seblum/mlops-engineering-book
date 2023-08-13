@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.4 Additional tips &amp; tricks | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.4 Additional tips &amp; tricks | MLOps Engineering" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-08-03" />
+<meta name="date" content="2023-08-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -163,15 +163,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.5" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#devops-engineer"><i class="fa fa-check"></i><b>1.3.5</b> DevOps Engineer</a></li>
 <li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>1.4</b> Ops Tools &amp; Principles</a>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>2</b> Ops Tools &amp; Principles</a>
 <ul>
-<li class="chapter" data-level="1.4.1" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#containerization"><i class="fa fa-check"></i><b>1.4.1</b> Containerization</a></li>
-<li class="chapter" data-level="1.4.2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#version-control"><i class="fa fa-check"></i><b>1.4.2</b> Version Control</a></li>
-<li class="chapter" data-level="1.4.3" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#cicd"><i class="fa fa-check"></i><b>1.4.3</b> CI/CD</a></li>
-<li class="chapter" data-level="1.4.4" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html#infrastructure-as-code"><i class="fa fa-check"></i><b>1.4.4</b> Infrastructure as code</a></li>
+<li class="chapter" data-level="2.1" data-path="containerization.html"><a href="containerization.html"><i class="fa fa-check"></i><b>2.1</b> Containerization</a></li>
+<li class="chapter" data-level="2.2" data-path="version-control.html"><a href="version-control.html"><i class="fa fa-check"></i><b>2.2</b> Version Control</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="version-control.html"><a href="version-control.html#github"><i class="fa fa-check"></i><b>2.2.1</b> Github</a></li>
+<li class="chapter" data-level="2.2.2" data-path="version-control.html"><a href="version-control.html#git-lifecycle"><i class="fa fa-check"></i><b>2.2.2</b> Git lifecycle</a></li>
 </ul></li>
+<li class="chapter" data-level="2.3" data-path="cicd.html"><a href="cicd.html"><i class="fa fa-check"></i><b>2.3</b> CI/CD</a></li>
+<li class="chapter" data-level="2.4" data-path="infrastructure-as-code.html"><a href="infrastructure-as-code.html"><i class="fa fa-check"></i><b>2.4</b> Infrastructure as code</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="overview-about-book-tutorials.html"><a href="overview-about-book-tutorials.html"><i class="fa fa-check"></i><b>2</b> Overview about book tutorials</a></li>
 <li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="core-components.html"><a href="core-components.html"><i class="fa fa-check"></i><b>3.1</b> Core Components</a>
@@ -288,9 +291,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>6.5</b> Exemplary Deployment</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="ml-platform-design.html"><a href="ml-platform-design.html"><i class="fa fa-check"></i><b>7</b> ML Platform Design</a></li>
-<li class="chapter" data-level="8" data-path="ml-platform-deployment.html"><a href="ml-platform-deployment.html"><i class="fa fa-check"></i><b>8</b> ML Platform Deployment</a>
+<li class="chapter" data-level="8" data-path="platform-deployment.html"><a href="platform-deployment.html"><i class="fa fa-check"></i><b>8</b> Platform Deployment</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="root-directory-module.html"><a href="root-directory-module.html"><i class="fa fa-check"></i><b>8.1</b> Root directory module</a></li>
+<li class="chapter" data-level="8.1" data-path="root-module.html"><a href="root-module.html"><i class="fa fa-check"></i><b>8.1</b> Root module</a></li>
 <li class="chapter" data-level="8.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html"><i class="fa fa-check"></i><b>8.2</b> Infrastructure</a>
 <ul>
 <li class="chapter" data-level="8.2.1" data-path="infrastructure-1.html"><a href="infrastructure-1.html#virtual-private-cloud"><i class="fa fa-check"></i><b>8.2.1</b> Virtual Private Cloud</a></li>
@@ -298,36 +301,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2.3" data-path="infrastructure-1.html"><a href="infrastructure-1.html#networking"><i class="fa fa-check"></i><b>8.2.3</b> Networking</a></li>
 <li class="chapter" data-level="8.2.4" data-path="infrastructure-1.html"><a href="infrastructure-1.html#relational-database-service"><i class="fa fa-check"></i><b>8.2.4</b> Relational Database Service</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="modules-2.html"><a href="modules-2.html"><i class="fa fa-check"></i><b>8.3</b> Modules</a>
+<li class="chapter" data-level="8.3" data-path="components.html"><a href="components.html"><i class="fa fa-check"></i><b>8.3</b> Components</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="modules-2.html"><a href="modules-2.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
-<li class="chapter" data-level="8.3.2" data-path="modules-2.html"><a href="modules-2.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
+<li class="chapter" data-level="8.3.1" data-path="components.html"><a href="components.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
+<li class="chapter" data-level="8.3.2" data-path="components.html"><a href="components.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="design-decisions.html"><a href="design-decisions.html"><i class="fa fa-check"></i><b>8.4</b> Design Decisions</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="use-case-development.html"><a href="use-case-development.html"><i class="fa fa-check"></i><b>9</b> Use Case Development</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="integrated-development-environment.html"><a href="integrated-development-environment.html"><i class="fa fa-check"></i><b>9.1</b> Integrated Development Environment</a>
+<li class="chapter" data-level="9.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html"><i class="fa fa-check"></i><b>9.1</b> Integrated Development Environment</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="integrated-development-environment.html"><a href="integrated-development-environment.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
+<li class="chapter" data-level="9.1.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Pipeline Workflow</a>
+<li class="chapter" data-level="9.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Training Pipeline Workflow</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
-<li class="chapter" data-level="9.2.2" data-path="pipeline-workflow.html"><a href="pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
+<li class="chapter" data-level="9.2.1" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
+<li class="chapter" data-level="9.2.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Building the Pipeline Steps</a>
+<li class="chapter" data-level="9.3" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Training Pipeline Steps</a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
-<li class="chapter" data-level="9.3.2" data-path="building-the-pipeline-steps.html"><a href="building-the-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
+<li class="chapter" data-level="9.3.1" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="9.3.2" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
 </ul></li>
 <li class="chapter" data-level="9.4" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html"><i class="fa fa-check"></i><b>9.4</b> Model Serving &amp; Inferencing</a>
 <ul>
 <li class="chapter" data-level="9.4.1" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#model-serving-1"><i class="fa fa-check"></i><b>9.4.1</b> Model Serving</a></li>
-<li class="chapter" data-level="9.4.2" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.4.2</b> Streamlit App</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="model-inferencing.html"><a href="model-inferencing.html"><i class="fa fa-check"></i><b>9.5</b> Model Inferencing</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="model-inferencing.html"><a href="model-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.5.1</b> Streamlit App</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>10</b> Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="glossary.html"><a href="glossary.html"><i class="fa fa-check"></i>Glossary</a></li>
+<li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul>
 
       </nav>
@@ -352,89 +359,90 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="count" class="section level3 hasAnchor" number="6.4.1">
 <h3><span class="header-section-number">6.4.1</span> count<a href="additional-tips-tricks.html#count" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Count can be used to loop over any resource and module. Every Terraform resource has a meta-parameter <em>count</em> one can use. Count is the simplest, and most limited iteration construct and all it does is to define how many copies to create of a resource. When creating multiple instance with one specification, the problem is that each instance must have a unique name, otherwise Terraform would cause an error. Therefore we need to index the meta-parameter just like doing it in a for-loop to give each resource a unique name. The example below shows how to do this on an AWS IAM user.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb101-1"><a href="additional-tips-tricks.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_iam_user&quot;</span> <span class="st">&quot;example&quot;</span> {</span>
-<span id="cb101-2"><a href="additional-tips-tricks.html#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">count</span> = 2</span>
-<span id="cb101-3"><a href="additional-tips-tricks.html#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>  = <span class="st">&quot;neo.</span><span class="va">${count</span><span class="er">.index</span><span class="va">}</span><span class="st">&quot;</span></span>
-<span id="cb101-4"><a href="additional-tips-tricks.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
-<p><img src="images/06-Terraform/additionals_count.png" /></p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb100-1"><a href="additional-tips-tricks.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_iam_user&quot;</span> <span class="st">&quot;example&quot;</span> {</span>
+<span id="cb100-2"><a href="additional-tips-tricks.html#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">count</span> = 2</span>
+<span id="cb100-3"><a href="additional-tips-tricks.html#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>  = <span class="st">&quot;neo.</span><span class="va">${count</span><span class="er">.index</span><span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb100-4"><a href="additional-tips-tricks.html#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<p><img src="images/06-Terraform/additionals_count.png" style="width:100.0%" /></p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb101-1"><a href="additional-tips-tricks.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="ex">variable</span> <span class="st">&quot;user_names&quot;</span> {</span>
+<span id="cb101-2"><a href="additional-tips-tricks.html#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">description</span> = <span class="st">&quot;Create IAM users with these names&quot;</span></span>
+<span id="cb101-3"><a href="additional-tips-tricks.html#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">type</span>        = list<span class="er">(</span><span class="ex">string</span><span class="kw">)</span></span>
+<span id="cb101-4"><a href="additional-tips-tricks.html#cb101-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">default</span>     = [<span class="st">&quot;adam&quot;</span>, <span class="st">&quot;eve&quot;</span>, <span class="st">&quot;snake&quot;</span>, <span class="st">&quot;apple&quot;</span>]</span>
+<span id="cb101-5"><a href="additional-tips-tricks.html#cb101-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb101-6"><a href="additional-tips-tricks.html#cb101-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-7"><a href="additional-tips-tricks.html#cb101-7" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_iam_user&quot;</span> <span class="st">&quot;example&quot;</span> {</span>
+<span id="cb101-8"><a href="additional-tips-tricks.html#cb101-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">count</span> = length<span class="er">(</span><span class="ex">var.user_names</span><span class="kw">)</span> <span class="co"># returns the number of items in the given array</span></span>
+<span id="cb101-9"><a href="additional-tips-tricks.html#cb101-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>  = var.user_names[count.index]</span>
+<span id="cb101-10"><a href="additional-tips-tricks.html#cb101-10" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<p><img src="images/06-Terraform/additionals_count_list.png" style="width:100.0%" /></p>
+<p>After using count on a resource it becomes an array of resources rather than one single resource. The same hold when using count on modules. When adding count to a module it turns it into an array of modules.</p>
+<p>This can round into problems because the way Terraform identifies each resource within the array is by its index. Now, when removing an item from the middle of the array, all items after it shift one index back. This will result in Terraform deleting every resource after that item and then re-creating these resources again from scratch</p>
+<p>So after running <code>terraform plan</code> with just three names, Terraform’s internal representation will look like this:</p>
 <div class="sourceCode" id="cb102"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb102-1"><a href="additional-tips-tricks.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="ex">variable</span> <span class="st">&quot;user_names&quot;</span> {</span>
 <span id="cb102-2"><a href="additional-tips-tricks.html#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">description</span> = <span class="st">&quot;Create IAM users with these names&quot;</span></span>
 <span id="cb102-3"><a href="additional-tips-tricks.html#cb102-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">type</span>        = list<span class="er">(</span><span class="ex">string</span><span class="kw">)</span></span>
-<span id="cb102-4"><a href="additional-tips-tricks.html#cb102-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">default</span>     = [<span class="st">&quot;adam&quot;</span>, <span class="st">&quot;eve&quot;</span>, <span class="st">&quot;snake&quot;</span>, <span class="st">&quot;apple&quot;</span>]</span>
+<span id="cb102-4"><a href="additional-tips-tricks.html#cb102-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">default</span>     = [<span class="st">&quot;adam&quot;</span>, <span class="st">&quot;eve&quot;</span>, <span class="st">&quot;apple&quot;</span>]</span>
 <span id="cb102-5"><a href="additional-tips-tricks.html#cb102-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
 <span id="cb102-6"><a href="additional-tips-tricks.html#cb102-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb102-7"><a href="additional-tips-tricks.html#cb102-7" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_iam_user&quot;</span> <span class="st">&quot;example&quot;</span> {</span>
 <span id="cb102-8"><a href="additional-tips-tricks.html#cb102-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">count</span> = length<span class="er">(</span><span class="ex">var.user_names</span><span class="kw">)</span> <span class="co"># returns the number of items in the given array</span></span>
 <span id="cb102-9"><a href="additional-tips-tricks.html#cb102-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>  = var.user_names[count.index]</span>
 <span id="cb102-10"><a href="additional-tips-tricks.html#cb102-10" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
-<p><img src="images/06-Terraform/additionals_count_list.png" /></p>
-<p>After using count on a resource it becomes an array of resources rather than one single resource. The same hold when using count on modules. When adding count to a module it turns it into an array of modules.</p>
-<p>This can round into problems because the way Terraform identifies each resource within the array is by its index. Now, when removing an item from the middle of the array, all items after it shift one index back. This will result in Terraform deleting every resource after that item and then re-creating these resources again from scratch</p>
-<p>So after running <code>terraform plan</code> with just three names, Terraform’s internal representation will look like this:</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb103-1"><a href="additional-tips-tricks.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="ex">variable</span> <span class="st">&quot;user_names&quot;</span> {</span>
-<span id="cb103-2"><a href="additional-tips-tricks.html#cb103-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">description</span> = <span class="st">&quot;Create IAM users with these names&quot;</span></span>
-<span id="cb103-3"><a href="additional-tips-tricks.html#cb103-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">type</span>        = list<span class="er">(</span><span class="ex">string</span><span class="kw">)</span></span>
-<span id="cb103-4"><a href="additional-tips-tricks.html#cb103-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">default</span>     = [<span class="st">&quot;adam&quot;</span>, <span class="st">&quot;eve&quot;</span>, <span class="st">&quot;apple&quot;</span>]</span>
-<span id="cb103-5"><a href="additional-tips-tricks.html#cb103-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
-<span id="cb103-6"><a href="additional-tips-tricks.html#cb103-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-7"><a href="additional-tips-tricks.html#cb103-7" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_iam_user&quot;</span> <span class="st">&quot;example&quot;</span> {</span>
-<span id="cb103-8"><a href="additional-tips-tricks.html#cb103-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">count</span> = length<span class="er">(</span><span class="ex">var.user_names</span><span class="kw">)</span> <span class="co"># returns the number of items in the given array</span></span>
-<span id="cb103-9"><a href="additional-tips-tricks.html#cb103-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>  = var.user_names[count.index]</span>
-<span id="cb103-10"><a href="additional-tips-tricks.html#cb103-10" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
-<p><img src="images/06-Terraform/additionals_count_index_deletion.png" /></p>
+<p><img src="images/06-Terraform/additionals_count_index_deletion.png" style="width:100.0%" /></p>
 <p><strong>Count as conditional</strong>
 Count can also be used as a form of a conditional if statement. This is possible as Terraform supports <em>conditional expressions</em>. If <code>count</code> is set to one 1, one copy of that resource is created; if set to 0, the resource is not created at all. Writing this as a conditional expression could look something like the follow, where var.enable_autoscaling is a boolean variable either set to <code>True</code> or <code>False</code>.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb104-1"><a href="additional-tips-tricks.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;example-1&quot;</span> <span class="st">&quot;example&quot;</span> {</span>
-<span id="cb104-2"><a href="additional-tips-tricks.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">count</span> = var.enable_autoscaling <span class="pp">?</span> 1 : 0</span>
-<span id="cb104-3"><a href="additional-tips-tricks.html#cb104-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>  = var.user_names[count.index]</span>
-<span id="cb104-4"><a href="additional-tips-tricks.html#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb103-1"><a href="additional-tips-tricks.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;example-1&quot;</span> <span class="st">&quot;example&quot;</span> {</span>
+<span id="cb103-2"><a href="additional-tips-tricks.html#cb103-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">count</span> = var.enable_autoscaling <span class="pp">?</span> 1 : 0</span>
+<span id="cb103-3"><a href="additional-tips-tricks.html#cb103-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>  = var.user_names[count.index]</span>
+<span id="cb103-4"><a href="additional-tips-tricks.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
 </div>
 <div id="for-each" class="section level3 hasAnchor" number="6.4.2">
 <h3><span class="header-section-number">6.4.2</span> for-each<a href="additional-tips-tricks.html#for-each" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <em>for_each</em> expression allows to loop over lists, sets, and maps to create multiple copies of a resource just like the <em>count</em> meta. The main difference between them is that <em>count</em> expects a non-negative number, whereas <em>for_each</em> only accepts a list or map of values. Using the same example as above it would look like this:</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb105-1"><a href="additional-tips-tricks.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="ex">variable</span> <span class="st">&quot;user_names&quot;</span> {</span>
-<span id="cb105-2"><a href="additional-tips-tricks.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">description</span> = <span class="st">&quot;Create IAM users with these names&quot;</span></span>
-<span id="cb105-3"><a href="additional-tips-tricks.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">type</span>        = list<span class="er">(</span><span class="ex">string</span><span class="kw">)</span></span>
-<span id="cb105-4"><a href="additional-tips-tricks.html#cb105-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">default</span>     = [<span class="st">&quot;adam&quot;</span>, <span class="st">&quot;eve&quot;</span>, <span class="st">&quot;snake&quot;</span>, <span class="st">&quot;apple&quot;</span>]</span>
-<span id="cb105-5"><a href="additional-tips-tricks.html#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
-<span id="cb105-6"><a href="additional-tips-tricks.html#cb105-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb105-7"><a href="additional-tips-tricks.html#cb105-7" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_iam_user&quot;</span> <span class="st">&quot;example&quot;</span> {</span>
-<span id="cb105-8"><a href="additional-tips-tricks.html#cb105-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">for_each</span> = toset<span class="er">(</span><span class="ex">var.user_names</span><span class="kw">)</span></span>
-<span id="cb105-9"><a href="additional-tips-tricks.html#cb105-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>     = each.value</span>
-<span id="cb105-10"><a href="additional-tips-tricks.html#cb105-10" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
-<span id="cb105-11"><a href="additional-tips-tricks.html#cb105-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb105-12"><a href="additional-tips-tricks.html#cb105-12" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;all_users&quot;</span> {  </span>
-<span id="cb105-13"><a href="additional-tips-tricks.html#cb105-13" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value</span> = aws_iam_user.example  </span>
-<span id="cb105-14"><a href="additional-tips-tricks.html#cb105-14" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
-<p><img src="images/06-Terraform/additionals_for_each_on_list.png" /></p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb104-1"><a href="additional-tips-tricks.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="ex">variable</span> <span class="st">&quot;user_names&quot;</span> {</span>
+<span id="cb104-2"><a href="additional-tips-tricks.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">description</span> = <span class="st">&quot;Create IAM users with these names&quot;</span></span>
+<span id="cb104-3"><a href="additional-tips-tricks.html#cb104-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">type</span>        = list<span class="er">(</span><span class="ex">string</span><span class="kw">)</span></span>
+<span id="cb104-4"><a href="additional-tips-tricks.html#cb104-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">default</span>     = [<span class="st">&quot;adam&quot;</span>, <span class="st">&quot;eve&quot;</span>, <span class="st">&quot;snake&quot;</span>, <span class="st">&quot;apple&quot;</span>]</span>
+<span id="cb104-5"><a href="additional-tips-tricks.html#cb104-5" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb104-6"><a href="additional-tips-tricks.html#cb104-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-7"><a href="additional-tips-tricks.html#cb104-7" aria-hidden="true" tabindex="-1"></a><span class="ex">resource</span> <span class="st">&quot;aws_iam_user&quot;</span> <span class="st">&quot;example&quot;</span> {</span>
+<span id="cb104-8"><a href="additional-tips-tricks.html#cb104-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">for_each</span> = toset<span class="er">(</span><span class="ex">var.user_names</span><span class="kw">)</span></span>
+<span id="cb104-9"><a href="additional-tips-tricks.html#cb104-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">name</span>     = each.value</span>
+<span id="cb104-10"><a href="additional-tips-tricks.html#cb104-10" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb104-11"><a href="additional-tips-tricks.html#cb104-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-12"><a href="additional-tips-tricks.html#cb104-12" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;all_users&quot;</span> {  </span>
+<span id="cb104-13"><a href="additional-tips-tricks.html#cb104-13" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value</span> = aws_iam_user.example  </span>
+<span id="cb104-14"><a href="additional-tips-tricks.html#cb104-14" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<p><img src="images/06-Terraform/additionals_for_each.png" style="width:100.0%" /></p>
 <p>Using a map of resource with the <em>for_each</em> meta rather than an array of resources as with <em>count</em> has the benefit to remove items from the middle of the collection safely and without re-creating the resources following the deleted item. Of course, the same can also be done for modules.</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb106-1"><a href="additional-tips-tricks.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> <span class="st">&quot;users&quot;</span> {  </span>
-<span id="cb106-2"><a href="additional-tips-tricks.html#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">source</span> = <span class="st">&quot;./iam-user&quot;</span>  </span>
-<span id="cb106-3"><a href="additional-tips-tricks.html#cb106-3" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb106-4"><a href="additional-tips-tricks.html#cb106-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">for_each</span>  = toset<span class="er">(</span><span class="ex">var.user_names</span><span class="kw">)</span>  </span>
-<span id="cb106-5"><a href="additional-tips-tricks.html#cb106-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">user_name</span> = each.value  </span>
-<span id="cb106-6"><a href="additional-tips-tricks.html#cb106-6" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb105-1"><a href="additional-tips-tricks.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> <span class="st">&quot;users&quot;</span> {  </span>
+<span id="cb105-2"><a href="additional-tips-tricks.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">source</span> = <span class="st">&quot;./iam-user&quot;</span>  </span>
+<span id="cb105-3"><a href="additional-tips-tricks.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb105-4"><a href="additional-tips-tricks.html#cb105-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">for_each</span>  = toset<span class="er">(</span><span class="ex">var.user_names</span><span class="kw">)</span>  </span>
+<span id="cb105-5"><a href="additional-tips-tricks.html#cb105-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">user_name</span> = each.value  </span>
+<span id="cb105-6"><a href="additional-tips-tricks.html#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
 </div>
 <div id="for" class="section level3 hasAnchor" number="6.4.3">
 <h3><span class="header-section-number">6.4.3</span> for<a href="additional-tips-tricks.html#for" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Terraform also offers a similar functionality as python list comprehension in the form of a for expression. This should not be confused with the <em>for-each</em> expression seen above. The basic syntax is shown below to convert the list of names of previous examples in var.names to uppercase:</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb107-1"><a href="additional-tips-tricks.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;upper_names&quot;</span> {</span>
-<span id="cb107-2"><a href="additional-tips-tricks.html#cb107-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value</span> = [for name in var.names : upper<span class="er">(</span><span class="ex">name</span><span class="kw">)</span><span class="ex">]</span></span>
-<span id="cb107-3"><a href="additional-tips-tricks.html#cb107-3" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
-<span id="cb107-4"><a href="additional-tips-tricks.html#cb107-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb107-5"><a href="additional-tips-tricks.html#cb107-5" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;short_upper_names&quot;</span> {</span>
-<span id="cb107-6"><a href="additional-tips-tricks.html#cb107-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value</span> = [for name in var.names : upper<span class="er">(</span><span class="ex">name</span><span class="kw">)</span> <span class="cf">if</span> <span class="ex">length</span><span class="er">(</span><span class="ex">name</span><span class="kw">)</span> <span class="op">&lt;</span> 5]</span>
-<span id="cb107-7"><a href="additional-tips-tricks.html#cb107-7" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
-<p><img src="images/06-Terraform/additionals_for_each_on_list.png" /></p>
+<p>Terraform also offers a similar functionality as Python list comprehension in the form of a for expression. This should not be confused with the <em>for-each</em> expression seen above. The basic syntax is shown below to convert the list of names of previous examples in var.names to uppercase:</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb106-1"><a href="additional-tips-tricks.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;upper_names&quot;</span> {</span>
+<span id="cb106-2"><a href="additional-tips-tricks.html#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value</span> = [for name in var.names : upper<span class="er">(</span><span class="ex">name</span><span class="kw">)</span><span class="ex">]</span></span>
+<span id="cb106-3"><a href="additional-tips-tricks.html#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb106-4"><a href="additional-tips-tricks.html#cb106-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-5"><a href="additional-tips-tricks.html#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;short_upper_names&quot;</span> {</span>
+<span id="cb106-6"><a href="additional-tips-tricks.html#cb106-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value</span> = [for name in var.names : upper<span class="er">(</span><span class="ex">name</span><span class="kw">)</span> <span class="cf">if</span> <span class="ex">length</span><span class="er">(</span><span class="ex">name</span><span class="kw">)</span> <span class="op">&lt;</span> 5]</span>
+<span id="cb106-7"><a href="additional-tips-tricks.html#cb106-7" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<p><img src="images/06-Terraform/additionals_for_each_on_list.png" style="width:100.0%" /></p>
 <p>Using for to loop over lists and maps within a string can be used similarly. This allows us to use control statements directly withing strings using a syntax similar to string interpolation.</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb108-1"><a href="additional-tips-tricks.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;for_directive&quot;</span> {  </span>
-<span id="cb108-2"><a href="additional-tips-tricks.html#cb108-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value</span> = <span class="st">&quot;%{ for name in var.names }</span><span class="va">${name}</span><span class="st">, %{ endfor }&quot;</span>  </span>
-<span id="cb108-3"><a href="additional-tips-tricks.html#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
-<p><img src="images/06-Terraform/additionals_for_each_on_string.png" /></p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb107-1"><a href="additional-tips-tricks.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="ex">output</span> <span class="st">&quot;for_directive&quot;</span> {  </span>
+<span id="cb107-2"><a href="additional-tips-tricks.html#cb107-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value</span> = <span class="st">&quot;%{ for name in var.names }</span><span class="va">${name}</span><span class="st">, %{ endfor }&quot;</span>  </span>
+<span id="cb107-3"><a href="additional-tips-tricks.html#cb107-3" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<p><img src="images/06-Terraform/additionals_for_each_on_string.png" style="width:100.0%" /></p>
 </div>
 <div id="workspaces" class="section level3 hasAnchor" number="6.4.4">
 <h3><span class="header-section-number">6.4.4</span> Workspaces<a href="additional-tips-tricks.html#workspaces" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Terraform workspaces allow us to keep multiple state files for the same project. When we run Terraform for the first time in a project, the generated state file will go into the <em>default</em> workspace. Later, we can create a new workspace with the <code>terraform workspace new</code> command, optionally supplying an existing state file as a parameter.</p>
+<p><img src="images/06-Terraform/workspaces.png" /></p>
 
 </div>
 </div>

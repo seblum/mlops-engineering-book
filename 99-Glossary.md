@@ -1,0 +1,45 @@
+# Glossary {.unnumbered}
+
+
+
+AI
+: Artificial Intelligence - The simulation of human intelligence processes by machines, often used to perform tasks that typically require human intelligence.
+
+AWS
+: Amazon Web Services - A comprehensive cloud computing platform provided by Amazon, offering a wide range of cloud services for storage, computation, and more.
+
+Azure
+: Microsoft Azure - Microsoft's cloud computing platform, providing services for building, deploying, and managing applications and services through Microsoft-managed data centers.
+
+CI/CD
+: Continuous Integration/Continuous Deployment - Practices that involve automatically integrating code changes into a shared repository and deploying them to production or testing environments.
+
+DevOps
+: Development and Operations - A set of practices and cultural philosophies that aim to automate and integrate the processes of software development and IT operations.
+
+DVC
+: Data Version Control - A system for managing and versioning machine learning data, ensuring consistent and reproducible data sets for machine learning projects.
+
+ETL
+: Extract, Transform, Load - A process in data management that involves extracting data from various sources, transforming it into a usable format, and loading it into a destination system.
+
+GCP
+: Google Cloud Platform - Google's suite of cloud computing services, providing a range of infrastructure and platform services for building and running applications.
+
+Git LFS
+: Git Large File Storage - An extension to Git that allows handling large files more efficiently, often used in software development to manage binary assets.
+
+IaaC
+: Infrastructure as Code - The practice of managing and provisioning data center infrastructure using code and automation, enabling efficient and consistent infrastructure management.
+
+IDE
+: Integrated Development Environment - A software application that provides comprehensive tools and features for software development, including code editing, debugging, and version control.
+
+MLOps
+: Machine Learning Operations - The combination of machine learning and DevOps practices, focusing on automating and managing the end-to-end machine learning lifecycle.
+
+ML
+: Machine Learning - A subset of artificial intelligence that involves algorithms and models enabling computers to learn patterns from data and make predictions or decisions.
+
+VM
+: Virtual Machine - An emulation of a computer system that allows multiple operating systems to run on a single physical machine, providing isolation and flexibility for various tasks.
