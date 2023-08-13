@@ -1,5 +1,5 @@
 
-## Model Serving & Inferencing
+## Model Inferencing
 
 The process of serving and making inferences utilizes Docker containers and runs them within Kubernetes pods.
 
