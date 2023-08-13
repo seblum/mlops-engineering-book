@@ -43,8 +43,5 @@ MLOps
 ML
 : Machine Learning - A subset of artificial intelligence that involves algorithms and models enabling computers to learn patterns from data and make predictions or decisions.
 
-SVN
-: Subversion - A version control system used for tracking changes in files and directories, often used as an alternative to Git.
-
 VM
 : Virtual Machine - An emulation of a computer system that allows multiple operating systems to run on a single physical machine, providing isolation and flexibility for various tasks.
