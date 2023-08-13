@@ -55,7 +55,7 @@ Model Tracking tools are often used at the development and testing stages of the
 
 Model Serving refers to the process of deploying a machine learning model in a production environment, so it can be used to make predictions on new data. This includes tasks such as scaling the model to handle large amounts of data, deploying the model to different environments, and monitoring the performance of the deployed model. Model serving tools are specifically used at the deployment stage of the machine learning workflow and can handle the necessary tasks mentioned beforehand.
 
-There are multiple tools that integrate the funtionality of serving models, each different in its specific use cases, for example *TensorFlow*, *Kubernetes*, *DataRobot*, or also the already mentioned tools *MLflow* and *Airflow*.
+There are multiple tools that integrate the funtionality of serving models, each different in its specific use cases, for example *KF Serve*, *BentoML*, *Seldon*, or also the already mentioned tools like *MLflow*.
 
 
 ### Developing Machine Learning Models

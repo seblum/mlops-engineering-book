@@ -1,6 +1,6 @@
 
 
-## Pipeline Workflow
+## Training Pipeline Workflow
 
 The code and machine learning pipeline have been modularized into distinct steps, including preprocessing, model training, model comparison, and model serving. Airflow serves as the model workflow tool, generating DAGs for managing the pipeline. MLflow is integrated to facilitate model tracking, registry, and serving functionalities. To ensure portability and scalability, the codebase has been containerized using Docker, allowing it to be executed in Docker and/or Kubernetes environments.
 
