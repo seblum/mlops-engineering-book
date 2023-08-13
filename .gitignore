@@ -8,3 +8,8 @@
 manuscript/docs
 ./manuscript/svg-inkscape/*
 manuscript/svg-inkscape
+manuscript/.Rbuildignore
+manuscript/_main.log
+manuscript/_main.log
+manuscript/_main.Rmd
+manuscript/_main.log
