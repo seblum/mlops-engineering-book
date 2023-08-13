@@ -8,12 +8,18 @@ The concept involves running a Docker container that serves the pre-trained Tens
 
 ### Model Serving
 
+Model Serving is done via Seldon. Explanation is TBD
+
+<!---
+### Model Serving
+
 The model serving application is built on FastAPI, which includes various endpoints catering to our use case. The primary endpoint, `predict`, allows for multiple predictions to be made, while additional maintenance endpoints such as `info` or `health` provide relevant information about the app itself.
 
 To initiate the prediction process, the model is first retrieved from the MLflow registry. The specific model to be fetched and the location of the MLflow server are specified through environment variables. Once the model is loaded, it is used to generate predictions based on the provided input data. The API call returns the predictions in the form of a Python list.
 
 #### Importing Dependencies {.unlisted .unnumbered}
 
+\footnotesize
 ```python
 # Imports necessary packages
 import io
@@ -29,26 +35,27 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from PIL import Image
 from tensorflow import keras
-
 ```
+\normalsize
 
 #### Creating the FastAPI Instance {.unlisted .unnumbered}
 An instance of the FastAPI application is created as well as its name and version defined.
 
+\footnotesize
 ```python
 # Create FastAPI instance
 app = FastAPI()
 
 model_name = "Skin Cancer Detection"
 version = "v1.0.0"
-
 ```
+\normalsize
 
 #### Defining API Endpoints {.unlisted .unnumbered}
 
 This section defines three API endpoints: `/info`, `/health`, and `/predict`. The `/info` endpoint returns information about the model, including its name and version. The `/health` endpoint returns the health status of the service. 
 
-
+\footnotesize
 ```python
 @app.get("/info")
 async def model_info():
@@ -69,11 +76,12 @@ async def service_health():
         - Dictionary indicating the health status of the service
     """
     return {"ok"}
-
 ```
+\normalsize
 
 The `/predict` endpoint is used for making predictions and accepts an uploaded file. Within the predict endpoint, two helper functions for image preprocessing are defined. `_read_imagefile` reads the image file from the provided data and returns it as a PIL Image object. `_preprocess_image` performs normalization and reshaping on the image data to prepare it for the model.
 
+\footnotesize
 ```python
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
@@ -118,11 +126,12 @@ async def predict(file: UploadFile = File(...)):
         np_image = np_image / 255.0
         np_image = np_image.reshape(1, 224, 224, 3)
         return np_image
-
 ```
+\normalsize
 
 The following code snippoet contains the actual logic for the `/predict` endpoint. It checks if the uploaded file has a `.jpg` extension. If it does, it reads the image, loads the MLflow model, preprocesses the image, performs the prediction using the model, and returns the predictions as a JSON response. If the file format is not `.jpg`, it raises a `HTTPException` with a status code of 400 and an error message indicating the invalid file format.
 
+\footnotesize
 ```python
     if file.filename.endswith(".jpg"):
         print("[+] Read File")
@@ -145,81 +154,5 @@ The following code snippoet contains the actual logic for the `/predict` endpoin
     else:
         # Raise a HTTP 400 Exception, indicating Bad Request
         raise HTTPException(status_code=400, detail="Invalid file format. Only JPG Files accepted.")
-
 ```
-
-### Streamlit App
-
-The Streamlit app offers a simple interface for performing inferences on the served model. The user interface enables users to upload a `jpg` image. Upon clicking the `predict` button, the image is sent to the model serving app, where a prediction is made. The prediction results are then returned as a JSON file, which can be downloaded upon request.
-
-**Importing Dependencies**
-This section imports the necessary dependencies for the code, including libraries for file handling, JSON processing, working with images, making HTTP requests, and creating the Streamlit application.
-
-```python
-# Imports necessary packages
-import io
-import json
-import os
-
-import pandas as pd
-import requests
-import streamlit as st
-from PIL import Image
-
-```
-
-#### Setting Up the Streamlit Application {.unlisted .unnumbered}
-At first, the header and subheader for the Streamlit application are set. Afterward, the FastAPI serving IP and port are retrieved from environment variables. They constructs the FastAPI endpoint URL and are later used to send a POST request to.
-
-```python
-st.header("MLOps Engineering Project")
-st.subheader("Skin Cancer Detection")
-
-# FastAPI endpoint
-FASTAPI_SERVING_IP = os.getenv("FASTAPI_SERVING_IP")
-FASTAPI_SERVING_PORT = os.getenv("FASTAPI_SERVING_PORT")
-FASTAPI_ENDPOINT = f"http://{FASTAPI_SERVING_IP}:{FASTAPI_SERVING_PORT}/predict"
-
-```
-
-#### Uploading test image {.unlisted .unnumbered}
-The `st.file_uploader` allows the user to upload a test image in JPG format using the Streamlit file uploader widget. The type of the uploaded file is limited to `.jpg`. If a test image has been uploaded, the image is processed by opening it with PIL and creating a file-like object.
-
-
-```python
-test_image = st.file_uploader("", type=["jpg"], accept_multiple_files=False)
-
-if test_image:
-    image = Image.open(test_image)
-    image_file = io.BytesIO(test_image.getvalue())
-    files = {"file": image_file}
-
-```
-
-#### Displaying the uploaded image and performing prediction {.unlisted .unnumbered}
-A two-column layout in the Streamlit app is created That displays the uploaded image in the first column. In the second columns, a button for the user to start the prediction process is displayed. When the button is clicked, it sends a POST request to the FastAPI endpoint with the uploaded image file. The prediction results are displayed as JSON and can be downloaded as a JSON file.
-
-```python
-    col1, col2 = st.columns(2)
-
-    with col1:
-        # Display the uploaded image in the first column
-        st.image(test_image, caption="", use_column_width="always")
-
-    with col2:
-        if st.button("Start Prediction"):
-            with st.spinner("Prediction in Progress. Please Wait..."):
-                # Send a POST request to FastAPI for prediction
-                output = requests.post(FASTAPI_ENDPOINT, files=files, timeout=8000)
-            st.success("Success! Click the Download button below to retrieve prediction results (JSON format)")
-            # Display the prediction results in JSON format
-            st.json(output.json())
-            # Add a download button to download the prediction results as a JSON file
-            st.download_button(
-                label="Download",
-                data=json.dumps(output.json()),
-                file_name="cnn_skin_cancer_prediction_results.json",
-            )
-
-```
-
+--->

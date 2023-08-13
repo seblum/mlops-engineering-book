@@ -1,0 +1,53 @@
+Package: Placeholder
+Title: MLOps Engineering
+Version: 0.0.1
+Depends:
+  knitr
+Imports:
+  arules,
+  bookdown,
+  Cairo,
+  caret,
+  data.table,
+  dplyr,
+  devtools,
+  DT,
+  e1071,
+  ggplot2,
+  grid,
+  gridExtra,
+  iml,
+  interactions,
+  jpeg,
+  jtools,
+  kableExtra,
+  knitr,
+  latex2exp,
+  lubridate,
+  memoise,
+  mgcv,
+  mlbench,
+  mlr,
+  mmpf,
+  numDeriv,
+  OneR,
+  party,
+  partykit,
+  patchwork,
+  png,
+  pre,
+  randomForest,
+  readr,
+  rjson,
+  roxygen2,
+  rpart,
+  R.utils,
+  shiny,
+  svglite,
+  tidyr,
+  tm,
+  viridis,
+  xgboost,
+  yaImpute
+Remotes: Placeholder
+

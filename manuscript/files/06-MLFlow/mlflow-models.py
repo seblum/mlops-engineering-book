@@ -4,6 +4,7 @@ import mlflow.pyfunc
 from sklearn.ensemble import RandomForestRegressor
 import mlflow.sklearn
 import mlflow
+
 print("MLFlow Models Tutorial Script")
 
 
@@ -22,7 +23,7 @@ params = {"n_estimators": 4, "random_state": 42}
 
 # Start an MLFlow run, train the RandomForestRegressor example model, and
 # log its parameeters. In the end the model itself is logged and stored in MLFlow
-run_name = 'Model example'
+run_name = "Model example"
 with mlflow.start_run(run_name=run_name) as run:
     rfr = RandomForestRegressor(**params).fit([[0, 1, 0]], [1])
     mlflow.log_params(params)

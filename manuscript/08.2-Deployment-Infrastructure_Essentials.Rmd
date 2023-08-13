@@ -12,6 +12,7 @@ The VPC subnets are tagged with specific metadata relevant to Kubernetes cluster
 
 Additionally, three security groups are defined to manage access to worker nodes. They are intended to provide secure management access to the worker nodes within the EKS cluster. Two of these security groups, `"worker_group_mgmt_one"` and `"worker_group_mgmt_two"`, allow SSH access from specific CIDR blocks. The third security group, `"all_worker_mgmt,"` allows SSH access from multiple CIDR blocks, including `"10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"`
 
+\footnotesize
 ```javascript
 locals {
   cluster_name = var.cluster_name
@@ -93,6 +94,7 @@ resource "aws_security_group" "all_worker_mgmt" {
   }
 }
 ```
+\normalsize
 
 ### Elastic Kubernetes Service
 
@@ -107,6 +109,7 @@ The `eks` module also deploys several Kubernetes add-ons, including `coredns`, `
 - `aws-ebs-csi-driver`(Container Storage Interface) is an add-on that enables Kubernetes pods to use Amazon Elastic Block Store (EBS) volumes for persistent storage, allowing data to be retained across pod restarts and ensuring data durability for stateful applications. The EBS configuration and deployment are describen in the following subsection, but the respective `service_account_role_arn` is linked to the EKS cluster on creation.
 - `vpc-cni` (Container Network Interface) is essential for AWS EKS clusters, as it enables networking for pods using AWS VPC (Virtual Private Cloud) networking. It ensures that each pod gets an IP address from the VPC subnet and can communicate securely with other AWS resources within the VPC.
 
+\footnotesize
 ```javascript
 locals {
   cluster_name                         = var.cluster_name
@@ -281,6 +284,7 @@ module "vpc_cni_irsa" {
   }
 }
 ```
+\normalsize
 
 #### Elastic Block Store
 
@@ -288,6 +292,7 @@ The EBS CSI controller (Elastic Block Store Container Storage Interface) is set 
 
 The code also configures the default Kubernetes StorageClass named `"gp2"` and annotates it as not the default storage class for the cluster, managing how storage volumes are provisioned and utilized in the cluster. Ensuring that the `"gp2"` StorageClass does not become the default storage class is needed as we additionally create an EFS Storage (Elastic File System), which is described in the next subsection.
 
+\footnotesize
 ```javascript
 #
 # EBS CSI controller
@@ -343,6 +348,7 @@ resource "kubernetes_annotations" "ebs-no-default-storageclass" {
   }
 }
 ```
+\normalsize
 
 #### Elastic File System
 
@@ -352,6 +358,7 @@ For security, the code creates an AWS security group named `"allow_nfs"` that al
 
 Finally, the code defines a Kubernetes StorageClass named `"efs"` using the `"kubernetes_storage_class_v1"` resource. The StorageClass specifies the EFS CSI driver as the storage provisioner and the EFS file system created earlier as the backing storage. Additionally, the `"efs"` StorageClass is marked as the default storage class for the cluster using an annotation. This allows dynamic provisioning of EFS-backed persistent volumes for Kubernetes pods on default, simplifying the process of handling storage in the EKS cluster. This is done for example for the Airflow deployment in a later step.
 
+\footnotesize
 ```javascript
 #
 # EFS
@@ -450,6 +457,7 @@ resource "kubernetes_storage_class_v1" "efs" {
   ]
 }
 ```
+\normalsize
 
 #### Cluster Autoscaler
 
@@ -459,6 +467,7 @@ The necessary IAM settings are set up prior to deploying the Autoscaler. First, 
 
 The EKS Cluster Autoscaler itself is instantiated using the custom `"eks_autoscaler"` module on the bottom of the code snippet. The module is called to set up the Autoscaler for the EKS cluster and the required input variables are provided accordingly. Its components are described in detailed in the following.
 
+\footnotesize
 ```javascript
 #
 # EKS Cluster autoscaler
@@ -528,6 +537,7 @@ module "eks_autoscaler" {
   autoscaler_service_account_name = local.autoscaler_service_account_name
 }
 ```
+\normalsize
 
 The configurationof the Cluster Autoscaler  begins with the creation of a Helm release named `"cluster-autoscaler"` using the `"helm_release"` resource. The Helm chart is sourced from the `"kubernetes.github.io/autoscaler"` repository with the chart version `"9.10.7"`. The settings inside the Helm release include the AWS region, RBAC (Role-Based Access Control) settings for the service account, cluster auto-discovery settings, and the creation of the service account with the required permissions.
 
@@ -535,6 +545,7 @@ The necessary resources for the settings are created accordingly in the followin
 
 An IAM policy named `"cluster_autoscaler"` is created to permit the Cluster Autoscaler to interact with Auto Scaling Groups, EC2 instances, launch configurations, and tags. The policy includes two statements: `"clusterAutoscalerAll"` and `"clusterAutoscalerOwn"`. The first statement grants read access to Auto Scaling Group-related resources, while the second statement allows the Cluster Autoscaler to modify the desired capacity of the Auto Scaling Groups and terminate instances. The policy also includes conditions to ensure that the Cluster Autoscaler can only modify resources with specific tags. The conditions check that the Auto Scaling Group has a tag `"k8s.io/cluster-autoscaler/enabled"` set to `"true"` and a tag `"k8s.io/cluster-autoscaler/<cluster_name>"` set to `"owned"`. If you remember it, we have set these tags when setting up the managed node groups for the EKS Cluster in the previous step.
 
+\footnotesize
 ```javascript
 resource "helm_release" "cluster-autoscaler" {
   name             = "cluster-autoscaler"
@@ -628,11 +639,13 @@ data "aws_iam_policy_document" "cluster_autoscaler" {
   }
 }
 ```
+\normalsize
 
 ### Networking
 
 The `networking` module of the infrastructure directory integrates an *Application Load Balancer* (ALB) and *External DNS* in the cluster. Both play crucial roles in managing and exposing Kubernetes applications within the EKS cluster to the outside world. The ALB serves as an Ingress Controller to route external traffic to Kubernetes services, while External DNS automates the management of DNS records, making it easier to access services using user-friendly domain names. The root module of network just calls both submodules, which are described in detail in the following sections.
 
+\footnotesize
 ```javascript
 module "external-dns" {
   ...
@@ -642,6 +655,7 @@ module "application-load-balancer" {
   ...
 }
 ```
+\normalsize
 
 #### AWS Application Load Balancer (ALB)
 
@@ -653,6 +667,7 @@ Since its policy document is quite extensive, it is loaded from a file named `"A
 
 After setting up the IAM role, the code proceeds to install the AWS Load Balancer Controller using Helm. The Helm chart is sourced from the `"aws.github.io/eks-charts"` repository, specifying version `"v2.4.2"`. The service account configuration is provided to the Helm release's values, including the name of the service account and annotations to associate it with the IAM role created earlier. The `"eks.amazonaws.com/role-arn"` annotation points to the ARN of the IAM role associated with the service account, allowing the controller to assume that role and operate with the appropriate permissions.
 
+\footnotesize
 ```javascript
 locals {
   aws_load_balancer_controller_service_account_role_name = "aws-load-balancer-controller-role"
@@ -702,6 +717,7 @@ resource "helm_release" "aws-load-balancer-controller" {
   })]
 }
 ```
+\normalsize
 
 #### External DNS
 
@@ -711,6 +727,7 @@ The code is structured similar to the ALB and defines local variables first, fol
 
 Finally, the Helm is used to to deploy the external DNS controller as a Kubernetes resource. The Helm release configuration includes specifying the previously create service account, the IAM `role-arn` associated with it, the `aws.region` where the Route 53 hosted zone exists, and a `domainFilter` which filters to a specific domain provided by us.
 
+\footnotesize
 ```javascript
 locals {
   external_dns_service_account_role_name = "external-dns-role"
@@ -790,6 +807,7 @@ resource "helm_release" "external_dns" {
   })]
 }
 ```
+\normalsize
 
 ### Relational Database Service
 
@@ -799,6 +817,7 @@ The resource `aws_db_subnet_group` creates an RDS subnet group with the name `"v
 
 The `rds` module is not necessarily needed to run a kubernetes cluster properly. It is merely an extension of the cluster and is needed to store relevant data of the tools used, such as airflow or mlflow. The module is thus called directly from the own airflow and mlflow modules.
 
+\footnotesize
 ```javascript
 locals {
   rds_name           = var.rds_name
@@ -847,3 +866,4 @@ resource "aws_security_group" "rds_sg" {
   }
 }
 ```
+\normalsize

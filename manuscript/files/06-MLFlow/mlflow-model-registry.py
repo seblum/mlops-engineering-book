@@ -6,6 +6,7 @@ from sklearn.ensemble import RandomForestRegressor
 import mlflow.pyfunc
 import mlflow.sklearn
 import mlflow
+
 print("MLFlow Model Registry Tutorial Script")
 
 
@@ -19,10 +20,9 @@ print("> register model in registry 1.0")
 mlflow.set_tracking_uri("http://127.0.0.1:5000/")
 
 run_name = "registry-example-run"
-params = {"n_estimators": 4,
-          "random_state": 42}
+params = {"n_estimators": 4, "random_state": 42}
 
-run_name = 'model registry example'
+run_name = "model registry example"
 with mlflow.start_run(run_name=run_name) as run:
     rfr = RandomForestRegressor(**params).fit([[0, 1, 0]], [1])
     mlflow.log_params(params)
@@ -54,9 +54,7 @@ print("> Use model for prediction")
 
 
 # Load model for prediction. Keep note that we now specified the model version.
-model = mlflow.pyfunc.load_model(
-    model_uri=f"models:/{model_name}/{mv.version}"
-)
+model = mlflow.pyfunc.load_model(model_uri=f"models:/{model_name}/{mv.version}")
 
 # Predict based on the loaded model
 data = [[0, 1, 0]]
@@ -70,13 +68,9 @@ print("> Transition model to another stage")
 # Transition the model to another stage
 client = MlflowClient()
 
-stage = 'Staging'  # None, Production
+stage = "Staging"  # None, Production
 
-client.transition_model_version_stage(
-    name=model_name,
-    version=mv.version,
-    stage=stage
-)
+client.transition_model_version_stage(name=model_name, version=mv.version, stage=stage)
 
 # ---------------------
 print("> Print registered models")

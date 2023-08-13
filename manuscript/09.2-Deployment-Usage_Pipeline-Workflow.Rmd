@@ -1,6 +1,6 @@
 
 
-## Pipeline Workflow
+## Training Pipeline Workflow
 
 The code and machine learning pipeline have been modularized into distinct steps, including preprocessing, model training, model comparison, and model serving. Airflow serves as the model workflow tool, generating DAGs for managing the pipeline. MLflow is integrated to facilitate model tracking, registry, and serving functionalities. To ensure portability and scalability, the codebase has been containerized using Docker, allowing it to be executed in Docker and/or Kubernetes environments.
 
@@ -16,13 +16,14 @@ To execute the pipeline steps, the Airflow Docker Operator is employed, which en
 
 Once the model is in the serving phase, a Streamlit app is deployed for applying inference on new data.
 
-![](images/09-Deployment-Usage/use-case-pipeline-graph.png) 
+![](images/09-Deployment-Usage/use-case-pipeline-graph.png){ width=100% }
 
 The code below defines the `ml_pipeline_dag` function as an Airflow DAG using the `dag` decorator. Each step of the pipeline, including data preprocessing, model training, model comparison, and serving the best model, is represented as a separate task with the `@task` decorator. Dependencies between these tasks are established by passing the output of one task as an argument to the next task. The `ml_pipeline` object serves as a representation of the entire DAG.
 
 #### Importing Dependencies {.unlisted .unnumbered}
 At first the necessary dependencies for the code are imported, including libraries for MLflow, Airflow, and other utilities.
 
+\footnotesize
 ```python
 # Imports necessary packages
 import os
@@ -30,12 +31,13 @@ from enum import Enum
 import mlflow
 import pendulum
 from airflow.decorators import dag, task
-
 ```
+\normalsize
 
 #### Setting MLflow Tracking URI and Experiment {.unlisted .unnumbered}
 Secondly, the necessary variables and constants for the whole Airflow DAG are defined and set. Either hard coded as string, or read from environment variables. Also, the MLflow tracking URI is set and a MLflow experiment retrieved, or created if none exists already.
 
+\footnotesize
 ```python
 # Define variables and constants
 MLFLOW_TRACKING_URI_local = "http://127.0.0.1:5008/"
@@ -57,11 +59,12 @@ except:
     pass
 # Setting the environment with the created experiment
 mlflow_experiment_id = mlflow.set_experiment(EXPERIMENT_NAME).experiment_id
-
 ```
+\normalsize
 
 #### Setting Default Arguments and Environment Data {.unlisted .unnumbered}
 
+\footnotesize
 ```python 
 # Set various model params and airflow or environment args
 dag_default_args = {
@@ -97,12 +100,13 @@ model_params = {
     "pooling": "avg",  # needed for resnet50
     "verbose": 2,
 }
-
 ```
+\normalsize
 
 #### Defining the Airflow DAG {.unlisted .unnumbered}
 After all parameters have been set, the actual Airflow DAG for the CNN skin cancer workflow is defined. As each single task of the ML pipeline of the Airflow DAG is executed as a container run, the container image that is pulled from DockerHub needs to be specified.
 
+\footnotesize
 ```python
 skin_cancer_container_image = "seblum/cnn-skin-cancer:latest"
 
@@ -113,12 +117,13 @@ skin_cancer_container_image = "seblum/cnn-skin-cancer:latest"
     max_active_runs=1,
 )
 def cnn_skin_cancer_workflow():
-
 ```
+\normalsize
 
 #### Defining Preprocessing Task {.unlisted .unnumbered}
 As a first step, the preprocessing task is defined, which performs data preprocessing.
 
+\footnotesize
 ```python
     @task.docker(
         image=skin_cancer_container_image,
@@ -160,12 +165,13 @@ As a first step, the preprocessing task is defined, which performs data preproce
             "y_test_data_path": y_test_data_path,
         }
         return return_dict
-
 ```
+\normalsize
 
 #### Defining Model Training Task {.unlisted .unnumbered}
 Similarly, the model training task is defined, which trains a machine learning model.
 
+\footnotesize
 ```python
     @task.docker(
         image=skin_cancer_container_image,
@@ -208,12 +214,13 @@ Similarly, the model training task is defined, which trains a machine learning m
             "model_stage": model_stage,
         }
         return return_dict
-
 ```
+\normalsize
 
 #### Defining Model Comparison Task {.unlisted .unnumbered}
 The following code snippet defines the model comparison task, which compares trained models.
 
+\footnotesize
 ```python
     @task.docker(
         image=skin_cancer_container_image,
@@ -250,12 +257,13 @@ The following code snippet defines the model comparison task, which compares tra
             "serving_model_version": serving_model_version,
         }
         return return_dict
-
 ```
+\normalsize
 
 #### Defining Pipeline {.unlisted .unnumbered}
 After the tasks have been specified, they are connected together to define the workflow pipeline, specifying inputs and outputs.
 
+\footnotesize
 ```python 
     # CREATE PIPELINE
 
@@ -291,8 +299,8 @@ Finally, the Airflow DAG function is called in a last step.
 ```python
 # Call the airflow DAG
 cnn_skin_cancer_workflow()
-
 ```
+\normalsize
 
 ### MLflow
 

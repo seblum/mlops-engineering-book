@@ -2,7 +2,7 @@
 
 [Apache Airflow](https://github.com/apache/airflow) is an open-source platform to develop, schedule and monitor workflows. Airflow comes with a web user interface that aims to make managing workflows as easy as possible and provides a good overview of each workflow over time and the ability to inspect logs and manage tasks, for example retrying a task in case of failure.
 
-![](./images/03-Airflow/web-interface_overview.png)
+![](./images/03-Airflow/web-interface_overview.png){ width=100% }
 
 However, the philosophy of Airflow is to define workflows as code, so coding will always be required. Thus, Airflow can also be referred to as a *“Workflows as code”*-tool that allows for a dynamic, extensible, and flexible management of its workflows.
 
@@ -13,5 +13,5 @@ The usage tutorial is based on the local installation of Airflow. Please refer t
 
 ### Prerequisites {.unlisted .unnumbered}
 
-The main prerequisites to follow this tutorial to have an Apache Airflow instance installed. The official documentation gives a good overview on [how to do](https://airflow.apache.org/docs/apache-airflow/stable/start.html). It is sufficient to run Airflow on a local deployment and there is no need to to set up a complex Airflow deployment on a cluster or else. Further needed is intermediate knowledge of the programming language Python and basic knowledge of bash.
+The main prerequisites to follow this tutorial to have an Apache Airflow instance installed. The official documentation gives a good overview on [how to do](https://airflow.apache.org/docs/apache-airflow/stable/start.html). It is sufficient to run Airflow on a local deployment using `airflow standalone` or `airflow webserver` and accessing it via any browser under `http://localhost:8080/`. There is no need to set up a complex Airflow deployment on a cluster or else. Further needed is intermediate knowledge of the programming language Python and basic knowledge of bash.
 

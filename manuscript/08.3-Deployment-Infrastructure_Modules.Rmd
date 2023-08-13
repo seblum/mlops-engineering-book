@@ -1,4 +1,4 @@
-## Modules
+## Components
 
 Within the setup, there are multiple custom modules, namely airflow, mlflow, jupyterhub, and monitoring. Each module is responsible for deploying a specific workflow tool.
 
@@ -11,6 +11,7 @@ Airflow itself is deployed in the Terraform code via a Helm chart. The provided 
 
 The code starts by declaring several local variables that store the names of Kubernetes secrets and S3 buckets for data storage and logging. Next, it creates a Kubernetes namespace for Airflow to isolate the deployment.
 
+\footnotesize
 ```javascript
 locals {
   k8s_airflow_db_secret_name   = "${var.name_prefix}-${var.namespace}-db-auth"
@@ -53,11 +54,14 @@ module "s3-data-storage" {
   s3_data_bucket_secret_name = local.s3_data_bucket_secret_name
 }
 ```
+\normalsize
+
 Afterward, two custom modules, `"s3-remote-logging"` and `"s3-data-storage"` set up S3 buckets for remote logging and data storage. Both modules handle creating the S3 buckets and necessary IAM roles for accessing them. The terraform code of both modules is not depicted here, it is visible on [github](https://github.com/seblum/mlops-airflow-on-eks) though.
 The main difference between the modules are in the in the assume role policies that are needed for the different use cases of storing and reading data, or logging to S3. While the `"s3_log_bucket_role"` allows a Federated entity, specified by an OIDC provider ARN, to assume the role using `"sts:AssumeRoleWithWebIdentity"`, the `"s3_data_bucket_role"` allows both a specific IAM user (constructed from the user's ARN) and the Amazon S3 service itself to assume the role using `"sts:AssumeRole"`.
 
 **s3-data-storage role policy**
 
+\footnotesize
 ```javascript
 # s3-data-storage role policy
 resource "aws_iam_role" "s3_data_bucket_role" {
@@ -87,9 +91,11 @@ resource "aws_iam_role" "s3_data_bucket_role" {
   EOF
 }
 ```
+\normalsize
 
 **s3-remote-logging role policy**
 
+\footnotesize
 ```javascript
 # s3-remote-logging role policy
 resource "aws_iam_role" "s3_log_bucket_role" {
@@ -114,12 +120,14 @@ resource "aws_iam_role" "s3_log_bucket_role" {
   EOF
 }
 ```
+\normalsize
 
 After the S3 buckets are set up, the code proceeds to create Kubernetes secrets to store various credentials required for Airflow's operation. These include credentials for PostgreSQL database, GitHub authentication secrets for accessing private repositories, and secrets for accessing GitHub organizations which are required to authenticate users. The `"rds-airflow"` module is used to create the RDS instance for Airflow, which will serve as the external database for the deployment.
 
 The Apache Airflow deployment is defined using a `helm_release` of the *Airflow Community Helm Chart* and is highly customized to cater to our specific needs. The release includes various configurations for Airflow, such as custom environment variables, extra environment variables sourced from the GitHub organization secret, and the `KubernetesExecutor` Airflow executor.
 The deployment enables DAG synchronization of a dedicated Github repository which includes our Airflow DAGs (see chapter 9). It also configures a persistent volume using Amazon EFS for Airflow logs and a Kubernetes Ingress resource to expose the Airflow web interface using an Application Load Balancer (ALB). Additionally, readiness and liveness probes are configured for the web server.
 
+\footnotesize
 ```javascript
 #
 # Helm Release Airflow
@@ -211,14 +219,10 @@ resource "helm_release" "airflow" {
         }
       ],
       config = {
-        AIRFLOW__WEBSERVER__EXPOSE_CONFIG = true
+        AIRFLOW__WEBSERVER__EXPOSE_CONFIG = false
         AIRFLOW__WEBSERVER__BASE_URL      = "http://${var.domain_name}/${var.domain_suffix}"
 
         AIRFLOW__CORE__LOAD_EXAMPLES = false
-        # AIRFLOW__LOGGING__LOGGING_LEVEL          = "DEBUG"
-        # AIRFLOW__LOGGING__REMOTE_LOGGING         = true
-        # AIRFLOW__LOGGING__REMOTE_BASE_LOG_FOLDER = "s3://${module.s3-data-storage.s3_log_bucket_name}/airflow/logs"
-        # AIRFLOW__LOGGING__REMOTE_LOG_CONN_ID     = "aws_logs_storage_access"
         AIRFLOW__CORE__DEFAULT_TIMEZONE = "Europe/Amsterdam"
       },
       users = []
@@ -349,11 +353,13 @@ resource "helm_release" "airflow" {
   })]
 }
 ```
+\normalsize
 
-In a final step of the Helm Chart, a custom `WebServerConfig.py` is specified which is set to integrate our Airflow deployment with a Github Authentication provider. The python script consists of two major parts: a custom AirflowSecurityManager class definition and the actual webserver_config configuration file for Apache Airflow's web server.
+In a final step of the Helm Chart, a custom `WebServerConfig.py` is specified which is set to integrate our Airflow deployment with a Github Authentication provider. The Python script consists of two major parts: a custom AirflowSecurityManager class definition and the actual webserver_config configuration file for Apache Airflow's web server.
 
 The custom `CustomSecurityManager` class extends the default AirflowSecurityManager to retrieves user information from the GitHub OAuth provider. The webserver_config configuration sets up the configurations for the web server component of Apache Airflow by indicating that OAuth will be used for user authentication. The `SECURITY_MANAGER_CLASS` is set to the previously defined `CustomSecurityManager` to customizes how user information is retrieved from the OAuth provider. Finally, the GitHub provider is configured with its required parameters like `client_id`, `client_secret`, and API endpoints.
 
+\footnotesize
 ```python
 #######################################
 # Custom AirflowSecurityManager
@@ -409,7 +415,6 @@ class CustomSecurityManager(AirflowSecurityManager):
         else:
             return {}
 
-
 #######################################
 # Actual `webserver_config.py`
 #######################################
@@ -457,6 +462,7 @@ AUTH_ROLES_SYNC_AT_LOGIN = True
 # force users to re-auth after 30min of inactivity (to keep roles in sync)
 PERMANENT_SESSION_LIFETIME = 1800
 ```
+\normalsize
 
 <!---
 ### Mlflow
@@ -481,6 +487,7 @@ The Airflow configuration enables an Ingress resource to expose JupyterHub to th
 
 Similar to the Airflow deployment, the JupyterHub instance is configured to use GitHub OAuthenticator for user authentication. The OAuthenticator is configured with the provided GitHub `client_id` and `client_secret`, and the `oauth_callback_url` to set a specific endpoint under the specified domain name.
 
+\footnotesize
 ```javascript
 resource "helm_release" "jupyterhub" {
   name             = var.name
@@ -546,6 +553,21 @@ resource "helm_release" "jupyterhub" {
   })]
 }
 ```
+\normalsize
+
+
+<!---
+
+### Seldon
+
+Seldon is used for Model deployment.
+
+helm chart installed
+
+--->
+
+
+
 
 <!---
 
@@ -557,5 +579,7 @@ Prometheus is employed for [specific purpose], while Grafana is used for [specif
 
 #### Prometheus
 #### Grafana
+
+grafana github oauth and ingress
 --->
 

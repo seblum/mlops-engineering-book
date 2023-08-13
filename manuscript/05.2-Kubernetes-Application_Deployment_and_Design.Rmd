@@ -10,6 +10,7 @@ In general, Pods should be managed through Deployments. The purpose of a Deploym
 #### ReplicaSets {}
 A ReplicaSet makes sure that a desired number of pods is running. When looking at Pods' name of a Deployment, it usually has a random string attached. This is because a deployment can have multiple replicas and the random suffix ensures a different name after all. The way ReplicaSets work is that they implement a background control loop that checks the desired number of pods are always present on the cluster. We can specify the number of replicas by creating a yaml-file of a Deployment, similar to previous specifications done to a Pod. As a reminder, the Deployment can be applied using the `kubectl apply -f` as well.
 
+\footnotesize
 ```yaml
 # deployment.yaml
 apiVersion: apps/v1
@@ -38,10 +39,12 @@ spec:
         ports:
         - containerPort: 5000
 ```
+\normalsize
 
 #### Rolling updates
 A rolling update means that a new version of the application is rolled out. In general, a basic deployments strategy will delete every single pod before it creates a new version. This is very dangerous since there is downtime. The preferred strategy is to perform a rolling update. This ensures keeping traffic to the previous version until the new one is up and running and alternates traffic until the new version is fully healthy. K8s perfoms the update of an application while the application is up and running. For example, when there are two replicasets running, one with version v1 and one with v2, K8s performs the update such that it only scales v1 down when v2 is already up and running and the traffic has been redirected to v2 as well. How do the deployments need to be configured for that?
 
+\footnotesize
 ```yaml
 # deployment_rolling-update.yaml
 apiVersion: apps/v1
@@ -84,9 +87,11 @@ spec:
         ports:
         - containerPort: 5000
 ```
+\normalsize
 
 The changes can be applied as well using `kubectl apply -f "file-name.yaml"`. Good to know, K8s is not deleting the replicasets of previous versions. They are still stored on the Cluster Store. The `spec.revisionHistory: <?>` state in the yaml denoted this. The last ten previous versions are stored on default. However, it doesn't really make sense to keep more such for example in the previous yaml where there are the last 20 versions specified. This enables to perform **Rollbacks** to previous versions. To not have discrepancies in a cluster, one should always update using the declarative approach. Below stated are a number of commands that trigger and help with a rollback or with rollouts in general.
 
+\footnotesize
 ```bash
 # check the status of the current deployment process
 kubectl rollout status deployments <name>
@@ -104,12 +109,13 @@ kubectl rollout undo deployment <name>
 # there is a limit of history and k8s only keeps 10 previous versions
 kubectl rollout undo deployment <name> --to-revision=
 ```
-
+\normalsize
 
 ### Resource Management
 
 Besides the importance of a healthy application itself, there should be also enough resources allocated so the application can perform well, e.g. memory & CPU. Yet, it should also only consume the resources needed and not block unneeded ones. It might be dangerous, as one application using a lot of ressources, leaving nothing left for other applications and eventually starving them. To prevent this from happening in K8s. there can be a minimum amount of resources defined a container needs (request) as well as the maximum amount of resources a container can have (limit). Configuring limits and requests for a container can be done within the spec for a Pod or Deployment. Actually, we have been using them all the time previously.
 
+\footnotesize
 ```yaml
 # resource-management.yaml
 apiVersion: apps/v1
@@ -141,13 +147,14 @@ spec:
         ports:
         - containerPort: 5000
 ```
-
+\normalsize
 
 ### DaemonSets
 The master node of K8s decides on what worker nodes a pod is scheduled or not. However, there are times where we want to have a copy of a pod across the cluster. A *DaemonSet* ensures a copy of the specified Pod is exactly doing this. This can be useful for example to deploy system daemons such as log collectors and monitoring agents. DaemonSets are automatically deployed on every single node, unless specified on which node to run. They therefore do not need a specification of nodes and can scale up and down with the cluster as needed. They will automatically scheduled a pod on each new node.
 
 The given example deploys a DaemonSet to cover logging using K8s FluendID.
 
+\footnotesize
 ```yaml
 # daemonsets.yaml
 apiVersion: v1
@@ -203,22 +210,25 @@ spec:
           readOnly: true
       terminationGracePeriodSeconds: 30
 ```
-
+\normalsize
 
 ### StatefulSets
 *StatefulSets* are used to deploy and manage stateful applications. Stateful applications are applications which are long lived, for example databases. Most applications of K8s are stateless as they only run for a specific task. However, a database is a state of truth and should be present at all time. StatefulSets manage the pods based on the same container specifications such as Deployments.
 
 Lets assume we have a StatefulSet with 3 replicas. Each Pod has a PV attached.
 
+\footnotesize
 ```yaml
 ```
-
+\normalsize
 
 ### Jobs & Cron Jobs
 
 Using the *busybox* image in the section about volumes we experienced that the image is very short lived. K8s is not aware of this and runs into a CrashLoopBackOff-Error. K8s will try and restart the container itself though until it BackOffs completley. Because the image is so short live, a job within the image has to be executed such as done with a shell command previously. However, what if we have a simple task that only should run like every 5 minutes, or every single day? A good idea is to use CronJobs for such tasks that start the image if needed. When comparingJobs jobs and CronJobs, jobs execute only once, whereas CronJobs execute depending on an specified expression.
 
 The following job simulates a backup to a database that runs 30 seconds in total. The part in the `args` specifies that the container will sleep for 20 seconds (the hypothetical backup). Afterward, the container will wait 10 seconds to shut down, as specified in `ttlSecondsAfterFinished`.
+
+\footnotesize
 ```yaml
 # job.yaml
 apiVersion: batch/v1
@@ -238,8 +248,11 @@ spec:
           - "echo 'performing db backup...' && sleep 20"
       restartPolicy: Never
 ```
+\normalsize
 
 The CronJob below runs run every minute. Given the structure of ( * * * * * * ) - ( Minutes Hours Day-of-month Month Day-of-week Year), the cronjob expression defines as follows:
+
+\footnotesize
 ```yaml
 # cronjob.yaml
 apiVersion: batch/v1
@@ -260,3 +273,4 @@ spec:
               - "echo 'performing db backup...' && sleep 20"
           restartPolicy: Never
 ```
+\normalsize

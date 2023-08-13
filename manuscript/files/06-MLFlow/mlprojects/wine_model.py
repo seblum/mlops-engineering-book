@@ -22,12 +22,15 @@ def eval_metrics(actual, pred):
     r2 = r2_score(actual, pred)
     return rmse, mae, r2
 
+
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     np.random.seed(40)
 
     # Read the wine-quality csv file (make sure you're running this from the root of MLflow!)
-    wine_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "wine-quality.csv")
+    wine_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "wine-quality.csv"
+    )
     data = pd.read_csv(wine_path)
 
     # Split the data into training and test sets. (0.75, 0.25) split.

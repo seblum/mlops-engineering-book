@@ -31,10 +31,7 @@ Loadbalancers are a standard way of exposing applications to the extern, for exa
 #### default kubernetes services
 There are also default K8s services created automatically to access K8s with the K8s API. Check the endpoints of the *kubernetes* service and the endpoints of the *api-service* pod within kube-system namespace. They should be the same.
 
-It is also possible to show all endpoints of the cluster using
-```bash
-kubectl get endpoints
-```
+It is also possible to show all endpoints of the cluster using `kubectl get endpoints`.
 
 #### Exemplary setup of database and frontend microservices
 
@@ -42,6 +39,7 @@ The following example show the deployment and linking of two different deploymen
 
 When looking at the ClusterIP service with `kubectl describe service backendflask` the IP address of the service to exposes, as well as the listed endpoints that connect to the database-deployments are shown. One can compare them to the IPs of the actual deployments - they are the same.
 
+\footnotesize
 ```yaml
 # services_frontend-deployment.yaml
 apiVersion: apps/v1
@@ -106,7 +104,9 @@ spec:
     targetPort: 8501
     nodePort: 30000
 ```
+\normalsize
 
+\footnotesize
 ```yaml
 # services_backend-deployment.yaml
 apiVersion: apps/v1
@@ -150,7 +150,7 @@ spec:
     # in our case has to be the same as in backendflask.
     targetPort: 5000
 ```
-
+\normalsize
 
 ### Service Discovery
 
@@ -160,6 +160,7 @@ Service Discovery is a mechanism that lets applications and microservices locate
 
 Whenever a service is created, it is registered in the service registry with the service name and the service IP. Most clusters use CoreDNS as a service registry (this would be the telephone book itself). When having a look at the minikube cluster one should see are *core-dns* service running. Now you know what it is for. Having a closer look using `kubectl describe svc <name>`, the core-dns service has only one endpoint. If you want to have an even closer look, you can dive into a pod itself and check the file /etc/resolv.conf. There you find a nameserver <IP> where the IP is the one of the core-dns. 
 
+\footnotesize
 ```bash
 # when querying services, it necessary 
 # to specify the corresponding namespace
@@ -168,6 +169,7 @@ kubectl get service -n kube-system
 # command for queriying the dns  
 nslookup <podname>
 ```
+\normalsize
 
 #### kube-proxy
 

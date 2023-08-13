@@ -11,9 +11,9 @@ MLflow is library-agnostic, which means one can use it with any ML library and  
 The aim is to make its use as reproducible and reusable as possible so Data Scientists require minimal changes to integrate MLflow into their existing codebase. 
 MLflow also comes with a user web interface to conveniently view and compare models and metrics.
 
-![Web Interface of MLflow](images/04-MLflow/MLflow_web_interface-overview.png)
+![Web Interface of MLflow](images/04-MLflow/MLflow_web_interface-overview.png){ width=100% }
 
 
 ### Prerequisites {.unlisted .unnumbered}
 
-To go through this chapter it is necessary to have python and MLflow installed. One can install MLflow locally via `pip install MLflow`. This tutorial is based on MLflow v2.1.1. It is also recommended to have knowledge of VirtualEnv, Conda, or Docker when working with MLflow Projects.
+To go through this chapter it is necessary to have Python and MLflow installed. One can install MLflow locally via `pip install MLflow`. This tutorial is based on MLflow v2.1.1. It is also recommended to have knowledge of VirtualEnv, Conda, or Docker when working with MLflow Projects.

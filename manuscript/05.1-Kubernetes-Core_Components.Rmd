@@ -4,7 +4,7 @@
 
 A K8s Cluster usually consistes of a set of nodes. A Node can hereby be a virtual machine (VM) in the cloud, e.g. AWS, Azure, or GCP, or a node can also be of course a physical on-premise instance. K8s distinguishes the nodes between a *master node* and *worker nodes*. The master node is basically the brain of the cluster. This is where everything is organized, handled, and managed. In comparison, a worker nodes is where the heavy lifting is happening, such as running application. Both, master and worker nodes communicate with each other via the so called kubelet. One cluster has only one master node and usually multiple worker nodes.
 
-![K8s Cluster](images/05-Kubernetes/k8s-cluster.png) 
+![K8s Cluster](images/05-Kubernetes/k8s-cluster.png){ width=100% }
 
 #### Master & Control Plane
 
@@ -16,7 +16,7 @@ To be able to work as the brain of the cluster, the master node contains a contr
 + Controller Manager
 + Cloud Controller Manager
 
-![Master Node](images/05-Kubernetes/master-node.png) 
+![Master Node](images/05-Kubernetes/master-node.png){ width=100% }
 
 ##### API Server
 The api servers serves as the connection between the frontend and the K8s controll plane. All communications, external and interal, go through it. Frontend to Kubernetes Controll Plane. It exposes a restful api on port 443 to allow communication, as well as performes authentication and authorization checks. Whenever we perform something on the K8s cluster, e.g. using a command like `kubectl apply -f <file.yaml>`, we communicate with the api server (what we do here is shown in the section about pods).
@@ -35,7 +35,7 @@ The controller manager is a daemon that manages the control loop. This means, th
 
 There worker nodes are the part of the cluster where the heavy lifting happens. Their VMs (or physical machines) often run linux and thus provide a suitable and running environment for each application.
 
-![Worker Node](images/05-Kubernetes/worker-node.png) 
+![Worker Node](images/05-Kubernetes/worker-node.png){ width=100% }
 
 A worker node consists of three main components.
 
@@ -57,7 +57,7 @@ The kube-proxy runs on every node via a DaemondSet. It is responsible for networ
 
 A pod is the smallest deployable unit in K8s (In contrast to K8s, the smallest deployable unit for docker are containers.). Therefore, a pod is a running process that runs on a clusters' node. Within a pod, there is always one *main container* representing the application (in whatever language written, e.g. JS, Python, Go). There also may or may not be *init containers*, and/or *side containers*. Init containers are containers that are executed before the main container. Side containers are containers that support the main containers, e.g. a container that acts as a proxy to your main container. There may be volumes specified within a pod, which enables containers to share and store data.
 
-![Pod](images/05-Kubernetes/pod.png) 
+![Pod](images/05-Kubernetes/pod.png){ width=100% }
 
 The containers running within a pod communicate with each other using localhost and whatever port they expose. The port itself has a unique ip adress, which enables outward communication between pods.
 
@@ -69,6 +69,7 @@ Imperative management means managing the pods via a CLI and specifying all neces
 
 #### Imperative Management
 
+\footnotesize
 ```bash
 # start a pod by specifying the pods name, 
 # the container image to run, and the port exposed
@@ -78,11 +79,13 @@ kubectl run <pod-name> --image="<image-name>" --port=80
 # It will forward to localhost:8080
 kubectl port-forward pod/<pod-name> 8080:80
 ```
+\normalsize
 
 #### Declarative Management / Configuration
 
 Declarative configuration is done using a *yaml* format, which works on key-value pairs.
 
+\footnotesize
 ```yaml
 # pod.yaml
 apiVersion: v1
@@ -112,20 +115,24 @@ spec:
   ports:
       ContainerPorts: 80
 ```
+\normalsize
 
 Appyl this declarative configuration using the following kubectl command via the CLI.
 
+\footnotesize
 ```bash
 kubectl apply -f "file-name.yaml"
 
 # similar to before, run following to test your pod on localhost:8080
 kubectl port-forward pod/<pod-name> 8080:80
 ```
+\normalsize
 
 #### Kubectl
 
 One word to interacting with the cluster using the CLI. In general, *kubectl* is used to interact with the K8s cluster. This allows to run and apply pod configurations such as seen before, as well as the already shown port forwarding. We can also inspect the cluster, see what ressources are running on which nodes, see their configurations, and watch their logs. A small selection of commands are shown below.
 
+\footnotesize
 ```bash
 # forward the pods to localhost:8080
 kubectl port-forward <ressource>/<pod-name> 8080:80
@@ -146,3 +153,4 @@ kubectl get <resource>
 # describe and show specific settings of a pods
 kubectl describe pod <pod-name>
 ```
+\normalsize
