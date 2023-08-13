@@ -1,3 +1,5 @@
+# Acronyms {.unnumbered}
+
 ---
 acronyms:
   keys:
@@ -15,4 +17,3 @@ acronyms:
       longname: Integrated Development Environment
 ---
 
-# Acronyms {.unnumbered}

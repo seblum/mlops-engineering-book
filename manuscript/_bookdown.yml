@@ -6,8 +6,6 @@ language:
     chapter_name: "Chapter "
 rmd_files: 
     ["index.Rmd",
-    "00-Acronyms.Rmd",
-    #"00-Glossary.Rmd",
     "00-Preamble.Rmd",
     "01-Introduction.Rmd",
     "01.1-Introduction-Machine_Learning_Workflow.Rmd",
@@ -48,7 +46,8 @@ rmd_files:
     "09.2-Deployment-Usage_Pipeline-Workflow.Rmd",
     "09.3-Deployment-Usage_Building-Model-Pipeline.Rmd",
     "09.4-Deployment-Usage_Model-Serving.Rmd",
-    "10-Acknowledgements.Rmd"
+    "10-Acknowledgements.Rmd",
+    "99-Glossary.Rmd"
     ]
 
 
