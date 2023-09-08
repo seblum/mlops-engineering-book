@@ -1,0 +1,46 @@
+
+### Model Training
+
+The training step is designed to accommodate different models based on the selected model. The custom `model.utils` package, imported at the beginning, enables the selection and retrieval of models. The chosen model can be specified by passing its name to the `get_model` function, which then returns the corresponding model. These models are implemented using TensorFlow Keras and their code is stored in the `/model` directory. The model is trained using the `model_params` parameters provided to the training function, which include all the necessary hyperparameters. The training and evaluation are conducted using the preprocessed data from the previous step, which is downloaded from S3 at the beginning. Depending on the selected model, a KFold cross-validation is performed to improve the model's fit.
+
+MLflow is utilized to track the model's progress. By invoking `mlflow.start_run()`, a new MLflow run is initiated. The `model_params` are logged using `mlflow.log_params`, and MLflow autolog is enabled for Keras models through `mlflow.keras.autolog()`. After successful training, the models are stored in the model registry. The trained model is logged using `mlflow.keras.register_model`, with the specified `model_name` as the destination.
+
+The function returns the MLflow run ID and crucial information about the model, such as its name, version, and stage.
+
+#### Importing Dependencies {.unlisted .unnumbered}
+This section imports the necessary dependencies for the code, including libraries for machine learning, data manipulation, and utility functions.
+
+\footnotesize
+```python 
+
+```
+\normalsize
+
+#### Loading Data {.unlisted .unnumbered}
+This section handles the loading of data required for training the model. It retrieves the file paths for the training and testing data from the `import_dict` parameter and loads the corresponding NumPy arrays from an AWS S3 bucket using the `AWSSession` class.
+
+\footnotesize
+```python
+
+```
+\normalsize
+
+#### Training the Model {.unlisted .unnumbered}
+After the data is loaded, the training process for the machine learning model is started. It begins by printing the model class and generating a timestamp for the run name. Then, it starts an MLflow run with the specified experiment ID and run name. The model parameters are logged using MLflow's log_params function. Additionally, a callback for reducing the learning rate during training is configured using the ReduceLROnPlateau class from Keras.
+
+The model training handles two different scenarios based on the selected `model_class`. If it is set to cross-validation (`Model_Class.CrossVal`), the model is trained using cross-validation. Otherwise, it is trained using the specified model class.
+
+\footnotesize
+```python
+
+```
+\normalsize
+
+#### Testing and Evaluating the Model {.unlisted .unnumbered}
+After the model training, the trained model is tested on the test data and its prediction accuracy evaluated. The accuracy score is calculated using the `accuracy_score` function from scikit-learn and logged as a metric using MLflow. Afterward, the trained and evaluated model is registered with MLflow using the `register_model` function. The resulting model name, version, and stage are obtained to finally return them in the functions `return` statement.
+
+\footnotesize
+```python
+
+```
+\normalsize

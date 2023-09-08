@@ -1,0 +1,14 @@
+### Model Deployment & Serving
+
+# TODO REWRITE
+The process of serving and making inferences utilizes Docker containers and runs them within Kubernetes pods.
+
+The concept involves running a Docker container that serves the pre-trained TensorFlow model using FastAPI. This containerized model is responsible for providing predictions and responses to incoming requests. Additionally, a Streamlit app is used to interact with the served model, enabling users to make inferences by sending input data to the model and receiving the corresponding predictions.
+
+Deployment to Sagemaker
+
+\footnotesize
+```python 
+
+```
+\normalsize

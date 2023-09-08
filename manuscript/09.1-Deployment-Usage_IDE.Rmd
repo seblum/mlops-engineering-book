@@ -8,6 +8,7 @@ In addition to synchronizing with Airflow, the use of GitHub provides additional
 
 The code for the model pipeline is located in the GitHub repository called *mlops-airflow-DAGs*. It encompasses the setup of an Airflow DAG and the utilization of MLflow. The code responsible for the pipeline functionality can be located in the `src` subdirectory of the repository. The Airflow DAG is written in the `airflow_DAG.py` file situated in the root directory of the repository. Additionally, the repository includes a GitHub Actions workflow file located in the `.github/workflows/` subdirectory. The `Docker` subdirectory contains the Dockerfiles for the various containers used in the ML pipeline. These include a container with the code for data preprocessing and model training, a Dockerfile for serving the model using fastAPI, and a file that runs a streamlit app for sending inferences to the served model.
 
+## TODO: Adjust graph
 ```bash
 root
 │   Readme.md

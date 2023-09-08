@@ -1,0 +1,59 @@
+
+### Data Preprocessing
+
+The data processing stage involves three primary processes. First, the raw data is loaded from an S3 Bucket. Second, the data is preprocessed and converted into the required format. Finally, the preprocessed data is stored in a way that allows it to be utilized by subsequent models. The data processing functionality is implemented within the given `data_preprocessing` function. The `utils` module, imported at the beginning, provides the functionality to access, load, and store data from S3. The data is normalized and transformed into a NumPy array to make it compatible with TensorFlow Keras models. The function returns the names and paths of the preprocessed and uploaded data, making it convenient for selecting them for future model training. Moreover, the data preprocessing stage establishes a connection with MLflow to record the sizes of the datasets.
+
+#### Importing Required Libraries {.unlisted .unnumbered}
+The following code imports the necessary libraries and modules required for the code execution. It includes libraries for handling file operations, data manipulation, machine learning, progress tracking, as well as custom modules.
+
+\footnotesize
+```python
+
+```
+\normalsize
+
+#### Data Preprocessing Function Definition {.unlisted .unnumbered}
+At first, the `data_preprocessing` function is defined, which performs the data preprocessing steps. The function takes three arguments: `mlflow_experiment_id` (the MLflow experiment ID for logging), aws_bucket (the S3 bucket for reading raw data and storing preprocessed data), and path_preprocessed (the subdirectory for storing preprocessed data, with a default value of "preprocessed"). The function returns a tuple of four strings representing the paths of the preprocessed data.
+
+\footnotesize
+```python
+
+```
+\normalsize
+
+#### Setting MLflow Tracking URI and AWS Session {.unlisted .unnumbered}
+Afterward, the MLflow tracking URI is set and an AWS session created using the AWS Access Key obtained from the environment variables and using the custom class `AWSSession()`.
+
+\footnotesize
+```python
+
+```
+\normalsize
+
+#### Setting Paths and Helper Functions {.unlisted .unnumbered}
+The paths for storing raw and preprocessed data within the S3 bucket are defined in a next step. As well as the helper functions `_load_and_convert_images`, `_create_label` and `_merge_data`. The `_load_and_convert_images` function loads and converts images from an S3 bucket folder into a NumPy array. The `_create_label` function creates a label array for a given dataset, while the `_merge_data` function merges two datasets into a single dataset. 
+
+\footnotesize
+```python
+
+```
+\normalsize
+
+#### Preprocessing Steps and MLflow Logging {.unlisted .unnumbered}
+This section performs the main preprocessing steps. It loads images from the S3 bucket, creates labels, merges data, shuffles the data, performs data normalization, and uploads the preprocessed data as NumPy arrays to the S3 bucket. The MLflow logging is also performed, recording the sizes of the training and testing data.
+
+\footnotesize
+```python
+
+```
+\normalsize
+
+#### Uploading preprocessed data {.unlisted .unnumbered}
+The four preprocessed numpy arrays (X_train, y_train, X_test, y_test) are uploaded to an S3 bucket. The arrays are stored as pickle files with specific file keys in the bucket. Finally, the paths of the preprocessed data are create and and returned as a tuple of strings.
+
+\footnotesize
+```python
+
+```
+\normalsize
+
