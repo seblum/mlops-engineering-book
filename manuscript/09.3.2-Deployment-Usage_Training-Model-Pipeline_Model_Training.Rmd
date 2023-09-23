@@ -1,46 +1,144 @@
-
 ### Model Training
 
 The training step is designed to accommodate different models based on the selected model. The custom `model.utils` package, imported at the beginning, enables the selection and retrieval of models. The chosen model can be specified by passing its name to the `get_model` function, which then returns the corresponding model. These models are implemented using TensorFlow Keras and their code is stored in the `/model` directory. The model is trained using the `model_params` parameters provided to the training function, which include all the necessary hyperparameters. The training and evaluation are conducted using the preprocessed data from the previous step, which is downloaded from S3 at the beginning. Depending on the selected model, a KFold cross-validation is performed to improve the model's fit.
 
 MLflow is utilized to track the model's progress. By invoking `mlflow.start_run()`, a new MLflow run is initiated. The `model_params` are logged using `mlflow.log_params`, and MLflow autolog is enabled for Keras models through `mlflow.keras.autolog()`. After successful training, the models are stored in the model registry. The trained model is logged using `mlflow.keras.register_model`, with the specified `model_name` as the destination.
 
-The function returns the MLflow run ID and crucial information about the model, such as its name, version, and stage.
-
-#### Importing Dependencies {.unlisted .unnumbered}
-This section imports the necessary dependencies for the code, including libraries for machine learning, data manipulation, and utility functions.
+The Function Definition `train_model` takes several input parameters, including `mlflow_experiment_id`, `model_class`, `model_params`, `aws_bucket`, and an optional `import_dict` for importing data. It returns a tuple containing information about the run and model. The code of the functions starts by setting the tracking URI for MLflow. 
 
 \footnotesize
-```python 
+```python
+def train_model(
+    mlflow_experiment_id: str,
+    model_class: Enum,
+    model_params: dict,
+    aws_bucket: str,
+    import_dict: dict = {},
+) -> Tuple[str, str, int, str]:
+    """
+    Trains a machine learning model and logs the results to MLflow.
 
+    Args:
+        mlflow_experiment_id (str): The ID of the MLflow experiment to log the results.
+        model_class (Enum): The class of the model to train.
+        model_params (dict): A dictionary containing the parameters for the model.
+        aws_bucket (str): The AWS S3 bucket name for data storage.
+        import_dict (dict, optional): A dictionary containing paths for importing data. Defaults to {}.
+
+    Returns:
+        Tuple[str, str, int, str]: A tuple containing the run ID, model name, model version, and current stage.
+
+    Raises:
+        None
+    """
+    mlflow_tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
+    mlflow.set_tracking_uri(mlflow_tracking_uri)
 ```
 \normalsize
 
-#### Loading Data {.unlisted .unnumbered}
-This section handles the loading of data required for training the model. It retrieves the file paths for the training and testing data from the `import_dict` parameter and loads the corresponding NumPy arrays from an AWS S3 bucket using the `AWSSession` class.
+Afterward, the data required for training and testing the model is loaded from AWS S3 buckets. It fetches file paths from the `import_dict` dictionary, and instantiates an `AWSSession`. It uses the `AWSSession` class to download NumPy arrays from the specified S3 bucket.
 
 \footnotesize
 ```python
 
+    print("\n> Loading data...")
+    X_train_data_path = import_dict.get("X_train_data_path")
+    y_train_data_path = import_dict.get("y_train_data_path")
+    X_test_data_path = import_dict.get("X_test_data_path")
+    y_test_data_path = import_dict.get("y_test_data_path")
+
+    # Instantiate aws session based on AWS Access Key
+    # AWS Access Key is fetched within AWS Session by os.getenv
+    aws_session = AWSSession()
+    aws_session.set_sessions()
+
+    # Read NumPy Arrays from S3
+    X_train = aws_session.download_npy_from_s3(s3_bucket=aws_bucket, file_key=X_train_data_path)
+    y_train = aws_session.download_npy_from_s3(s3_bucket=aws_bucket, file_key=y_train_data_path)
+    X_test = aws_session.download_npy_from_s3(s3_bucket=aws_bucket, file_key=X_test_data_path)
+    y_test = aws_session.download_npy_from_s3(s3_bucket=aws_bucket, file_key=y_test_data_path)
+
 ```
 \normalsize
 
-#### Training the Model {.unlisted .unnumbered}
-After the data is loaded, the training process for the machine learning model is started. It begins by printing the model class and generating a timestamp for the run name. Then, it starts an MLflow run with the specified experiment ID and run name. The model parameters are logged using MLflow's log_params function. Additionally, a callback for reducing the learning rate during training is configured using the ReduceLROnPlateau class from Keras.
+The training of the machine learning model is contingent upon the chosen model class. If the `model_class` is set to `Model_Class.CrossVal`, the training process involves k-fold cross-validation using the BasicNet as the model. Conversely, if the `model_class` is anything other than `Model_Class.CrossVal`, the model undergoes training without cross-validation, following the specifications associated with the provided class and parameters.
 
-The model training handles two different scenarios based on the selected `model_class`. If it is set to cross-validation (`Model_Class.CrossVal`), the model is trained using cross-validation. Otherwise, it is trained using the specified model class.
+The selection of the model is based on the `model_class` Enum, which could be either `Model_Class.CrossVal` or `Model_Class.ResNet50`. During the training process, the `mlflow.autolog` functionality is employed, allowing for the automatic logging of all essential run parameters. This feature can be enabled or disabled as needed to facilitate model training and parameter logging.
 
 \footnotesize
 ```python
+print("\n> Training model...")
+print(model_class)
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+with mlflow.start_run(experiment_id=mlflow_experiment_id, run_name=f"{timestamp}-{model_class}") as run:
+    mlflow.log_params(model_params)
+    learning_rate_reduction = ReduceLROnPlateau(monitor="accuracy", patience=5, verbose=1, factor=0.5, min_lr=1e-7)
 
+    # If CrossVal is selected, train BasicNet as Cross-Validated Model
+    if model_class == Model_Class.CrossVal.value:
+        kfold = KFold(n_splits=3, shuffle=True, random_state=11)
+        cvscores = []
+        for train, test in kfold.split(X_train, y_train):
+            model = get_model(Model_Class.Basic.value, model_params)
+            # TODO: autolog kfold ???
+            # Train Model
+            model.fit(
+                X_train[train],
+                y_train[train],
+                epochs=model_params.get("epochs"),
+                batch_size=model_params.get("batch_size"),
+                verbose=model_params.get("verbose"),
+            )
+            scores = model.evaluate(X_train[test], y_train[test], verbose=0)
+            print("%s: %.2f%%" % (model.metrics_names[1], scores[1] * 100))
+            cvscores.append(scores[1] * 100)
+            K.clear_session()
+    # TODO: not very safe, create if-else on other Enums
+    else:
+        model = get_model(model_class, model_params)
+        mlflow.keras.autolog()
+        # Train Model
+        model.fit(
+            X_train,
+            y_train,
+            validation_split=model_params.get("validation_split"),
+            epochs=model_params.get("epochs"),
+            batch_size=model_params.get("batch_size"),
+            verbose=model_params.get("verbose"),
+            callbacks=[learning_rate_reduction],
+        )
+        mlflow.keras.autolog(disable=True)
+
+    run_id = run.info.run_id
+    model_uri = f"runs:/{run_id}/{model_class}"
 ```
 \normalsize
 
-#### Testing and Evaluating the Model {.unlisted .unnumbered}
-After the model training, the trained model is tested on the test data and its prediction accuracy evaluated. The accuracy score is calculated using the `accuracy_score` function from scikit-learn and logged as a metric using MLflow. Afterward, the trained and evaluated model is registered with MLflow using the `register_model` function. The resulting model name, version, and stage are obtained to finally return them in the functions `return` statement.
+After model training, the trained model is tested on a separate test dataset and log the prediction accuracy as a metric in MLflow. The model is then registered with MLflow and necessary metadata about the registered model are stored in the variable `mv`.
 
 \footnotesize
 ```python
-
+# Testing model on test data to evaluate
+print("\n> Testing model...")
+y_pred = model.predict(X_test)
+prediction_accuracy = accuracy_score(np.argmax(y_test, axis=1), np.argmax(y_pred, axis=1))
+mlflow.log_metric("prediction_accuracy", prediction_accuracy)
+print(f"Prediction Accuracy: {prediction_accuracy}")
+print("\n> Register model...")
+mv = mlflow.register_model(model_uri, model_class)
 ```
 \normalsize
+
+Finally, the function returns a tuple containing the run ID and crucial information about the model, such as its name, version, and stage.
+
+\footnotesize
+```python
+return run_id, mv.name, mv.version, mv.current_stage
+```
+\normalsize
+
+
+
+
+
+

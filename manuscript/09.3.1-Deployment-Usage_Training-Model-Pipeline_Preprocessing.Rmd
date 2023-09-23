@@ -1,4 +1,3 @@
-
 ### Data Preprocessing
 
 The data processing stage involves three primary processes. First, the raw data is loaded from an S3 Bucket. Second, the data is preprocessed and converted into the required format. Finally, the preprocessed data is stored in a way that allows it to be utilized by subsequent models. The data processing functionality is implemented within the given `data_preprocessing` function. The `utils` module, imported at the beginning, provides the functionality to access, load, and store data from S3. The data is normalized and transformed into a NumPy array to make it compatible with TensorFlow Keras models. The function returns the names and paths of the preprocessed and uploaded data, making it convenient for selecting them for future model training. Moreover, the data preprocessing stage establishes a connection with MLflow to record the sizes of the datasets.
