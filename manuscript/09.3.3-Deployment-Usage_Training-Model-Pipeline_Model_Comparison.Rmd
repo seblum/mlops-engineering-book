@@ -1,11 +1,63 @@
-
 ### Model Comparison
 
-#### Loading Models {.unlisted .unnumbered}
-This section imports the necessary dependencies for the code, including libraries for machine learning, data manipulation, and utility functions.
+The `compare_models` function is responsible for model comparison within MLflow. It evaluates MLflow models by considering a specified metric and promotes the best-performing model to the `"Staging"` stage within the MLflow Registry. This function accepts two arguments: `input_dict`, which is a dictionary containing model names and run IDs, and an optional `metric` parameter (defaulting to `"prediction_accuracy"`) used for conducting the comparison.
 
 \footnotesize
 ```python 
+def compare_models(input_dict: dict, metric: str = "prediction_accuracy") -> Tuple[str, str, int]:
+    """
+    Compares a given set of MLflow models based on their logged metric. The model with the best metric will be
+    transferred to a "Staging" stage within the MLflow Registry.
 
+    Args:
+        input_dict (dict): A dictionary containing the names and run IDs of the MLflow models to compare.
+        metric (str, optional): The metric to compare the models. Defaults to "prediction_accuracy".
+
+    Returns:
+        Tuple[str, str, int]: A tuple containing the name of the best performing model, its MLflow URI,
+                              and the version of the model.
+
+    Raises:
+        None
+    """
+    mlflow_tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
+    mlflow.set_tracking_uri(mlflow_tracking_uri)
+```
+\normalsize
+
+Once the MLflow tracking URI is configured to align with the "MLFLOW_TRACKING_URI" environment variable, an MLflow client is established. This client is integral to a process known as the Model Comparison Loop. In this loop, models listed in the `input_dict` dictionary are individually processed. The loop retrieves their respective metrics and aggregates this data within the `all_results` dictionary, facilitating direct model comparisons.
+
+\footnotesize
+```python 
+    client = mlflow.MlflowClient(tracking_uri=mlflow_tracking_uri)
+
+    all_results = {}
+    for key, value in input_dict.items():
+        # extract params/metrics data for run `test_run_id` in a single dict
+        model_results_data_dict = client.get_run(value).data.to_dictionary()
+        # get params and metrics for this run (test_run_id)
+        model_results_accuracy = model_results_data_dict["metrics"][metric]
+        all_results[key] = model_results_accuracy
+
+    # Get model with maximum accuracy
+    serving_model_name = max(all_results, key=all_results.get)
+    serving_model_version = client.get_latest_versions(name=serving_model_name, stages=["None"])[0].version
+    print(f"acc_dict: {all_results}")
+    print(f"acc_dict_model: {serving_model_name}")
+    print(f"latest_model_version: {serving_model_version}")
+
+```
+\normalsize
+
+Subsequently, the model with the highest accuracy, as determined from the gathered metrics, is singled out for special attention. This exceptional model is then moved to the `"Staging"` stage within the MLflow Registry, indicating its preparedness for subsequent evaluation and deployment. As a result, a tuple is returned, containing the name of the top-performing model, its corresponding MLflow URI, and the model's version information.
+
+\footnotesize
+```python 
+    # Transition model to stage "Staging"
+    model_stage = "Staging"
+    client.transition_model_version_stage(name=serving_model_name, version=serving_model_version, stage=model_stage)
+    serving_model_uri = f"models:/{serving_model_name}/{model_stage}"
+
+    return serving_model_name, serving_model_uri, serving_model_version
 ```
 \normalsize
