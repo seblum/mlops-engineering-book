@@ -1,14 +1,160 @@
 ### Model Deployment & Serving
+This code serves a specific purpose: to simplify the deployment of MLflow models to AWS SageMaker. It achieves this by meticulously configuring and overseeing the deployment process through a combination of environment variables and utility functions. By making use of MLflow's SageMaker integration, this code automates the deployment of a pre-trained TensorFlow model from the MLflow registry to a SageMaker instance.
 
-# TODO REWRITE
-The process of serving and making inferences utilizes Docker containers and runs them within Kubernetes pods.
-
-The concept involves running a Docker container that serves the pre-trained TensorFlow model using FastAPI. This containerized model is responsible for providing predictions and responses to incoming requests. Additionally, a Streamlit app is used to interact with the served model, enabling users to make inferences by sending input data to the model and receiving the corresponding predictions.
-
-Deployment to Sagemaker
+The primary responsibility for deploying an MLflow model to an AWS SageMaker endpoint lies with the `deploy_model_to_sagemaker` function. To kickstart the deployment process, various AWS and MLflow-related environment variables, essential for the deployment, are initially fetched.
 
 \footnotesize
 ```python 
+def deploy_model_to_sagemaker(
+    mlflow_model_name: str,
+    mlflow_model_uri: str,
+    mlflow_experiment_name: str,
+    mlflow_model_version: int,
+    sagemaker_endpoint_name: str,
+    sagemaker_instance_type: str,
+) -> bool:
+    """
+    Deploy a machine learning model to AWS SageMaker from MLflow.
 
+    This function deploys an MLflow model to an AWS SageMaker endpoint using the specified configuration.
+
+    Args:
+        mlflow_model_name (str): The name of the MLflow model to deploy.
+        mlflow_model_uri (str): The URI of the MLflow model from the registry.
+        mlflow_experiment_name (str): The name of the MLflow experiment containing the model.
+        mlflow_model_version (int): The version of the MLflow model to deploy.
+        sagemaker_endpoint_name (str): The desired name for the SageMaker endpoint.
+        sagemaker_instance_type (str): The SageMaker instance type for deployment.
+
+    Returns:
+        bool: True if the task was completed successfully, otherwise False.
+    """
+    # Retrieve AWS and MLflow environment variables
+    AWS_ID = os.getenv("AWS_ID")
+    AWS_REGION = os.getenv("AWS_REGION")
+    AWS_ACCESS_ROLE_NAME_SAGEMAKER = os.getenv("AWS_ROLE_NAME_SAGEMAKER")
+    ECR_REPOSITORY_NAME = os.getenv("ECR_REPOSITORY_NAME")
+    ECR_SAGEMAKER_IMAGE_TAG = os.getenv("ECR_SAGEMAKER_IMAGE_TAG")
+    MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI")
+
+    # Set the MLflow tracking URI
+    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+```
+\normalsize
+
+Within this main deployment function, there are three utility functions that have been defined:
+
+- `_build_image_url`: This function constructs the ECR image URL required for SageMaker.
+- `_build_execution_role_arn`: It is responsible for generating the SageMaker execution role ARN.
+- `_get_mlflow_parameters`: This utility function retrieves crucial MLflow model parameters, including the model URI and source code.
+
+\footnotesize
+```python 
+    def _build_image_url(
+        aws_id: str,
+        aws_region: str,
+        ecr_repository_name: str,
+        ecr_sagemaker_image_tag: str,
+    ) -> str:
+        """
+        Build the ECR image URL for SageMaker.
+
+        Args:
+            aws_id (str): AWS account ID.
+            aws_region (str): AWS region.
+            ecr_repository_name (str): Name of the ECR repository.
+            ecr_sagemaker_image_tag (str): Tag for the ECR image.
+
+        Returns:
+            str: The ECR image URL for SageMaker.
+        """
+        image_url = f"{aws_id}.dkr.ecr.{aws_region}.amazonaws.com/{ecr_repository_name}:{ecr_sagemaker_image_tag}"
+        return image_url
+
+    def _build_execution_role_arn(aws_id: str, access_role_name: str) -> str:
+        """
+        Build the SageMaker execution role ARN.
+
+        Args:
+            aws_id (str): AWS account ID.
+            access_role_name (str): SageMaker execution role name.
+
+        Returns:
+            str: The SageMaker execution role ARN.
+        """
+        execution_role_arn = f"arn:aws:iam::{aws_id}:role/{access_role_name}"
+        return execution_role_arn
+
+    def _get_mlflow_parameters(experiment_name: str, model_name: str, model_version: int) -> (str, str, str):
+        """
+        Retrieve MLflow model parameters.
+
+        Args:
+            experiment_name (str): Name of the MLflow experiment.
+            model_name (str): Name of the MLflow model.
+            model_version (int): Version of the MLflow model.
+
+        Returns:
+            Tuple[str, str]: The model URI and source.
+        """
+        client = mlflow.MlflowClient()
+        model_version_details = client.get_model_version(
+            name=model_name,
+            version=model_version,
+        )
+
+        # This is for local
+        # experiment_id = dict(mlflow.get_experiment_by_name(experiment_name))["experiment_id"]
+        # run_id = model_version_details.run_id
+        # model_uri = f"mlruns/{experiment_id}/{run_id}/artifacts/{model_name}"
+        model_source = model_version_details.source
+        model_source_adapted = f"{model_source.removesuffix(model_name)}model"
+
+        return model_source, model_source_adapted
+```
+\normalsize
+
+Following their definition, these utility functions are invoked sequentially. Initially, the ECR image URL for SageMaker and the SageMaker execution role ARN are constructed using `_build_image_url` and `_build_execution_role_arn`. Subsequently, `_get_mlflow_parameters` is called to retrieve pertinent MLflow model parameters, encompassing the model source and any adaptations made to the source code.
+
+\footnotesize
+```python 
+    image_url = _build_image_url(
+        aws_id=AWS_ID,
+        aws_region=AWS_REGION,
+        ecr_repository_name=ECR_REPOSITORY_NAME,
+        ecr_sagemaker_image_tag=ECR_SAGEMAKER_IMAGE_TAG,
+    )
+    execution_role_arn = _build_execution_role_arn(aws_id=AWS_ID, access_role_name=AWS_ACCESS_ROLE_NAME_SAGEMAKER)
+    model_source, model_source_adapted = _get_mlflow_parameters(
+        experiment_name=mlflow_experiment_name,
+        model_name=mlflow_model_name,
+        model_version=mlflow_model_version,
+    )
+
+    print(f"model_source: {model_source}")
+    print(f"mlflow_model_uri: {mlflow_model_uri}")
+    print(f"model_source_adapted: {model_source_adapted}")
+```
+\normalsize
+
+Each of these preceding steps is considered a prerequisite to the actual deployment of the model to SageMaker.
+
+The MLflow model deployment to an AWS SageMaker endpoint is executed via MLflow's SageMaker integration. This is accomplished by invoking `mlflow.sagemaker._deploy` with all the previously accumulated information. Given that the setup of the SageMaker instance and environment can be time-consuming, a suitable timeout is established. Ultimately, the function returns `True` upon successful completion of the deployment task; otherwise, it returns `False`.
+
+\footnotesize
+```python 
+    mlflow.sagemaker._deploy(
+        mode="create",
+        app_name=sagemaker_endpoint_name,
+        model_uri=model_source_adapted,
+        image_url=image_url,
+        execution_role_arn=execution_role_arn,
+        instance_type=sagemaker_instance_type,
+        instance_count=1,
+        region_name=AWS_REGION,
+        timeout_seconds=2400,
+    )
+
+    return True
 ```
 \normalsize
