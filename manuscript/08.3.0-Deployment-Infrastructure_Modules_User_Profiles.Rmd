@@ -1,5 +1,10 @@
 ### User Profiles
 
+The code within the `"User-profiles"` module serves the purpose of configuring IAM (Identity and Access Management) policies and roles tailored for an ML (Machine Learning) platform. It involves the creation of AWS IAM user profiles, each linked to specific users and their corresponding access keys. These users are granted access privileges determined by specific policies, which can be designated as either user or developer access levels. All pertinent information is securely stored within AWS Secrets Manager. The list of users is dynamically provided to the module through the `var.profiles` variable from the root modules.
+
+At the outset of the code, data sources are defined to retrieve essential information about the AWS caller's identity and the current AWS region. These data sources, namely `aws_caller_identity` and `aws_region`, serve as repositories for critical details that may be utilized in subsequent configurations.
+
+Furthermore, the code introduces an AWS managed policy named "AmazonSageMakerFullAccess" using the `aws_iam_policy` data source. This policy is characterized by its unique ARN (Amazon Resource Name) and is configured to grant comprehensive access privileges to Amazon SageMaker services.
 
 \footnotesize
 ```javascript
@@ -9,7 +14,15 @@ data "aws_region" "current" {}
 data "aws_iam_policy" "AmazonSageMakerFullAccess" {
   arn = "arn:aws:iam::aws:policy/AmazonSageMakerFullAccess"
 }
+```
+\normalsize
 
+An IAM policy titled `"mlplatform-developer-access-policy"` is meticulously crafted to cater to platform developers, extending to them full-fledged access to a wide array of AWS services. This comprehensive access includes EKS, EC2 , S3, RDS, and VPC. The policy's specifications are delineated within a JSON file situated at the designated file path.
+
+In a parallel fashion, an IAM policy denoted as `"mlplatform-user-access-policy"` is tailored to accommodate platform users, authorizing them to harness the capabilities of Amazon SageMaker services. This policy is also constructed through the utilization of a JSON file, residing at the specified path, and is thoughtfully designed to provide users with the necessary access privileges.
+
+\footnotesize
+```javascript
 resource "aws_iam_policy" "mlplatform_developer_access_policy" {
   name        = "mlplatform-developer-access-policy"
   description = "Access for platform developers granting them full EKS, EC2, S3, RDS, VPC access"
@@ -23,7 +36,13 @@ resource "aws_iam_policy" "mlplatform_user_access_policy" {
 
   policy = file("${path.module}/access_policies/AccessPolicyUser.json")
 }
+```
+\normalsize
 
+For each profile outlined within the `var.profiles` variable, the "aws-profiles" module is instantiated. The primary purpose of this module is to facilitate the creation of IAM users, IAM roles, and AWS Secrets Manager secrets. Furthermore, it establishes the necessary associations by linking the previously defined developer and user access policies with their corresponding roles.
+
+\footnotesize
+```javascript
 module "aws-profiles" {
   for_each = var.profiles
   source   = "./aws-profiles"
@@ -32,7 +51,13 @@ module "aws-profiles" {
   access_policy_developer = aws_iam_policy.mlplatform_developer_access_policy.arn
   access_policy_user      = aws_iam_policy.mlplatform_user_access_policy.arn
 }
+```
+\normalsize
 
+In the concluding phase of the code, the `"AmazonSageMakerFullAccess"` policy is affixed to IAM roles that are employed by platform users. This process involves iterating through the `local.user_user_access_auth_list`, which encompasses a collection of IAM role names designated for users. For each user role, the SageMaker access policy is linked or attached.
+\footnotesize
+
+```javascript
 # Add additional policies to ALL users
 resource "aws_iam_role_policy_attachment" "sagemaker_access_user_role_policy" {
   for_each = toset(local.user_user_access_auth_list)
@@ -48,6 +73,9 @@ resource "aws_iam_role_policy_attachment" "sagemaker_access_user_role_policy" {
 
 #### AWS Profiles
 
+The `aws-profiles` module, which is invoked within the `user-profiles` module, streamlines the creation of IAM users, roles, access keys, and Secrets Manager secrets tailored to user profiles within an ML platform. This module takes charge of managing IAM permissions and securely storing secrets, ensuring that platform users and developers can access AWS resources securely.
+
+In this segment, local variables are established based on the details provided in the `var.profile`. It dissects the username into `firstName` and `lastName`, extracts the `role`, and assembles a `username` for the IAM user. Just as in the preceding code snippet, this section fetches details regarding the AWS caller's identity and the current AWS region.
 
 \footnotesize
 ```javascript
@@ -60,8 +88,13 @@ locals {
 
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
+```
+\normalsize
 
+Next, an IAM user is generated using the previously constructed username. The user is established at the root level ("/") within IAM. Additionally, an IAM access key is generated for this IAM user, providing the capability for programmatic access to AWS resources.
 
+\footnotesize
+```javascript
 resource "aws_iam_user" "this" {
   name = local.username
   path = "/"
@@ -70,7 +103,13 @@ resource "aws_iam_user" "this" {
 resource "aws_iam_access_key" "this" {
   user = aws_iam_user.this.name
 }
+```
+\normalsize
 
+Following this, an IAM role is generated and assigned the name `"mlplatform-access-${local.firstName}-${local.lastName}"`. This role is configured with a maximum session duration of 28,800 seconds, equivalent to 8 hours. The `assume_role_policy` is defined to grant the IAM user the ability to assume this role, and it also authorizes Amazon S3 to assume this role. This is commonly employed to facilitate access to S3 buckets.
+
+\footnotesize
+```javascript
 resource "aws_iam_role" "user_access_role" {
   name                 = "mlplatform-access-${local.firstName}-${local.lastName}"
   max_session_duration = 28800
@@ -100,7 +139,13 @@ resource "aws_iam_role" "user_access_role" {
   #   #   tag-key = "tag-value"
   #   # }
 }
+```
+\normalsize
 
+Furthermore, the code dynamically attaches two IAM role policy attachments based on the role specified in `var.profile`. If the role is designated as *"Developer"*, the `"access_policy_developer"` is linked to the IAM role. Alternatively, if the role is marked as *"User"*, the `"access_policy_user"` is connected to the IAM role. This conditional attachment of policies ensures that each IAM role is granted the appropriate level of access based on the user's role designation.
+
+\footnotesize
+```javascript
 resource "aws_iam_role_policy_attachment" "role_attachement_policy_developer" {
   count      = local.role == "Developer" ? 1 : 0
   role       = aws_iam_role.user_access_role.name
@@ -113,6 +158,13 @@ resource "aws_iam_role_policy_attachment" "role_attachement_policy_user" {
   policy_arn = var.access_policy_user
 }
 
+```
+\normalsize
+
+Concluding the module code, an AWS Secrets Manager secret is generated with a name derived from the username found in `var.profile`. A secret version is also established and populated with a range of attributes, encompassing access key information, username, email, role, and IAM role ARN. This comprehensive secret ensures secure storage and retrieval of critical user-specific data for authentication and access control.
+
+\footnotesize
+```javascript
 resource "aws_secretsmanager_secret" "this" {
   name                    = var.profile.username
   recovery_window_in_days = 0
