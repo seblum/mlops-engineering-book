@@ -1,5 +1,9 @@
 ### Sagemaker
 
+The Sagemaker module serves as a vital component of the ML platform, ensuring seamless interaction with SageMaker by providing essential IAM roles and permissions. Additionally, it deploys a custom Helm chart designed to harness the capabilities of a straightforward Streamlit application, effectively presenting all deployed SageMaker endpoints.
+
+The Terraform code commences by establishing local variables, meticulously capturing a spectrum of configuration details pivotal for this deployment. These variables encompass crucial information such as Docker image specifics, ECR repository nomenclature, IAM role designations, and more. The judicious utilization of these variables throughout the code enhances both consistency and reusability.
+
 \footnotesize
 ```javascript
 locals {
@@ -21,7 +25,13 @@ data "aws_iam_policy" "AmazonSageMakerFullAccess" {
 data "aws_iam_policy" "AmazonSageMakerReadOnlyAccess" {
   arn = "arn:aws:iam::aws:policy/AmazonSageMakerReadOnly"
 }
+```
+\normalsize
 
+The code efficiently leverages the `"terraform-aws-modules/ecr/aws"` module, effectively birthing an Elastic Container Registry (ECR) repository christened as `"mlflow-sagemaker-deployment"`. Furthermore, a `"null_resource"` block is meticulously crafted to orchestrate the packaging and dissemination of a Docker image to the ECR repository. This resource leverages a local-exec provisioner, deftly executing a series of Docker commands. These commands encompass the retrieval of the base image, affixing it with the ECR repository URL, securing authentication to the ECR registry, and ultimately, the seamless transmission of the image. This strategic orchestration guarantees the availability of the MLflow base image, purpose-built for SageMaker deployments, within the ECR repository, ready for deployment when needed.
+
+\footnotesize
+```javascript
 # Create Container Registry
 module "ecr" {
   source          = "terraform-aws-modules/ecr/aws"
@@ -71,6 +81,14 @@ resource "null_resource" "docker_packaging" {
   ]
 }
 
+
+```
+\normalsize
+
+Moreover, the Terraform module assumes responsibility for the creation of an IAM role christened as `"sagemaker_access_role"`. This role plays a pivotal role, enabling SageMaker to assume its authority for requisite access. The trust policy governing this role stipulates SageMaker's unequivocal authority to assume it. Notably, the code adjoins the `"AmazonSageMakerFullAccess"` IAM policy to the `"sagemaker_access_role"`, conferring comprehensive access rights to SageMaker resources. Parallel to the MLflow SageMaker base image residing within ECR, the `"sagemaker_access_role"` becomes an indispensable component, facilitating MLflow's deployments to AWS SageMaker.
+
+\footnotesize
+```javascript
 # Access role to allow access to Sagemaker
 resource "aws_iam_role" "sagemaker_access_role" {
   name                 = "${local.iam_name_sagemaker_access}-role"
@@ -100,7 +118,13 @@ resource "aws_iam_role_policy_attachment" "sagemaker_access_role_policy" {
   role       = aws_iam_role.sagemaker_access_role.name
   policy_arn = data.aws_iam_policy.AmazonSageMakerFullAccess.arn
 }
+```
+\normalsize
 
+In the final orchestration, the ML platform's Sagemaker Dashboard materializes through the medium of Helm. The deployment specifications encompass critical parameters, encompassing the Docker image identity, deployment nomenclature, namespace delineation, Ingress configuration tailored for efficient routing of external traffic, and essential secrets mandatorily required for authentication. Notably, the deployment relies on the Docker image bearing the label `"seblum/streamlit-sagemaker-app:v1.0.0"`, which serves as the engine propelling the Streamlit application. For those seeking deeper insights, the inner workings of this Docker image are meticulously documented [here](https://github.com/seblum/streamlit-sagemaker-app).
+
+\footnotesize
+```javascript
 # Helm Deployment
 resource "helm_release" "sagemaker-dashboard" {
   name             = var.name
@@ -126,7 +150,13 @@ resource "helm_release" "sagemaker-dashboard" {
     }
   })]
 }
+```
+\normalsize
 
+In tandem with this deployment, an additional IAM role christened as `"sagemaker_dashboard_read_access_role"` takes center stage, conferring access rights to SageMaker resources. The trust policy associated with this role casts a discerning gaze, specifying the entities deemed eligible to assume its authority. Among the authorized entities are the SageMaker user and the SageMaker dashboard read-access user. To further bolster the role's capabilities, it is graced with the `"AmazonSageMakerReadOnlyAccess"` IAM policy, gracefully endowing it with read-only access privileges to SageMaker resources. Concomitantly, an IAM user, christened as `"sagemaker_dashboard_read_access_user,"` is ushered into existence, complete with an associated access key. This user is purpose-built for interfacing with SageMaker resources, playing a pivotal role in accessing SageMaker endpoints and seamlessly presenting them within the Streamlit application.
+
+\footnotesize
+```javascript
 # Access role to allow access to Sagemaker
 resource "aws_iam_role" "sagemaker_dashboard_read_access_role" {
   name                 = local.sagemaker_dashboard_read_access_role_name
