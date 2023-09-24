@@ -1,6 +1,6 @@
 ## Exemplary Airflow ML workflow
 
-The following shows an exemplary Airflow DAG by building a MNIST Image Classification Workflow with Keras and the Taskflow API. The DAG automates the process of training and testing a convolutional neural network (CNN) model using the popular MNIST dataset and Keras. The DAG demonstrates how to set up a simple task flow for data preprocessing, model training, and model testing.
+The following shows an exemplary Airflow DAG by building a MNIST Image Classification Workflow with Keras and the Taskflow API. The DAG automates the process of training and testing a convolutional neural network (CNN) model using the popular MNIST dataset and Keras. The DAG demonstrates how to set up a simple task flow for data preprocessing, model training, and model testing. A python file of the DAG can be found [here](files/05-Airflow/08_exemlary-ML-Workflow)
 
 The Airflow DAG is named `"tutorial_mnist_keras_taskflow_api"` and is designed to be informative and easy to understand. It includes three distinct tasks: `preprocess_data()`, `train_model(data_paths_dict)`, and `test_model(model_name)`. These tasks collectively create a streamlined workflow for building, training, and evaluating a deep learning model.
 
