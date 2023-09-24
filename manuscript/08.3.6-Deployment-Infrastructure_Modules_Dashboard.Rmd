@@ -1,5 +1,11 @@
 ### Dashboard
 
+The Dashboard module leverages Terraform and Helm to deploy a custom Vue.js-based dashboard for an ML platform. 
+
+This deployment is accomplished through the definition of a `"helm_release"` resource. A custom Helm chart, akin to the mlflow deployment, takes center stage. This Helm chart is expected to reside in a directory nested within the Terraform module, conveniently defined as `"${path.module}/helm/"`. The configuration for this deployment encompasses critical parameters pivotal to the successful deployment of the dashboard. Notably, it specifies the utilization of a bespoke Docker image, bearing the tag `"seblum/vuejs-ml-dashboard:latest"`, meticulously tailored for this specific deployment. Moreover, the deployment name and namespace exhibit dynamic characteristics, rendering the code adaptable to diverse environments and specific requirements.
+
+A main aspect of the code revolves around the configuration of an Ingress resource, designed to efficiently route external traffic to the dashboard. This resource employs the `"var.domain_name"` variable to determine the host value, which can signify the domain or subdomain intricately linked to the dashboard. Furthermore, the `"path"` parameter derives its value from the `"var.domain_suffix"` variable, delineating the path through which users can access the ML platform's dashboard. In essence, this Terraform code exemplifies an indispensable tool, enabling the consistent and streamlined deployment and management of the ML dashboard within the Kubernetes environment.
+
 \footnotesize
 ```javascript
 resource "helm_release" "dashboard" {
@@ -23,5 +29,4 @@ resource "helm_release" "dashboard" {
 ```
 \normalsize
 
-
-#### Helm Chart
+It's worth noting that the Vue.js Dashboard, while underpinned by a free Vue.js template from [Creative Tim](https://www.creative-tim.com/product/vue-material-dashboard), has been thoughtfully customized to cater to the specific requirements of the ML platform. For an in-depth exploration of Vue.js, the reader is encouraged to explore external resources, as it falls outside the scope of this documentation. Nevertheless, the complete Vue.js dashboard application is readily accessible [here](https://github.com/seblum/mlops-platform-dashboard) for those with a keen interest.
