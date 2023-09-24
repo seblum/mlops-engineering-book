@@ -154,15 +154,11 @@ module "rds-airflow" {
 
 In this final phase, Apache Airflow is deployed using Helm, and meticulous configurations are set to ensure its smooth operation. These configurations encompass various aspects of Airflow, encompassing Git authentication, database connections, and Ingress settings for external accessibility. The Helm release configurations can be dissected into several key sections, each serving a specific purpose within the larger infrastructure of the dashboard.
 
-**Helm Release Configuration**: This segment delineates the Helm release resource named "airflow," responsible for the deployment of Apache Airflow. It encompasses crucial details such as the Helm chart repository, chart name, chart version, and assorted configuration options.
-
-**Airflow Configuration**: In this section, comprehensive configurations for Apache Airflow are provided. This includes environment variables, Airflow-specific settings, and additional parameters required for tailoring the Airflow deployment. Of notable significance is the establishment of GitHub authentication and the definition of the Airflow webserver's base URL.
-
-**Service Account Configuration**: This segment is dedicated to specifying the configuration for the service account utilized by Airflow. It initiates the creation of a service account named "airflow-sa" and establishes its association with an IAM role, as denoted by the "eks.amazonaws.com/role-arn" annotation.
-
-**Ingress Configuration**: Here, meticulous configuration of the Ingress for Apache Airflow takes place, facilitating external accessibility. This involves specifying annotations and settings for the Ingress controller, including hostname and health check path.
-
-**Web Configuration**: This component defines settings pertinent to the Airflow web component. It encompasses aspects such as readiness and liveness probes, which are instrumental in verifying the responsiveness of the web server. Additionally, provisions are made for configuration overrides through the utilization of a custom Python file, affording flexibility in tailoring the web server's behavior.
+- **Helm Release Configuration**: This segment delineates the Helm release resource named "airflow," responsible for the deployment of Apache Airflow. It encompasses crucial details such as the Helm chart repository, chart name, chart version, and assorted configuration options.
+- **Airflow Configuration**: In this section, comprehensive configurations for Apache Airflow are provided. This includes environment variables, Airflow-specific settings, and additional parameters required for tailoring the Airflow deployment. Of notable significance is the establishment of GitHub authentication and the definition of the Airflow webserver's base URL.
+- **Service Account Configuration**: This segment is dedicated to specifying the configuration for the service account utilized by Airflow. It initiates the creation of a service account named "airflow-sa" and establishes its association with an IAM role, as denoted by the "eks.amazonaws.com/role-arn" annotation.
+- **Ingress Configuration**: Here, meticulous configuration of the Ingress for Apache Airflow takes place, facilitating external accessibility. This involves specifying annotations and settings for the Ingress controller, including hostname and health check path.
+- **Web Configuration**: This component defines settings pertinent to the Airflow web component. It encompasses aspects such as readiness and liveness probes, which are instrumental in verifying the responsiveness of the web server. Additionally, provisions are made for configuration overrides through the utilization of a custom Python file, affording flexibility in tailoring the web server's behavior.
 
 \footnotesize
 ```javascript
