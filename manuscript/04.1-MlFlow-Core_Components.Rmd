@@ -391,7 +391,7 @@ mlflow run . -P alpha=5.0
 MLFLOW_TRACKING_URI=http://localhost:<PORT> mlflow run . --experiment-name="models-experiment"
 
 # Run the MLflow project from a Github URI and use the localhost as backend
-MLFLOW_TRACKING_URI=http://localhost:<PORT> MLflow run https://github.com/seblum/mlops-practice#files/06-MLFlow/mlprojects --version=chapter/mlflow
+MLFLOW_TRACKING_URI=http://localhost:<PORT> MLflow run https://github.com/mlflow/mlflow-example/MLprojects --version=chapter/mlflow
 ```
 \normalsize
 
