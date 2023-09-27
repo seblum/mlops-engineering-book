@@ -1,28 +1,239 @@
 
 ## Exemplary Deployment
 
-**Building a VPC with EC2 & S3**
+**Configuring NGINX on Amazon EC2 Instances Using Terraform**
 
-Finally, we want to put everything together and provision our own cloud infrastructure using Terraform. We will create a AWS Virtual private Cloud with EC2 Instances running on it, and S3 Buckets attached to the them. We will use *for_each* and *count* to create multiple instaces. The Terraform infrastructure is separated into three modules *VPS*, *EC2*, and *S3*.
+In this final exemplary Terraform deployment, we aim to establish our cloud infrastructure on AWS as done in the previous subsections. This infrastructure comprises an AWS Virtual Private Cloud (VPC) housing EC2 instances, upon which NGINX will be deployed. The structural arrangement is as follows:
+
+We employ two distinct modules: the `"root"` module and the `"vpc"` module. The `"root"` module is responsible for orchestrating all other modules, respectively the `"vpc"` module, alongside integrating all further resources, such as for example `ec2_instances`. The ultimate goal is to have NGINX efficiently operational on these EC2 instances within the provisioned AWS VPC.
 
 ```bash
 root
 │   main.tf
 │   variables.tf
 │   outputs.tf
+│   providers.tf
+│   userdata.tpl
+│   terraform.pem # (to be created in the aws console)
 │
-└── networking
+└── vpc
 │   │   main.tf
 │   │   variables.tf
 │   │   outputs.tf
-│
-└── ec2
-│   │   main.tf
-│   │   variables.tf
-│   │   outputs.tf
-│
-└── s3
-    │   main.tf
-    │   variables.tf
-    │   outputs.tf
 ```
+
+Before executing the provided Terraform script, it's necessary to first create an AWS key pair (pem file) with the specific name `terraform.pem` within the AWS Management Console. This key pair will be instrumental for SSH access to the EC2 instances that the script is designed to provision. To accomplish this, log in to your AWS account via the AWS Management Console, navigate to the EC2 service, and then locate the "Key Pairs" section under "Network & Security" in the EC2 dashboard. Click on the "Create Key Pair" button and assign the name `terraform` to your key pair. Once created, a `.pem` file will be generated and automatically downloaded to your computer. Ensure you save this file in a secure location, as it will be used for accessing the EC2 instances. With the `terraform.pem` file prepared, you can proceed to run the Terraform script, ensuring that the file resides in the same directory where you intend to execute the Terraform commands.
+
+### root
+
+In this Tutorial, the term *root* designates the highest-level directory within the codebase, wherein crucial components such as primary modules, provider configurations, and terraform.tfvars variables are typically established.
+
+#### main.tf
+
+The `main.tf` defines the main code for deploying an AWS EC2 instance and related resources. First, it collects data about the latest AWS Ubuntu Amazon Machine Image (AMI) with a specific name pattern using the `aws_ami` data source. This image will be used as the base for EC2 instances.
+
+It deploys an EC2 instance using the `"terraform-aws-modules/ec2-instance/aws"` module, specifying various parameters such as the AMI ID obtained from the data source, instance type `t2.micro`, the security group we create with the `vpc` module, the SSH `key_name` we created within the AWS console, and `userdata.tpl` script which installed ngnix on the instance.
+
+On the bottom of the code, the `vpc` module is deployed using a custom module located in the `"./vpc"` directory, with a specified security group name. As mentioned earlier, EC2 instance is associated with this security group for network access control. As the EC2 instance is dependent on the security group, the `vpc` module will be created before the `ec2_instance`, even if the code is specified afterward.
+
+\footnotesize
+```javascript
+# DATA
+data "aws_ami" "aws_ubuntu" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+        name = "name"
+        values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    }
+
+}
+
+module "ec2_instances" {
+  source  = "terraform-aws-modules/ec2-instance/aws"
+  version = "3.5.0"
+  count   = 1
+
+  name = "ec2-nginx-demo"
+
+  ami                    = data.aws_ami.aws_ubuntu.id
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [module.vpc.aws_security_group_id]
+  key_name               = var.pem_key_name
+  user_data              = file("userdata.tpl")
+
+  tags = {
+    Name = "NginxDemo"
+  }
+}
+
+module "vpc" {
+  source              = "./vpc"
+  security_group_name = "demo_sg"
+}
+```
+\normalsize
+
+#### outputs.tf
+
+The `outputs.tf` file defines an output named `"aws_instance_public_dns"` that captures and makes accessible the public DNS of the first EC2 instance created using the `"ec2_instances"` module.
+
+\footnotesize
+```javascript
+output "aws_instance_public_dns" {
+  value = module.ec2_instances[0].public_dns
+}
+```
+\normalsize
+
+
+#### providers.tf
+
+The `providers.tf` establishes an AWS provider configuration where the `"aws"` provider is defined with the AWS region specified by `"var.region"`. This region configuration ensures that subsequent AWS resources and modules defined in the Terraform configuration will be created within the specified AWS region.
+
+\footnotesize
+```javascript
+# Provider
+provider "aws" {
+  region = var.region
+}
+```
+\normalsize
+
+
+#### terraform.tfvars
+
+The input provided in the `terraform.tfvars` file sets the value of the variable `"pem_key_name"`. This configuration file is used to assign specific values to variables defined in the Terraform configuration.
+
+\footnotesize
+```javascript
+pem_key_name = "terraform"
+```
+\normalsize
+
+
+#### variables.tf
+
+The `variables.tf` defines two variables: `"pem_key_name"` and `"region"`. The `"pem_key_name"` variable is intended for specifying the name of an AWS PEM key within the AWS console and is of string data type. Meanwhile, the `"region"` variable is designed for specifying the AWS region and has a default value set to a default of `"eu-central-1"` if not explicitly specified.
+
+\footnotesize
+```javascript
+variable "pem_key_name" {
+  description = "Name of the pem key within AWS console"
+  type        = string
+}
+
+variable "region" {
+  description = "AWS Region"
+  type        = string
+  default     = "eu-central-1"
+}
+```
+\normalsize
+
+
+
+### vpc
+
+The `"vpc"` module is responsible for defining and configuring an Amazon Virtual Private Cloud (VPC) on AWS as part of the infrastructure provisioning process.
+
+#### main.tf
+
+The provided Terraform code accomplishes two primary tasks. Firstly, it establishes a default Virtual Private Cloud (VPC) by defining an AWS resource of type `aws_default_vpc` named "default." This action results in the creation of a default VPC within the AWS region corresponding to the Terraform configuration's execution environment. Default VPCs are pre-configured VPCs automatically provided by AWS upon the creation of an AWS account.
+
+Secondly, the code proceeds to create an AWS security group resource designated as "aws_security_group" with the name specified by the variable `var.security_group_name`. This security group is given the description "allow ssh on 22 & http on port 80." It is associated with the previously created default VPC (`aws_default_vpc.default.id`). The security group's inbound rules permit incoming traffic on port 22 (SSH) and port 80 (HTTP) from any source IP address (`0.0.0.0/0`). Additionally, an egress rule with unrestricted outbound access is configured to allow all traffic (protocol "-1") from the security group. This security group definition is instrumental in governing the network access policies for associated AWS resources, such as EC2 instances.
+
+\footnotesize
+```javascript
+# Default VPC
+resource "aws_default_vpc" "default" {}
+
+# Security group
+resource "aws_security_group" "nginx_demo" {
+  name        = var.security_group_name
+  description = "allow ssh on 22 & http on port 80"
+  vpc_id      = aws_default_vpc.default.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+```
+\normalsize
+
+#### variables.tf
+
+The `variables.tf` defines only one variable names `"security_group_name"`. This variable serves as a parameter that allows to customize and provide a name to the custom security group when using the Terraform configuration. 
+
+\footnotesize
+```javascript
+variable "security_group_name" {
+  type        = string
+  description = "Name of the security group"
+}
+```
+\normalsize
+
+#### outputs.tf
+
+The provided `outputs.tf` defines an output named `"aws\_security\_group_id"` which captures and makes available the value of the created `id` attribute of the AWS security group resource with the identifier `"nginx_demo"`, we created earlier.
+
+\footnotesize
+```javascript
+output "aws_security_group_id" {
+  value = aws_security_group.nginx_demo.id
+}
+```
+\normalsize
+
+
+### Run the code
+
+As outlined in the previous sections, you can execute the Terraform code by following a sequence of Terraform CLI commands. Here's a step-by-step guide to working with the code:
+
+**Initialize Terraform** (if you haven't already done so) and downloads the necessary providers and modules.
+```bash
+terraform init
+```
+
+**Validate the Configuration** to check the syntax and validity of your Terraform configuration files.
+```bash
+terraform validate
+```
+
+**Plan the Infrastructure** and create an execution plan, displaying the changes that Terraform will make to your infrastructure. Review the plan to ensure everything is correct.
+```bash
+terraform plan
+```
+
+**Apply the Configuration** and confirm the changes by entering "yes" when prompted.
+```bash
+terraform apply
+```
+
+**Testing NGINX Deployment**
+After the `terraform apply` command successfully completes, you can access the NGINX deployment using the public DNS defined as an output in your Terraform script. Open the URL provided in a web browser to verify the NGINX server's availability.
+
+**Destroy Resources** (After Testing) to clean up and remove all the resources created by Terraform.
+   ```bash
+   terraform destroy
+   ```
+
