@@ -1,4 +1,3 @@
-
 ## Exemplary Deployment
 
 **Configuring NGINX on Amazon EC2 Instances Using Terraform**
