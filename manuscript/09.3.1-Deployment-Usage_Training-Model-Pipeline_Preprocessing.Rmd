@@ -2,7 +2,7 @@
 
 The data processing stage involves three primary processes. First, the raw data is loaded from an S3 Bucket. Second, the data is preprocessed and converted into the required format. Finally, the preprocessed data is stored in a way that allows it to be utilized by subsequent models. The data processing functionality is implemented within the given `data_preprocessing` function. The `utils` module, imported at the beginning, provides the functionality to access, load, and store data from S3. The data is normalized and transformed into a NumPy array to make it compatible with TensorFlow Keras models. The function returns the names and paths of the preprocessed and uploaded data, making it convenient for selecting them for future model training. Moreover, the data preprocessing stage establishes a connection with MLflow to record the sizes of the datasets.
 
-At the beginning of each pipeline step are the import statements for various Python modules and libraries used in the code. They will not be mentioned within the description, but you can look them up in the [provided code](TODO).
+At the beginning of each pipeline step are the import statements for various Python modules and libraries used in the code. They will not be mentioned within the description, but you can look them up in the [provided code](https://github.com/seblum/mlops-airflow-DAGs/blob/main/cnn_skin_cancer/src/preprocessing.py).
 
 The code starts with the function definition `data_preprocessing`. The function takes several input parameters and returns a tuple with paths to the preprocessed data stored as NumPy arrays. The function is equipped with a `@timeit` decorator, which serves to measure the execution time of the preprocessing operation.
 
@@ -78,8 +78,6 @@ The code proceeds by defining three hidden functions that play a crucial role in
         """
         ims = [
             aws_session.read_image_from_s3(s3_bucket=aws_bucket, imname=filename)
-            # TODO: currently only uses the last ten files for testing
-            # for filename in tqdm(aws_session.list_files_in_bucket(folder_path)[-10:])
             for filename in tqdm(aws_session.list_files_in_bucket(folder_path))
         ]
         return np.array(ims, dtype="uint8")

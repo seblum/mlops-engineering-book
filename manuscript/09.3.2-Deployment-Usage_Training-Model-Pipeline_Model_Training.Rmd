@@ -80,7 +80,6 @@ with mlflow.start_run(experiment_id=mlflow_experiment_id, run_name=f"{timestamp}
         cvscores = []
         for train, test in kfold.split(X_train, y_train):
             model = get_model(Model_Class.Basic.value, model_params)
-            # TODO: autolog kfold ???
             # Train Model
             model.fit(
                 X_train[train],

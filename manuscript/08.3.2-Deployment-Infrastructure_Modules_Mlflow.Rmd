@@ -14,7 +14,6 @@ locals {
 }
 
 data "aws_caller_identity" "current" {}
-# TODO: set namespace before ressourcs right
 
 # create s3 bucket for artifacts
 resource "aws_s3_bucket" "mlflow" {
