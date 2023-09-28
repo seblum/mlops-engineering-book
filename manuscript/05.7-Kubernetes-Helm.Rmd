@@ -1,10 +1,10 @@
 ## Helm
 
- The previous sections showed the complexity of working with Kubernetes. As in other programming languages, there are easier ways to manage an application rather than writing all of the deployments and services of an application by hand. 
- Among others, *Helm* is a package manager for Kubernetes that enables to template and group Kubernetes manifests as versioned packages. 
-  
- Helm packages applications into so called **, which are a collection of yaml and helper templates. Once an application is packaged, it can be installed onto a Kubernetes cluster using a single command. 
- Helm s are packaged as `tar`files and stored in repositories similar to registries like Docker or PyPi, and some repository registries like Artifactory automatically index Helm Charts. This ease of working allows Helm  to provide a large collection of open-source charts to easily deploy applications such as [PostgreSQL](https://github.com/bitnami/charts/tree/master/bitnami/postgresql), [Redis](https://github.com/bitnami/charts/tree/master/bitnami/redis), [Nginx](https://github.com/kubernetes/ingress-nginx), and [Prometheus](https://github.com/prometheus-community/helm-charts). 
+The previous sections showed the complexity of working with Kubernetes. As in other programming languages, there are easier ways to manage an application rather than writing all of the deployments and services of an application by hand. 
+Among others, *Helm* is a package manager for Kubernetes that enables to template and group Kubernetes manifests as versioned packages. 
+
+Helm applications are a collection of yaml and helper templates. Once an application is packaged, it can be installed onto a Kubernetes cluster using a single command. 
+Helm applications are packaged as `tar` files and stored in repositories similar to registries like Docker or PyPi, and some repository registries like *Artifactory* automatically index Helm Charts. This ease of working allows Helm to provide a large collection of open-source charts to easily deploy applications such as [PostgreSQL](https://github.com/bitnami/charts/tree/master/bitnami/postgresql), [Redis](https://github.com/bitnami/charts/tree/master/bitnami/redis), [Nginx](https://github.com/kubernetes/ingress-nginx), and [Prometheus](https://github.com/prometheus-community/helm-charts). 
 
 ### Helm Chart Structure
 
