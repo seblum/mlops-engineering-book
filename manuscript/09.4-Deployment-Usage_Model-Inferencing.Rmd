@@ -109,7 +109,7 @@ cnn_skin_cancer_sagemaker_inference_test()
 \normalsize
 
 
-### Functions for Inference Code
+### Inference Workflow Code
 
 Collectively, these functions provide comprehensive support for testing and interacting with an Amazon SageMaker endpoint. Their functionality encompasses tasks such as image data preparation and processing, endpoint status verification, and querying the endpoint to obtain predictions or responses.
 
