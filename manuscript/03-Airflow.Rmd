@@ -13,5 +13,5 @@ The usage tutorial is based on the local installation of Airflow. Please refer t
 
 ### Prerequisites {.unlisted .unnumbered}
 
-The main prerequisites to follow this tutorial to have an Apache Airflow instance installed. The official documentation gives a good overview on [how to do](https://airflow.apache.org/docs/apache-airflow/stable/start.html). It is sufficient to run Airflow on a local deployment using `airflow standalone` or `airflow webserver` and accessing it via any browser under `http://localhost:8080/`. There is no need to set up a complex Airflow deployment on a cluster or else. Further needed is intermediate knowledge of the programming language Python and basic knowledge of bash.
+The main prerequisites to follow this tutorial to have an Apache Airflow instance installed. The official documentation gives a good overview on [how to do](https://airflow.apache.org/docs/apache-airflow/stable/start.html). It is sufficient to run Airflow on a local deployment using `airflow standalone`, or `airflow webserver` and `airflow scheduler` and accessing it via any browser under `http://localhost:8080/`. There is no need to set up a complex Airflow deployment on a cluster or else. Further needed is intermediate knowledge of the programming language Python and basic knowledge of bash.
 
