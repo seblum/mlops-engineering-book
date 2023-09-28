@@ -62,7 +62,7 @@ An Operator represents a single predefined task in a workflow. It is basically a
 *Transfer Operators* are designed to transfer data from one place to another, for example to copy data from one cloud bucket to another. Those operators are often stateful, which means the downloaded data are first stored locally and then uploaded to a destination storage. The principle of a stateful execution defines them as an own category of operator. 
 Finally, *Sensors* are a special subclass of operators that are triggered when an external event is happening, for example the creation of a file.
 
-The `PythonOperator` is actually declared a deprecated function. Airflow 2.0 promotes to use the `@task`-decorator of *Taskflow* to define tasks in a more pythonic context. Yet, it still works in Airflow 2.0 and is still a very good example on how operators work.
+> **_NOTE:_** The `PythonOperator` is actually declared a deprecated function. Airflow 2.0 promotes to use the `@task`-decorator of *Taskflow* to define tasks in a more pythonic context. Yet, it still works in Airflow 2.0 and is still a very good example on how operators work.
 
 #### Action Operators
 
