@@ -1,20 +1,6 @@
 ## Components
 
-Within the setup, there are multiple custom modules, namely airflow, mlflow, jupyterhub, and monitoring. Each module is responsible for deploying a specific workflow tool.
+In this configuration, several custom modules are in place, including Airflow, MLflow, JupyterHub, and monitoring. Each module has a distinct role in deploying specific workflow tools.
 
-These module names also align with their corresponding namespaces within the cluster.
-
-
-
-<!---
-
-### Seldon
-
-Seldon is used for Model deployment.
-
-helm chart installed
-
---->
-
-
+Additionally, these module names correspond to their respective namespaces within the cluster.
 
