@@ -1,5 +1,5 @@
 
-## Services & Networking
+## Services and Networking
 
 
 ### Services
@@ -154,7 +154,7 @@ spec:
 
 ### Service Discovery
 
-Service Discovery is a mechanism that lets applications and microservices locate each other on a network. In fact, we have aready used Service Discovery in the previous sections, they just haven't been mentioned yet. If a client wants to communicate with the application, it should not use the IP of an individual Pod should not use the individual pod ip. Instead, we should rely on services as they have a stable IP address. We have already seen this in the section about Services. Yet, each pod has also an individual DNS (Domain Name System). A DNS translates a domain names to an IP address, just one lookes up a number in a telephone book, so it's much easier to reference to a resource online. This is where service Discovery enters the game.
+Service Discovery is a mechanism that lets applications and microservices locate each other on a network. In fact, we have aready used Service Discovery in the previous sections, they just haven't been mentioned yet. If a client wants to communicate with the application, it should not use the IP of an individual Pod should not use the individual pod ip. Instead, we should rely on services as they have a stable IP address. We have already seen this in the [section about Services](#services). Yet, each pod has also an individual DNS (Domain Name System). A DNS translates a domain names to an IP address, just one lookes up a number in a telephone book, so it's much easier to reference to a resource online. This is where service Discovery enters the game.
 
 ![Service Discovery](images/05-Kubernetes/service-discovery.png) 
 

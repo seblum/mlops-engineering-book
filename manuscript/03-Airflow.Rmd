@@ -8,7 +8,7 @@ However, the philosophy of Airflow is to define workflows as code, so coding wil
 
 The Airflow platform contains different operators to easily extend and connect with many other technologies. Being able to manage a workflow for all stages of the training of ML models, and the possibility to combine Airflow with other tools like MLflow for model tracking, make Apache Airflow a great tool to incorporate in an MLOps architecture.
 
-The aim of this chapter is to give a tutorial on how to use Airflow from a user perspective, as well as give a short overview of its deployment. Airflow can be deployed in multiple ways, starting from a single processing unit on a local machine to a distributed setup with multiple compute resources for large workflows in a production setting. A detailed description of what an Airflow deployment involves is shown in the section Airflow Infrastructure. 
+The aim of this chapter is to give a tutorial on how to use Airflow from a user perspective, as well as give a short overview of its deployment. Airflow can be deployed in multiple ways, starting from a single processing unit on a local machine to a distributed setup with multiple compute resources for large workflows in a production setting. A detailed description of what an Airflow deployment involves is shown in the section [Airflow Infrastructure](#airflow-infrastructure). 
 The usage tutorial is based on the local installation of Airflow. Please refer to the prerequisits on what is needed to follow through.
 
 ### Prerequisites {.unlisted .unnumbered}

@@ -40,7 +40,7 @@ It's important to note that the specific tools used in MLOps and DevOps may vary
 
 ### MLOps Lifecycle
 
-Incorporating the tools introduced by DevOps and MLOps can extend the machine learning workflow outlined in the previous section, resulting in a complete MLOps lifecycle that covers each stage of the machine learning process while integrating automation practices.
+Incorporating the tools introduced by DevOps and MLOps can extend the machine learning workflow outlined in the [previous section](#machine-learning-workflow), resulting in a complete MLOps lifecycle that covers each stage of the machine learning process while integrating automation practices.
 
 ![](images/01-Introduction/mlops-lifecycle.svg){ width=100% }
 

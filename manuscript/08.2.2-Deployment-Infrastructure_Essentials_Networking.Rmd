@@ -1,6 +1,6 @@
 ### Networking
 
-The `networking` module of the infrastructure directory integrates an *Application Load Balancer* (ALB) and *External DNS* in the cluster. Both play crucial roles in managing and exposing Kubernetes applications within the EKS cluster to the outside world. The ALB serves as an Ingress Controller to route external traffic to Kubernetes services, while External DNS automates the management of DNS records, making it easier to access services using user-friendly domain names. The root module of network just calls both submodules, which are described in detail in the following sections.
+The `networking` module of the infrastructure directory integrates an *Application Load Balancer* (ALB) and *External DNS* in the cluster. Both play crucial roles in managing and exposing Kubernetes applications within the EKS cluster to the outside world. The ALB serves as an Ingress Controller to route external traffic to Kubernetes services, while External DNS automates the management of DNS records, making it easier to access services using user-friendly domain names. The root module of network just calls both submodules, which are described in detail in the upcoming sections.
 
 \footnotesize
 ```javascript

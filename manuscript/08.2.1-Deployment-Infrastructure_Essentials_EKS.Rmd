@@ -8,7 +8,7 @@ The `eks` module also deploys several Kubernetes add-ons, including `coredns`, `
 
 - `CoreDNS` provides DNS-based service discovery, allowing pods and services to communicate with each other using domain names, and thus enabling seamless communication within the cluster without the need for explicit IP addresses. 
 - `kube-proxy`: is responsible for network proxying on Kubernetes nodes which ensures that network traffic is properly routed to the appropriate pods, services, and endpoints. It allows for an seamless communication between different parts of the cluster. 
-- `aws-ebs-csi-driver`(Container Storage Interface) is an add-on that enables Kubernetes pods to use Amazon Elastic Block Store (EBS) volumes for persistent storage, allowing data to be retained across pod restarts and ensuring data durability for stateful applications. The EBS configuration and deployment are describen in the following subsection, but the respective `service_account_role_arn` is linked to the EKS cluster on creation.
+- `aws-ebs-csi-driver`(Container Storage Interface) is an add-on that enables Kubernetes pods to use Amazon Elastic Block Store (EBS) volumes for persistent storage, allowing data to be retained across pod restarts and ensuring data durability for stateful applications. The EBS configuration and deployment are describen in the following subsection [Elastic Block Store](#elastic-block-store), but the respective `service_account_role_arn` is linked to the EKS cluster on creation.
 - `vpc-cni` (Container Network Interface) is essential for AWS EKS clusters, as it enables networking for pods using AWS VPC (Virtual Private Cloud) networking. It ensures that each pod gets an IP address from the VPC subnet and can communicate securely with other AWS resources within the VPC.
 
 \footnotesize
@@ -192,7 +192,7 @@ module "vpc_cni_irsa" {
 
 The EBS CSI controller (Elastic Block Store Container Storage Interface) is set up by defining an IAM (Identity and Access Management) role using the `"ebs_csi_controller_role"` module. The role allows the EBS CSI controller to assume a specific IAM role with OIDC (OpenID Connect) authentication, granting it the necessary permissions for EBS-related actions in the AWS environment by an IAM policy. The IAM policy associated with the role is created likewise and permits various EC2 actions, such as attaching and detaching volumes, creating and deleting snapshots, and describing instances and volumes. 
 
-The code also configures the default Kubernetes StorageClass named `"gp2"` and annotates it as not the default storage class for the cluster, managing how storage volumes are provisioned and utilized in the cluster. Ensuring that the `"gp2"` StorageClass does not become the default storage class is needed as we additionally create an EFS Storage (Elastic File System), which is described in the next subsection.
+The code also configures the default Kubernetes StorageClass named `"gp2"` and annotates it as not the default storage class for the cluster, managing how storage volumes are provisioned and utilized in the cluster. Ensuring that the `"gp2"` StorageClass does not become the default storage class is needed as we additionally create an EFS Storage (Elastic File System), which is described in the [next subsection](#elastic-file-system).
 
 \footnotesize
 ```javascript

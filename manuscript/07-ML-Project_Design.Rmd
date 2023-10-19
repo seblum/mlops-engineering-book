@@ -14,7 +14,6 @@ The infrastructure will be maintained using the Infrastructure as Code tool *Ter
 
 ![](images/01-Introduction/airflow-on-eks-basic.drawio.svg){ width=100% }
 
-The following chapters give an introductory tutorial on each of the previously introduced tools. A machine learning workflow using Airflow is set up on the deployed infrastructure, including data preprocessing, model training, and model deployment, as well as tracking the experiment and deploying the model into production using MLFlow. 
 
 ### Infrastructure {.unnumbered}
 

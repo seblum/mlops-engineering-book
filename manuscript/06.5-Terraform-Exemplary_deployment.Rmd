@@ -206,7 +206,7 @@ output "aws_security_group_id" {
 
 ### Run the code
 
-As outlined in the previous sections, you can execute the Terraform code by following a sequence of Terraform CLI commands. Here's a step-by-step guide to working with the code:
+As outlined in the section [Basic usage](#basic-usage), you can execute the Terraform code by following a sequence of Terraform CLI commands. Here's a step-by-step guide to working with the code:
 
 **Initialize Terraform** (if you haven't already done so) and downloads the necessary providers and modules.
 ```bash

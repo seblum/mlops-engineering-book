@@ -27,7 +27,7 @@ The *scheduler* is basically the brain and heart of Airflow. It handles triggeri
 
 ### Webserver
 
-The *webserver* runs the web interface of Airflow and thus the user interface every Airflow user sees. This allows to inspect, trigger, and debug DAGs and tasks in Airflow (and much more!), such as seen in the previous chapters. Each user interaction and change is written to the *DAG directory* or the *metadata database*, from where the *scheduler* will read and act upon.
+The *webserver* runs the web interface of Airflow and thus the user interface every Airflow user sees. This allows to inspect, trigger, and debug DAGs and tasks in Airflow (and much more!). Each user interaction and change is written to the *DAG directory* or the *metadata database*, from where the *scheduler* will read and act upon.
 
 ### Executor 
 

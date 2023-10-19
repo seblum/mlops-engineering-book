@@ -40,7 +40,7 @@ The second image depicts a detailed overview of the DAG "xcom_fundamentals". Bes
 
 ![](./images/03-Airflow/web-interface_dag-grid.png){ width=100% }
 
-The Airflow command line interface also allows to interact with the DAGs. Below command shows its exemplary usage and how to list all active DAGs. Further examples of using the CLI in a specific context are show in the subsection about Tasks.
+The Airflow command line interface also allows to interact with the DAGs. Below command shows its exemplary usage and how to list all active DAGs. Further examples of using the CLI in a specific context are show in the subsection about [Tasks](#tasks).
 
 \footnotesize
 ```bash
@@ -515,4 +515,4 @@ def transform(**kwargs):
 
 As it is clearly visible, using TaskFlow is an easy approach to workflowing in Airflow. It takes away a lot of worries when it comes to building pipelines and allows for a flexible programing experience using decorators. It allows for several more functionalities, such as reusing decorated tasks in multiple DAGs, overriding task parameters like the `task_id`, custom XCom backends to automatically store data in e.g. AWS S3, and using TaskGroups to group multiple tasks for a better overview in the Airflow Interface.
 
-However, even though Taskflow allows for a smooth way of developing workflows, it is beneficial to learn the traditional Airflow API to understand the fundamental concepts of how to create a workflow. The following section will build up on that knowledge and depict a full machine learning workflow as an example.
+However, even though Taskflow allows for a smooth way of developing workflows, it is beneficial to learn the traditional Airflow API to understand the fundamental concepts of how to create a workflow. The [following-section](#exemplary-ml-workflow) will build up on that knowledge and depict a full machine learning workflow as an example.
