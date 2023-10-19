@@ -213,12 +213,59 @@ spec:
 \normalsize
 
 ### StatefulSets
-*StatefulSets* are used to deploy and manage stateful applications. Stateful applications are applications which are long lived, for example databases. Most applications of K8s are stateless as they only run for a specific task. However, a database is a state of truth and should be present at all time. StatefulSets manage the pods based on the same container specifications such as Deployments.
+*StatefulSets* are used to deploy and manage stateful applications. Stateful applications are applications which are long lived, for example databases. Most applications of K8s are stateless as they only run for a specific task, like Deployments or Pods. However, a database is a state of truth and should be present at all time. StatefulSets manage the pods based on the same container specifications such as Deployments. However, unlike a Deployment, a StatefulSet ensures that each of its Pods retains a distinct identity, maintaining a persistent identifier through potential rescheduling.
 
-Lets assume we have a StatefulSet with 3 replicas. Each Pod has a PV attached.
+Lets assume we have a StatefulSet with 3 replicas that is exposed by a headless service named `ngnix-service`. Each Pod has a PV attached.
 
 \footnotesize
 ```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  labels:
+    app: nginx
+spec:
+  ports:
+  - port: 80
+    name: web-statefulset
+  clusterIP: None
+  selector:
+    app: nginx-service
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web-statefulset
+spec:
+  serviceName: "nginx-service"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: registry.k8s.io/nginx-slim:0.8
+        ports:
+        - containerPort: 80
+          name: web-statefulset
+        volumeMounts:
+        - name: data
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      # storageClassName: storage-class-name
+      resources:
+        requests:
+          storage: 1Gi
 ```
 \normalsize
 
