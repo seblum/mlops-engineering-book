@@ -192,6 +192,9 @@ sync_azure_files_with_gcs = AzureFileShareToGCSOperator(
 ```
 \normalsize
 
+> **_NOTE:_** The Python code for the *Transfer Operators* has not been tested by myself. The examples are based on the official [Airflow documentation](https://airflow.apache.org/docs/).
+
+
 #### Sensors
 
 A *sensor* is a special subclass of an operator that is triggered when an external event is happening or a certain condition is be true. Such conditions are for example the creation of a file, an upload of a database record, or a certain response from a web request.

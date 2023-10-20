@@ -39,7 +39,7 @@ sleep_task = PythonOperator(
 
 
 # EmailOperator
-
+# This Operator has not been testet by seblum
 email_task = EmailOperator(
     task_id="email_sales_report",
     to="sales_manager@example.com",
