@@ -13,7 +13,7 @@ Rmd_book_template
 
 .DS_Store
 files/.DS_Store
-files/02-Terraform/.DS_Store
+files/06-Terraform/.DS_Store
 
 # MLflow runs folder
 **/mlruns

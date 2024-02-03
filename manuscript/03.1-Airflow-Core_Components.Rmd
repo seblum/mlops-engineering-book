@@ -40,7 +40,7 @@ The second image depicts a detailed overview of the DAG "xcom_fundamentals". Bes
 
 ![](./images/03-Airflow/web-interface_dag-grid.png){ width=100% }
 
-The Airflow command line interface also allows to interact with the DAGs. Below command shows its exemplary usage and how to list all active DAGs. Further examples of using the CLI in a specific context are show in the subsection about Tasks.
+The Airflow command line interface also allows to interact with the DAGs. Below command shows its exemplary usage and how to list all active DAGs. Further examples of using the CLI in a specific context are show in the subsection about [Tasks](#tasks).
 
 \footnotesize
 ```bash
@@ -62,7 +62,7 @@ An Operator represents a single predefined task in a workflow. It is basically a
 *Transfer Operators* are designed to transfer data from one place to another, for example to copy data from one cloud bucket to another. Those operators are often stateful, which means the downloaded data are first stored locally and then uploaded to a destination storage. The principle of a stateful execution defines them as an own category of operator. 
 Finally, *Sensors* are a special subclass of operators that are triggered when an external event is happening, for example the creation of a file.
 
-The `PythonOperator` is actually declared a deprecated function. Airflow 2.0 promotes to use the `@task`-decorator of *Taskflow* to define tasks in a more pythonic context. Yet, it still works in Airflow 2.0 and is still a very good example on how operators work.
+> **_NOTE:_** The `PythonOperator` is actually declared a deprecated function. Airflow 2.0 promotes to use the `@task`-decorator of *Taskflow* to define tasks in a more pythonic context. Yet, it still works in Airflow 2.0 and is still a very good example on how operators work.
 
 #### Action Operators
 
@@ -191,6 +191,9 @@ sync_azure_files_with_gcs = AzureFileShareToGCSOperator(
 )
 ```
 \normalsize
+
+> **_NOTE:_** The Python code for the *Transfer Operators* has not been tested by myself. The examples are based on the official [Airflow documentation](https://airflow.apache.org/docs/).
+
 
 #### Sensors
 
@@ -515,4 +518,4 @@ def transform(**kwargs):
 
 As it is clearly visible, using TaskFlow is an easy approach to workflowing in Airflow. It takes away a lot of worries when it comes to building pipelines and allows for a flexible programing experience using decorators. It allows for several more functionalities, such as reusing decorated tasks in multiple DAGs, overriding task parameters like the `task_id`, custom XCom backends to automatically store data in e.g. AWS S3, and using TaskGroups to group multiple tasks for a better overview in the Airflow Interface.
 
-However, even though Taskflow allows for a smooth way of developing workflows, it is beneficial to learn the traditional Airflow API to understand the fundamental concepts of how to create a workflow. The following section will build up on that knowledge and depict a full machine learning workflow as an example.
+However, even though Taskflow allows for a smooth way of developing workflows, it is beneficial to learn the traditional Airflow API to understand the fundamental concepts of how to create a workflow. The [following-section](#exemplary-ml-workflow) will build up on that knowledge and depict a full machine learning workflow as an example.

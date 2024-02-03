@@ -17,7 +17,7 @@ resource "local_file" "hello" {
 
 ### terraform init
 
-When a project is run for the first time the terraform project needs to be initialized. This is done via the `terraform init` command. Terraform scans the project files in this step and downloads any required providers needed (more details to providers in a following section). In the given example this is the local procider.
+When a project is run for the first time the terraform project needs to be initialized. This is done via the `terraform init` command. Terraform scans the project files in this step and downloads any required providers needed (more details to providers in the [section about providers](#providers)). In the given example this is the local provider.
 
 \footnotesize
 ```bash

@@ -10,28 +10,31 @@ The code for the model pipeline is located in the GitHub repository called *mlop
 
 ```bash
 root
-│   Readme.md
 │
+│   Readme.md
 └── .github/workflows/
 │
-└── airflow_docker_DAG.py
-└── airflow_kubernetes_DAG.py
-│
-└── src
-│   └── preprocessing.py
-│   │   train.py
-│   │   ...
-│   └── model
-│       └── utils.py
-│           ...
-│
-└── Docker
+└── cnn_skin_cancer
+│   │   airflow_docker_DAG.py
+│   │   airflow_k8s_test_inference_DAG.py
+│   │   airflow_k8s_workflow_DAG.py
 │   │
-│   └── fastapi-serve-app
-│   │   └── Dockerfile
+│   └── Docker
+│   │   └── python-base-cnn-model
+│   │       └── Dockerfile
+│   │           ...
+│   │
+│   └── inference_test_images
+│   │   └── 1.jpg
+│   │   │   10.jpg
 │   │       ...
 │   │
-│   └── python-base-cnn-model
-│       └── Dockerfile
-│           ...
+│   └── src
+│       └── preprocessing.py
+│       │   train.py
+│       │   ...
+│       └── model
+│           └── utils.py
+│               ...
+│
 ```

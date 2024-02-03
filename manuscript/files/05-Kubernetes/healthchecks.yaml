@@ -1,0 +1,80 @@
+# healthchecks.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backendflask-healthcheck
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backendflask-healthcheck
+  template:
+    metadata:
+      labels:
+        app: backendflask-healthcheck
+        environment: test
+        tier: backend
+        department: engineering
+    spec:
+      containers:
+        - name: backendflask-healthcheck
+          # check whether I have to change the backend app to do this.
+          image: "seblum/mlops-public:backend-flask"
+          imagePullPolicy: "Always"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          # Specification of the the Liveness Probe
+          livenessProbe:
+            httpGet:
+              # path of the url
+              path: /liveness
+              port: 5000
+            # time the liveness probe starts after pod is started
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            failureThreshold: 3
+            # period of time when the checks should be performed
+            periodSeconds: 5
+          # Specification of the Readiness Probe
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 5000
+            initialDelaySeconds: 10
+            # change to 1 seconds and see the pod not going to go ready
+            timeoutSeconds: 3
+            failureThreshold: 1
+            periodSeconds: 5
+          env:
+            # variable for the container to be killed after 60 seconds
+            - name: "KILL_IN_SECONDS"
+              value: "60"
+          ports:
+            - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backendflask-healthcheck
+spec:
+  type: NodePort
+  selector:
+    app: backendflask-healthcheck
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 30000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backendflask-healthcheck
+spec:
+  type: ClusterIP
+  selector:
+    app: backendflask-healthcheck
+  ports:
+    - port: 80
+      targetPort: 8080

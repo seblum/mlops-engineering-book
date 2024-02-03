@@ -1,0 +1,58 @@
+### Relational Database Service
+
+The Amazon RDS (Relational Database Service) instance is provisioned by the `aws_db_instance` resource. It configures the instance with the specified settings, such as `allocated_storage`, `storage_type`, `engine`, `db_name`, `username`, and `password`, etc. All these parameters are provided whenever the module is invoked, e.g. in the Airflow or Mlflow modules..  The `skip_final_snapshot` set to true states that no final DB snapshot will be created when the instance is deleted. 
+
+The resource `aws_db_subnet_group` creates an RDS subnet group with the name `"vpc-subnet-group-${local.rds_name}"`. It associates the RDS instance with the private subnets specified in the `VPC` module, and is used to define the subnets in which the RDS instance can be launched. Similar to the subnet group, the RDS instance uses an own security group. The security group `aws_security_group` is attached to the RDS instance. It specifies `ingress` (inbound)) and `egress` (outbound) rules to control network traffic. In this case, it allows inbound access on the specified port used by the RDS engine (5432 for PostgreSQL) from the CIDR blocks specified in the `private_subnets_cidr_blocks`, and allows all outbound traffic (`0.0.0.0/0`) from the RDS instance.
+
+The `rds` module is not necessarily needed to run a kubernetes cluster properly. It is merely an extension of the cluster and is needed to store relevant data of the tools used, such as airflow or mlflow. The module is thus called directly from the own airflow and mlflow modules.
+
+\footnotesize
+```javascript
+locals {
+  rds_name           = var.rds_name
+  rds_engine         = var.rds_engine
+  rds_engine_version = var.rds_engine_version
+  rds_port           = var.rds_port
+}
+
+resource "aws_db_subnet_group" "default" {
+  name       = "vpc-subnet-group-${local.rds_name}"
+  subnet_ids = var.private_subnets
+}
+
+resource "aws_db_instance" "rds_instance" {
+  allocated_storage      = var.max_allocated_storage
+  storage_type           = var.storage_type
+  engine                 = local.rds_engine
+  engine_version         = local.rds_engine_version
+  instance_class         = var.rds_instance_class
+  db_name                = "${local.rds_name}_db"
+  username               = "${local.rds_name}_admin"
+  password               = var.rds_password
+  identifier             = "${local.rds_name}-${local.rds_engine}"
+  port                   = local.rds_port
+  vpc_security_group_ids = [aws_security_group.rds_sg.id]
+  db_subnet_group_name   = aws_db_subnet_group.default.name
+  skip_final_snapshot    = true
+}
+
+resource "aws_security_group" "rds_sg" {
+  name   = "${local.rds_name}-${local.rds_engine}-sg"
+  vpc_id = var.vpc_id
+  
+  ingress {
+    description = "Enable postgres access"
+    from_port   = local.rds_port
+    to_port     = local.rds_port
+    protocol    = "tcp"
+    cidr_blocks = var.private_subnets_cidr_blocks
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+```
+\normalsize

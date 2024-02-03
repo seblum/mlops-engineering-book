@@ -274,7 +274,7 @@ print(f"model_pred: {model_pred}")
 
 ### MLflow Model Registry
 
-The MLflow Model Registry provides a central model store to manage the lifecycle of an ML Model. This allows to register MLflow models like the *RandomForestRegressor* from the previous section to the Model Registry and include model versioning, stage transitions, and annotations. In fact, by running `MLflow.sklearn.log_model` we already did exactly that. Look at how easy the MLflow API is to use. Let's have a look at the code again.
+The MLflow Model Registry provides a central model store to manage the lifecycle of an ML Model. This allows to register MLflow models like the *RandomForestRegressor* from the [previous section](#mlflow-models) to the Model Registry and include model versioning, stage transitions, and annotations. In fact, by running `MLflow.sklearn.log_model` we already did exactly that. Look at how easy the MLflow API is to use. Let's have a look at the code again.
 
 \footnotesize
 ```python
@@ -391,7 +391,7 @@ mlflow run . -P alpha=5.0
 MLFLOW_TRACKING_URI=http://localhost:<PORT> mlflow run . --experiment-name="models-experiment"
 
 # Run the MLflow project from a Github URI and use the localhost as backend
-MLFLOW_TRACKING_URI=http://localhost:<PORT> MLflow run https://github.com/seblum/mlops-practice#files/06-MLFlow/mlprojects --version=chapter/mlflow
+MLFLOW_TRACKING_URI=http://localhost:<PORT> MLflow run https://github.com/mlflow/mlflow-example/MLprojects --version=chapter/mlflow
 ```
 \normalsize
 

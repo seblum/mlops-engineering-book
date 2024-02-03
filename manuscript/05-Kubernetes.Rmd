@@ -5,4 +5,6 @@ Kubernetes (short: K8s) is greek and means pilot. K8s is an applications orchest
 ### Prerequisites {.unlisted .unnumbered}
 
 As a prerequisites to go through this tutorial and implement the scripts one has to have Docker installed, Kubectl to interact via the command line with K8s, as well as Minikube to run a K8s cluster on a local machine. Please refer to the corresponding sites.
+All configuration files within this tutorial can be found in the github repository of this [book](https://github.com/seblum/mlops-engineering-book/tree/master/manuscript/files/05-Kubernetes).
+
 

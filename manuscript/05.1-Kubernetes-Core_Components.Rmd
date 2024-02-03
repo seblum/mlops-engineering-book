@@ -19,7 +19,7 @@ To be able to work as the brain of the cluster, the master node contains a contr
 ![Master Node](images/05-Kubernetes/master-node.png){ width=100% }
 
 ##### API Server
-The api servers serves as the connection between the frontend and the K8s controll plane. All communications, external and interal, go through it. Frontend to Kubernetes Controll Plane. It exposes a restful api on port 443 to allow communication, as well as performes authentication and authorization checks. Whenever we perform something on the K8s cluster, e.g. using a command like `kubectl apply -f <file.yaml>`, we communicate with the api server (what we do here is shown in the section about pods).
+The api servers serves as the connection between the frontend and the K8s controll plane. All communications, external and interal, go through it. Frontend to Kubernetes Controll Plane. It exposes a restful api on port 443 to allow communication, as well as performes authentication and authorization checks. Whenever we perform something on the K8s cluster, e.g. using a command like `kubectl apply -f <file.yaml>`, we communicate with the api server (what we do here is shown in the [section about pods](#pods)).
 
 ##### Cluster store
 The cluster store stores the configuration and state of the entire cluster. It is a distributed key-value data store and the single source of truth database of the cluster. As in the example before, whenever we apply a command like `kubectl apply -f <file.yaml>`, the file is stored on the cluster store to store the configuration.

@@ -1,0 +1,93 @@
+### Virtual Private Cloud
+
+The provided code in the `vpc` module establishes a Virtual Private Cloud (VPC) with associated subnets and security groups. It configures the required networking and security infrastructure to serve as the foundation to deploy an AWS EKS cluster.
+
+The VPC is created using the `terraform-aws-modules/vpc/aws` module version 5.0.0. The VPC is assigned the IPv4 CIDR block `"10.0.0.0/16"` and spans across all three available AWS availability zones within the specified region `eu-central-1`. It includes both public and private subnets, with private subnets associated with NAT gateways for internet access. DNS hostnames are enabled for the instances launched within the VPC.
+
+The VPC subnets are tagged with specific metadata relevant to Kubernetes cluster management. The public subnets are tagged with `"kubernetes.io/cluster/${local.cluster_name}"` set to `"shared"` and `"kubernetes.io/role/elb"` set to `1`. The private subnets are tagged with `"kubernetes.io/cluster/${local.cluster_name}"` set to `"shared"` and `"kubernetes.io/role/internal-elb"` set to `1`.
+
+Additionally, three security groups are defined to manage access to worker nodes. They are intended to provide secure management access to the worker nodes within the EKS cluster. Two of these security groups, `"worker_group_mgmt_one"` and `"worker_group_mgmt_two"`, allow SSH access from specific CIDR blocks. The third security group, `"all_worker_mgmt,"` allows SSH access from multiple CIDR blocks, including `"10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"`
+
+\footnotesize
+```javascript
+locals {
+  cluster_name = var.cluster_name
+}
+
+data "aws_availability_zones" "available" {}
+
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "5.0.0"
+
+  name = var.vpc_name
+
+  cidr = "10.0.0.0/16"
+  azs  = slice(data.aws_availability_zones.available.names, 0, 3)
+
+  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  public_subnets  = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+
+  enable_nat_gateway   = true
+  single_nat_gateway   = true
+  enable_dns_hostnames = true
+
+  public_subnet_tags = {
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+    "kubernetes.io/role/elb"                      = 1
+  }
+
+  private_subnet_tags = {
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+    "kubernetes.io/role/internal-elb"             = 1
+  }
+}
+
+resource "aws_security_group" "worker_group_mgmt_one" {
+  name_prefix = "worker_group_mgmt_one"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+
+    cidr_blocks = [
+      "10.0.0.0/8",
+    ]
+  }
+}
+
+resource "aws_security_group" "worker_group_mgmt_two" {
+  name_prefix = "worker_group_mgmt_two"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+
+    cidr_blocks = [
+      "192.168.0.0/16",
+    ]
+  }
+}
+
+resource "aws_security_group" "all_worker_mgmt" {
+  name_prefix = "all_worker_management"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+
+    cidr_blocks = [
+      "10.0.0.0/8",
+      "172.16.0.0/12",
+      "192.168.0.0/16",
+    ]
+  }
+}
+```
+\normalsize

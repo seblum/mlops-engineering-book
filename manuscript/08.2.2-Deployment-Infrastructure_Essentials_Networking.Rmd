@@ -1,0 +1,167 @@
+### Networking
+
+The `networking` module of the infrastructure directory integrates an *Application Load Balancer* (ALB) and *External DNS* in the cluster. Both play crucial roles in managing and exposing Kubernetes applications within the EKS cluster to the outside world. The ALB serves as an Ingress Controller to route external traffic to Kubernetes services, while External DNS automates the management of DNS records, making it easier to access services using user-friendly domain names. The root module of network just calls both submodules, which are described in detail in the upcoming sections.
+
+\footnotesize
+```javascript
+module "external-dns" {
+  ...
+}
+
+module "application-load-balancer" {
+  ...
+}
+```
+\normalsize
+
+#### AWS Application Load Balancer (ALB)
+
+The ALB is a managed load balancer service provided by AWS. In the context of an EKS cluster, the ALB serves as an Ingress Controller and thus is responsible for routing external traffic to the appropriate services and pods running inside your Kubernetes cluster. The ALB acts as the entry point to our applications and enables us to expose multiple services over a single public IP address or domain name, which simplifies access for users and clients.
+
+The code starts by defining some local variables, followed by creating an assumable IAM role for the AWS Load Balancer Controller service account by the module `aws_load_balancer_controller_controller_role`. The service account holds the necessary permissions and associates with the OIDC provider of the EKS cluster as it is the same module call we already used multiple times beforehand. The IAM policy for the role is defined in the `"aws_iam_policy.aws_load_balancer_controller_controller_sa"` resource. 
+
+Since its policy document is quite extensive, it is loaded from a file named `"AWSLoadBalancerControllerPolicy.json.`". In summary, the AWS IAM document allows the AWS Elastic Load Balancing (ELB) controller, specifically the Elastic Load Balancer V2 (ELBV2) API, to perform various actions related to managing load balancers, target groups, listeners, rules, and tags. The document includes several "Allow" statements that grant permissions for actions like describing and managing load balancers, target groups, listeners, and rules. It also allows the controller to create and delete load balancers, target groups, and listeners, as well as modify their attributes. Additionally, the document permits the addition and removal of tags for ELBV2 resources. 
+
+After setting up the IAM role, the code proceeds to install the AWS Load Balancer Controller using Helm. The Helm chart is sourced from the `"aws.github.io/eks-charts"` repository, specifying version `"v2.4.2"`. The service account configuration is provided to the Helm release's values, including the name of the service account and annotations to associate it with the IAM role created earlier. The `"eks.amazonaws.com/role-arn"` annotation points to the ARN of the IAM role associated with the service account, allowing the controller to assume that role and operate with the appropriate permissions.
+
+\footnotesize
+```javascript
+locals {
+  aws_load_balancer_controller_service_account_role_name = "aws-load-balancer-controller-role"
+  aws_load_balancer_controller_service_account_name      = "aws-load-balancer-controller-sa"
+}
+
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {} # 
+
+module "aws_load_balancer_controller_controller_role" {
+  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version                       = "5.11.1"
+  create_role                   = true
+  role_name                     = local.aws_load_balancer_controller_service_account_role_name
+  provider_url                  = replace(var.cluster_oidc_issuer_url, "https://", "")
+  role_policy_arns              = [aws_iam_policy.aws_load_balancer_controller_controller_sa.arn]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:kube-system:${local.aws_load_balancer_controller_service_account_name}"]
+}
+
+resource "aws_iam_policy" "aws_load_balancer_controller_controller_sa" {
+  name        = local.aws_load_balancer_controller_service_account_name
+  description = "EKS ebs-csi-controller policy for cluster ${var.cluster_name}"
+
+  policy = file("${path.module}/AWSLoadBalancerControllerPolicy.json")
+}
+
+resource "helm_release" "aws-load-balancer-controller" {
+  name             = var.helm_chart_name
+  namespace        = var.namespace
+  chart            = "aws-load-balancer-controller"
+  create_namespace = false
+
+  repository = "https://aws.github.io/eks-charts"
+  version    = var.helm_chart_version
+
+  values = [yamlencode({
+    clusterName = var.cluster_name
+    image = {
+      tag = "v2.4.2"
+    },
+    serviceAccount = {
+      name = "${local.aws_load_balancer_controller_service_account_name}"
+      annotations = {
+        "eks.amazonaws.com/role-arn" = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${local.aws_load_balancer_controller_service_account_role_name}"
+      }
+    }
+  })]
+}
+```
+\normalsize
+
+#### External DNS
+
+External DNS is a Kubernetes add-on that automates the creation and management of DNS records for Kubernetes services. It is particularly useful when services are exposed to the internet through the ALB or any other Ingress Controller. When an Ingress resource is created that defines how external traffic should be routed to services within the EKS cluster, External DNS automatically updates the DNS provider with the corresponding DNS records (in our case this is Route 53 in AWS). Automatically configuring DNS records ensures that the records are always up-to-date, which helps maintain consistency and reliability in the DNS configuration, and users can access the Kubernetes services using user-friendly domain names rather than relying on IP addresses.
+
+The code is structured similar to the ALB and defines local variables first, followed by creating a service account to interact with AWS resources. The service account, its role with OIDC and the policy with relevant permissions are created by the `external_dns_controller_role` module same to as we know it from previous implementations. The policy allows the external DNS controller to operate within the specified AWS Route 53 hosted zone, such as changing resource record sets, and listing hosted zones and resource record sets.
+
+Finally, the Helm is used to to deploy the external DNS controller as a Kubernetes resource. The Helm release configuration includes specifying the previously create service account, the IAM `role-arn` associated with it, the `aws.region` where the Route 53 hosted zone exists, and a `domainFilter` which filters to a specific domain provided by us.
+
+\footnotesize
+```javascript
+locals {
+  external_dns_service_account_role_name = "external-dns-role"
+  external_dns_service_account_name      = "external-dns-sa"
+}
+
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {} # 
+
+module "external_dns_controller_role" {
+  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version                       = "5.11.1"
+  create_role                   = true
+  role_name                     = local.external_dns_service_account_role_name
+  provider_url                  = replace(var.cluster_oidc_issuer_url, "https://", "")
+  role_policy_arns              = [aws_iam_policy.external_dns_controller_sa.arn]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:${var.namespace}:${local.external_dns_service_account_name}"]
+}
+
+resource "aws_iam_policy" "external_dns_controller_sa" {
+  name        = local.external_dns_service_account_name
+  description = "EKS ebs-csi-controller policy for cluster ${var.cluster_name}"
+
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "route53:ChangeResourceRecordSets"
+        ],
+        "Resource" : [
+          "arn:aws:route53:::hostedzone/*"
+        ]
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "route53:ListHostedZones",
+          "route53:ListResourceRecordSets"
+        ],
+        "Resource" : [
+          "*"
+        ]
+      }
+    ]
+  })
+}
+
+resource "helm_release" "external_dns" {
+  name             = var.name
+  namespace        = var.namespace
+  chart            = var.helm_chart_name
+  create_namespace = false
+
+  repository = "https://charts.bitnami.com/bitnami"
+  version    = var.helm_chart_version
+
+  values = [yamlencode({
+    serviceAccount = {
+      create = true
+      name   = "${local.external_dns_service_account_name}"
+      annotations = {
+        "eks.amazonaws.com/role-arn" = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${local.external_dns_service_account_role_name}"
+      }
+    },
+    aws = {
+      zoneType = "public"
+      region   = "${data.aws_region.current.name}"
+    },
+    policy = "sync"
+    domainFilter = [
+      "${var.domain_name}"
+    ]
+    provider   = "aws"
+    txtOwnerId = "${var.name}"
+  })]
+}
+```
+\normalsize

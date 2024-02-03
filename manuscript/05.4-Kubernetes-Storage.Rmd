@@ -1,7 +1,7 @@
 
-## Volume & Storage
+## Volumes and Storage
 
-Since Pods are ephemeral, any data associated is deleted when a Pod or container restarts. Applications are run stateless the majority of the times, meaning the data does not needs to be kept on the node and the data is stored on an external database. However, there are times when the data wants to be kept, shared between Pods, or when it should persist on the host file system (disk). As described in the section about Pods, a Pod can contain volumes. Volumes are exactly what is needed for such tasks. They are used to store and access data which can be persistent or long lived on K8s.
+Since Pods are ephemeral, any data associated is deleted when a Pod or container restarts. Applications are run stateless the majority of the times, meaning the data does not needs to be kept on the node and the data is stored on an external database. However, there are times when the data wants to be kept, shared between Pods, or when it should persist on the host file system (disk). As described in the [section about Pods](#pods), a Pod can contain volumes. Volumes are exactly what is needed for such tasks. They are used to store and access data which can be persistent or long lived on K8s.
 
 There are different types of volumes, e.g.:
 

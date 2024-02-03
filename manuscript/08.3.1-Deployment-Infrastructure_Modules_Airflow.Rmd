@@ -1,0 +1,429 @@
+
+### Airflow
+
+The `Airflow` module is responsible for provisioning all components related to the deployment of Airflow. Being a crucial workflow orchestration tool in our ML platform, Airflow is tightly integrated with various other components in the Terraform codebase, which requires it to receive multiple input variables and configurations. This Terraform code serves as the foundation for erecting an ML platform dashboard based on Apache Airflow, encompassing the configuration of a diverse array of components, including IAM roles, data storage, RDS, and Helm releases.
+
+The deployment of Airflow itself via this Terraform code hinges on the utilization of a Helm chart. This codebase also seamlessly integrates the Airflow deployment with AWS S3 for efficient data storage and logging, while relying on an AWS RDS instance from the [infrastructure section](#relational-database-service) to serve as the bedrock for metadata storage. Furthermore, pertinent Kubernetes secrets are meticulously integrated into the setup to ensure a secure and well-protected deployment.
+
+The code initiation begins with the declaration of several local variables, encompassing prefixes, secret names, and variable lists. These variables serve as cornerstones throughout the code, fostering consistency in naming conventions and configurations. Additionally, essential data sources, such as `"aws_caller_identity"` and `"aws_region"`, are defined. A dedicated Kubernetes namespace for Airflow is also established, providing a controlled and isolated environment for Airflow resources within the Kubernetes cluster.
+
+\footnotesize
+```javascript
+locals {
+  prefix                       = "${var.name_prefix}-${var.namespace}"
+  k8s_airflow_db_secret_name   = "${local.prefix}-db-auth"
+  git_airflow_repo_secret_name = "${local.prefix}-https-git-secret"
+  git_organization_secret_name = "${local.prefix}-organization-git-secret"
+  s3_data_bucket_secret_name   = "${var.namespace}-${var.s3_data_bucket_secret_name}"
+  s3_data_bucket_name          = "${local.prefix}-${var.s3_data_bucket_name}"
+
+  airflow_variable_list_addition = [
+    {
+      key   = "s3_access_name"
+      value = "${local.s3_data_bucket_secret_name}"
+    }
+  ]
+  airflow_variable_list_full = concat(var.airflow_variable_list, local.airflow_variable_list_addition)
+}
+
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {} #
+
+resource "kubernetes_namespace" "airflow" {
+  metadata {
+    name = var.namespace
+  }
+}
+```
+\normalsize
+
+Subsequently, a customized Terraform module, denoted as `"iam-service-account,"` is enlisted to configure IAM roles and policies tailored to service accounts associated with Airflow. These configurations include enabling role access through an OIDC provider and attaching an IAM policy that grants access to S3 buckets related to MLflow. These roles and policies serve as the bedrock for permissions and access control over a multitude of resources.
+
+\footnotesize
+```javascript
+module "iam-service-account" {
+  source                      = "./iam-service-account"
+  namespace                   = var.namespace
+  oidc_provider_arn           = var.oidc_provider_arn
+  s3_mlflow_bucket_policy_arn = var.s3_mlflow_bucket_policy_arn
+}
+```
+\normalsize
+
+Moreover, an additional customized Terraform module, titled `"s3-data-storage,"` is harnessed to configure data storage. This entails the definition of an S3 bucket designed for data storage, complete with associated configurations such as the bucket name, secret names, and policies. This data storage facility empowers Airflow users to securely store a diverse range of data, including training images and more.
+
+\footnotesize
+```javascript
+module "s3-data-storage" {
+  source                      = "./data-storage"
+  namespace                   = var.namespace
+  s3_data_bucket_name         = local.s3_data_bucket_name
+  s3_data_bucket_secret_name  = local.s3_data_bucket_secret_name
+  s3_mlflow_bucket_policy_arn = var.s3_mlflow_bucket_policy_arn
+  s3_force_destroy            = true
+}
+```
+\normalsize
+
+Before the Airflow deployment can take shape, the code diligently crafts Kubernetes secrets serving various purposes. These secrets play a pivotal role in safeguarding sensitive information and providing secure access and configurations for Airflow. They encompass a spectrum of crucial details, including database credentials, Git authentication credentials, AWS account information, and SageMaker access data.
+
+\footnotesize
+```javascript
+resource "kubernetes_secret" "airflow_db_credentials" {
+  metadata {
+    name      = local.k8s_airflow_db_secret_name
+    namespace = helm_release.airflow.namespace
+  }
+  data = {
+    "postgresql-password" = module.rds-airflow.rds_password
+  }
+}
+
+resource "kubernetes_secret" "airflow_https_git_secret" {
+  metadata {
+    name      = local.git_airflow_repo_secret_name
+    namespace = helm_release.airflow.namespace
+  }
+  data = {
+    "username" = var.git_username
+    "password" = var.git_token
+  }
+}
+
+resource "kubernetes_secret" "airflow_organization_git_secret" {
+  metadata {
+    name      = local.git_organization_secret_name
+    namespace = helm_release.airflow.namespace
+  }
+  data = {
+    "GITHUB_CLIENT_ID"     = var.git_client_id
+    "GITHUB_CLIENT_SECRET" = var.git_client_secret
+  }
+}
+
+# secret with account information
+resource "kubernetes_secret" "aws-account-information" {
+  metadata {
+    name      = "${var.namespace}-aws-account-information"
+    namespace = var.namespace
+  }
+  data = {
+    "AWS_REGION" = "${data.aws_region.current.name}"
+    "AWS_ID"     = "${data.aws_caller_identity.current.account_id}"
+  }
+}
+
+# secret for sagemaker
+resource "kubernetes_secret" "sagemaker-access" {
+  metadata {
+    name      = "${var.namespace}-sagemaker-access"
+    namespace = var.namespace
+  }
+  data = {
+    "AWS_ROLE_NAME_SAGEMAKER" = var.sagemaker_access_role_name
+  }
+}
+```
+\normalsize
+
+Additionally, the code orchestrates the deployment of an RDS database through the utilization of a dedicated module. This RDS database is earmarked to serve as the metadata repository for the Airflow deployment, with a randomly generated password enhancing security.
+
+\footnotesize
+```javascript
+resource "random_password" "rds_password" {
+  length  = 16
+  special = false
+}
+
+module "rds-airflow" {
+  source                      = "../../infrastructure/rds"
+  vpc_id                      = var.vpc_id
+  private_subnets             = var.private_subnets
+  private_subnets_cidr_blocks = var.private_subnets_cidr_blocks
+  rds_port                    = var.rds_port
+  rds_name                    = var.rds_name
+  rds_password                = coalesce(var.rds_password, random_password.rds_password.result)
+  rds_engine                  = var.rds_engine
+  rds_engine_version          = var.rds_engine_version
+  rds_instance_class          = var.rds_instance_class
+  storage_type                = var.rds_storage_type
+  max_allocated_storage       = var.rds_max_allocated_storage
+}
+```
+\normalsize
+
+In this final phase, Apache Airflow is deployed using Helm, and meticulous configurations are set to ensure its smooth operation. These configurations encompass various aspects of Airflow, encompassing Git authentication, database connections, and Ingress settings for external accessibility. The Helm release configurations can be dissected into several key parts, each serving a specific purpose within the larger infrastructure of the dashboard.
+
+- **Helm Release Configuration**: This segment delineates the Helm release resource named "airflow," responsible for the deployment of Apache Airflow. It encompasses crucial details such as the Helm chart repository, chart name, chart version, and assorted configuration options.
+- **Airflow Configuration**: In this section, comprehensive configurations for Apache Airflow are provided. This includes environment variables, Airflow-specific settings, and additional parameters required for tailoring the Airflow deployment. Of notable significance is the establishment of GitHub authentication and the definition of the Airflow webserver's base URL.
+- **Service Account Configuration**: This segment is dedicated to specifying the configuration for the service account utilized by Airflow. It initiates the creation of a service account named "airflow-sa" and establishes its association with an IAM role, as denoted by the "eks.amazonaws.com/role-arn" annotation.
+- **Ingress Configuration**: Here, meticulous configuration of the Ingress for Apache Airflow takes place, facilitating external accessibility. This involves specifying annotations and settings for the Ingress controller, including hostname and health check path.
+- **Web Configuration**: This component defines settings pertinent to the Airflow web component. It encompasses aspects such as readiness and liveness probes, which are instrumental in verifying the responsiveness of the web server. Additionally, provisions are made for configuration overrides through the utilization of a custom Python file, affording flexibility in tailoring the web server's behavior.
+
+\footnotesize
+```javascript
+# HELM
+resource "helm_release" "airflow" {
+  name             = var.name
+  namespace        = var.namespace
+  create_namespace = var.create_namespace
+
+  repository = "https://airflow-helm.github.io/charts"
+  chart      = var.helm_chart_name
+  version    = var.helm_chart_version
+  wait       = false # deactivate post install hooks otherwise will fail
+
+  values = [yamlencode({
+    airflow = {
+      extraEnv = [
+        {
+          name = "GITHUB_CLIENT_ID"
+          valueFrom = {
+            secretKeyRef = {
+              name = local.git_organization_secret_name
+              key  = "GITHUB_CLIENT_ID"
+            }
+          }
+        },
+        {
+          name = "GITHUB_CLIENT_SECRET"
+          valueFrom = {
+            secretKeyRef = {
+              name = local.git_organization_secret_name
+              key  = "GITHUB_CLIENT_SECRET"
+            }
+          }
+        }
+      ],
+      config = {
+        AIRFLOW__WEBSERVER__EXPOSE_CONFIG = false
+        AIRFLOW__WEBSERVER__BASE_URL      = "http://${var.domain_name}/${var.domain_suffix}"
+        AIRFLOW__CORE__LOAD_EXAMPLES = false
+        AIRFLOW__CORE__DEFAULT_TIMEZONE = "Europe/Amsterdam"
+      },
+      users = []
+      image = {
+        repository = "seblum/airflow"
+        tag        = "2.6.3-python3.11-custom-light"
+        pullPolicy = "IfNotPresent"
+        pullSecret = ""
+        uid        = 50000
+        gid        = 0
+      },
+      executor           = "KubernetesExecutor"
+      fernetKey          = var.fernet_key
+      webserverSecretKey = "THIS IS UNSAFE!"
+      variables = local.airflow_variable_list_full
+    },
+    serviceAccount = {
+      create = true
+      name   = "airflow-sa"
+      annotations = {
+        "eks.amazonaws.com/role-arn" = "${module.iam-service-account.airflow_service_account_role_arn}"
+      }
+    },
+    scheduler = {
+      logCleanup = {
+        enabled = false
+      }
+    },
+    workers = {
+      enabled = false
+      logCleanup = {
+        enables = true
+      }
+    },
+    flower = {
+      enabled = false
+    },
+    postgresql = {
+      enabled = false
+    },
+    redis = {
+      enabled = false
+    },
+    externalDatabase = {
+      type              = "postgres"
+      host              = module.rds-airflow.rds_host
+      port              = var.rds_port
+      database          = "airflow_db"
+      user              = "airflow_admin"
+      passwordSecret    = local.k8s_airflow_db_secret_name
+      passwordSecretKey = "postgresql-password"
+    },
+    dags = {
+      path = "/opt/airflow/dags"
+      gitSync = {
+        enabled  = true
+        repo     = var.git_repository_url
+        branch   = var.git_branch
+        revision = "HEAD"
+        # repoSubPath           = "workflows"
+        httpSecret            = local.git_airflow_repo_secret_name
+        httpSecretUsernameKey = "username"
+        httpSecretPasswordKey = "password"
+        syncWait              = 60
+        syncTimeout           = 120
+      }
+    },
+    logs = {
+      path = "/opt/airflow/logs"
+      persistence = {
+        enabled = true
+        storageClass : "efs"
+        size : "5Gi"
+        accessMode : "ReadWriteMany"
+      }
+    },
+    ingress = {
+      enabled    = true
+      apiVersion = "networking.k8s.io/v1"
+      web = {
+        annotations = {
+          "external-dns.alpha.kubernetes.io/hostname"  = "${var.domain_name}"
+          "alb.ingress.kubernetes.io/scheme"           = "internet-facing"
+          "alb.ingress.kubernetes.io/target-type"      = "ip"
+          "kubernetes.io/ingress.class"                = "alb"
+          "alb.ingress.kubernetes.io/group.name"       = "mlplatform"
+          "alb.ingress.kubernetes.io/healthcheck-path" = "/${var.domain_suffix}/health"
+        }
+        path = "/${var.domain_suffix}"
+        host = "${var.domain_name}"
+        precedingPaths = [{
+          path        = "/${var.domain_suffix}*"
+          serviceName = "airflow-web"
+          servicePort = "web"
+        }]
+      }
+    },
+    web = {
+      readinessProbe = {
+        enabled             = true
+        initialDelaySeconds = 45
+      },
+      livenessProbe = {
+        enabled             = true
+        initialDelaySeconds = 45
+      },
+      webserverConfig = {
+        stringOverride = file("${path.module}/WebServerConfig.py")
+      }
+    },
+  })]
+}
+```
+\normalsize
+
+In summary, the Terraform code provisions the necessary infrastructure components, IAM roles and policies, data storage, RDS database, Kubernetes secrets, and deploys Apache Airflow using Helm. This setup forms the foundation for the ML platform's dashboard, enabling workflow orchestration and data management capabilities with Airflow.
+
+#### WebServerConfig
+
+In a final step of the Helm Chart, a custom `WebServerConfig.py` is specified which is set to integrate our Airflow deployment with a Github Authentication provider. The Python script consists of two major parts: a custom AirflowSecurityManager class definition and the actual webserver_config configuration file for Apache Airflow's web server.
+
+The custom `CustomSecurityManager` class extends the default AirflowSecurityManager to retrieves user information from the GitHub OAuth provider. The webserver_config configuration sets up the configurations for the web server component of Apache Airflow by indicating that OAuth will be used for user authentication. The `SECURITY_MANAGER_CLASS` is set to the previously defined `CustomSecurityManager` to customizes how user information is retrieved from the OAuth provider. Finally, the GitHub provider is configured with its required parameters like `client_id`, `client_secret`, and API endpoints.
+
+\footnotesize
+```python
+#######################################
+# Custom AirflowSecurityManager
+#######################################
+from airflow.www.security import AirflowSecurityManager
+import os
+
+
+class CustomSecurityManager(AirflowSecurityManager):
+    def get_oauth_user_info(self, provider, resp):
+        if provider == "github":
+            user_data = self.appbuilder.sm.oauth_remotes[provider].get("user").json()
+            emails_data = (
+                self.appbuilder.sm.oauth_remotes[provider].get("user/emails").json()
+            )
+            teams_data = (
+                self.appbuilder.sm.oauth_remotes[provider].get("user/teams").json()
+            )
+
+            # unpack the user's name
+            first_name = ""
+            last_name = ""
+            name = user_data.get("name", "").split(maxsplit=1)
+            if len(name) == 1:
+                first_name = name[0]
+            elif len(name) == 2:
+                first_name = name[0]
+                last_name = name[1]
+
+            # unpack the user's email
+            email = ""
+            for email_data in emails_data:
+                if email_data["primary"]:
+                    email = email_data["email"]
+                    break
+
+            # unpack the user's teams as role_keys
+            # NOTE: each role key will be "my-github-org/my-team-name"
+            role_keys = []
+            for team_data in teams_data:
+                team_org = team_data["organization"]["login"]
+                team_slug = team_data["slug"]
+                team_ref = team_org + "/" + team_slug
+                role_keys.append(team_ref)
+
+            return {
+                "username": "github_" + user_data.get("login", ""),
+                "first_name": first_name,
+                "last_name": last_name,
+                "email": email,
+                "role_keys": role_keys,
+            }
+        else:
+            return {}
+
+#######################################
+# Actual `webserver_config.py`
+#######################################
+from flask_appbuilder.security.manager import AUTH_OAUTH
+
+# only needed for airflow 1.10
+# from airflow import configuration as conf
+# SQLALCHEMY_DATABASE_URI = conf.get("core", "SQL_ALCHEMY_CONN")
+
+AUTH_TYPE = AUTH_OAUTH
+SECURITY_MANAGER_CLASS = CustomSecurityManager
+
+# registration configs
+AUTH_USER_REGISTRATION = True  # allow users who are not already in the FAB DB
+AUTH_USER_REGISTRATION_ROLE = (
+    "Public"  # this role will be given in addition to any AUTH_ROLES_MAPPING
+)
+
+# the list of providers which the user can choose from
+OAUTH_PROVIDERS = [
+    {
+        "name": "github",
+        "icon": "fa-github",
+        "token_key": "access_token",
+        "remote_app": {
+            "client_id": os.getenv("GITHUB_CLIENT_ID"),
+            "client_secret": os.getenv("GITHUB_CLIENT_SECRET"),
+            "api_base_url": "https://api.github.com",
+            "client_kwargs": {"scope": "read:org read:user user:email"},
+            "access_token_url": "https://github.com/login/oauth/access_token",
+            "authorize_url": "https://github.com/login/oauth/authorize",
+        },
+    },
+]
+
+# a mapping from the values of `userinfo["role_keys"]` to a list of FAB roles
+AUTH_ROLES_MAPPING = {
+    "github-organization/airflow-users-team": ["User"],
+    "github-organization/airflow-admin-team": ["Admin"],
+}
+
+# if we should replace ALL the user's roles each login, or only on registration
+AUTH_ROLES_SYNC_AT_LOGIN = True
+
+# force users to re-auth after 30min of inactivity (to keep roles in sync)
+PERMANENT_SESSION_LIFETIME = 1800
+```
+\normalsize
+
