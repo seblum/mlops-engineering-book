@@ -1,0 +1,33 @@
+# volume_hostpath.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostpath-volume
+spec:
+  selector:
+    matchLabels:
+      app: hostpath-volume
+  template:
+    metadata:
+      labels:
+        app: hostpath-volume
+    spec:
+      volumes:
+        - name: var-log
+          # specify the HostPath volume type
+          hostPath:
+            path: /var/log
+      containers:
+      - name: container-one
+        image: busybox 
+        volumeMounts:
+          - mountPath: /var/log
+            name: var-log
+            readOnly: true
+        command: 
+          - "sleep"
+          - "3600"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"

@@ -22,6 +22,12 @@ DevOps
 DVC
 : Data Version Control - A system for managing and versioning machine learning data, ensuring consistent and reproducible data sets for machine learning projects.
 
+EC2
+: Elastic Compute Cloud - A web service that offers resizable compute capacity in the cloud, allowing users to run virtual machines (EC2 instances) for various computing tasks.
+
+EKS
+: Elastic Kubernetes Service - A managed container orchestration service that simplifies the deployment, management, and scaling of containerized applications using Kubernetes.
+
 ETL
 : Extract, Transform, Load - A process in data management that involves extracting data from various sources, transforming it into a usable format, and loading it into a destination system.
 
@@ -31,17 +37,29 @@ GCP
 Git LFS
 : Git Large File Storage - An extension to Git that allows handling large files more efficiently, often used in software development to manage binary assets.
 
-IaaC
-: Infrastructure as Code - The practice of managing and provisioning data center infrastructure using code and automation, enabling efficient and consistent infrastructure management.
+IAM
+: Identity and Access Management - A service that allows organizations to manage access to their AWS resources securely by defining and controlling user permissions and policies.
 
 IDE
 : Integrated Development Environment - A software application that provides comprehensive tools and features for software development, including code editing, debugging, and version control.
+
+JSON
+: JavaScript Object Notation - A lightweight data interchange format that is human-readable and easy for machines to parse, commonly used for data exchange between systems.
 
 MLOps
 : Machine Learning Operations - The combination of machine learning and DevOps practices, focusing on automating and managing the end-to-end machine learning lifecycle.
 
 ML
 : Machine Learning - A subset of artificial intelligence that involves algorithms and models enabling computers to learn patterns from data and make predictions or decisions.
+
+RDS
+: Relational Database Service - A managed database service that streamlines the setup, operation, and scaling of relational databases like MySQL, PostgreSQL, and others.
+
+S3
+: Simple Storage Service - An object storage service designed for storing and retrieving data, known for its scalability, durability, and security features.
+
+VPC
+: Virtual Private Cloud - A virtual network service that enables users to create isolated and customizable network environments within their cloud infrastructure.
 
 VM
 : Virtual Machine - An emulation of a computer system that allows multiple operating systems to run on a single physical machine, providing isolation and flexibility for various tasks.

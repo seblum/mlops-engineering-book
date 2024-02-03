@@ -1,0 +1,81 @@
+### Jupyterhub
+
+In our setup, JupyterHub plays a crucial role by providing an Integrated Development Environment (IDE). The Terraform code presented here defines a `helm_release` responsible for deploying JupyterHub onto our EKS cluster. In contrast to other components of our ML platform, JupyterHub doesn't require additional resources to operate.
+
+The Helm configuration used in this deployment is multifaceted, encompassing various settings and customizations. Its primary aim is to establish a JupyterHub instance that seamlessly integrates with a single-user Jupyter notebook server. This configuration encompasses user sessions, GitHub authentication, proxy settings, Ingress for external access, and various other JupyterHub-related configurations. This ensures that JupyterHub is finely tuned to meet the specific requirements of our ML platform, providing users with the ability to run interactive notebooks and access MLflow services effortlessly.
+
+Within the Terraform code, a Helm release named `"jupyterhub"` is defined, orchestrating the deployment of JupyterHub into the designated Kubernetes namespace. The Helm chart is sourced from the JupyterHub Helm chart repository at a version specified by `var.helm_chart_version`. The `values` block within this configuration contains a YAML-encoded set of parameters for JupyterHub, including numerous settings related to single-user notebooks, Ingress, proxy, culling, and hub configuration.
+
+- **Single-User Notebook Configuration**: This segment of the configuration is dedicated to single-user notebook settings. It encompasses parameters like the default URL for notebooks, the Docker image to be employed, and lifecycle hooks. The Docker image is set to "seblum/jupyterhub-server:latest," and a postStart lifecycle hook is defined to clone a Git repository specified by `var.git_repository_url`. Additionally, an environment variable `MLFLOW_TRACKING_URI` is configured to point to the URI of the MLflow service.
+- **Ingress Configuration**: The Ingress resource is configured to facilitate external access to JupyterHub. This entails the inclusion of annotations to tailor its behavior. Key settings include the specification of the hostname, scheme, healthcheck path, and ingress class. Hosts are configured to `${var.domain_name}` and `www.${var.domain_name}`, facilitating access through the designated domain name.
+- **Proxy Configuration**: Within the proxy configuration, the service type for the JupyterHub proxy is set as "ClusterIP." Additionally, the `secretToken` is configured with a value provided by `var.proxy_secret_token`.
+- **Culling Configuration**: Culling is enabled and finely tuned to manage user sessions. Users are subject to culling when their sessions become idle.
+- **Hub Configuration**: The hub configuration addresses settings pertaining to the JupyterHub's base URL, GitHub OAuthenticator, and JupyterHub's authenticator class. Similar to the Airflow deployment, the JupyterHub instance is configured to utilize GitHub OAuthenticator for user authentication. This OAuthenticator is then configured with the supplied GitHub credentials (`var.git_client_id` and `var.git_client_secret`), along with the `oauth_callback_url` parameter, which specifies a specific endpoint under the provided domain name.
+
+\footnotesize
+```javascript
+resource "helm_release" "jupyterhub" {
+  name             = var.name
+  namespace        = var.name
+  create_namespace = var.create_namespace
+
+  repository = "https://jupyterhub.github.io/helm-chart/"
+  chart      = var.helm_chart_name
+  version    = var.helm_chart_version
+
+  values = [yamlencode({
+    singleuser = {
+      defaultUrl = "/lab"
+      image = {
+        name = "seblum/jupyterhub-server"
+        tag  = "latest"
+      },
+      lifecycleHooks = {
+        postStart = {
+          exec = {
+            command = ["git", "clone", "${var.git_repository_url}"]
+          }
+        }
+      },
+      extraEnv = {
+        "MLFLOW_TRACKING_URI" = "http://mlflow-service.mlflow.svc.cluster.local"
+      }
+    },
+    ingress = {
+      enabled : true
+      annotations = {
+        "external-dns.alpha.kubernetes.io/hostname" = "${var.domain_name}"
+        "alb.ingress.kubernetes.io/scheme"          = "internet-facing"
+        "alb.ingress.kubernetes.io/target-type"     = "ip"
+        "kubernetes.io/ingress.class"               = "alb"
+        "alb.ingress.kubernetes.io/group.name"      = "mlplatform"
+      }
+      hosts = ["${var.domain_name}", "www.${var.domain_name}"]
+    },
+    proxy = {
+      service = {
+        type = "ClusterIP"
+      }
+      secretToken = var.proxy_secret_token
+    }
+    cull = {
+      enabled = true
+      users   = true
+    }
+    hub = {
+      baseUrl = "/${var.domain_suffix}"
+      config = {
+        GitHubOAuthenticator = {
+          client_id          = var.git_client_id
+          client_secret      = var.git_client_secret
+          oauth_callback_url = "http://${var.domain_name}/${var.domain_suffix}/hub/oauth_callback"
+        }
+        JupyterHub = {
+          authenticator_class = "github"
+        }
+      }
+    }
+  })]
+}
+```
+\normalsize

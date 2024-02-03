@@ -1,89 +1,110 @@
 
+## Training & Deployment Pipeline Workflow
 
-## Training Pipeline Workflow
+The code and machine learning pipeline have been modularized into distinct steps, including preprocessing, model training, model comparison, and model serving. Airflow serves as the model workflow tool, generating DAGs for managing the pipeline. MLflow is integrated to facilitate model tracking, registry, and serving functionalities. To ensure portability and scalability, the codebase has been containerized using Docker, allowing it to be executed in Docker and/or Kubernetes environments. A detailed explanation of how these components function will be provided in the following section.
 
-The code and machine learning pipeline have been modularized into distinct steps, including preprocessing, model training, model comparison, and model serving. Airflow serves as the model workflow tool, generating DAGs for managing the pipeline. MLflow is integrated to facilitate model tracking, registry, and serving functionalities. To ensure portability and scalability, the codebase has been containerized using Docker, allowing it to be executed in Docker and/or Kubernetes environments.
+The `src` code is installed as a Python package within the Docker container, enabling easy invocation within the Airflow DAG. However, it is important to note that although Model Serving is triggered within the Airflow pipeline, the serving itself is not done on the Airflow and the EKS cluster respectively, but the model is served on an AWS Sagemaker instance.
 
-The `src` code is installed as a Python package within the Docker container, enabling easy invocation within the Airflow DAG. However, it is important to note that although Model Serving is triggered within the Airflow pipeline, it consists of a separate Python code and is not integrated into the `src` package. Likewise, model inferencing has its own distinct description and functionality. The code bases for both model serving and model inferencing can be found in the app/ directory, alongside their respective Dockerfiles. A detailed explanation of how these components function will be provided in the following section.
 
 ### Airflow Workflow
 
-The specification of the Airflow DAG, which includes the DAG structure, tasks, and their dependencies, can be found in the `airflow_DAG.py` file. The DAG is built using the TaskFlow API.
+The configuration for the Airflow DAG, encompassing its structure, tasks, and task dependencies, can be located within the `airflow_k8s_workflow_DAG.py` file. The DAG is constructed utilizing the TaskFlow API.
 
-An ML pipeline of this use case consists of three main steps: preprocessing, training, and serving. The preprocessing step involves data processing and storing it in the S3 storage. The training step and code are designed to accommodate different TensorFlow models, allowing for parallel training on multiple models, thereby reducing the time to deployment. Since there are multiple models, it is essential to serve only the model with the best metrics based on the current data. Hence, an intermediate step is incorporated to compare the metrics of all the models and select the best one for serving.
-
-To execute the pipeline steps, the Airflow Docker Operator is employed, which ensures that each step runs in a separate and isolated environment using Docker or Kubernetes jobs. Dockerizing the code is a prerequisite for this process. The Airflow task then invokes the relevant methods of the Python code and executes them accordingly.
-
-Once the model is in the serving phase, a Streamlit app is deployed for applying inference on new data.
+In the context of this use case, the ML pipeline comprises three primary phases: preprocessing, training, and serving. The preprocessing phase encompasses data manipulation and its subsequent storage within the S3 repository. The training phase and its associated code are designed to accommodate various TensorFlow models, facilitating parallel training across multiple models, consequently reducing the deployment time. Given the existence of multiple models, it becomes imperative to serve only the model that exhibits the most favorable metrics based on the present data. As a result, an intermediary step is incorporated to compare the metrics of all the models and select the most optimal one for serving.
 
 ![](images/09-Deployment-Usage/use-case-pipeline-graph.png){ width=100% }
 
-The code below defines the `ml_pipeline_dag` function as an Airflow DAG using the `dag` decorator. Each step of the pipeline, including data preprocessing, model training, model comparison, and serving the best model, is represented as a separate task with the `@task` decorator. Dependencies between these tasks are established by passing the output of one task as an argument to the next task. The `ml_pipeline` object serves as a representation of the entire DAG.
+To execute these pipeline phases, the Airflow Kubernetes Operator is utilized. This operator guarantees that each phase operates within an independent and segregated environment using either Docker or Kubernetes jobs. To enable this process, it is necessary to containerize the code using Docker. Subsequently, the Airflow task invokes the relevant Python code methods and executes them in accordance with the specified requirements.
 
-#### Importing Dependencies {.unlisted .unnumbered}
-At first the necessary dependencies for the code are imported, including libraries for MLflow, Airflow, and other utilities.
 
-\footnotesize
-```python
-# Imports necessary packages
-import os
-from enum import Enum
-import mlflow
-import pendulum
-from airflow.decorators import dag, task
-```
-\normalsize
+### MLflow integration
 
-#### Setting MLflow Tracking URI and Experiment {.unlisted .unnumbered}
-Secondly, the necessary variables and constants for the whole Airflow DAG are defined and set. Either hard coded as string, or read from environment variables. Also, the MLflow tracking URI is set and a MLflow experiment retrieved, or created if none exists already.
+Mlflow is leveraged in the preprocessing and model training stages to store crucial data parameters, model training parameters, and metrics, while also enabling the saving of trained models in the model registry. In the `airflow_k8s_workflow_DAG.py` file, Mlflow is invoked to create an experiment, and the experiment ID is passed to each pipeline step to store parameters in separate runs. This ensures a clear distinction between the execution of different models.
 
-\footnotesize
-```python
-# Define variables and constants
-MLFLOW_TRACKING_URI_local = "http://127.0.0.1:5008/"
-MLFLOW_TRACKING_URI = "http://host.docker.internal:5008"
-EXPERIMENT_NAME = "cnn_skin_cancer"
-AWS_BUCKET = os.getenv("AWS_BUCKET")
-AWS_REGION = os.getenv("AWS_REGION")
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_ROLE_NAME = os.getenv("AWS_ROLE_NAME")
+The `train_model` pipeline steps serve as a container for the model training procedure. Within the container, the model is trained using specific code. All the relevant information about the model and the model itself are logged using mlflow as well. This workflow ensures the comprehensive tracking of model parameters and metrics, and the saved model can be accessed and compared during the subsequent model comparison step. In fact, during this stage, the best model is transferred to another model stage within the model registry.
 
-# Set MLflow tracking URI
-mlflow.set_tracking_uri(MLFLOW_TRACKING_URI_local)
 
-try:
-    # Creating an experiment
-    mlflow_experiment_id = mlflow.create_experiment(EXPERIMENT_NAME)
-except:
-    pass
-# Setting the environment with the created experiment
-mlflow_experiment_id = mlflow.set_experiment(EXPERIMENT_NAME).experiment_id
-```
-\normalsize
+### Pipeline Workflow 
 
-#### Setting Default Arguments and Environment Data {.unlisted .unnumbered}
+The code below defines the `cnn_skin_cancer_workflow` function as an Airflow DAG using the `dag` decorator. Each step of the pipeline, including data preprocessing, model training, model comparison, and serving the best model, is represented as a separate task with the `@task.kubernetes` decorator. Dependencies between these tasks are established by passing the output of one task as an argument to the next task. The `cnn_skin_cancer_workflow` object serves as a representation of the entire DAG.
+
+The code starts by importing various Python modules and libraries, defining several variables and parameters, and setting up an Enum class for distinguishing different models and model parameters.
 
 \footnotesize
 ```python 
-# Set various model params and airflow or environment args
-dag_default_args = {
-    "owner": "seblum",
-    "depends_on_past": False,
-    "start_date": pendulum.datetime(2021, 1, 1, tz="UTC"),
-    "tags": ["Keras CNN to classify skin cancer"],
-}
+import os
+from enum import Enum
 
-kwargs_env_data = {
-    "MLFLOW_TRACKING_URI": MLFLOW_TRACKING_URI,
-    "MLFLOW_EXPERIMENT_ID": mlflow_experiment_id,
-    "AWS_ACCESS_KEY_ID": AWS_ACCESS_KEY_ID,
-    "AWS_SECRET_ACCESS_KEY": AWS_SECRET_ACCESS_KEY,
-    "AWS_BUCKET": AWS_BUCKET,
-    "AWS_REGION": AWS_REGION,
-    "AWS_ROLE_NAME": AWS_ROLE_NAME,
-}
+import mlflow
+import pendulum
+from airflow.decorators import dag, task
+from airflow.kubernetes.secret import Secret
+from airflow.models import Variable
+from airflow.operators.bash import BashOperator
+from airflow.providers.docker.operators.docker import DockerOperator
+from kubernetes.client import models as k8s
 
+################################################################################
+#
+# SET VARIOUS PARAMETERS
+#
+EXPERIMENT_NAME = "cnn_skin_cancer"  # mlflow experiment name
+skin_cancer_container_image = "seblum/cnn-skin-cancer-model:latest"  # base image for k8s pods
+
+MLFLOW_TRACKING_URI = Variable.get("MLFLOW_TRACKING_URI")
+ECR_REPOSITORY_NAME = Variable.get("ECR_REPOSITORY_NAME")
+ECR_SAGEMAKER_IMAGE_TAG = Variable.get("ECR_SAGEMAKER_IMAGE_TAG")
+
+# secrets to pass on to k8s pod
+secret_name = "airflow-sagemaker-access"
+SECRET_AWS_ROLE_NAME_SAGEMAKER = Secret(
+    deploy_type="env",
+    deploy_target="AWS_ROLE_NAME_SAGEMAKER",
+    secret=secret_name,
+    key="AWS_ROLE_NAME_SAGEMAKER",
+)
+
+secret_name = "airflow-aws-account-information"
+SECRET_AWS_ID = Secret(deploy_type="env", deploy_target="AWS_ID", secret=secret_name, key="AWS_ID")
+SECRET_AWS_REGION = Secret(deploy_type="env", deploy_target="AWS_REGION", secret=secret_name, key="AWS_REGION")
+
+# secrets to pass on to k8s pod
+secret_name = "airflow-s3-data-bucket-access-credentials"
+SECRET_AWS_BUCKET = Secret(deploy_type="env", deploy_target="AWS_BUCKET", secret=secret_name, key="AWS_BUCKET")
+SECRET_AWS_ACCESS_KEY_ID = Secret(
+    deploy_type="env",
+    deploy_target="AWS_ACCESS_KEY_ID",
+    secret=secret_name,
+    key="AWS_ACCESS_KEY_ID",
+)
+SECRET_AWS_SECRET_ACCESS_KEY = Secret(
+    deploy_type="env",
+    deploy_target="AWS_SECRET_ACCESS_KEY",
+    secret=secret_name,
+    key="AWS_SECRET_ACCESS_KEY",
+)
+SECRET_AWS_ROLE_NAME = Secret(
+    deploy_type="env",
+    deploy_target="AWS_ROLE_NAME",
+    secret=secret_name,
+    key="AWS_ROLE_NAME",
+)
+
+# node_selector and toleration to schedule model training on specific nodes
+tolerations = [k8s.V1Toleration(key="dedicated", operator="Equal", value="t3_large", effect="NoSchedule")]
+node_selector = {"role": "t3_large"}
+
+
+# Enum Class to distiguish models
+class Model_Class(Enum):
+    """This enum includes different models."""
+
+    Basic = "Basic"
+    CrossVal = "CrossVal"
+    ResNet50 = "ResNet50"
+
+
+# Set various model params
 model_params = {
     "num_classes": 2,
     "input_shape": (224, 224, 3),
@@ -100,41 +121,86 @@ model_params = {
     "pooling": "avg",  # needed for resnet50
     "verbose": 2,
 }
+
 ```
 \normalsize
 
-#### Defining the Airflow DAG {.unlisted .unnumbered}
-After all parameters have been set, the actual Airflow DAG for the CNN skin cancer workflow is defined. As each single task of the ML pipeline of the Airflow DAG is executed as a container run, the container image that is pulled from DockerHub needs to be specified.
+Afterward, the MLflow tracking URI is set and a function `make_mlflow()` defined that creates an MLflow experiment or sets an existing one as active. The experiment ID is stored in `mlflow_experiment_id`. The function is called and the MLflow experiment is set respectively.
 
 \footnotesize
 ```python
-skin_cancer_container_image = "seblum/cnn-skin-cancer:latest"
+mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 
+
+def make_mlflow() -> str:
+    """
+    Creates an MLflow experiment and sets it as the active experiment.
+
+    Returns:
+        str: The experiment ID of the created or existing MLflow experiment.
+
+    Example:
+        # Create an MLflow experiment and set it as active
+        experiment_id = make_mlflow()
+        print(f"Active MLflow experiment ID: {experiment_id}")
+    """
+    try:
+        mlflow_experiment_id = mlflow.create_experiment(EXPERIMENT_NAME)
+    except:
+        pass
+    mlflow_experiment_id = mlflow.set_experiment(EXPERIMENT_NAME).experiment_id
+    return mlflow_experiment_id
+
+
+# When dag is loaded, mlflow experiment is created
+mlflow_experiment_id = make_mlflow()
+```
+\normalsize
+
+After setting up all secrets, variables, and parameters, the Apache Airflow DAG itself is defined and named `cnn_skin_cancer_workflow` with default arguments and metadata. It's the beginning of the DAG definition. All ML pipeline steps are defined within the DAG. 
+
+- The task labeled as `preprocessing_op` is in charge of the initial step within the workflow. Its primary role involves fetching data from an S3 bucket, executing preprocessing procedures, and subsequently storing the processed data back into the S3 storage. The `mlflow_experiment_id` parameter is provided as input to the task, and the outcome, including the paths to the preprocessed data, is captured within the `preprocessed_data` variable. The resulting path to the preprocessed data is communicated through the utilization of an XCOM dictionary.
+- The `model_training_op` task is specifically designed for the training of deep learning models using the preprocessed data. It offers flexibility in terms of model selection by means of the `model_class` parameter, which leverages the Enum type for making the choice, for example by specifying `Model_Class.ResNet50.name` and indicating the intention to train a ResNet50 model.  Similar to the prior task, it utilizes identical `model_params` and `input` parameters derived from the preprocessed data. The outcomes of this task, containing training-related information, are stored within the `train_data_basic` variable.
+- The `model_comparison_op` task fulfills the role of comparing multiple previously trained models based on their accuracy. Additionally, it updates the stage of the models within MLflow to facilitate easier differentiation in subsequent stages. It accepts as input the outcomes of training for the Basic, ResNet50, and CrossVal models (`train_data_basic`, `train_data_resnet50`, and `train_data_crossval`). The results are captured within the `compare_models_dict` variable.
+- The task known as `deploy_model_to_sagemaker_op` manages the deployment of the top model to the SageMaker platform. It determines and selects the model with the highest performance based on the information contained within the `compare_models_dict`.
+
+\footnotesize
+```python 
 @dag(
-    "cnn_skin_cancer_docker_workflow",
-    default_args=dag_default_args,
+    dag_id="cnn_skin_cancer_workflow",
+    default_args={
+        "owner": "seblum",
+        "depends_on_past": False,
+        "start_date": pendulum.datetime(2021, 1, 1, tz="Europe/Amsterdam"),
+        "tags": ["Keras CNN to classify skin cancer"],
+    },
     schedule_interval=None,
     max_active_runs=1,
 )
 def cnn_skin_cancer_workflow():
-```
-\normalsize
+    """
+    Apache Airflow DAG for running a workflow to train, compare, and deploy skin cancer classification models.
+    """
 
-#### Defining Preprocessing Task {.unlisted .unnumbered}
-As a first step, the preprocessing task is defined, which performs data preprocessing.
-
-\footnotesize
-```python
-    @task.docker(
+    @task.kubernetes(
         image=skin_cancer_container_image,
-        multiple_outputs=True,
-        # Add the previously defined variables and constants as environment variables to the container
-        environment=kwargs_env_data,
-        working_dir="/app",
-        force_pull=True,
-        network_mode="bridge",
+        task_id="preprocessing_op",
+        namespace="airflow",
+        env_vars={"MLFLOW_TRACKING_URI": MLFLOW_TRACKING_URI},
+        in_cluster=True,
+        get_logs=True,
+        do_xcom_push=True,
+        startup_timeout_seconds=300,
+        service_account_name="airflow-sa",
+        secrets=[
+            SECRET_AWS_BUCKET,
+            SECRET_AWS_REGION,
+            SECRET_AWS_ACCESS_KEY_ID,
+            SECRET_AWS_SECRET_ACCESS_KEY,
+            SECRET_AWS_ROLE_NAME,
+        ],
     )
-    def preprocessing_op(mlflow_experiment_id):
+    def preprocessing_op(mlflow_experiment_id: str) -> dict:
         """
         Perform data preprocessing.
 
@@ -146,9 +212,9 @@ As a first step, the preprocessing task is defined, which performs data preproce
         """
         import os
 
-        from src.preprocessing import data_preprocessing
-
         aws_bucket = os.getenv("AWS_BUCKET")
+
+        from src.preprocessing import data_preprocessing
 
         (
             X_train_data_path,
@@ -165,23 +231,28 @@ As a first step, the preprocessing task is defined, which performs data preproce
             "y_test_data_path": y_test_data_path,
         }
         return return_dict
-```
-\normalsize
 
-#### Defining Model Training Task {.unlisted .unnumbered}
-Similarly, the model training task is defined, which trains a machine learning model.
-
-\footnotesize
-```python
-    @task.docker(
+    @task.kubernetes(
         image=skin_cancer_container_image,
-        multiple_outputs=True,
-        environment=kwargs_env_data,
-        working_dir="/app",
-        force_pull=True,
-        network_mode="bridge",
+        task_id="model_training_op",
+        namespace="airflow",
+        env_vars={"MLFLOW_TRACKING_URI": MLFLOW_TRACKING_URI},
+        in_cluster=True,
+        get_logs=True,
+        do_xcom_push=True,
+        startup_timeout_seconds=300,
+        node_selector=node_selector,
+        tolerations=tolerations,
+        service_account_name="airflow-sa",
+        secrets=[
+            SECRET_AWS_BUCKET,
+            SECRET_AWS_REGION,
+            SECRET_AWS_ACCESS_KEY_ID,
+            SECRET_AWS_SECRET_ACCESS_KEY,
+            SECRET_AWS_ROLE_NAME,
+        ],
     )
-    def model_training_op(mlflow_experiment_id, model_class, model_params, input):
+    def model_training_op(mlflow_experiment_id: str, model_class: str, model_params: dict, input: dict) -> dict:
         """
         Train a model.
 
@@ -214,22 +285,19 @@ Similarly, the model training task is defined, which trains a machine learning m
             "model_stage": model_stage,
         }
         return return_dict
-```
-\normalsize
 
-#### Defining Model Comparison Task {.unlisted .unnumbered}
-The following code snippet defines the model comparison task, which compares trained models.
-
-\footnotesize
-```python
-    @task.docker(
+    @task.kubernetes(
         image=skin_cancer_container_image,
-        multiple_outputs=True,
-        environment=kwargs_env_data,
-        force_pull=True,
-        network_mode="bridge",
+        task_id="compare_models_op",
+        namespace="airflow",
+        env_vars={"MLFLOW_TRACKING_URI": MLFLOW_TRACKING_URI},
+        in_cluster=True,
+        get_logs=True,
+        do_xcom_push=True,
+        startup_timeout_seconds=300,
+        service_account_name="airflow-sa",  # Don't need Access Secrets as SA is given
     )
-    def compare_models_op(train_data_basic, train_data_resnet50, train_data_crossval):
+    def compare_models_op(train_data_basic: dict, train_data_resnet50: dict, train_data_crossval: dict) -> dict:
         """
         Compare trained models.
 
@@ -257,16 +325,74 @@ The following code snippet defines the model comparison task, which compares tra
             "serving_model_version": serving_model_version,
         }
         return return_dict
+
+    @task.kubernetes(
+        image=skin_cancer_container_image,
+        task_id="deploy_model_to_sagemaker_op",
+        namespace="airflow",
+        env_vars={
+            "MLFLOW_TRACKING_URI": MLFLOW_TRACKING_URI,
+            "ECR_REPOSITORY_NAME": ECR_REPOSITORY_NAME,
+            "ECR_SAGEMAKER_IMAGE_TAG": ECR_SAGEMAKER_IMAGE_TAG,
+        },
+        in_cluster=True,
+        get_logs=True,
+        startup_timeout_seconds=300,
+        service_account_name="airflow-sa",
+        secrets=[
+            SECRET_AWS_ROLE_NAME_SAGEMAKER,
+            SECRET_AWS_REGION,
+            SECRET_AWS_ID,
+        ],
+    )
+    def deploy_model_to_sagemaker_op(serving_model_dict: dict):
+        """
+        Deploys a machine learning model to Amazon SageMaker using the specified parameters.
+
+        Args:
+            serving_model_dict (dict): A dictionary containing information about the model to deploy.
+                It should contain the following keys:
+                    - "serving_model_name" (str): The name of the MLflow model to be deployed.
+                    - "serving_model_uri" (str): The URI or path to the MLflow model in artifact storage.
+                    - "serving_model_version" (str): The version of the MLflow model to deploy.
+
+        Example:
+            serving_model_info = {
+                "serving_model_name": "my_mlflow_model",
+                "serving_model_uri": "s3://my-bucket/mlflow/models/my_model",
+                "serving_model_version": "1",
+            }
+            deploy_model_to_sagemaker_op(serving_model_info)
+        """
+        mlflow_model_name, mlflow_model_uri, mlflow_model_version = (
+            serving_model_dict["serving_model_name"],
+            serving_model_dict["serving_model_uri"],
+            serving_model_dict["serving_model_version"],
+        )
+
+        print(f"mlflow_model_name: {mlflow_model_name}")
+        print(f"mlflow_model_uri: {mlflow_model_uri}")
+        print(f"mlflow_model_version: {mlflow_model_version}")
+
+        from src.deploy_model_to_sagemaker import deploy_model_to_sagemaker
+
+        result = deploy_model_to_sagemaker(
+            mlflow_model_name=mlflow_model_name,
+            mlflow_model_uri=mlflow_model_uri,
+            mlflow_model_version=mlflow_model_version,
+            mlflow_experiment_name="cnn_skin_cancer",
+            sagemaker_endpoint_name="test-cnn-skin-cancer",
+            sagemaker_instance_type="ml.t2.large",
+        )
+
+        print(f"Script run successfully: {result}")
 ```
 \normalsize
 
-#### Defining Pipeline {.unlisted .unnumbered}
-After the tasks have been specified, they are connected together to define the workflow pipeline, specifying inputs and outputs.
+Finally, all the previously declared tasks are linked to form the Airflow Workflow DAG. The `cnn_skin_cancer_workflow` function is called at the end of the code respectively.
 
 \footnotesize
-```python 
-    # CREATE PIPELINE
-
+```python
     preprocessed_data = preprocessing_op(
         mlflow_experiment_id=mlflow_experiment_id,
     )
@@ -288,22 +414,10 @@ After the tasks have been specified, they are connected together to define the w
         model_params=model_params,
         input=preprocessed_data,
     )
-    
-    # Similarly, the operations for compare_models, serve_fastapi_app, and serve_streamlit_app
-    # would be added to the pipeline as well.
+    compare_models_dict = compare_models_op(train_data_basic, train_data_resnet50, train_data_crossval)
 
-```
+    deploy_model_to_sagemaker_op(compare_models_dict)
 
-Finally, the Airflow DAG function is called in a last step.
-
-```python
-# Call the airflow DAG
 cnn_skin_cancer_workflow()
 ```
 \normalsize
-
-### MLflow
-
-Mlflow is leveraged in the preprocessing and model training stages to store crucial data parameters, model training parameters, and metrics, while also enabling the saving of trained models in the model registry. In the `airflow_DAG.py` file, Mlflow is invoked to create an experiment, and the experiment ID is passed to each pipeline step to store parameters in separate runs. This ensures a clear distinction between the execution of different models.
-
-The `train_model` pipeline steps serve as a container for the model training procedure. Within the container, the model is trained using specific code. All the relevant information about the model and the model itself are logged using mlflow as well. This workflow ensures the comprehensive tracking of model parameters and metrics, and the saved model can be accessed and compared during the subsequent model comparison step. In fact, during this stage, the best model is transferred to another model stage within the model registry.

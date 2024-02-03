@@ -32,7 +32,7 @@ Another key difference is that MLOps places a great emphasis on model governance
 
 1.  *Machine Learning Platforms*: Platforms such as TensorFlow, PyTorch, and scikit-learn are used to develop and train machine learning models.
 2.  *Experiment Management Tools*: Tools such as MLflow, Weights & Biases, and Airflow are used to track, version, and reproduce experiments, as well as to manage the model lifecycle.
-3.  *Model Deployment and Management Tools*: Tools such as TensorFlow Serving, Clipper, and Seldon Core are used to deploy and manage machine learning models in production.
+3.  *Model Deployment and Management Tools*: Tools such as TensorFlow Serving, AWS Sagemaker, and Seldon Core are used to deploy and manage machine learning models in production.
 4.  *Data Versioning and Management Tools*: Tools such as DVC (Data Version Control) and Pachyderm are used to version and manage the data used for training and evaluating models.    
 5.  *Automated Model Evaluation and Deployment Tools*: Tools such as AlgoTrader and AlgoHub are used to automate the evaluation of machine learning models and deploy the best-performing models to production.
 
@@ -40,7 +40,7 @@ It's important to note that the specific tools used in MLOps and DevOps may vary
 
 ### MLOps Lifecycle
 
-Incorporating the tools introduced by DevOps and MLOps can extend the machine learning workflow outlined in the previous section, resulting in a complete MLOps lifecycle that covers each stage of the machine learning process while integrating automation practices.
+Incorporating the tools introduced by DevOps and MLOps can extend the machine learning workflow outlined in the [previous section](#machine-learning-workflow), resulting in a complete MLOps lifecycle that covers each stage of the machine learning process while integrating automation practices.
 
 ![](images/01-Introduction/mlops-lifecycle.svg){ width=100% }
 

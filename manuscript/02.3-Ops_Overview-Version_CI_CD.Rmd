@@ -1,0 +1,81 @@
+## CI/CD
+
+Continuous Integration (CI) and Continuous Delivery / Continuous Delivery (CD) are related software development practices that work together to automate and streamline the software development and deployment process of code changes to production. Deploying new software and models without CI/CD often requires a lot of implicit knowledge and manual steps.
+
+![](./images/01-Introduction/ops-ci-cd.drawio.svg){ width=100% }
+
+1. *Continuous Integration (CI)*: is a software development practice that involves frequently integrating code changes into a shared central repository. The goal of CI is to catch and fix integration errors as soon as they are introduced, rather than waiting for them to accumulate over time. This is typically done by running automated tests and builds, to catch any errors that might have been introduced with new code changes, for example when merging a Git feature branch into the main branch.
+2. *Continuous Delivery (CD)*: is the practice that involves automating the process of building, testing, and deploying software to a production-like environment. The goal is to ensure that code changes can be safely and quickly deployed to production. This is typically done by automating the deployment process and by testing the software in a staging environment before deploying it to production.
+3. *Continuous Deployment (CD):* is the practice of automatically deploying code changes to production once they pass automated tests and checks. The goal is to minimize the time it takes to get new features and bug fixes into the hands of end-users. In this process, the software is delivered directly to the end-user without manual testing and verification. 
+
+The terms *Continuous Delivery* and *Continuous Deployment* are often used interchangeably, but they have distinct meanings. Continuous delivery refers to the process of building, testing, and running software on a production-like environment, while continuous deployment refers specifically to the process of running the new version on the production environment itself. However, fully automated deployments may not always be desirable or feasible, depending on the organization's business needs and the complexity of the software being deployed. While continuous deployment builds on continuous delivery, the latter can offer significant value on its own.
+
+CI/CD integrates the principles of continuous integration and continuous delivery in a seamless workflow, allowing teams to catch and fix issues early and quickly deliver new features to users. The pipeline is often triggered by a code commit. Ideally, a Data Scientist would push the changes made to the code at each incremental step of development to a share repository, including metadata and documentation. This code commit would trigger the CI/CD pipeline to build, test, package, and deploy the model software. In contrast to the local development, the CI/CD steps will test the model changes on the full dataset and aiming to deploy for production. 
+
+CI and CD practices help to increase the speed and quality of software development, by automating repetitive tasks and catching errors early, reducing the time and effort required to release new features, and increasing the stability of the deployed software. Examples for CI/CD Tools that enable automated testing with already existing build servers are for example GitHub Actions, Gitlab CI/CD, AWS Code Build, or Azure DevOps
+
+### Github Actions {.unnumbered}
+GitHub Actions is an automation and workflow orchestration tool provided by GitHub. It allows developers to automate various tasks, processes directly within their GitHub repositories by providing a CI/CD framework for building, sharing, and executing automation workflows. The following code snippet shows an exemplary GitHub Actions pipeline to test, build and push a Docker image to the DockerHub registry. The code is structured in three parts.
+
+At first, the environment variables are defined under `env`. Two variables are defined here which are later called with by the command `env.VARIABLE`. 
+The second part defines when the pipeline is or should be triggered. The exampele shows three possibilites to trigger a pipelines, when pushing on the master branch `push`, when a pull request to the master branch is granted `pull_request`, or when the pipeline is triggered manually via the Github interface `workflow_dispatch`.
+The third part of the code example introduces the actual jobs and steps performed by the pipeline. The pipeline consists of two jobs `pytest` and `docker`. The first represents the CI part of the pipeline. The run environment of the job is set up and the necessary requirements are installed. Afterward unit tests are run using the pytest library. If the `pytest` job was successful, the `docker` job will be triggered. The job builds the Dockerfile and pushes it automatically to the specified Dockerhub repository specified in `tags`. The step introduces another variable just like the `env.Variable` before, the `secrets.`. Secrets are a way by Github to safely store classified information like username and passwords. They can be set up using the Github Interface and used in the Github Actions CI using `secrets.SECRET-NAME`. 
+
+\footnotesize
+```yaml
+name: Docker CI base
+
+env:
+  DIRECTORY: base
+  DOCKERREPO: seblum/mlops-public
+
+on:
+  push:
+    branches: master
+    paths: $DIRECTORY/**
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./${{ env.DIRECTORY }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest
+        pip install pytest-cov
+    - name: Test with pytest
+      run: |
+        pytest test_app.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+  docker:
+    needs: pytest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          file: ./${{ env.DIRECTORY }}/Dockerfile
+          push: true
+          tags: ${{ env.DOCKERREPO }}:${{ env.DIRECTORY }}
+```
+\normalsize

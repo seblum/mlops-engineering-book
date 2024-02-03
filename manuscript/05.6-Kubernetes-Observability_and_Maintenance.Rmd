@@ -1,7 +1,9 @@
 ## Observability & Maintenance
 
 ### Health Checks
-Applications running in service need to be healthy at all times so they are ready to receive traffic. K8s uses a process called health checks to test whether an application is alive. If there are any issues and the application is unhealthy, K8s will restart the process. Yet, checking only whether a process is up and running might be not sufficient. What if, e.g., a client wants to connect to a database and the connection cannot be established, even though the app is up and running? To solve more specific issues like this, health checks like a *liveness probe* or *readiness probe* can be used. If there have not been specified, K8s will use the default checks to test whether a process is running.
+Applications running in service need to be healthy at all times so they are ready to receive traffic. K8s uses a process called health checks to test whether an application is alive. If there are any issues and the application is unhealthy, K8s will restart the process. Yet, checking only whether a process is up and running might be not sufficient. What if, e.g., a client wants to connect to a database and the connection cannot be established, even though the app is up and running? To solve more specific issues like this, health checks like a *liveness probe* or *readiness probe* can be used. If there have not been specified, K8s will use the default checks to test whether a process is running. 
+
+There are three primary types of health checks: *TCP*, *exec*, and *HTTP*. *TCP* health checks perform a GET request on container’s IP by verifying if a network socket is open and responsive. *Exec* health checks allow custom scripts or commands to be run within the container which can be specified using the `exec` field in the yaml definition file. Thirdly, a *HTTP* request checks the status of a web service by sending HTTP requests to specific endpoints, making them particularly suited for applications with HTTP interfaces. The choice of health check type depends on the nature of the application and the specific aspects to monitor. For the sake of this tutorial only the last type `http` will be covered.
 
 #### Liveness Probe
 The Kubelet of a node uses *Liveness Probes* to check whether an application runs fine or whether it is unable to make progress and its stuck on a broken state. For example, it could catch a deadlock, a database connection failure, etc. The Liveness Probe can restart a container accordingly. To use a Liveness Probe, an endpoint needs to be specified. The benefit of this is, that it is simple to define what it means for an application to be healthy just by defining a path. 
@@ -100,5 +102,3 @@ spec:
       targetPort: 8080
 ```
 \normalsize
-
-### Debugging

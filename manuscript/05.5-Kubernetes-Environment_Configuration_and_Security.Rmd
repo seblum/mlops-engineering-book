@@ -47,7 +47,7 @@ spec:
 ```
 \normalsize
 
-When creating a Service, a corresponding DNS entry is created as well, such as seen in the Services section when calling `backendflask` directly. This entry is created according to the namespace which is denoted to the service. This can be useful when using the same configuration across multiple namespaces such as development, staging, and production. It is also possible to reach across namespaces. One needs to use the fully qualified domain name (FQDN) tough, such as `<service-name>.<namespace-name>.svc.cluster.local`.
+When creating a Service, a corresponding DNS entry is created as well, such as seen in the [Services section](#services) when calling `backendflask` directly. This entry is created according to the namespace which is denoted to the service. This can be useful when using the same configuration across multiple namespaces such as development, staging, and production. It is also possible to reach across namespaces. One needs to use the fully qualified domain name (FQDN) tough, such as `<service-name>.<namespace-name>.svc.cluster.local`.
 
 
 ### Labels, Selectors and Annotations
@@ -74,7 +74,7 @@ kubectl get pods -l 'key in (value1, value2)'
 ```
 \normalsize
 
-When using ReplicaSets in a Deployment, their selector matches the labels to a specific pod (check e.g. the section describing Deployments). Any Pods matching the label of the selector will be created according to the specified replicas. Of course, there can also be multiple labels specified.
+When using ReplicaSets in a Deployment, their selector matches the labels to a specific pod (check e.g. the [section describing Deployments](#deployments)). Any Pods matching the label of the selector will be created according to the specified replicas. Of course, there can also be multiple labels specified.
 The same principle accounts when working with Services. Below example shows two different Pods and two NodePort services. Each service matches to a Pod based on their selector-label relationship. Have a look at their specific settings using `kubectl`. The Nodeport Service *labels-and-selectors-2* has no endpoints, as it is a all-or-none-principle and none of the created Pods matches the label `environment=dev`. In contrast, even though the Pod *cat-v1* has multiple labels specified `app: cat-v1; version: one`, the NodePort Service *labels-and-selectors* is linked to it. It is also linked to the second Pod *cat-v2*.
 
 \footnotesize
@@ -287,7 +287,7 @@ spec:
 ```
 \normalsize
 
-We can check for the attached configs by accessing the containers via the shell, similar to what we did in the section about Volumes. In the container *config-map-volume*, the configs are saved under the respective `mountPath` of the volume. In the *config-map-env*, the configs are stored as environment variables. 
+We can check for the attached configs by accessing the containers via the shell, similar to what we did in the [section about Volumes](#volumes-and-storage). In the container *config-map-volume*, the configs are saved under the respective `mountPath` of the volume. In the *config-map-env*, the configs are stored as environment variables. 
 
 \footnotesize
 ```bash

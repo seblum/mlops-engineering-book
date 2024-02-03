@@ -1,0 +1,54 @@
+# volume_empty-dir.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emptydir-volume
+spec:
+  selector:
+    matchLabels:
+      app: emptydir-volume
+  template:
+    metadata:
+      labels:
+        app: emptydir-volume
+    spec:
+      # add a volume to the deployment
+      volumes:
+        # mimics a caching memory type
+        - name: cache
+          # specify the volume type and the temp directory
+          emptyDir: {}    
+        # of course there could also be a second volume added
+      containers:
+      - name: container-one
+        image: busybox 
+        # image used for testing purposes
+        # since the testing image immediately dies, we want to
+        # execute an own sh command to interact with the volume
+        volumeMounts:
+          # The name must match the name of the volume
+          - name: cache
+            # interal reference of the pod 
+            mountPath: /foo
+        command: 
+          - "/bin/sh"
+        args:
+          - "-c"
+          - "touch /foo/bar.txt && sleep 3600"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        # create a second container with a different internal mountPath
+      - name: container-two
+        image: busybox
+        volumeMounts:
+          - name: cache
+            mountPath: /footwo
+        command:
+          - "sleep"
+          - "3600"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"

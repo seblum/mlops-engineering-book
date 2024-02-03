@@ -1,0 +1,183 @@
+### Mlflow
+
+In order to enable model tracking, the deployment of MLflow necessitates specific requirements. These include the establishment of a data store on AWS S3, a metadata store utilizing PostgreSQL (RDS), and the MLflow server itself. The initial two components are crafted using Terraform resources.
+
+However, it's worth noting that MLflow lacks native support for Kubernetes and an official Helm chart. In light of this, despite being a highly effective tool, we need to create a fundamental custom Helm chart for deploying the MLflow server. Furthermore, a custom container image is employed for running MLflow. This process entails the creation of YAML configurations for deployment, service, and configmap, all of which are executed on our Kubernetes cluster.
+
+The provided Terraform code assumes responsibility for orchestrating the deployment of a dashboard tailored for an ML platform, relying on the power of MLflow. This intricate process encompasses various configurations and resource deployments. It commences by defining local variables, including a unique S3 bucket name. Subsequently, an S3 bucket with the name `"mlflow"` is generated, designed explicitly for housing MLflow artifacts.
+
+\footnotesize
+```javascript
+locals {
+  s3_bucket_name        = "${var.name_prefix}-${var.namespace}-${var.s3_bucket_name}"
+  s3_bucket_path_prefix = "users"
+}
+
+data "aws_caller_identity" "current" {}
+
+# create s3 bucket for artifacts
+resource "aws_s3_bucket" "mlflow" {
+  bucket = local.s3_bucket_name
+  # tags          = var.tags
+  force_destroy = var.s3_force_destroy
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "bucket_state_encryption" {
+  bucket = aws_s3_bucket.mlflow.bucket
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+```
+\normalsize
+
+Following this, an IAM role by the name of `"mlflow_s3_role"` is crafted, bestowing access to the S3 bucket. This role assumes a web identity role using the OIDC provider ARN specified by `var.oidc_provider_arn`. In a similar vein, an IAM policy named `"mlflow_s3_policy"` is forged, extending specific permissions for S3 access. These permissions encompass actions such as object creation, listing, and deletion within the S3 bucket. The policy is meticulously scoped to the S3 bucket and its associated objects. Subsequently, the `"mlflow_s3_policy"` is attached to the `"mlflow_s3_role"`, effectively enabling the IAM role to wield the permissions delineated in the policy.
+
+\footnotesize
+```javascript
+# "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${var.eks_oidc_provider}"
+resource "aws_iam_role" "mlflow_s3_role" {
+  name = "${var.namespace}-s3-access-role"
+
+  assume_role_policy = <<EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action" : "sts:AssumeRoleWithWebIdentity",
+        "Effect": "Allow",
+        "Principal" : {
+          "Federated" : [
+            "${var.oidc_provider_arn}"
+          ]
+        }
+      }
+    ]
+  }
+  EOF
+  tags = {
+    tag-key = "tag-value"
+  }
+}
+
+resource "aws_iam_policy" "mlflow_s3_policy" {
+  name = "${var.namespace}-s3-access-policy"
+  path = "/"
+
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "s3:*Object",
+          "s3:GetObjectVersion",
+          "s3:*"
+        ],
+        "Resource" : [
+          "arn:aws:s3:::${local.s3_bucket_name}/*",
+          "arn:aws:s3:::${local.s3_bucket_name}"
+        ]
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "s3:ListBucket",
+          "s3:ListBucketVersions"
+        ],
+        "Resource" : [
+          "arn:aws:s3:::${local.s3_bucket_name}/*",
+          "arn:aws:s3:::${local.s3_bucket_name}"
+        ],
+        "Condition" : {
+          "StringLike" : {
+            "s3:prefix" : [
+              "${local.s3_bucket_path_prefix}/*"
+            ]
+          }
+        }
+      }
+  ] })
+}
+
+resource "aws_iam_role_policy_attachment" "mlflow_s3_policy" {
+  role       = aws_iam_role.mlflow_s3_role.name
+  policy_arn = aws_iam_policy.mlflow_s3_policy.arn
+}
+```
+\normalsize
+
+Much like the Airflow deployment, an RDS database is deployed for use as a metadata store through the specified RDS module. Here, a random password is generated for the RDS database that will be employed by MLflow.
+
+\footnotesize
+```javascript
+
+resource "random_password" "rds_password" {
+  length = 16
+  # MLFlow has troubles using special characters
+  special = false
+}
+
+# create rds for s3
+module "rds-mlflow" {
+  source                      = "../../infrastructure/rds"
+  vpc_id                      = var.vpc_id
+  private_subnets             = var.private_subnets
+  private_subnets_cidr_blocks = var.private_subnets_cidr_blocks
+  rds_port                    = var.rds_port
+  rds_name                    = var.rds_name
+  rds_password                = coalesce(var.rds_password, random_password.rds_password.result)
+  rds_engine                  = var.rds_engine
+  rds_engine_version          = var.rds_engine_version
+  rds_instance_class          = var.rds_instance_class
+  storage_type                = var.rds_storage_type
+  max_allocated_storage       = var.rds_max_allocated_storage
+}
+```
+\normalsize
+
+The final phase of this deployment leverages Helm to roll out MLflow. It encompasses crucial aspects such as the Docker image selection for MLflow, configuration settings for external access through Ingress, configuration of the S3 bucket, and provision of essential information regarding the RDS database. This Helm release orchestrates the deployment of MLflow, a pivotal component within the ML platform's dashboard.
+
+Given the absence of a native Helm chart for MLflow, a custom Helm chart has been crafted to facilitate this deployment. The chart brings together various Kubernetes deployments, including the MLflow deployment itself, a service account, a secret, and an ingress configuration. For a detailed look at the chart and its components, you can refer to this [implementation](https://github.com/seblum/mlops-mlplatform-on-eks/tree/main/deployment/modules/mlflow/helm/templates).
+Furthermore, as MLflow doesn't offer a suitable container image for our specific use case, a custom container image has been defined and can be explored [here](https://github.com/seblum/mlflow-image).
+
+\footnotesize
+```javascript
+
+resource "helm_release" "mlflow" {
+  name             = var.name
+  namespace        = var.namespace
+  create_namespace = var.create_namespace
+
+  chart = "${path.module}/helm/"
+  values = [yamlencode({
+    deployment = {
+      image     = "seblum/mlflow:v2.4.1"
+      namespace = var.namespace
+      name      = var.name
+    },
+    ingress = {
+      host = var.domain_name
+      path = var.domain_suffix
+    },
+    artifacts = {
+      s3_role_arn   = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${aws_iam_role.mlflow_s3_role.name}",
+      s3_key_prefix = local.s3_bucket_path_prefix,
+      s3_bucket     = local.s3_bucket_name,
+    },
+    rds = {
+      host     = module.rds-mlflow.rds_host
+      port     = var.rds_port,
+      username = module.rds-mlflow.rds_username,
+      password = module.rds-mlflow.rds_password,
+      db_name  = module.rds-mlflow.rds_dbname
+    },
+  })]
+}
+```
+\normalsize
+
+> **_NOTE:_**  It's important to note that the deployment has an open endpoint, which means it lacks sufficient security measures.
+
