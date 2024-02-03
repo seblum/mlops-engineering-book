@@ -121,7 +121,6 @@ model_params = {
     "pooling": "avg",  # needed for resnet50
     "verbose": 2,
 }
-
 ```
 \normalsize
 
