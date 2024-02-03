@@ -2,7 +2,7 @@
 title: "MLOps Engineering"
 subtitle: "Building, Deploying, and Managing Machine Learning Workflows with Airflow and MLflow on Kubernetes."
 author: "Sebastian Blum"
-date: "2023-08-13"
+date: "2024-02-03"
 site: bookdown::bookdown_site
 documentclass: scrbook
 bibliography: [book.bib, packages.bib]
@@ -12,13 +12,13 @@ description: |
   Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions.
 link-citations: yes
 links-as-notes: true
-fontsize: 10pt
+fontsize: 11pt
 linestretch: 1.15
 github-repo: seblum/mlops-engineering-book
 ---
 
 # Summary {.unlisted .unnumbered}
 
-*MLOps Engineering: Building, Deploying, and Managing Machine Learning Workflows with Airflow and MLflow on Kubernetes"* is a comprehensive guide to understanding the principles and roles of MLOps, as well as operational principles such as CI/CD and versioning. Through the use of an exemplary ML platform utilizing Airflow, MLflow, and JupyterHub on AWS EKS, readers will learn how to deploy this platform using infrastructure as code Terraform. The book is structured with chapters that introduce the various tools such as Airflow, MLflow, Kubernetes, and Terraform, and also includes a use case that demonstrates the utilization of the platform through Airflow workflows and MLflow tracking. Whether you are a data scientist, engineer, or developer, this book provides the necessary knowledge and skills to effectively implement MLOps practices and platforms in your organization.
+*MLOps Engineering: Building, Deploying, and Managing Machine Learning Workflows with Airflow and MLflow on Kubernetes"* is a comprehensive guide to understanding the principles and roles of MLOps, as well as operational principles such as CI/CD and versioning. Through the use of an exemplary ML platform utilizing Airflow, MLflow, and JupyterHub on AWS EKS, readers will learn how to deploy this platform using infrastructure as code Terraform. The book is structured with chapters that introduce the various tools such as [Airflow](#airflow), [MLflow](#mlflow), [Kubernetes](#kubernetes), and [Terraform](#terraform), and also includes a use case that demonstrates the utilization of the platform through Airflow workflows and MLflow tracking. Whether you are a data scientist, engineer, or developer, this book provides the necessary knowledge and skills to effectively implement MLOps practices and platforms in your organization.
 
 

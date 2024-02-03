@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.5 Environment, Configuration &amp; Security | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
-  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.5 Environment, Configuration &amp; Security | MLOps Engineering" />
   <meta property="og:type" content="book" />
@@ -23,14 +23,14 @@
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-08-13" />
+<meta name="date" content="2024-02-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="volume-storage.html"/>
+<link rel="prev" href="volumes-and-storage.html"/>
 <link rel="next" href="observability-maintenance.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -164,7 +164,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>2</b> Ops Tools &amp; Principles</a>
+<li class="chapter" data-level="2" data-path="ops-tools-and-principles.html"><a href="ops-tools-and-principles.html"><i class="fa fa-check"></i><b>2</b> Ops Tools and Principles</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="containerization.html"><a href="containerization.html"><i class="fa fa-check"></i><b>2.1</b> Containerization</a></li>
 <li class="chapter" data-level="2.2" data-path="version-control.html"><a href="version-control.html"><i class="fa fa-check"></i><b>2.2</b> Version Control</a>
@@ -172,7 +172,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.1" data-path="version-control.html"><a href="version-control.html#github"><i class="fa fa-check"></i><b>2.2.1</b> Github</a></li>
 <li class="chapter" data-level="2.2.2" data-path="version-control.html"><a href="version-control.html#git-lifecycle"><i class="fa fa-check"></i><b>2.2.2</b> Git lifecycle</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="cicd.html"><a href="cicd.html"><i class="fa fa-check"></i><b>2.3</b> CI/CD</a></li>
+<li class="chapter" data-level="2.3" data-path="cicd.html"><a href="cicd.html"><i class="fa fa-check"></i><b>2.3</b> CI/CD</a>
+<ul>
+<li class="chapter" data-level="" data-path="cicd.html"><a href="cicd.html#github-actions"><i class="fa fa-check"></i>Github Actions</a></li>
+</ul></li>
 <li class="chapter" data-level="2.4" data-path="infrastructure-as-code.html"><a href="infrastructure-as-code.html"><i class="fa fa-check"></i><b>2.4</b> Infrastructure as code</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a>
@@ -229,16 +232,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>5.2.4</b> StatefulSets</a></li>
 <li class="chapter" data-level="5.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>5.2.5</b> Jobs &amp; Cron Jobs</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>5.3</b> Services &amp; Networking</a>
+<li class="chapter" data-level="5.3" data-path="services-and-networking.html"><a href="services-and-networking.html"><i class="fa fa-check"></i><b>5.3</b> Services and Networking</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>5.3.1</b> Services</a></li>
-<li class="chapter" data-level="5.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>5.3.2</b> Service Discovery</a></li>
+<li class="chapter" data-level="5.3.1" data-path="services-and-networking.html"><a href="services-and-networking.html#services"><i class="fa fa-check"></i><b>5.3.1</b> Services</a></li>
+<li class="chapter" data-level="5.3.2" data-path="services-and-networking.html"><a href="services-and-networking.html#service-discovery"><i class="fa fa-check"></i><b>5.3.2</b> Service Discovery</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>5.4</b> Volume &amp; Storage</a>
+<li class="chapter" data-level="5.4" data-path="volumes-and-storage.html"><a href="volumes-and-storage.html"><i class="fa fa-check"></i><b>5.4</b> Volumes and Storage</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>5.4.1</b> EmptyDir Volume</a></li>
-<li class="chapter" data-level="5.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>5.4.2</b> HostPath Volume</a></li>
-<li class="chapter" data-level="5.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>5.4.3</b> Persistent Volumes</a></li>
+<li class="chapter" data-level="5.4.1" data-path="volumes-and-storage.html"><a href="volumes-and-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>5.4.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="5.4.2" data-path="volumes-and-storage.html"><a href="volumes-and-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>5.4.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="5.4.3" data-path="volumes-and-storage.html"><a href="volumes-and-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>5.4.3</b> Persistent Volumes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>5.5</b> Environment, Configuration &amp; Security</a>
 <ul>
@@ -250,7 +253,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>5.6</b> Observability &amp; Maintenance</a>
 <ul>
 <li class="chapter" data-level="5.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>5.6.1</b> Health Checks</a></li>
-<li class="chapter" data-level="5.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>5.6.2</b> Debugging</a></li>
 </ul></li>
 <li class="chapter" data-level="5.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>5.7</b> Helm</a>
 <ul>
@@ -288,23 +290,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>6.4.3</b> for</a></li>
 <li class="chapter" data-level="6.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>6.4.4</b> Workspaces</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>6.5</b> Exemplary Deployment</a></li>
+<li class="chapter" data-level="6.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>6.5</b> Exemplary Deployment</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html#root"><i class="fa fa-check"></i><b>6.5.1</b> root</a></li>
+<li class="chapter" data-level="6.5.2" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html#vpc"><i class="fa fa-check"></i><b>6.5.2</b> vpc</a></li>
+<li class="chapter" data-level="6.5.3" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html#run-the-code"><i class="fa fa-check"></i><b>6.5.3</b> Run the code</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="ml-platform-design.html"><a href="ml-platform-design.html"><i class="fa fa-check"></i><b>7</b> ML Platform Design</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ml-platform-design.html"><a href="ml-platform-design.html"><i class="fa fa-check"></i><b>7</b> ML Platform Design</a>
+<ul>
+<li class="chapter" data-level="" data-path="ml-platform-design.html"><a href="ml-platform-design.html#overview"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="ml-platform-design.html"><a href="ml-platform-design.html#infrastructure"><i class="fa fa-check"></i>Infrastructure</a></li>
+<li class="chapter" data-level="" data-path="ml-platform-design.html"><a href="ml-platform-design.html#mlops-tools"><i class="fa fa-check"></i>MLOps Tools</a></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="platform-deployment.html"><a href="platform-deployment.html"><i class="fa fa-check"></i><b>8</b> Platform Deployment</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="root-module.html"><a href="root-module.html"><i class="fa fa-check"></i><b>8.1</b> Root module</a></li>
-<li class="chapter" data-level="8.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html"><i class="fa fa-check"></i><b>8.2</b> Infrastructure</a>
+<li class="chapter" data-level="8.2" data-path="infrastructure-2.html"><a href="infrastructure-2.html"><i class="fa fa-check"></i><b>8.2</b> Infrastructure</a>
 <ul>
-<li class="chapter" data-level="8.2.1" data-path="infrastructure-1.html"><a href="infrastructure-1.html#virtual-private-cloud"><i class="fa fa-check"></i><b>8.2.1</b> Virtual Private Cloud</a></li>
-<li class="chapter" data-level="8.2.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html#elastic-kubernetes-service"><i class="fa fa-check"></i><b>8.2.2</b> Elastic Kubernetes Service</a></li>
-<li class="chapter" data-level="8.2.3" data-path="infrastructure-1.html"><a href="infrastructure-1.html#networking"><i class="fa fa-check"></i><b>8.2.3</b> Networking</a></li>
-<li class="chapter" data-level="8.2.4" data-path="infrastructure-1.html"><a href="infrastructure-1.html#relational-database-service"><i class="fa fa-check"></i><b>8.2.4</b> Relational Database Service</a></li>
+<li class="chapter" data-level="8.2.1" data-path="infrastructure-2.html"><a href="infrastructure-2.html#virtual-private-cloud"><i class="fa fa-check"></i><b>8.2.1</b> Virtual Private Cloud</a></li>
+<li class="chapter" data-level="8.2.2" data-path="infrastructure-2.html"><a href="infrastructure-2.html#elastic-kubernetes-service"><i class="fa fa-check"></i><b>8.2.2</b> Elastic Kubernetes Service</a></li>
+<li class="chapter" data-level="8.2.3" data-path="infrastructure-2.html"><a href="infrastructure-2.html#networking"><i class="fa fa-check"></i><b>8.2.3</b> Networking</a></li>
+<li class="chapter" data-level="8.2.4" data-path="infrastructure-2.html"><a href="infrastructure-2.html#relational-database-service"><i class="fa fa-check"></i><b>8.2.4</b> Relational Database Service</a></li>
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="components.html"><a href="components.html"><i class="fa fa-check"></i><b>8.3</b> Components</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="components.html"><a href="components.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
-<li class="chapter" data-level="8.3.2" data-path="components.html"><a href="components.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
+<li class="chapter" data-level="8.3.1" data-path="components.html"><a href="components.html#user-profiles"><i class="fa fa-check"></i><b>8.3.1</b> User Profiles</a></li>
+<li class="chapter" data-level="8.3.2" data-path="components.html"><a href="components.html#airflow-1"><i class="fa fa-check"></i><b>8.3.2</b> Airflow</a></li>
+<li class="chapter" data-level="8.3.3" data-path="components.html"><a href="components.html#mlflow-1"><i class="fa fa-check"></i><b>8.3.3</b> Mlflow</a></li>
+<li class="chapter" data-level="8.3.4" data-path="components.html"><a href="components.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.4</b> Jupyterhub</a></li>
+<li class="chapter" data-level="8.3.5" data-path="components.html"><a href="components.html#monitoring"><i class="fa fa-check"></i><b>8.3.5</b> Monitoring</a></li>
+<li class="chapter" data-level="8.3.6" data-path="components.html"><a href="components.html#sagemaker"><i class="fa fa-check"></i><b>8.3.6</b> Sagemaker</a></li>
+<li class="chapter" data-level="8.3.7" data-path="components.html"><a href="components.html#dashboard"><i class="fa fa-check"></i><b>8.3.7</b> Dashboard</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="design-decisions.html"><a href="design-decisions.html"><i class="fa fa-check"></i><b>8.4</b> Design Decisions</a></li>
 </ul></li>
@@ -314,26 +331,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="9.1.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Training Pipeline Workflow</a>
+<li class="chapter" data-level="9.2" data-path="training-deployment-pipeline-workflow.html"><a href="training-deployment-pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Training &amp; Deployment Pipeline Workflow</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
-<li class="chapter" data-level="9.2.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
+<li class="chapter" data-level="9.2.1" data-path="training-deployment-pipeline-workflow.html"><a href="training-deployment-pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
+<li class="chapter" data-level="9.2.2" data-path="training-deployment-pipeline-workflow.html"><a href="training-deployment-pipeline-workflow.html#mlflow-integration"><i class="fa fa-check"></i><b>9.2.2</b> MLflow integration</a></li>
+<li class="chapter" data-level="9.2.3" data-path="training-deployment-pipeline-workflow.html"><a href="training-deployment-pipeline-workflow.html#pipeline-workflow"><i class="fa fa-check"></i><b>9.2.3</b> Pipeline Workflow</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Training Pipeline Steps</a>
+<li class="chapter" data-level="9.3" data-path="pipeline-workflow-steps.html"><a href="pipeline-workflow-steps.html"><i class="fa fa-check"></i><b>9.3</b> Pipeline Workflow Steps</a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
-<li class="chapter" data-level="9.3.2" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
+<li class="chapter" data-level="9.3.1" data-path="pipeline-workflow-steps.html"><a href="pipeline-workflow-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="9.3.2" data-path="pipeline-workflow-steps.html"><a href="pipeline-workflow-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
+<li class="chapter" data-level="9.3.3" data-path="pipeline-workflow-steps.html"><a href="pipeline-workflow-steps.html#model-comparison"><i class="fa fa-check"></i><b>9.3.3</b> Model Comparison</a></li>
+<li class="chapter" data-level="9.3.4" data-path="pipeline-workflow-steps.html"><a href="pipeline-workflow-steps.html#model-deployment-serving"><i class="fa fa-check"></i><b>9.3.4</b> Model Deployment &amp; Serving</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html"><i class="fa fa-check"></i><b>9.4</b> Model Serving &amp; Inferencing</a>
+<li class="chapter" data-level="9.4" data-path="model-inferencing.html"><a href="model-inferencing.html"><i class="fa fa-check"></i><b>9.4</b> Model Inferencing</a>
 <ul>
-<li class="chapter" data-level="9.4.1" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#model-serving-1"><i class="fa fa-check"></i><b>9.4.1</b> Model Serving</a></li>
-</ul></li>
-<li class="chapter" data-level="9.5" data-path="model-inferencing.html"><a href="model-inferencing.html"><i class="fa fa-check"></i><b>9.5</b> Model Inferencing</a>
-<ul>
-<li class="chapter" data-level="9.5.1" data-path="model-inferencing.html"><a href="model-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.5.1</b> Streamlit App</a></li>
+<li class="chapter" data-level="9.4.1" data-path="model-inferencing.html"><a href="model-inferencing.html#pipeline-workflow-1"><i class="fa fa-check"></i><b>9.4.1</b> Pipeline Workflow</a></li>
+<li class="chapter" data-level="9.4.2" data-path="model-inferencing.html"><a href="model-inferencing.html#inference-workflow-code"><i class="fa fa-check"></i><b>9.4.2</b> Inference Workflow Code</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="glossary.html"><a href="glossary.html"><i class="fa fa-check"></i>Glossary</a></li>
+<li class="chapter" data-level="" data-path="contributing.html"><a href="contributing.html"><i class="fa fa-check"></i>Contributing</a></li>
 <li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul>
 
@@ -394,7 +412,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb64-28"><a href="environment-configuration-security.html#cb64-28" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;500m&quot;</span></span>
 <span id="cb64-29"><a href="environment-configuration-security.html#cb64-29" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">ports</span><span class="kw">:</span></span>
 <span id="cb64-30"><a href="environment-configuration-security.html#cb64-30" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span></code></pre></div>
-<p>When creating a Service, a corresponding DNS entry is created as well, such as seen in the Services section when calling <code>backendflask</code> directly. This entry is created according to the namespace which is denoted to the service. This can be useful when using the same configuration across multiple namespaces such as development, staging, and production. It is also possible to reach across namespaces. One needs to use the fully qualified domain name (FQDN) tough, such as <code>&lt;service-name&gt;.&lt;namespace-name&gt;.svc.cluster.local</code>.</p>
+<p>When creating a Service, a corresponding DNS entry is created as well, such as seen in the <a href="services-and-networking.html#services">Services section</a> when calling <code>backendflask</code> directly. This entry is created according to the namespace which is denoted to the service. This can be useful when using the same configuration across multiple namespaces such as development, staging, and production. It is also possible to reach across namespaces. One needs to use the fully qualified domain name (FQDN) tough, such as <code>&lt;service-name&gt;.&lt;namespace-name&gt;.svc.cluster.local</code>.</p>
 </div>
 <div id="labels-selectors-and-annotations" class="section level3 hasAnchor" number="5.5.2">
 <h3><span class="header-section-number">5.5.2</span> Labels, Selectors and Annotations<a href="environment-configuration-security.html#labels-selectors-and-annotations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -412,7 +430,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb65-9"><a href="environment-configuration-security.html#cb65-9" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods <span class="at">-l</span> key=value</span>
 <span id="cb65-10"><a href="environment-configuration-security.html#cb65-10" aria-hidden="true" tabindex="-1"></a><span class="co"># or also look for multiple</span></span>
 <span id="cb65-11"><a href="environment-configuration-security.html#cb65-11" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> get pods <span class="at">-l</span> <span class="st">&#39;key in (value1, value2)&#39;</span></span></code></pre></div>
-<p>When using ReplicaSets in a Deployment, their selector matches the labels to a specific pod (check e.g. the section describing Deployments). Any Pods matching the label of the selector will be created according to the specified replicas. Of course, there can also be multiple labels specified.
+<p>When using ReplicaSets in a Deployment, their selector matches the labels to a specific pod (check e.g. the <a href="application-deployment-design.html#deployments">section describing Deployments</a>). Any Pods matching the label of the selector will be created according to the specified replicas. Of course, there can also be multiple labels specified.
 The same principle accounts when working with Services. Below example shows two different Pods and two NodePort services. Each service matches to a Pod based on their selector-label relationship. Have a look at their specific settings using <code>kubectl</code>. The Nodeport Service <em>labels-and-selectors-2</em> has no endpoints, as it is a all-or-none-principle and none of the created Pods matches the label <code>environment=dev</code>. In contrast, even though the Pod <em>cat-v1</em> has multiple labels specified <code>app: cat-v1; version: one</code>, the NodePort Service <em>labels-and-selectors</em> is linked to it. It is also linked to the second Pod <em>cat-v2</em>.</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb66-1"><a href="environment-configuration-security.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># labels.yaml</span></span>
 <span id="cb66-2"><a href="environment-configuration-security.html#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
@@ -607,7 +625,7 @@ Besides allow for an easy change of variables, another benefit of using ConfigMa
 <span id="cb68-90"><a href="environment-configuration-security.html#cb68-90" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">configMapKeyRef</span><span class="kw">:</span></span>
 <span id="cb68-91"><a href="environment-configuration-security.html#cb68-91" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx-conf</span></span>
 <span id="cb68-92"><a href="environment-configuration-security.html#cb68-92" aria-hidden="true" tabindex="-1"></a><span class="at">                </span><span class="fu">key</span><span class="kw">:</span><span class="at"> nginx.conf  </span></span></code></pre></div>
-<p>We can check for the attached configs by accessing the containers via the shell, similar to what we did in the section about Volumes. In the container <em>config-map-volume</em>, the configs are saved under the respective <code>mountPath</code> of the volume. In the <em>config-map-env</em>, the configs are stored as environment variables.</p>
+<p>We can check for the attached configs by accessing the containers via the shell, similar to what we did in the <a href="volumes-and-storage.html#volumes-and-storage">section about Volumes</a>. In the container <em>config-map-volume</em>, the configs are saved under the respective <code>mountPath</code> of the volume. In the <em>config-map-env</em>, the configs are stored as environment variables.</p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb69-1"><a href="environment-configuration-security.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get in container -volume or -env</span></span>
 <span id="cb69-2"><a href="environment-configuration-security.html#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="ex">kubectl</span> exec <span class="at">-it</span> <span class="op">&lt;</span>config-map-name<span class="op">&gt;</span> -c <span class="op">&gt;</span>container-name<span class="op">&lt;</span> -- sh</span>
 <span id="cb69-3"><a href="environment-configuration-security.html#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="co"># check subdirectories</span></span>
@@ -719,7 +737,7 @@ Besides allow for an easy change of variables, another benefit of using ConfigMa
           </div>
         </div>
       </div>
-<a href="volume-storage.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="volumes-and-storage.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="observability-maintenance.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

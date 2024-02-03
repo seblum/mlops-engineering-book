@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9.5 Model Inferencing | MLOps Engineering</title>
+  <title>9.4 Model Inferencing | MLOps Engineering</title>
   <meta name="description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
-  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9.5 Model Inferencing | MLOps Engineering" />
+  <meta property="og:title" content="9.4 Model Inferencing | MLOps Engineering" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   <meta name="github-repo" content="seblum/mlops-engineering-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9.5 Model Inferencing | MLOps Engineering" />
+  <meta name="twitter:title" content="9.4 Model Inferencing | MLOps Engineering" />
   
   <meta name="twitter:description" content="Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions." />
   
@@ -23,14 +23,14 @@
 <meta name="author" content="Sebastian Blum" />
 
 
-<meta name="date" content="2023-08-13" />
+<meta name="date" content="2024-02-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="model-serving-inferencing.html"/>
+<link rel="prev" href="pipeline-workflow-steps.html"/>
 <link rel="next" href="glossary.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -164,7 +164,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.6" data-path="roles-and-tasks-in-mlops.html"><a href="roles-and-tasks-in-mlops.html#additional-roles-function"><i class="fa fa-check"></i><b>1.3.6</b> Additional roles &amp; function</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="ops-tools-principles.html"><a href="ops-tools-principles.html"><i class="fa fa-check"></i><b>2</b> Ops Tools &amp; Principles</a>
+<li class="chapter" data-level="2" data-path="ops-tools-and-principles.html"><a href="ops-tools-and-principles.html"><i class="fa fa-check"></i><b>2</b> Ops Tools and Principles</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="containerization.html"><a href="containerization.html"><i class="fa fa-check"></i><b>2.1</b> Containerization</a></li>
 <li class="chapter" data-level="2.2" data-path="version-control.html"><a href="version-control.html"><i class="fa fa-check"></i><b>2.2</b> Version Control</a>
@@ -172,7 +172,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.1" data-path="version-control.html"><a href="version-control.html#github"><i class="fa fa-check"></i><b>2.2.1</b> Github</a></li>
 <li class="chapter" data-level="2.2.2" data-path="version-control.html"><a href="version-control.html#git-lifecycle"><i class="fa fa-check"></i><b>2.2.2</b> Git lifecycle</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="cicd.html"><a href="cicd.html"><i class="fa fa-check"></i><b>2.3</b> CI/CD</a></li>
+<li class="chapter" data-level="2.3" data-path="cicd.html"><a href="cicd.html"><i class="fa fa-check"></i><b>2.3</b> CI/CD</a>
+<ul>
+<li class="chapter" data-level="" data-path="cicd.html"><a href="cicd.html#github-actions"><i class="fa fa-check"></i>Github Actions</a></li>
+</ul></li>
 <li class="chapter" data-level="2.4" data-path="infrastructure-as-code.html"><a href="infrastructure-as-code.html"><i class="fa fa-check"></i><b>2.4</b> Infrastructure as code</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="airflow.html"><a href="airflow.html"><i class="fa fa-check"></i><b>3</b> Airflow</a>
@@ -229,16 +232,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.4" data-path="application-deployment-design.html"><a href="application-deployment-design.html#statefulsets"><i class="fa fa-check"></i><b>5.2.4</b> StatefulSets</a></li>
 <li class="chapter" data-level="5.2.5" data-path="application-deployment-design.html"><a href="application-deployment-design.html#jobs-cron-jobs"><i class="fa fa-check"></i><b>5.2.5</b> Jobs &amp; Cron Jobs</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="services-networking.html"><a href="services-networking.html"><i class="fa fa-check"></i><b>5.3</b> Services &amp; Networking</a>
+<li class="chapter" data-level="5.3" data-path="services-and-networking.html"><a href="services-and-networking.html"><i class="fa fa-check"></i><b>5.3</b> Services and Networking</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="services-networking.html"><a href="services-networking.html#services"><i class="fa fa-check"></i><b>5.3.1</b> Services</a></li>
-<li class="chapter" data-level="5.3.2" data-path="services-networking.html"><a href="services-networking.html#service-discovery"><i class="fa fa-check"></i><b>5.3.2</b> Service Discovery</a></li>
+<li class="chapter" data-level="5.3.1" data-path="services-and-networking.html"><a href="services-and-networking.html#services"><i class="fa fa-check"></i><b>5.3.1</b> Services</a></li>
+<li class="chapter" data-level="5.3.2" data-path="services-and-networking.html"><a href="services-and-networking.html#service-discovery"><i class="fa fa-check"></i><b>5.3.2</b> Service Discovery</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="volume-storage.html"><a href="volume-storage.html"><i class="fa fa-check"></i><b>5.4</b> Volume &amp; Storage</a>
+<li class="chapter" data-level="5.4" data-path="volumes-and-storage.html"><a href="volumes-and-storage.html"><i class="fa fa-check"></i><b>5.4</b> Volumes and Storage</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="volume-storage.html"><a href="volume-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>5.4.1</b> EmptyDir Volume</a></li>
-<li class="chapter" data-level="5.4.2" data-path="volume-storage.html"><a href="volume-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>5.4.2</b> HostPath Volume</a></li>
-<li class="chapter" data-level="5.4.3" data-path="volume-storage.html"><a href="volume-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>5.4.3</b> Persistent Volumes</a></li>
+<li class="chapter" data-level="5.4.1" data-path="volumes-and-storage.html"><a href="volumes-and-storage.html#emptydir-volume"><i class="fa fa-check"></i><b>5.4.1</b> EmptyDir Volume</a></li>
+<li class="chapter" data-level="5.4.2" data-path="volumes-and-storage.html"><a href="volumes-and-storage.html#hostpath-volume"><i class="fa fa-check"></i><b>5.4.2</b> HostPath Volume</a></li>
+<li class="chapter" data-level="5.4.3" data-path="volumes-and-storage.html"><a href="volumes-and-storage.html#persistent-volumes"><i class="fa fa-check"></i><b>5.4.3</b> Persistent Volumes</a></li>
 </ul></li>
 <li class="chapter" data-level="5.5" data-path="environment-configuration-security.html"><a href="environment-configuration-security.html"><i class="fa fa-check"></i><b>5.5</b> Environment, Configuration &amp; Security</a>
 <ul>
@@ -250,7 +253,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.6" data-path="observability-maintenance.html"><a href="observability-maintenance.html"><i class="fa fa-check"></i><b>5.6</b> Observability &amp; Maintenance</a>
 <ul>
 <li class="chapter" data-level="5.6.1" data-path="observability-maintenance.html"><a href="observability-maintenance.html#health-checks"><i class="fa fa-check"></i><b>5.6.1</b> Health Checks</a></li>
-<li class="chapter" data-level="5.6.2" data-path="observability-maintenance.html"><a href="observability-maintenance.html#debugging"><i class="fa fa-check"></i><b>5.6.2</b> Debugging</a></li>
 </ul></li>
 <li class="chapter" data-level="5.7" data-path="helm.html"><a href="helm.html"><i class="fa fa-check"></i><b>5.7</b> Helm</a>
 <ul>
@@ -288,23 +290,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4.3" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#for"><i class="fa fa-check"></i><b>6.4.3</b> for</a></li>
 <li class="chapter" data-level="6.4.4" data-path="additional-tips-tricks.html"><a href="additional-tips-tricks.html#workspaces"><i class="fa fa-check"></i><b>6.4.4</b> Workspaces</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>6.5</b> Exemplary Deployment</a></li>
+<li class="chapter" data-level="6.5" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html"><i class="fa fa-check"></i><b>6.5</b> Exemplary Deployment</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html#root"><i class="fa fa-check"></i><b>6.5.1</b> root</a></li>
+<li class="chapter" data-level="6.5.2" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html#vpc"><i class="fa fa-check"></i><b>6.5.2</b> vpc</a></li>
+<li class="chapter" data-level="6.5.3" data-path="exemplary-deployment.html"><a href="exemplary-deployment.html#run-the-code"><i class="fa fa-check"></i><b>6.5.3</b> Run the code</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="ml-platform-design.html"><a href="ml-platform-design.html"><i class="fa fa-check"></i><b>7</b> ML Platform Design</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ml-platform-design.html"><a href="ml-platform-design.html"><i class="fa fa-check"></i><b>7</b> ML Platform Design</a>
+<ul>
+<li class="chapter" data-level="" data-path="ml-platform-design.html"><a href="ml-platform-design.html#overview"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="ml-platform-design.html"><a href="ml-platform-design.html#infrastructure"><i class="fa fa-check"></i>Infrastructure</a></li>
+<li class="chapter" data-level="" data-path="ml-platform-design.html"><a href="ml-platform-design.html#mlops-tools"><i class="fa fa-check"></i>MLOps Tools</a></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="platform-deployment.html"><a href="platform-deployment.html"><i class="fa fa-check"></i><b>8</b> Platform Deployment</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="root-module.html"><a href="root-module.html"><i class="fa fa-check"></i><b>8.1</b> Root module</a></li>
-<li class="chapter" data-level="8.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html"><i class="fa fa-check"></i><b>8.2</b> Infrastructure</a>
+<li class="chapter" data-level="8.2" data-path="infrastructure-2.html"><a href="infrastructure-2.html"><i class="fa fa-check"></i><b>8.2</b> Infrastructure</a>
 <ul>
-<li class="chapter" data-level="8.2.1" data-path="infrastructure-1.html"><a href="infrastructure-1.html#virtual-private-cloud"><i class="fa fa-check"></i><b>8.2.1</b> Virtual Private Cloud</a></li>
-<li class="chapter" data-level="8.2.2" data-path="infrastructure-1.html"><a href="infrastructure-1.html#elastic-kubernetes-service"><i class="fa fa-check"></i><b>8.2.2</b> Elastic Kubernetes Service</a></li>
-<li class="chapter" data-level="8.2.3" data-path="infrastructure-1.html"><a href="infrastructure-1.html#networking"><i class="fa fa-check"></i><b>8.2.3</b> Networking</a></li>
-<li class="chapter" data-level="8.2.4" data-path="infrastructure-1.html"><a href="infrastructure-1.html#relational-database-service"><i class="fa fa-check"></i><b>8.2.4</b> Relational Database Service</a></li>
+<li class="chapter" data-level="8.2.1" data-path="infrastructure-2.html"><a href="infrastructure-2.html#virtual-private-cloud"><i class="fa fa-check"></i><b>8.2.1</b> Virtual Private Cloud</a></li>
+<li class="chapter" data-level="8.2.2" data-path="infrastructure-2.html"><a href="infrastructure-2.html#elastic-kubernetes-service"><i class="fa fa-check"></i><b>8.2.2</b> Elastic Kubernetes Service</a></li>
+<li class="chapter" data-level="8.2.3" data-path="infrastructure-2.html"><a href="infrastructure-2.html#networking"><i class="fa fa-check"></i><b>8.2.3</b> Networking</a></li>
+<li class="chapter" data-level="8.2.4" data-path="infrastructure-2.html"><a href="infrastructure-2.html#relational-database-service"><i class="fa fa-check"></i><b>8.2.4</b> Relational Database Service</a></li>
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="components.html"><a href="components.html"><i class="fa fa-check"></i><b>8.3</b> Components</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="components.html"><a href="components.html#airflow-1"><i class="fa fa-check"></i><b>8.3.1</b> Airflow</a></li>
-<li class="chapter" data-level="8.3.2" data-path="components.html"><a href="components.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.2</b> Jupyterhub</a></li>
+<li class="chapter" data-level="8.3.1" data-path="components.html"><a href="components.html#user-profiles"><i class="fa fa-check"></i><b>8.3.1</b> User Profiles</a></li>
+<li class="chapter" data-level="8.3.2" data-path="components.html"><a href="components.html#airflow-1"><i class="fa fa-check"></i><b>8.3.2</b> Airflow</a></li>
+<li class="chapter" data-level="8.3.3" data-path="components.html"><a href="components.html#mlflow-1"><i class="fa fa-check"></i><b>8.3.3</b> Mlflow</a></li>
+<li class="chapter" data-level="8.3.4" data-path="components.html"><a href="components.html#jupyterhub"><i class="fa fa-check"></i><b>8.3.4</b> Jupyterhub</a></li>
+<li class="chapter" data-level="8.3.5" data-path="components.html"><a href="components.html#monitoring"><i class="fa fa-check"></i><b>8.3.5</b> Monitoring</a></li>
+<li class="chapter" data-level="8.3.6" data-path="components.html"><a href="components.html#sagemaker"><i class="fa fa-check"></i><b>8.3.6</b> Sagemaker</a></li>
+<li class="chapter" data-level="8.3.7" data-path="components.html"><a href="components.html#dashboard"><i class="fa fa-check"></i><b>8.3.7</b> Dashboard</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="design-decisions.html"><a href="design-decisions.html"><i class="fa fa-check"></i><b>8.4</b> Design Decisions</a></li>
 </ul></li>
@@ -314,26 +331,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="9.1.1" data-path="integrated-development-environment-1.html"><a href="integrated-development-environment-1.html#github-repository"><i class="fa fa-check"></i><b>9.1.1</b> Github Repository</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Training Pipeline Workflow</a>
+<li class="chapter" data-level="9.2" data-path="training-deployment-pipeline-workflow.html"><a href="training-deployment-pipeline-workflow.html"><i class="fa fa-check"></i><b>9.2</b> Training &amp; Deployment Pipeline Workflow</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
-<li class="chapter" data-level="9.2.2" data-path="training-pipeline-workflow.html"><a href="training-pipeline-workflow.html#mlflow-1"><i class="fa fa-check"></i><b>9.2.2</b> MLflow</a></li>
+<li class="chapter" data-level="9.2.1" data-path="training-deployment-pipeline-workflow.html"><a href="training-deployment-pipeline-workflow.html#airflow-workflow"><i class="fa fa-check"></i><b>9.2.1</b> Airflow Workflow</a></li>
+<li class="chapter" data-level="9.2.2" data-path="training-deployment-pipeline-workflow.html"><a href="training-deployment-pipeline-workflow.html#mlflow-integration"><i class="fa fa-check"></i><b>9.2.2</b> MLflow integration</a></li>
+<li class="chapter" data-level="9.2.3" data-path="training-deployment-pipeline-workflow.html"><a href="training-deployment-pipeline-workflow.html#pipeline-workflow"><i class="fa fa-check"></i><b>9.2.3</b> Pipeline Workflow</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html"><i class="fa fa-check"></i><b>9.3</b> Training Pipeline Steps</a>
+<li class="chapter" data-level="9.3" data-path="pipeline-workflow-steps.html"><a href="pipeline-workflow-steps.html"><i class="fa fa-check"></i><b>9.3</b> Pipeline Workflow Steps</a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
-<li class="chapter" data-level="9.3.2" data-path="training-pipeline-steps.html"><a href="training-pipeline-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
+<li class="chapter" data-level="9.3.1" data-path="pipeline-workflow-steps.html"><a href="pipeline-workflow-steps.html#data-preprocessing"><i class="fa fa-check"></i><b>9.3.1</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="9.3.2" data-path="pipeline-workflow-steps.html"><a href="pipeline-workflow-steps.html#model-training"><i class="fa fa-check"></i><b>9.3.2</b> Model Training</a></li>
+<li class="chapter" data-level="9.3.3" data-path="pipeline-workflow-steps.html"><a href="pipeline-workflow-steps.html#model-comparison"><i class="fa fa-check"></i><b>9.3.3</b> Model Comparison</a></li>
+<li class="chapter" data-level="9.3.4" data-path="pipeline-workflow-steps.html"><a href="pipeline-workflow-steps.html#model-deployment-serving"><i class="fa fa-check"></i><b>9.3.4</b> Model Deployment &amp; Serving</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html"><i class="fa fa-check"></i><b>9.4</b> Model Serving &amp; Inferencing</a>
+<li class="chapter" data-level="9.4" data-path="model-inferencing.html"><a href="model-inferencing.html"><i class="fa fa-check"></i><b>9.4</b> Model Inferencing</a>
 <ul>
-<li class="chapter" data-level="9.4.1" data-path="model-serving-inferencing.html"><a href="model-serving-inferencing.html#model-serving-1"><i class="fa fa-check"></i><b>9.4.1</b> Model Serving</a></li>
-</ul></li>
-<li class="chapter" data-level="9.5" data-path="model-inferencing.html"><a href="model-inferencing.html"><i class="fa fa-check"></i><b>9.5</b> Model Inferencing</a>
-<ul>
-<li class="chapter" data-level="9.5.1" data-path="model-inferencing.html"><a href="model-inferencing.html#streamlit-app"><i class="fa fa-check"></i><b>9.5.1</b> Streamlit App</a></li>
+<li class="chapter" data-level="9.4.1" data-path="model-inferencing.html"><a href="model-inferencing.html#pipeline-workflow-1"><i class="fa fa-check"></i><b>9.4.1</b> Pipeline Workflow</a></li>
+<li class="chapter" data-level="9.4.2" data-path="model-inferencing.html"><a href="model-inferencing.html#inference-workflow-code"><i class="fa fa-check"></i><b>9.4.2</b> Inference Workflow Code</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="glossary.html"><a href="glossary.html"><i class="fa fa-check"></i>Glossary</a></li>
+<li class="chapter" data-level="" data-path="contributing.html"><a href="contributing.html"><i class="fa fa-check"></i>Contributing</a></li>
 <li class="chapter" data-level="" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul>
 
@@ -352,68 +370,223 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-inferencing" class="section level2 hasAnchor" number="9.5">
-<h2><span class="header-section-number">9.5</span> Model Inferencing<a href="model-inferencing.html#model-inferencing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The process of serving and making inferences utilizes Docker containers and runs them within Kubernetes pods.</p>
-<p>The concept involves running a Docker container that serves the pre-trained TensorFlow model using FastAPI. This containerized model is responsible for providing predictions and responses to incoming requests. Additionally, a Streamlit app is used to interact with the served model, enabling users to make inferences by sending input data to the model and receiving the corresponding predictions.</p>
-<div id="streamlit-app" class="section level3 hasAnchor" number="9.5.1">
-<h3><span class="header-section-number">9.5.1</span> Streamlit App<a href="model-inferencing.html#streamlit-app" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The Streamlit app offers a simple interface for performing inferences on the served model. The user interface enables users to upload a <code>jpg</code> image. Upon clicking the <code>predict</code> button, the image is sent to the model serving app, where a prediction is made. The prediction results are then returned as a JSON file, which can be downloaded upon request.</p>
-<p><strong>Importing Dependencies</strong>
-This section imports the necessary dependencies for the code, including libraries for file handling, JSON processing, working with images, making HTTP requests, and creating the Streamlit application.</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb149-1"><a href="model-inferencing.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports necessary packages</span></span>
-<span id="cb149-2"><a href="model-inferencing.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io</span>
-<span id="cb149-3"><a href="model-inferencing.html#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb149-4"><a href="model-inferencing.html#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb149-5"><a href="model-inferencing.html#cb149-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb149-6"><a href="model-inferencing.html#cb149-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb149-7"><a href="model-inferencing.html#cb149-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb149-8"><a href="model-inferencing.html#cb149-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> streamlit <span class="im">as</span> st</span>
-<span id="cb149-9"><a href="model-inferencing.html#cb149-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span></code></pre></div>
-<div id="setting-up-the-streamlit-application" class="section level4 unlisted unnumbered hasAnchor">
-<h4>Setting Up the Streamlit Application<a href="model-inferencing.html#setting-up-the-streamlit-application" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>At first, the header and subheader for the Streamlit application are set. Afterward, the FastAPI serving IP and port are retrieved from environment variables. They constructs the FastAPI endpoint URL and are later used to send a POST request to.</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb150-1"><a href="model-inferencing.html#cb150-1" aria-hidden="true" tabindex="-1"></a>st.header(<span class="st">&quot;MLOps Engineering Project&quot;</span>)</span>
-<span id="cb150-2"><a href="model-inferencing.html#cb150-2" aria-hidden="true" tabindex="-1"></a>st.subheader(<span class="st">&quot;Skin Cancer Detection&quot;</span>)</span>
-<span id="cb150-3"><a href="model-inferencing.html#cb150-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb150-4"><a href="model-inferencing.html#cb150-4" aria-hidden="true" tabindex="-1"></a><span class="co"># FastAPI endpoint</span></span>
-<span id="cb150-5"><a href="model-inferencing.html#cb150-5" aria-hidden="true" tabindex="-1"></a>FASTAPI_SERVING_IP <span class="op">=</span> os.getenv(<span class="st">&quot;FASTAPI_SERVING_IP&quot;</span>)</span>
-<span id="cb150-6"><a href="model-inferencing.html#cb150-6" aria-hidden="true" tabindex="-1"></a>FASTAPI_SERVING_PORT <span class="op">=</span> os.getenv(<span class="st">&quot;FASTAPI_SERVING_PORT&quot;</span>)</span>
-<span id="cb150-7"><a href="model-inferencing.html#cb150-7" aria-hidden="true" tabindex="-1"></a>FASTAPI_ENDPOINT <span class="op">=</span> <span class="ss">f&quot;http://</span><span class="sc">{</span>FASTAPI_SERVING_IP<span class="sc">}</span><span class="ss">:</span><span class="sc">{</span>FASTAPI_SERVING_PORT<span class="sc">}</span><span class="ss">/predict&quot;</span></span></code></pre></div>
+<div id="model-inferencing" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Model Inferencing<a href="model-inferencing.html#model-inferencing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For testing model inference, there is a separate Airflow DAG tailored specifically for conducting inference tests on a CNN SageMaker deployment. This DAG is responsible for various tasks, including verifying the status of the SageMaker endpoint, handling multiple sample images for inference, and retrieving predictions from the endpoint. The configuration of this DAG includes essential metadata and execution parameters.</p>
+<div id="pipeline-workflow-1" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> Pipeline Workflow<a href="model-inferencing.html#pipeline-workflow-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Similar to the <code>cnn_skin_cancer_workflow</code> DAG, this code commences by importing the necessary modules and libraries required for the Airflow DAG. Furthermore, it configures specific parameters, including the <code>skin_cancer_container_image</code>, which represents the container image used for Kubernetes pods, and the <code>SECRET_AWS_REGION</code>, a secret housing AWS region information, later passed to the container as an environment variable.</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb186-1"><a href="model-inferencing.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pendulum</span>
+<span id="cb186-2"><a href="model-inferencing.html#cb186-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow.decorators <span class="im">import</span> dag, task</span>
+<span id="cb186-3"><a href="model-inferencing.html#cb186-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow.kubernetes.secret <span class="im">import</span> Secret</span>
+<span id="cb186-4"><a href="model-inferencing.html#cb186-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> airflow.models <span class="im">import</span> Variable</span>
+<span id="cb186-5"><a href="model-inferencing.html#cb186-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb186-6"><a href="model-inferencing.html#cb186-6" aria-hidden="true" tabindex="-1"></a><span class="co"># SET PARAMETERS</span></span>
+<span id="cb186-7"><a href="model-inferencing.html#cb186-7" aria-hidden="true" tabindex="-1"></a>skin_cancer_container_image <span class="op">=</span> <span class="st">&quot;seblum/cnn-skin-cancer-model:latest&quot;</span>  <span class="co"># base image for k8s pods</span></span>
+<span id="cb186-8"><a href="model-inferencing.html#cb186-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb186-9"><a href="model-inferencing.html#cb186-9" aria-hidden="true" tabindex="-1"></a>SECRET_AWS_REGION <span class="op">=</span> Secret(</span>
+<span id="cb186-10"><a href="model-inferencing.html#cb186-10" aria-hidden="true" tabindex="-1"></a>    deploy_type<span class="op">=</span><span class="st">&quot;env&quot;</span>, deploy_target<span class="op">=</span><span class="st">&quot;AWS_REGION&quot;</span>, secret<span class="op">=</span><span class="st">&quot;airflow-aws-account-information&quot;</span>, key<span class="op">=</span><span class="st">&quot;AWS_REGION&quot;</span></span>
+<span id="cb186-11"><a href="model-inferencing.html#cb186-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>The Airflow DAG itself, named <code>cnn_skin_cancer_sagemaker_inference_test</code>, is then defined, complete with its metadata, scheduling details, and associated tasks. Within this DAG definition, there exists an inference task known as <code>inference_call_op</code>, which is established using the <code>@task.kubernetes</code> decorator. This task is responsible for conducting inference on a SageMaker endpoint, processing multiple images. It is configured with the previously defined secret and container image.</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb187-1"><a href="model-inferencing.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dag</span>(</span>
+<span id="cb187-2"><a href="model-inferencing.html#cb187-2" aria-hidden="true" tabindex="-1"></a>    dag_id<span class="op">=</span><span class="st">&quot;cnn_skin_cancer_sagemaker_test_inference&quot;</span>,</span>
+<span id="cb187-3"><a href="model-inferencing.html#cb187-3" aria-hidden="true" tabindex="-1"></a>    default_args<span class="op">=</span>{</span>
+<span id="cb187-4"><a href="model-inferencing.html#cb187-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;owner&quot;</span>: <span class="st">&quot;seblum&quot;</span>,</span>
+<span id="cb187-5"><a href="model-inferencing.html#cb187-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;depends_on_past&quot;</span>: <span class="va">False</span>,</span>
+<span id="cb187-6"><a href="model-inferencing.html#cb187-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;start_date&quot;</span>: pendulum.datetime(<span class="dv">2021</span>, <span class="dv">1</span>, <span class="dv">1</span>, tz<span class="op">=</span><span class="st">&quot;Europe/Amsterdam&quot;</span>),</span>
+<span id="cb187-7"><a href="model-inferencing.html#cb187-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;tags&quot;</span>: [<span class="st">&quot;Inference test on CNN sagemaker deployment&quot;</span>],</span>
+<span id="cb187-8"><a href="model-inferencing.html#cb187-8" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb187-9"><a href="model-inferencing.html#cb187-9" aria-hidden="true" tabindex="-1"></a>    schedule_interval<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb187-10"><a href="model-inferencing.html#cb187-10" aria-hidden="true" tabindex="-1"></a>    max_active_runs<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb187-11"><a href="model-inferencing.html#cb187-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb187-12"><a href="model-inferencing.html#cb187-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cnn_skin_cancer_sagemaker_inference_test():</span>
+<span id="cb187-13"><a href="model-inferencing.html#cb187-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb187-14"><a href="model-inferencing.html#cb187-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Apache Airflow DAG for testing inference on a CNN SageMaker deployment.</span></span>
+<span id="cb187-15"><a href="model-inferencing.html#cb187-15" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb187-16"><a href="model-inferencing.html#cb187-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">@task.kubernetes</span>(</span>
+<span id="cb187-17"><a href="model-inferencing.html#cb187-17" aria-hidden="true" tabindex="-1"></a>        image<span class="op">=</span>skin_cancer_container_image,</span>
+<span id="cb187-18"><a href="model-inferencing.html#cb187-18" aria-hidden="true" tabindex="-1"></a>        task_id<span class="op">=</span><span class="st">&quot;inference_call_op&quot;</span>,</span>
+<span id="cb187-19"><a href="model-inferencing.html#cb187-19" aria-hidden="true" tabindex="-1"></a>        namespace<span class="op">=</span><span class="st">&quot;airflow&quot;</span>,</span>
+<span id="cb187-20"><a href="model-inferencing.html#cb187-20" aria-hidden="true" tabindex="-1"></a>        in_cluster<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb187-21"><a href="model-inferencing.html#cb187-21" aria-hidden="true" tabindex="-1"></a>        get_logs<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb187-22"><a href="model-inferencing.html#cb187-22" aria-hidden="true" tabindex="-1"></a>        startup_timeout_seconds<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb187-23"><a href="model-inferencing.html#cb187-23" aria-hidden="true" tabindex="-1"></a>        service_account_name<span class="op">=</span><span class="st">&quot;airflow-sa&quot;</span>,</span>
+<span id="cb187-24"><a href="model-inferencing.html#cb187-24" aria-hidden="true" tabindex="-1"></a>        secrets<span class="op">=</span>[</span>
+<span id="cb187-25"><a href="model-inferencing.html#cb187-25" aria-hidden="true" tabindex="-1"></a>            SECRET_AWS_REGION,</span>
+<span id="cb187-26"><a href="model-inferencing.html#cb187-26" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb187-27"><a href="model-inferencing.html#cb187-27" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb187-28"><a href="model-inferencing.html#cb187-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> inference_call_op():</span>
+<span id="cb187-29"><a href="model-inferencing.html#cb187-29" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb187-30"><a href="model-inferencing.html#cb187-30" aria-hidden="true" tabindex="-1"></a><span class="co">        Perform inference on a SageMaker endpoint with multiple images.</span></span>
+<span id="cb187-31"><a href="model-inferencing.html#cb187-31" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb187-32"><a href="model-inferencing.html#cb187-32" aria-hidden="true" tabindex="-1"></a>        <span class="im">import</span> json</span>
+<span id="cb187-33"><a href="model-inferencing.html#cb187-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-34"><a href="model-inferencing.html#cb187-34" aria-hidden="true" tabindex="-1"></a>        <span class="im">from</span> src.inference_to_sagemaker <span class="im">import</span> (</span>
+<span id="cb187-35"><a href="model-inferencing.html#cb187-35" aria-hidden="true" tabindex="-1"></a>            endpoint_status,</span>
+<span id="cb187-36"><a href="model-inferencing.html#cb187-36" aria-hidden="true" tabindex="-1"></a>            get_image_directory,</span>
+<span id="cb187-37"><a href="model-inferencing.html#cb187-37" aria-hidden="true" tabindex="-1"></a>            preprocess_image,</span>
+<span id="cb187-38"><a href="model-inferencing.html#cb187-38" aria-hidden="true" tabindex="-1"></a>            query_endpoint,</span>
+<span id="cb187-39"><a href="model-inferencing.html#cb187-39" aria-hidden="true" tabindex="-1"></a>            read_imagefile,</span>
+<span id="cb187-40"><a href="model-inferencing.html#cb187-40" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div>
+<p>Inside the <code>inference_call_op</code> task, a sequence of actions takes place, encompassing SageMaker endpoint status verification, image data preparation, image preprocessing, and the actual inference process. Since the Airflow workflow comprises only a single step, the function is called directly following its definition. Subsequently, the DAG is executed by invoking the <code>cnn_skin_cancer_sagemaker_inference_test()</code> function.</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb188-1"><a href="model-inferencing.html#cb188-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-2"><a href="model-inferencing.html#cb188-2" aria-hidden="true" tabindex="-1"></a>        sagemaker_endpoint_name <span class="op">=</span> <span class="st">&quot;test-cnn-skin-cancer&quot;</span></span>
+<span id="cb188-3"><a href="model-inferencing.html#cb188-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-4"><a href="model-inferencing.html#cb188-4" aria-hidden="true" tabindex="-1"></a>        image_directoy <span class="op">=</span> get_image_directory()</span>
+<span id="cb188-5"><a href="model-inferencing.html#cb188-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Image directory: </span><span class="sc">{</span>image_directoy<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb188-6"><a href="model-inferencing.html#cb188-6" aria-hidden="true" tabindex="-1"></a>        filenames <span class="op">=</span> [<span class="st">&quot;1.jpg&quot;</span>, <span class="st">&quot;10.jpg&quot;</span>, <span class="st">&quot;1003.jpg&quot;</span>, <span class="st">&quot;1005.jpg&quot;</span>, <span class="st">&quot;1007.jpg&quot;</span>]</span>
+<span id="cb188-7"><a href="model-inferencing.html#cb188-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-8"><a href="model-inferencing.html#cb188-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> filenames:</span>
+<span id="cb188-9"><a href="model-inferencing.html#cb188-9" aria-hidden="true" tabindex="-1"></a>            filepath <span class="op">=</span> <span class="ss">f&quot;</span><span class="sc">{</span>image_directoy<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="bu">file</span><span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb188-10"><a href="model-inferencing.html#cb188-10" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f&quot;[+] New Inference&quot;</span>)</span>
+<span id="cb188-11"><a href="model-inferencing.html#cb188-11" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f&quot;[+] FilePath is </span><span class="sc">{</span>filepath<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb188-12"><a href="model-inferencing.html#cb188-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-13"><a href="model-inferencing.html#cb188-13" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Check endpoint status</span></span>
+<span id="cb188-14"><a href="model-inferencing.html#cb188-14" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&quot;[+] Endpoint Status&quot;</span>)</span>
+<span id="cb188-15"><a href="model-inferencing.html#cb188-15" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f&quot;Application status is </span><span class="sc">{</span>endpoint_status(sagemaker_endpoint_name)<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb188-16"><a href="model-inferencing.html#cb188-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-17"><a href="model-inferencing.html#cb188-17" aria-hidden="true" tabindex="-1"></a>            image <span class="op">=</span> read_imagefile(filepath)</span>
+<span id="cb188-18"><a href="model-inferencing.html#cb188-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-19"><a href="model-inferencing.html#cb188-19" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&quot;[+] Preprocess Data&quot;</span>)</span>
+<span id="cb188-20"><a href="model-inferencing.html#cb188-20" aria-hidden="true" tabindex="-1"></a>            np_image <span class="op">=</span> preprocess_image(image)</span>
+<span id="cb188-21"><a href="model-inferencing.html#cb188-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-22"><a href="model-inferencing.html#cb188-22" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Add instances fiels so np_image can be inferenced by MLflow model</span></span>
+<span id="cb188-23"><a href="model-inferencing.html#cb188-23" aria-hidden="true" tabindex="-1"></a>            payload <span class="op">=</span> json.dumps({<span class="st">&quot;instances&quot;</span>: np_image.tolist()})</span>
+<span id="cb188-24"><a href="model-inferencing.html#cb188-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-25"><a href="model-inferencing.html#cb188-25" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&quot;[+] Prediction&quot;</span>)</span>
+<span id="cb188-26"><a href="model-inferencing.html#cb188-26" aria-hidden="true" tabindex="-1"></a>            predictions <span class="op">=</span> query_endpoint(app_name<span class="op">=</span>sagemaker_endpoint_name, data<span class="op">=</span>payload)</span>
+<span id="cb188-27"><a href="model-inferencing.html#cb188-27" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f&quot;Received response for </span><span class="sc">{</span><span class="bu">file</span><span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>predictions<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb188-28"><a href="model-inferencing.html#cb188-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-29"><a href="model-inferencing.html#cb188-29" aria-hidden="true" tabindex="-1"></a>    inference_call_op()</span>
+<span id="cb188-30"><a href="model-inferencing.html#cb188-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-31"><a href="model-inferencing.html#cb188-31" aria-hidden="true" tabindex="-1"></a>cnn_skin_cancer_sagemaker_inference_test()</span></code></pre></div>
 </div>
-<div id="uploading-test-image" class="section level4 unlisted unnumbered hasAnchor">
-<h4>Uploading test image<a href="model-inferencing.html#uploading-test-image" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>The <code>st.file_uploader</code> allows the user to upload a test image in JPG format using the Streamlit file uploader widget. The type of the uploaded file is limited to <code>.jpg</code>. If a test image has been uploaded, the image is processed by opening it with PIL and creating a file-like object.</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb151-1"><a href="model-inferencing.html#cb151-1" aria-hidden="true" tabindex="-1"></a>test_image <span class="op">=</span> st.file_uploader(<span class="st">&quot;&quot;</span>, <span class="bu">type</span><span class="op">=</span>[<span class="st">&quot;jpg&quot;</span>], accept_multiple_files<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb151-2"><a href="model-inferencing.html#cb151-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb151-3"><a href="model-inferencing.html#cb151-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> test_image:</span>
-<span id="cb151-4"><a href="model-inferencing.html#cb151-4" aria-hidden="true" tabindex="-1"></a>    image <span class="op">=</span> Image.<span class="bu">open</span>(test_image)</span>
-<span id="cb151-5"><a href="model-inferencing.html#cb151-5" aria-hidden="true" tabindex="-1"></a>    image_file <span class="op">=</span> io.BytesIO(test_image.getvalue())</span>
-<span id="cb151-6"><a href="model-inferencing.html#cb151-6" aria-hidden="true" tabindex="-1"></a>    files <span class="op">=</span> {<span class="st">&quot;file&quot;</span>: image_file}</span></code></pre></div>
+<div id="inference-workflow-code" class="section level3 hasAnchor" number="9.4.2">
+<h3><span class="header-section-number">9.4.2</span> Inference Workflow Code<a href="model-inferencing.html#inference-workflow-code" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Collectively, these functions provide comprehensive support for testing and interacting with an Amazon SageMaker endpoint. Their functionality encompasses tasks such as image data preparation and processing, endpoint status verification, and querying the endpoint to obtain predictions or responses.</p>
+<div id="get_image_directory-function" class="section level5 hasAnchor" number="9.4.2.0.1">
+<h5><span class="header-section-number">9.4.2.0.1</span> <code>get_image_directory</code> Function<a href="model-inferencing.html#get_image_directory-function" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>This function is responsible for retrieving the absolute file path for the ‘inference_test_images’ directory, relative to the current script’s location.</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb189-1"><a href="model-inferencing.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_image_directory() <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb189-2"><a href="model-inferencing.html#cb189-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb189-3"><a href="model-inferencing.html#cb189-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Get the file path for the &#39;inference_test_images&#39; directory relative to the current script&#39;s location.</span></span>
+<span id="cb189-4"><a href="model-inferencing.html#cb189-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb189-5"><a href="model-inferencing.html#cb189-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb189-6"><a href="model-inferencing.html#cb189-6" aria-hidden="true" tabindex="-1"></a><span class="co">        str: The absolute file path to the &#39;inference_test_images&#39; directory.</span></span>
+<span id="cb189-7"><a href="model-inferencing.html#cb189-7" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb189-8"><a href="model-inferencing.html#cb189-8" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> <span class="ss">f&quot;</span><span class="sc">{</span>Path(<span class="va">__file__</span>)<span class="sc">.</span>parent<span class="sc">.</span>parent<span class="sc">}</span><span class="ss">/inference_test_images&quot;</span></span>
+<span id="cb189-9"><a href="model-inferencing.html#cb189-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> path</span></code></pre></div>
 </div>
-<div id="displaying-the-uploaded-image-and-performing-prediction" class="section level4 unlisted unnumbered hasAnchor">
-<h4>Displaying the uploaded image and performing prediction<a href="model-inferencing.html#displaying-the-uploaded-image-and-performing-prediction" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>A two-column layout in the Streamlit app is created That displays the uploaded image in the first column. In the second columns, a button for the user to start the prediction process is displayed. When the button is clicked, it sends a POST request to the FastAPI endpoint with the uploaded image file. The prediction results are displayed as JSON and can be downloaded as a JSON file.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb152-1"><a href="model-inferencing.html#cb152-1" aria-hidden="true" tabindex="-1"></a>    col1, col2 <span class="op">=</span> st.columns(<span class="dv">2</span>)</span>
-<span id="cb152-2"><a href="model-inferencing.html#cb152-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb152-3"><a href="model-inferencing.html#cb152-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> col1:</span>
-<span id="cb152-4"><a href="model-inferencing.html#cb152-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Display the uploaded image in the first column</span></span>
-<span id="cb152-5"><a href="model-inferencing.html#cb152-5" aria-hidden="true" tabindex="-1"></a>        st.image(test_image, caption<span class="op">=</span><span class="st">&quot;&quot;</span>, use_column_width<span class="op">=</span><span class="st">&quot;always&quot;</span>)</span>
-<span id="cb152-6"><a href="model-inferencing.html#cb152-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb152-7"><a href="model-inferencing.html#cb152-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> col2:</span>
-<span id="cb152-8"><a href="model-inferencing.html#cb152-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> st.button(<span class="st">&quot;Start Prediction&quot;</span>):</span>
-<span id="cb152-9"><a href="model-inferencing.html#cb152-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> st.spinner(<span class="st">&quot;Prediction in Progress. Please Wait...&quot;</span>):</span>
-<span id="cb152-10"><a href="model-inferencing.html#cb152-10" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Send a POST request to FastAPI for prediction</span></span>
-<span id="cb152-11"><a href="model-inferencing.html#cb152-11" aria-hidden="true" tabindex="-1"></a>                output <span class="op">=</span> requests.post(FASTAPI_ENDPOINT, files<span class="op">=</span>files, timeout<span class="op">=</span><span class="dv">8000</span>)</span>
-<span id="cb152-12"><a href="model-inferencing.html#cb152-12" aria-hidden="true" tabindex="-1"></a>            st.success(<span class="st">&quot;Success! Click the Download button below to retrieve prediction results (JSON format)&quot;</span>)</span>
-<span id="cb152-13"><a href="model-inferencing.html#cb152-13" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Display the prediction results in JSON format</span></span>
-<span id="cb152-14"><a href="model-inferencing.html#cb152-14" aria-hidden="true" tabindex="-1"></a>            st.json(output.json())</span>
-<span id="cb152-15"><a href="model-inferencing.html#cb152-15" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Add a download button to download the prediction results as a JSON file</span></span>
-<span id="cb152-16"><a href="model-inferencing.html#cb152-16" aria-hidden="true" tabindex="-1"></a>            st.download_button(</span>
-<span id="cb152-17"><a href="model-inferencing.html#cb152-17" aria-hidden="true" tabindex="-1"></a>                label<span class="op">=</span><span class="st">&quot;Download&quot;</span>,</span>
-<span id="cb152-18"><a href="model-inferencing.html#cb152-18" aria-hidden="true" tabindex="-1"></a>                data<span class="op">=</span>json.dumps(output.json()),</span>
-<span id="cb152-19"><a href="model-inferencing.html#cb152-19" aria-hidden="true" tabindex="-1"></a>                file_name<span class="op">=</span><span class="st">&quot;cnn_skin_cancer_prediction_results.json&quot;</span>,</span>
-<span id="cb152-20"><a href="model-inferencing.html#cb152-20" aria-hidden="true" tabindex="-1"></a>            )</span></code></pre></div>
+<div id="read_imagefile-function" class="section level5 hasAnchor" number="9.4.2.0.2">
+<h5><span class="header-section-number">9.4.2.0.2</span> <code>read_imagefile</code> Function<a href="model-inferencing.html#read_imagefile-function" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The <code>read_imagefile</code> function is designed to read an image file, which can be either from a file path or binary data, and return it as a PIL <code>JpegImageFile</code> object.</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb190-1"><a href="model-inferencing.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_imagefile(data: <span class="bu">str</span>) <span class="op">-&gt;</span> JpegImageFile:</span>
+<span id="cb190-2"><a href="model-inferencing.html#cb190-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb190-3"><a href="model-inferencing.html#cb190-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Reads an image file and returns it as a PIL JpegImageFile object.</span></span>
+<span id="cb190-4"><a href="model-inferencing.html#cb190-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-5"><a href="model-inferencing.html#cb190-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb190-6"><a href="model-inferencing.html#cb190-6" aria-hidden="true" tabindex="-1"></a><span class="co">        data (str): The file path or binary data representing the image.</span></span>
+<span id="cb190-7"><a href="model-inferencing.html#cb190-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-8"><a href="model-inferencing.html#cb190-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb190-9"><a href="model-inferencing.html#cb190-9" aria-hidden="true" tabindex="-1"></a><span class="co">        PIL.JpegImagePlugin.JpegImageFile: A PIL JpegImageFile object representing the image.</span></span>
+<span id="cb190-10"><a href="model-inferencing.html#cb190-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-11"><a href="model-inferencing.html#cb190-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Example:</span></span>
+<span id="cb190-12"><a href="model-inferencing.html#cb190-12" aria-hidden="true" tabindex="-1"></a><span class="co">        # Read an image file from a file path</span></span>
+<span id="cb190-13"><a href="model-inferencing.html#cb190-13" aria-hidden="true" tabindex="-1"></a><span class="co">        image_path = &quot;example.jpg&quot;</span></span>
+<span id="cb190-14"><a href="model-inferencing.html#cb190-14" aria-hidden="true" tabindex="-1"></a><span class="co">        image = read_imagefile(image_path)</span></span>
+<span id="cb190-15"><a href="model-inferencing.html#cb190-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-16"><a href="model-inferencing.html#cb190-16" aria-hidden="true" tabindex="-1"></a><span class="co">        # Read an image file from binary data</span></span>
+<span id="cb190-17"><a href="model-inferencing.html#cb190-17" aria-hidden="true" tabindex="-1"></a><span class="co">        with open(&quot;example.jpg&quot;, &quot;rb&quot;) as file:</span></span>
+<span id="cb190-18"><a href="model-inferencing.html#cb190-18" aria-hidden="true" tabindex="-1"></a><span class="co">            binary_data = file.read()</span></span>
+<span id="cb190-19"><a href="model-inferencing.html#cb190-19" aria-hidden="true" tabindex="-1"></a><span class="co">        image = read_imagefile(binary_data)</span></span>
+<span id="cb190-20"><a href="model-inferencing.html#cb190-20" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb190-21"><a href="model-inferencing.html#cb190-21" aria-hidden="true" tabindex="-1"></a>    image <span class="op">=</span> Image.<span class="bu">open</span>(data)</span>
+<span id="cb190-22"><a href="model-inferencing.html#cb190-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> image</span></code></pre></div>
+</div>
+<div id="preprocess_image-function" class="section level5 hasAnchor" number="9.4.2.0.3">
+<h5><span class="header-section-number">9.4.2.0.3</span> <code>preprocess_image</code> Function<a href="model-inferencing.html#preprocess_image-function" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The <code>preprocess_image</code> function plays a crucial role in preprocessing a JPEG image for deep learning models. It performs several operations, including converting the image to a NumPy array, scaling its values to fall within the 0 to 1 range, and reshaping it to match the expected input shape for the model.</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb191-1"><a href="model-inferencing.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> preprocess_image(image: JpegImageFile) <span class="op">-&gt;</span> np.array:</span>
+<span id="cb191-2"><a href="model-inferencing.html#cb191-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb191-3"><a href="model-inferencing.html#cb191-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Preprocesses a JPEG image for deep learning models.</span></span>
+<span id="cb191-4"><a href="model-inferencing.html#cb191-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb191-5"><a href="model-inferencing.html#cb191-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb191-6"><a href="model-inferencing.html#cb191-6" aria-hidden="true" tabindex="-1"></a><span class="co">        image (PIL.JpegImagePlugin.JpegImageFile): A PIL image object in JPEG format.</span></span>
+<span id="cb191-7"><a href="model-inferencing.html#cb191-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb191-8"><a href="model-inferencing.html#cb191-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb191-9"><a href="model-inferencing.html#cb191-9" aria-hidden="true" tabindex="-1"></a><span class="co">        np.ndarray: A NumPy array representing the preprocessed image.</span></span>
+<span id="cb191-10"><a href="model-inferencing.html#cb191-10" aria-hidden="true" tabindex="-1"></a><span class="co">                    The image is converted to a NumPy array with data type &#39;uint8&#39;,</span></span>
+<span id="cb191-11"><a href="model-inferencing.html#cb191-11" aria-hidden="true" tabindex="-1"></a><span class="co">                    scaled to values between 0 and 1, and reshaped to (1, 224, 224, 3).</span></span>
+<span id="cb191-12"><a href="model-inferencing.html#cb191-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb191-13"><a href="model-inferencing.html#cb191-13" aria-hidden="true" tabindex="-1"></a><span class="co">    Example:</span></span>
+<span id="cb191-14"><a href="model-inferencing.html#cb191-14" aria-hidden="true" tabindex="-1"></a><span class="co">        # Load an image using PIL</span></span>
+<span id="cb191-15"><a href="model-inferencing.html#cb191-15" aria-hidden="true" tabindex="-1"></a><span class="co">        image = Image.open(&quot;example.jpg&quot;)</span></span>
+<span id="cb191-16"><a href="model-inferencing.html#cb191-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb191-17"><a href="model-inferencing.html#cb191-17" aria-hidden="true" tabindex="-1"></a><span class="co">        # Preprocess the image</span></span>
+<span id="cb191-18"><a href="model-inferencing.html#cb191-18" aria-hidden="true" tabindex="-1"></a><span class="co">        preprocessed_image = preprocess_image(image)</span></span>
+<span id="cb191-19"><a href="model-inferencing.html#cb191-19" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb191-20"><a href="model-inferencing.html#cb191-20" aria-hidden="true" tabindex="-1"></a>    np_image <span class="op">=</span> np.array(image, dtype<span class="op">=</span><span class="st">&quot;uint8&quot;</span>)</span>
+<span id="cb191-21"><a href="model-inferencing.html#cb191-21" aria-hidden="true" tabindex="-1"></a>    np_image <span class="op">=</span> np_image <span class="op">/</span> <span class="fl">255.0</span></span>
+<span id="cb191-22"><a href="model-inferencing.html#cb191-22" aria-hidden="true" tabindex="-1"></a>    np_image <span class="op">=</span> np_image.reshape(<span class="dv">1</span>, <span class="dv">224</span>, <span class="dv">224</span>, <span class="dv">3</span>)</span>
+<span id="cb191-23"><a href="model-inferencing.html#cb191-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np_image</span></code></pre></div>
+</div>
+<div id="endpoint_status-function" class="section level5 hasAnchor" number="9.4.2.0.4">
+<h5><span class="header-section-number">9.4.2.0.4</span> <code>endpoint_status</code> Function<a href="model-inferencing.html#endpoint_status-function" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The <code>endpoint_status</code> function is responsible for checking the status of an Amazon SageMaker endpoint. It takes the <code>app_name</code> as input, which presumably represents the name or identifier of the endpoint.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb192-1"><a href="model-inferencing.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> endpoint_status(app_name: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb192-2"><a href="model-inferencing.html#cb192-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb192-3"><a href="model-inferencing.html#cb192-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Checks the status of an Amazon SageMaker endpoint.</span></span>
+<span id="cb192-4"><a href="model-inferencing.html#cb192-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-5"><a href="model-inferencing.html#cb192-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb192-6"><a href="model-inferencing.html#cb192-6" aria-hidden="true" tabindex="-1"></a><span class="co">        app_name (str): The name of the SageMaker endpoint to check.</span></span>
+<span id="cb192-7"><a href="model-inferencing.html#cb192-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-8"><a href="model-inferencing.html#cb192-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb192-9"><a href="model-inferencing.html#cb192-9" aria-hidden="true" tabindex="-1"></a><span class="co">        str: The current status of the SageMaker endpoint.</span></span>
+<span id="cb192-10"><a href="model-inferencing.html#cb192-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-11"><a href="model-inferencing.html#cb192-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Example:</span></span>
+<span id="cb192-12"><a href="model-inferencing.html#cb192-12" aria-hidden="true" tabindex="-1"></a><span class="co">        # Check the status of a SageMaker endpoint</span></span>
+<span id="cb192-13"><a href="model-inferencing.html#cb192-13" aria-hidden="true" tabindex="-1"></a><span class="co">        endpoint_name = &quot;my-endpoint&quot;</span></span>
+<span id="cb192-14"><a href="model-inferencing.html#cb192-14" aria-hidden="true" tabindex="-1"></a><span class="co">        status = endpoint_status(endpoint_name)</span></span>
+<span id="cb192-15"><a href="model-inferencing.html#cb192-15" aria-hidden="true" tabindex="-1"></a><span class="co">        print(f&quot;Endpoint status: {status}&quot;)</span></span>
+<span id="cb192-16"><a href="model-inferencing.html#cb192-16" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb192-17"><a href="model-inferencing.html#cb192-17" aria-hidden="true" tabindex="-1"></a>    AWS_REGION <span class="op">=</span> os.getenv(<span class="st">&quot;AWS_REGION&quot;</span>)</span>
+<span id="cb192-18"><a href="model-inferencing.html#cb192-18" aria-hidden="true" tabindex="-1"></a>    sage_client <span class="op">=</span> boto3.client(<span class="st">&quot;sagemaker&quot;</span>, region_name<span class="op">=</span>AWS_REGION)</span>
+<span id="cb192-19"><a href="model-inferencing.html#cb192-19" aria-hidden="true" tabindex="-1"></a>    endpoint_description <span class="op">=</span> sage_client.describe_endpoint(EndpointName<span class="op">=</span>app_name)</span>
+<span id="cb192-20"><a href="model-inferencing.html#cb192-20" aria-hidden="true" tabindex="-1"></a>    endpoint_status <span class="op">=</span> endpoint_description[<span class="st">&quot;EndpointStatus&quot;</span>]</span>
+<span id="cb192-21"><a href="model-inferencing.html#cb192-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> endpoint_status</span></code></pre></div>
+</div>
+<div id="query_endpoint-function" class="section level5 hasAnchor" number="9.4.2.0.5">
+<h5><span class="header-section-number">9.4.2.0.5</span> <code>query_endpoint</code> Function<a href="model-inferencing.html#query_endpoint-function" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The <code>query_endpoint</code> function is responsible for querying an Amazon SageMaker endpoint using input data provided in JSON format. It then retrieves predictions or responses from the endpoint based on the provided input.</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb193-1"><a href="model-inferencing.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> query_endpoint(app_name: <span class="bu">str</span>, data: <span class="bu">str</span>) <span class="op">-&gt;</span> json:</span>
+<span id="cb193-2"><a href="model-inferencing.html#cb193-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb193-3"><a href="model-inferencing.html#cb193-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Queries an Amazon SageMaker endpoint with input data and retrieves predictions.</span></span>
+<span id="cb193-4"><a href="model-inferencing.html#cb193-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-5"><a href="model-inferencing.html#cb193-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb193-6"><a href="model-inferencing.html#cb193-6" aria-hidden="true" tabindex="-1"></a><span class="co">        app_name (str): The name of the SageMaker endpoint to query.</span></span>
+<span id="cb193-7"><a href="model-inferencing.html#cb193-7" aria-hidden="true" tabindex="-1"></a><span class="co">        data (str): Input data in JSON format to send to the endpoint.</span></span>
+<span id="cb193-8"><a href="model-inferencing.html#cb193-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-9"><a href="model-inferencing.html#cb193-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb193-10"><a href="model-inferencing.html#cb193-10" aria-hidden="true" tabindex="-1"></a><span class="co">        dict: The prediction or response obtained from the SageMaker endpoint.</span></span>
+<span id="cb193-11"><a href="model-inferencing.html#cb193-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-12"><a href="model-inferencing.html#cb193-12" aria-hidden="true" tabindex="-1"></a><span class="co">    Example:</span></span>
+<span id="cb193-13"><a href="model-inferencing.html#cb193-13" aria-hidden="true" tabindex="-1"></a><span class="co">        # Query a SageMaker endpoint with JSON data</span></span>
+<span id="cb193-14"><a href="model-inferencing.html#cb193-14" aria-hidden="true" tabindex="-1"></a><span class="co">        endpoint_name = &quot;my-endpoint&quot;</span></span>
+<span id="cb193-15"><a href="model-inferencing.html#cb193-15" aria-hidden="true" tabindex="-1"></a><span class="co">        input_data = &#39;{&quot;feature1&quot;: 0.5, &quot;feature2&quot;: 1.2}&#39;</span></span>
+<span id="cb193-16"><a href="model-inferencing.html#cb193-16" aria-hidden="true" tabindex="-1"></a><span class="co">        prediction = query_endpoint(endpoint_name, input_data)</span></span>
+<span id="cb193-17"><a href="model-inferencing.html#cb193-17" aria-hidden="true" tabindex="-1"></a><span class="co">        print(f&quot;Endpoint prediction: {prediction}&quot;)</span></span>
+<span id="cb193-18"><a href="model-inferencing.html#cb193-18" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb193-19"><a href="model-inferencing.html#cb193-19" aria-hidden="true" tabindex="-1"></a>    AWS_REGION <span class="op">=</span> os.getenv(<span class="st">&quot;AWS_REGION&quot;</span>)</span>
+<span id="cb193-20"><a href="model-inferencing.html#cb193-20" aria-hidden="true" tabindex="-1"></a>    client <span class="op">=</span> boto3.session.Session().client(<span class="st">&quot;sagemaker-runtime&quot;</span>, AWS_REGION)</span>
+<span id="cb193-21"><a href="model-inferencing.html#cb193-21" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> client.invoke_endpoint(</span>
+<span id="cb193-22"><a href="model-inferencing.html#cb193-22" aria-hidden="true" tabindex="-1"></a>        EndpointName<span class="op">=</span>app_name,</span>
+<span id="cb193-23"><a href="model-inferencing.html#cb193-23" aria-hidden="true" tabindex="-1"></a>        Body<span class="op">=</span>data,</span>
+<span id="cb193-24"><a href="model-inferencing.html#cb193-24" aria-hidden="true" tabindex="-1"></a>        ContentType<span class="op">=</span><span class="st">&quot;application/json&quot;</span>,</span>
+<span id="cb193-25"><a href="model-inferencing.html#cb193-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb193-26"><a href="model-inferencing.html#cb193-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-27"><a href="model-inferencing.html#cb193-27" aria-hidden="true" tabindex="-1"></a>    prediction <span class="op">=</span> response[<span class="st">&quot;Body&quot;</span>].read().decode(<span class="st">&quot;ascii&quot;</span>)</span>
+<span id="cb193-28"><a href="model-inferencing.html#cb193-28" aria-hidden="true" tabindex="-1"></a>    prediction <span class="op">=</span> json.loads(prediction)</span>
+<span id="cb193-29"><a href="model-inferencing.html#cb193-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> prediction</span></code></pre></div>
 
 </div>
 </div>
@@ -424,7 +597,7 @@ This section imports the necessary dependencies for the code, including librarie
           </div>
         </div>
       </div>
-<a href="model-serving-inferencing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pipeline-workflow-steps.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="glossary.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -456,7 +629,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/seblum/kubernetes-training/edit/master/09.5-Deployment-Usage_Model-Inferencing.Rmd",
+"link": "https://github.com/seblum/kubernetes-training/edit/master/09.4-Deployment-Usage_Model-Inferencing.Rmd",
 "text": "Edit"
 },
 "history": {
