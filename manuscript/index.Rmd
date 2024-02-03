@@ -12,7 +12,7 @@ description: |
   Implementing an MLOps infrastructure with Airflow and MLFlow utilizing K8s, Terraform, and GithubActions.
 link-citations: yes
 links-as-notes: true
-fontsize: 10pt
+fontsize: 11pt
 linestretch: 1.15
 github-repo: seblum/mlops-engineering-book
 ---
